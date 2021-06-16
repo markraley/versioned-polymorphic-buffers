@@ -30,3 +30,15 @@
 *.exe
 *.out
 *.app
+
+deps/
+*.o
+*.amf?
+*.sublime-project
+*.sublime-workspace
+summary
+*.python
+*.javascript
+*.cplusplus
+node_modules/
+package-lock.json
