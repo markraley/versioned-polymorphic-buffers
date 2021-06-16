@@ -32,6 +32,8 @@
 *.app
 
 deps/
+build/
+__pycache__/
 *.o
 *.amf?
 *.sublime-project

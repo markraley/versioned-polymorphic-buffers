@@ -1,0 +1,16 @@
+target
+    language python 1 1 vp_poker "./python/vp_poker" py
+    language javascript 1 1 vp_poker "./nodejs/src" js
+    language cplusplus 1 1 vp_poker "./cpp/src" cc
+
+pod Header
+    varint version 1
+    string tag 1
+
+pod Card
+    varint id 1
+    string name 1
+
+pod Deck
+    vector *Card cards 1
+

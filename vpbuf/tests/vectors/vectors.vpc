@@ -1,0 +1,42 @@
+target  language cplusplus 1 1 vp_vectors "./cpp/src" cpp
+        language python 1 1 vp_vectors "./python/vp_vectors" py
+        language javascript 1 1 vp_vectors "./nodejs/src" js
+
+pod Header
+    varint version 1
+    string test_name 1
+
+pod A
+    varint i1 1
+    string s1 1
+
+pod OuterA
+    vector *A v 1
+
+pod OuterB
+    vector A v 1
+
+pod OuterC
+    vector string v 1
+
+pod OuterD
+    vector *string v 1
+
+pod OuterE
+    vector varint v 1
+
+pod OuterF
+    vector *varint v 1
+
+poly Base
+
+pod Derived1 is Base
+    varint i1 1
+    string s1 1
+
+pod Derived2 is Base
+    varint i1 1
+    string s1 1
+
+pod OuterG
+    vector *Base v 1

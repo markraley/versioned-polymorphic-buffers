@@ -1,0 +1,64 @@
+notes.txt
+
+cd /mnt/d/clones/mdr_projects/vpbuf/src/compiler/cpp
+g++ x.cpp -c -w -fpermissive -std=c++0x -I"$BOOST/boost_1_46_1" 2> x.txt
+
+/mnt/e/old01/save_171217/vp/vp/
+
+cd /mnt/d/clones/mdr_projects/vpbuf
+export vpdir=/mnt/d/clones/mdr_projects/vpbuf/
+export BOOST=/mnt/d/clones/mdr_projects/deps
+export ex1_src_dir='/mnt/d/clones/mdr_projects/vpbuf/tests/ex1/cpp/'
+export uno_dir='/mnt/d/clones/mdr_projects/vpbuf/tests/uno/'
+export vpc_dir='/mnt/d/clones/mdr_projects/vpbuf/tests/vpc/'
+alias gs='git status'
+alias b='cmake --build .'
+export PATH=$PATH:$vpdir/compiler/build
+
+export amf_cpp_dir='/mnt/d/clones/amf-cpp/src'
+
+deps - boost, Py3AMF
+pip3 install Py3AMF
+
+g++ load.cc -c -w -fpermissive -std=c++0x -I"/mnt/d/clones/amf-cpp/src"
+
+--------------------------------------------------------------------------------
+write_Value(nVersion, wc, dynamic_cast<Value *> (payload));
+
+pod Wild is Card
+pod WildFour is Card
+
+poly Action is Card
+
+pod Reverse is Action
+pod Skip is Action
+pod DrawTwo is Action
+
+------------------------
+(function() {
+})();
+------------------------
+
+
+cmake --build ./build/
+
+
+--------------------------------------------------------------------------------
+
+###
+import importlib.machinery
+
+loader = importlib.machinery.SourceFileLoader('a_b', 'standard_cards.python')
+mod = types.ModuleType(loader.name)
+loader.exec_module(mod)
+###
+
+tips
+
+1) use the interpreter to lookup objects
+2) use parens on returns
+3) open sublime in multi-column mode
+
+
+00000000  04 01 06 09 44 45 43 4b  04 01 06 17 41 63 65 20  |....DECK....Ace |
+00000010  6f 66 20 43 6c 75 62                              |of Club|
