@@ -32,18 +32,13 @@ def main():
 
         # modify the deck by removing cards
 
-        print()
         for i in range(0, int(args.count)):
             c = deck.cards.pop()
             print(c.get_name())
 
         # write the modified deck back out
 
-        bytes_written = save_deck(args.deck_name, deck)
-
-        print('\ncards remaining:', len(deck.cards))
-        print(bytes_written, 'bytes written')
-
+        save_deck(args.deck_name, deck)
 
 if __name__ == '__main__':
     main()

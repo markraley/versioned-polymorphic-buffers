@@ -36,10 +36,7 @@ def main():
 
     deck = build_poker_deck(int(args.count))
 
-    bytes_written = save_deck(args.deck_name, deck)
-
-    print('card count', len(deck.cards))
-    print(bytes_written, 'bytes written')
+    save_deck(args.deck_name, deck)
 
 if __name__ == '__main__':
     main()
