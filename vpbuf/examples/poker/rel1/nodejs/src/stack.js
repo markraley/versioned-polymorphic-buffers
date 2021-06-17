@@ -31,13 +31,16 @@ var write_context = require('./write_context');
         },
 
         save_deck: function(file_name, deck) {
-            var h = new persist.Header(vp.get_high_version(), 'VP_POKER')
+            var v = vp.get_high_version()
+            var h = new persist.Header(v, 'VP_POKER')
 
             vp.write_Header(1, write_context, h) // always version 1
-            vp.write_Deck(vp.get_high_version(), write_context, deck)
+            vp.write_Deck(v, write_context, deck)
 
             var bytes_out = write_context.write_File(file_name)
-            console.log(bytes_out, 'bytes written')
+            console.log('write: ' + file_name + ', version=' + v
+                        + ', cards=' + deck.cards.length
+                        + ', bytes=' + bytes_out)
         }
     };
 

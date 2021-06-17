@@ -19,13 +19,16 @@ var write_context = require('./write_context');
         file_name: '',
 
         save_deck: function(file_name, deck) {
-            var h = new persist.Header(vp.get_high_version(), 'VP_POKER')
+            var v = vp.get_high_version()
+            var h = new persist.Header(v, 'VP_POKER')
 
             vp.write_Header(1, write_context, h) // always version 1
-            vp.write_Deck(vp.get_high_version(), write_context, deck)
+            vp.write_Deck(v, write_context, deck)
 
             var bytes_out = write_context.write_File(file_name)
-            console.log(bytes_out, 'bytes written')
+            console.log('write: ' + file_name + ', version=' + v
+                        + ', cards=' + deck.cards.length
+                        + ', bytes=' + bytes_out)
         },
 
         on_read_complete: function(data) {
@@ -38,9 +41,12 @@ var write_context = require('./write_context');
                 console.log('version mismatch')
                 return
             } else {
-                library.deck = vp.read_Deck(library.hh.version, read_context)
+                var v = library.hh.version
+                library.deck = vp.read_Deck(v, read_context)
 
-                console.log(data.length, 'bytes read')
+                console.log('read: ' + library.file_name + ', version=' + v
+                            + ', cards=' + library.deck.cards.length
+                            + ', bytes=' + data.length)
 
                 if (library.draw_count > library.deck.cards.length) {
                     console.log('not enough cards left')
@@ -50,7 +56,7 @@ var write_context = require('./write_context');
 
                     for (var i = 0; i < library.draw_count; i++) {
                         var c = library.deck.cards.pop()
-                        console.log(c.get_name())
+                        console.log('draw: ' + c.get_name())
                     }
 
                     // write the modified deck back out

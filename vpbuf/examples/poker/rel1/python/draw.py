@@ -32,7 +32,7 @@ def main():
 
         for i in range(0, int(args.count)):
             c = deck.cards.pop()
-            print('draw: ', c.get_name())
+            print('draw:', c.get_name())
 
         # write the modified deck back out
 
