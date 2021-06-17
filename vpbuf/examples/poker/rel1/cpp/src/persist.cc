@@ -11,6 +11,8 @@ vector<string> rank_arr = {"Ace", "Two", "Three", "Four", "Five",
 
 class Header {
    public:
+      Header(int version = -1, string tag = "not set")
+         : version(version), tag(tag) {}
       int version;
       std::string tag;
 };
@@ -41,15 +43,21 @@ using namespace vp_poker;
 // -----------------------------------------------------------------------------
 
 size_t save_deck(string deck_name, Deck &deck) {
-   Header header;
-   header.version = 1;
-   header.tag = "VP_POKER";
+   long v = get_high_version();
+   Header header(v, "VP_POKER");
+
    write_context wc;
 
    write_Header(1, wc, header); // always version 1
-   write_Deck(get_high_version(), wc, deck);
+   write_Deck(v, wc, deck);
 
-   return wc.write_file(deck_name);
+   size_t bytes_out = wc.write_file(deck_name);
+
+   cout <<"write: "<< deck_name <<", version="<< v
+         <<", cards="<< deck.cards.size()
+         <<", bytes="<< bytes_out << endl;
+
+   return bytes_out;
 }
 
 // -----------------------------------------------------------------------------
@@ -60,12 +68,17 @@ Deck *load_deck(string deck_name) {
 
    read_context rc(deck_name);
    read_Header(1, rc, header);
+   int v = header.version;
 
-   if (!version_check(header.version)) {
+   if (!version_check(v)) {
       cout << "version out of range\n";
    } else {
       deck = new Deck();
-      read_Deck(header.version, rc, *deck);
+      read_Deck(v, rc, *deck);
+
+      cout <<"read: "<< deck_name <<", version= "<< v
+            <<", cards="<< deck->cards.size()
+            <<", bytes="<< rc.buf_arr.size() << endl;
    }
 
    return deck;

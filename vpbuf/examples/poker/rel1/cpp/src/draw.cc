@@ -47,19 +47,17 @@ int main(int argc, char* argv[])
       // modify the deck by removing cards
 
       if (deck->cards.size() < count) {
-         cout << "too foo cards remaining\n";
+         cout << "too few cards remaining\n";
       } else {
-         cout <<"\n";
          for (auto i = 0; i < count; i++) {
             Card *c =  deck->cards.back();
-            cout << c->get_name() <<"\n";
+            cout <<"draw: "<< c->get_name() <<endl;
             deck->cards.pop_back();
          }
 
          // write the modified deck back out
 
-         size_t bytes_out = save_deck(deck_name, *deck);
-         std::cout << deck_name <<" "<< bytes_out <<" bytes written\n";
+         save_deck(deck_name, *deck);
       }
    }
 }

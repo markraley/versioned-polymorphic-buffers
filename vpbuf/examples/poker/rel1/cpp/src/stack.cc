@@ -59,10 +59,7 @@ int main(int argc, char* argv[])
       size_t bytes_out = save_deck(deck_name, *deck);
 
       delete deck;
-
-      std::cout << deck_name <<" "<< bytes_out <<" bytes written\n";
    }
-
 }
 
 // -----------------------------------------------------------------------------
