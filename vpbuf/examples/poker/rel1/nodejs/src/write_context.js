@@ -5,8 +5,6 @@
 const fs = require('fs');
 const assert = require('chai').assert;
 "use strict";
-const tools = require('./tools');
-
 
 (function() {
     var wc = {

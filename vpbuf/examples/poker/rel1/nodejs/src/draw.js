@@ -4,7 +4,6 @@
 //    Software release is via MIT license (see project root for license file)
 
 const persist = require("./persist");
-var tools = require('./tools');
 var vp = require('./vp_poker');
 
 // ---------------------------------------------------------------------

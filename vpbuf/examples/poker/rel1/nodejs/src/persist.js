@@ -2,12 +2,12 @@
 //    Copyright Mark Raley, All Rights Reserved, https://github.com/markraley
 //    Software release is via MIT license (see project root for license file)
 
-var tools = require('./tools');
-var vp = require('./vp_poker');
+const fs = require('fs');
 var read_context = require('./read_context');
 var write_context = require('./write_context');
+var vp = require('./vp_poker');
 
-const fs = require('fs');
+// -----------------------------------------------------------------------------
 
 module.exports = {
     suit_arr: [ 'Diamonds', 'Clubs', 'Hearts', 'Spades' ],
@@ -34,16 +34,7 @@ module.exports = {
         this.cards = []
     },
 
-    read_File: function(file_name, callback) {
-        fs.readFile(file_name,
-            function(err, data) {
-                if (err)
-                    console.log('read_File: error', err);
-                // TODO: better error handling
-                callback(data);
-            }
-        );
-    },
+// -----------------------------------------------------------------------------
 
     save_deck: function(file_name, deck) {
         var v = vp.get_high_version()
@@ -58,8 +49,31 @@ module.exports = {
                     + ', bytes=' + bytes_out)
     },
 
+// -----------------------------------------------------------------------------
+
+    read_File: function(file_name, callback) {
+        fs.readFile(file_name,
+            function(err, data) {
+                if (err)
+                    console.log('read_File: error', err);
+                // TODO: better error handling
+                callback(data);
+            }
+        );
+    },
+
+    toArrayBuffer: function (buf) {
+//      console.log('toArrayBuffer:', buf.length);
+        var ab = new ArrayBuffer(buf.length);
+        var view = new Uint8Array(ab);
+        for (var i = 0; i < buf.length; ++i) {
+            view[i] = buf[i];
+        }
+        return ab;
+    },
+
     on_read_complete: function(data) {
-        read_context.dv = new DataView(tools.toArrayBuffer(data));
+        read_context.dv = new DataView(this.context.toArrayBuffer(data));
         read_context.cur_pos = 0;
 
         this.hh = vp.read_Header(1, read_context) // always version 1
