@@ -2,8 +2,8 @@
 //    Copyright Mark Raley, All Rights Reserved, https://github.com/markraley
 //    Software release is via MIT license (see project root for license file)
 
-const persist = require("./persist");
-const vp = require('./vp_vectors');
+var persist = require("./persist");
+var vp = require('./vp_vectors');
 
 var read_context = require('./read_context');
 var write_context = require('./write_context');
@@ -61,6 +61,8 @@ const out_dir = './out/';
             Test_vectors_A.validate();
         }
     };
+
+    vp.factory = persist // set factory
 
     Test_vectors_A.serialize();
 

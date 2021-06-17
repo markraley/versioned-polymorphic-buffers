@@ -72,12 +72,12 @@ code_footer_cpp(ofstream &ofs, int &in, const TarLang &tar_lang)
 bool
 code_header_js(ofstream &ofs, int &in, const TarLang &tar_lang)
 {
-   ofs << tab(in) <<"// vp_buf auto generated code\n";
+   ofs << tab(in) <<"// vpbuf generated code - do not modify\n";
    ofs << tab(in) <<"\"use strict\";\n";
-   ofs << tab(in) <<"const persist = require(\"./persist\");\n\n";
    ofs << tab(in) <<"module.exports = {\n\n";
 
    in += 1;
+   ofs <<tab(in)<< "factory: null, // must be set to class factory object\n\n";
 
    return true;
 }

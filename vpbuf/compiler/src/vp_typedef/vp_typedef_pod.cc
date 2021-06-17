@@ -188,7 +188,7 @@ vp_typedef_pod::serialize_in_js(
 
    ofs <<tab(in)<< "read_"<< type_name <<": function(ver, rc) {\n";
 
-   ofs <<tab(in+1) <<"var payload = new persist." << type_name << "();\n";
+   ofs <<tab(in+1) <<"var payload = new this.factory." << type_name << "();\n";
 
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
       (*jj)->serialize_in_js(ofs, in + 1, type_map, tar_lang);

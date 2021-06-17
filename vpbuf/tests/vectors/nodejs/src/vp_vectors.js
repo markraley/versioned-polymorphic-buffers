@@ -1,9 +1,8 @@
-// vp_buf auto generated code
+// vpbuf generated code - do not modify
 "use strict";
-const persist = require("./persist");
-
 module.exports = {
 
+	factory: null,
 	write_String: function(ver, wc, payload) {
 		wc.write_String(payload);
 	},
@@ -95,21 +94,21 @@ module.exports = {
 	},
 
 	read_Header: function(ver, rc) {
-		var payload = new persist.Header();
+		var payload = new this.factory.Header();
 		payload.version = rc.read_Integer();
 		payload.test_name = rc.read_String();
 		return payload;
 	},
 
 	read_A: function(ver, rc) {
-		var payload = new persist.A();
+		var payload = new this.factory.A();
 		payload.i1 = rc.read_Integer();
 		payload.s1 = rc.read_String();
 		return payload;
 	},
 
 	read_OuterA: function(ver, rc) {
-		var payload = new persist.OuterA();
+		var payload = new this.factory.OuterA();
 		var count = rc.read_Integer();
 		for (var i = 0; i < count; i++) {
 			var c = this.read_A(ver, rc);
@@ -119,7 +118,7 @@ module.exports = {
 	},
 
 	read_OuterB: function(ver, rc) {
-		var payload = new persist.OuterB();
+		var payload = new this.factory.OuterB();
 		var count = rc.read_Integer();
 		for (var i = 0; i < count; i++) {
 			var c = this.read_A(ver, rc);
@@ -129,7 +128,7 @@ module.exports = {
 	},
 
 	read_OuterC: function(ver, rc) {
-		var payload = new persist.OuterC();
+		var payload = new this.factory.OuterC();
 		var count = rc.read_Integer();
 		for (var i = 0; i < count; i++) {
 			var c = this.read_String(ver, rc);
@@ -139,7 +138,7 @@ module.exports = {
 	},
 
 	read_OuterD: function(ver, rc) {
-		var payload = new persist.OuterD();
+		var payload = new this.factory.OuterD();
 		var count = rc.read_Integer();
 		for (var i = 0; i < count; i++) {
 			var c = this.read_String(ver, rc);
@@ -149,7 +148,7 @@ module.exports = {
 	},
 
 	read_OuterE: function(ver, rc) {
-		var payload = new persist.OuterE();
+		var payload = new this.factory.OuterE();
 		var count = rc.read_Integer();
 		for (var i = 0; i < count; i++) {
 			var c = this.read_Integer(ver, rc);
@@ -159,7 +158,7 @@ module.exports = {
 	},
 
 	read_OuterF: function(ver, rc) {
-		var payload = new persist.OuterF();
+		var payload = new this.factory.OuterF();
 		var count = rc.read_Integer();
 		for (var i = 0; i < count; i++) {
 			var c = this.read_Integer(ver, rc);
@@ -181,21 +180,21 @@ module.exports = {
 	},
 
 	read_Derived1: function(ver, rc) {
-		var payload = new persist.Derived1();
+		var payload = new this.factory.Derived1();
 		payload.i1 = rc.read_Integer();
 		payload.s1 = rc.read_String();
 		return payload;
 	},
 
 	read_Derived2: function(ver, rc) {
-		var payload = new persist.Derived2();
+		var payload = new this.factory.Derived2();
 		payload.i1 = rc.read_Integer();
 		payload.s1 = rc.read_String();
 		return payload;
 	},
 
 	read_OuterG: function(ver, rc) {
-		var payload = new persist.OuterG();
+		var payload = new this.factory.OuterG();
 		var count = rc.read_Integer();
 		for (var i = 0; i < count; i++) {
 			var c = this.read_Base(ver, rc);

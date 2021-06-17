@@ -7,7 +7,7 @@
 
 const persist = require("./persist");
 var tools = require('./tools');
-const vp = require('./vp_poker');
+var vp = require('./vp_poker');
 var read_context = require('./read_context');
 var write_context = require('./write_context');
 
@@ -34,6 +34,7 @@ var write_context = require('./write_context');
         on_read_complete: function(data) {
             read_context.dv = new DataView(tools.toArrayBuffer(data));
             read_context.cur_pos = 0;
+            vp.factory = persist
 
             library.hh = vp.read_Header(1, read_context) // always version 1
 
