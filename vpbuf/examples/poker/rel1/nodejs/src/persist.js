@@ -2,6 +2,13 @@
 //    Copyright Mark Raley, All Rights Reserved, https://github.com/markraley
 //    Software release is via MIT license (see project root for license file)
 
+var tools = require('./tools');
+var vp = require('./vp_poker');
+var read_context = require('./read_context');
+var write_context = require('./write_context');
+
+const fs = require('fs');
+
 module.exports = {
     suit_arr: [ 'Diamonds', 'Clubs', 'Hearts', 'Spades' ],
     rank_arr: [ 'Ace',   'Two',   'Three', 'Four',
@@ -25,5 +32,64 @@ module.exports = {
 
     Deck: function() {
         this.cards = []
+    },
+
+    read_File: function(file_name, callback) {
+        fs.readFile(file_name,
+            function(err, data) {
+                if (err)
+                    console.log('read_File: error', err);
+                // TODO: better error handling
+                callback(data);
+            }
+        );
+    },
+
+    save_deck: function(file_name, deck) {
+        var v = vp.get_high_version()
+        var h = new this.Header(v, 'VP_POKER')
+
+        vp.write_Header(1, write_context, h) // always version 1
+        vp.write_Deck(v, write_context, deck)
+
+        var bytes_out = write_context.write_File(file_name)
+        console.log('write: ' + file_name + ', version=' + v
+                    + ', cards=' + deck.cards.length
+                    + ', bytes=' + bytes_out)
+    },
+
+    on_read_complete: function(data) {
+        read_context.dv = new DataView(tools.toArrayBuffer(data));
+        read_context.cur_pos = 0;
+
+        this.hh = vp.read_Header(1, read_context) // always version 1
+
+        if (!vp.version_check(this.hh.version)) {
+            console.log('version mismatch')
+            return
+        } else {
+            var v = this.hh.version
+            this.deck = vp.read_Deck(v, read_context)
+
+            console.log('read: ' + this.file_name + ', version=' + v
+                        + ', cards=' + this.deck.cards.length
+                        + ', bytes=' + data.length)
+
+            if (this.draw_count > this.deck.cards.length) {
+                console.log('not enough cards left')
+            } else {
+
+                // modify the deck by removing cards
+
+                for (var i = 0; i < this.draw_count; i++) {
+                    var c = this.deck.cards.pop()
+                    console.log('draw: ' + c.get_name())
+                }
+
+                // write the modified deck back out
+
+                this.context.save_deck(this.file_name, this.deck)
+            }
+        }
     }
 };

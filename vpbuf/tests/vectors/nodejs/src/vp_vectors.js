@@ -2,7 +2,8 @@
 "use strict";
 module.exports = {
 
-	factory: null,
+	factory: null, // must be set to class factory object
+
 	write_String: function(ver, wc, payload) {
 		wc.write_String(payload);
 	},
