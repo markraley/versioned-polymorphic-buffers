@@ -25,7 +25,6 @@ def build_poker_deck(card_count):
 # ------------------------------------------------------------------------------
 
 def main():
-
     # process args
 
     p = argparse.ArgumentParser()

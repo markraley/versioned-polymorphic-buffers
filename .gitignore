@@ -38,7 +38,7 @@ __pycache__/
 *.amf?
 *.sublime-project
 *.sublime-workspace
-summary
+notes.txt
 *.python
 *.javascript
 *.cplusplus

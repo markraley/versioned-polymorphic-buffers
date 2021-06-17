@@ -10,7 +10,6 @@ import argparse
 # ------------------------------------------------------------------------------
 
 def main():
-
     # process args
 
     p = argparse.ArgumentParser()
@@ -29,7 +28,6 @@ def main():
     if (len(deck.cards) < int(args.count)):
         print('too few cards left')
     else:
-
         # modify the deck by removing cards
 
         for i in range(0, int(args.count)):
