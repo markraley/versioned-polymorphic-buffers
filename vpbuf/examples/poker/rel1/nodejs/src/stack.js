@@ -6,10 +6,6 @@
 "use strict";
 
 const persist = require("./persist");
-var tools = require('./tools');
-const vp = require('./vp_poker');
-var read_context = require('./read_context');
-var write_context = require('./write_context');
 
 // ---------------------------------------------------------------------
 
@@ -28,19 +24,6 @@ var write_context = require('./write_context');
                 }
             }
             return d
-        },
-
-        save_deck: function(file_name, deck) {
-            var v = vp.get_high_version()
-            var h = new persist.Header(v, 'VP_POKER')
-
-            vp.write_Header(1, write_context, h) // always version 1
-            vp.write_Deck(v, write_context, deck)
-
-            var bytes_out = write_context.write_File(file_name)
-            console.log('write: ' + file_name + ', version=' + v
-                        + ', cards=' + deck.cards.length
-                        + ', bytes=' + bytes_out)
         }
     };
 
@@ -60,7 +43,7 @@ var write_context = require('./write_context');
 
         var deck = library.build_poker_deck(count)
 
-        library.save_deck(deck_name, deck)
+        persist.save_deck(deck_name, deck)
     }
 })();
 
