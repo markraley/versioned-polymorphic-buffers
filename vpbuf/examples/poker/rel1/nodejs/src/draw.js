@@ -3,8 +3,6 @@
 //    Copyright Mark Raley, All Rights Reserved, https://github.com/markraley
 //    Software release is via MIT license (see project root for license file)
 
-//"use strict";
-
 const persist = require("./persist");
 var tools = require('./tools');
 var vp = require('./vp_poker');
@@ -26,12 +24,15 @@ var vp = require('./vp_poker');
         if (args.length > 1)
             count = args[1]
 
+        // set some variables as read callback will run in this context
+
         this.draw_count = count
         this.file_name = deck_name
         this.context = persist
 
         // load the specified deck
-        vp.factory = persist
+
+        vp.factory = persist // set class factory
         persist.read_File(deck_name, persist.on_read_complete);
     }
 })();
