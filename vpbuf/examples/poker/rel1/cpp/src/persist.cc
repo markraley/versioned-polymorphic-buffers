@@ -7,6 +7,8 @@ vector<string> rank_arr = {"Ace", "Two", "Three", "Four", "Five",
                            "Six", "Seven", "Eight", "Nine", "Ten",
                            "Jack", "Queen", "King"};
 
+// -----------------------------------------------------------------------------
+
 class Header {
    public:
       Header(int version = -1, string tag = "not set")

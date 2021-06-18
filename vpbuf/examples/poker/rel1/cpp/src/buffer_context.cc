@@ -176,3 +176,6 @@ void read_string(long nVersion, read_context &rc, std::string &s)
       s.push_back(c);
    }
 }
+
+// -----------------------------------------------------------------------------
+

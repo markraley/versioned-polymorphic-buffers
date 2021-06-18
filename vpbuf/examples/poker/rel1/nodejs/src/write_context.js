@@ -83,3 +83,5 @@ const assert = require('chai').assert;
     };
     return module.exports = wc;
 })();
+
+// -----------------------------------------------------------------------------

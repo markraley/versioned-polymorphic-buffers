@@ -15,7 +15,6 @@ typedef vector<byte> ByteVec;
 // buffer management helper classes and functions
 #include "buffer_context.cc"
 
-
 // include classes to be serialized
 #include "persist.cc"
 
