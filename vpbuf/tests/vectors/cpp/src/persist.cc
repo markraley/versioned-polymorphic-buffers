@@ -1,3 +1,5 @@
+// Software released under the MIT license (see project root for license file)
+
 class Header {
    public:
       int version;

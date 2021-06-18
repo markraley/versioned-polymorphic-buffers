@@ -1,3 +1,5 @@
+// Software released under the MIT license (see project root for license file)
+
 module.exports = {
     Header: function(version = 1, test_name = "not set") {
         this.version = version;

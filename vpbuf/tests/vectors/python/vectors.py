@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 
+# Software released under the MIT license (see project root for license file)
+
 from pyamf import amf3
 from vp_vectors.persist import *
 from vp_vectors.vp_vectors import *

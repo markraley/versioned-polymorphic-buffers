@@ -1,3 +1,5 @@
+// Software released under the MIT license (see project root for license file)
+
 #include <cstddef>
 #include <iostream>
 #include <fstream>

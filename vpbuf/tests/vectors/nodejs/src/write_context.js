@@ -1,3 +1,5 @@
+// Software released under the MIT license (see project root for license file)
+
 const fs = require('fs');
 const assert = require('chai').assert;
 "use strict";

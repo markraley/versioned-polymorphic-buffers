@@ -1,3 +1,5 @@
+// Software released under the MIT license (see project root for license file)
+
 var persist = require("./persist");
 var vp = require('./vp_vectors');
 
