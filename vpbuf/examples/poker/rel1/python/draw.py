@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+# Software released under the MIT license (see project root for license file)
 
 from pyamf import amf3
 from vp_poker.persist import *

@@ -1,7 +1,5 @@
 #!/usr/bin/nodejs
-// Versioned Polymorphic Buffers (vpbuf) - data interchange format
-//    Copyright Mark Raley, All Rights Reserved, https://github.com/markraley
-//    Software release is via MIT license (see project root for license file)
+// Software released under the MIT license (see project root for license file)
 
 const persist = require("./persist");
 var vp = require('./vp_poker');
