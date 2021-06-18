@@ -59,6 +59,8 @@ int main(int argc, char* argv[])
          // write the modified deck back out
 
          save_deck(deck_name, *deck);
+
+         cout <<"cards left "<< deck->cards.size() <<endl;
       }
    }
 }

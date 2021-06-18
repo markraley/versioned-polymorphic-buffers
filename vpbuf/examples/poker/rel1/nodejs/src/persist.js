@@ -103,6 +103,8 @@ module.exports = {
                 // write the modified deck back out
 
                 this.context.save_deck(this.file_name, this.deck)
+
+                console.log('cards left ' + this.deck.cards.length)
             }
         }
     }

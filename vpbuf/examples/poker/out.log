@@ -1,29 +1,34 @@
-
+-------
 stack 9
 (python) write: t.dat, version=1, cards=9, bytes=194
 draw 3
 (nodejs) read: t.dat, version=1, cards=9, bytes=194
 (nodejs) draw: Nine of Diamonds Eight of Diamonds Seven of Diamonds
 (nodejs) write: t.dat, version=1, cards=6, bytes=132
+cards left 6
 draw 2
 (cpp) read: t.dat, version= 1, cards=6, bytes=132
 (cpp) draw: Six of Diamonds Five of Diamonds
 (cpp) write: t.dat, version=1, cards=4, bytes=93
+cards left 4
 draw 4
 (python) read: t.dat, version=1, cards=4, bytes=93
 (python) draw : Four of Diamonds Three of Diamonds Two of Diamonds Ace of Diamonds
 (python) write: t.dat, version=1, cards=0, bytes=14
-
+cards left 0
+-------
 stack 3
 (nodejs) write: t.dat, version=1, cards=3, bytes=73
 draw 1
 (nodejs) read: t.dat, version=1, cards=3, bytes=73
 (nodejs) draw: Three of Diamonds
 (nodejs) write: t.dat, version=1, cards=2, bytes=52
-
+cards left 2
+-------
 stack 3
 (cpp) write: t.dat, version=1, cards=3, bytes=73
 draw 1
 (cpp) read: t.dat, version= 1, cards=3, bytes=73
 (cpp) draw: Three of Diamonds
 (cpp) write: t.dat, version=1, cards=2, bytes=52
+cards left 2

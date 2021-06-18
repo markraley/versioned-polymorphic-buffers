@@ -43,6 +43,8 @@ def main():
 
         save_deck(args.deck_name, deck)
 
+        print('cards left', len(deck.cards))
+
 if __name__ == '__main__':
     main()
 
