@@ -52,6 +52,8 @@ int main(int argc, char* argv[])
       if (argc == 3)
          count = stoi(argv[2]);
 
+      cout <<"stack "<< count <<endl;
+
       Deck *deck = build_poker_deck(count);
 
       size_t bytes_out = save_deck(deck_name, *deck);

@@ -19,6 +19,8 @@ def main():
 
     args = p.parse_args()
 
+    print('draw', args.count)
+
     # load the specified deck
 
     deck = load_deck(args.deck_name)

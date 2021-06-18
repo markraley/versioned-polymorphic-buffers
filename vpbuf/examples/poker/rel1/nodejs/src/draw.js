@@ -21,6 +21,8 @@ var vp = require('./vp_poker');
         if (args.length > 1)
             count = args[1]
 
+        console.log('draw ' + count)
+
         // set some variables as read callback will run in this context
 
         this.draw_count = count

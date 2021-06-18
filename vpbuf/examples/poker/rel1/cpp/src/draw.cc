@@ -37,6 +37,8 @@ int main(int argc, char* argv[])
       if (argc == 3)
          count = stoi(argv[2]);
 
+      cout <<"draw "<< count << endl;
+
       // load the specified deck
 
       Deck *deck = load_deck(deck_name);

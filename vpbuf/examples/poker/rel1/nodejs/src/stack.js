@@ -39,6 +39,8 @@ const persist = require("./persist");
         if (args.length > 1)
             count = args[1]
 
+        console.log('stack ' + count)
+
         var deck = library.build_poker_deck(count)
 
         persist.save_deck(deck_name, deck)
