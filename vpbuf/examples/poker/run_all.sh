@@ -1,15 +1,20 @@
 #!/usr/bin/bash
 
-echo "python"
-./rel1/python/stack.py t.dat
-./rel1/python/draw.py t.dat
+echo "" > out.log
 
-echo
-echo "nodejs"
-./rel1/nodejs/src/stack.js t.dat
-./rel1/nodejs/src/draw.js t.dat
+echo "python stack" | tee -a out.log
+./rel1/python/stack.py t.dat  9 | tee -a out.log
 
-echo
-echo "cpp"
-./rel1/cpp/build/stack t.dat
-./rel1/cpp/build/draw t.dat
+./rel1/nodejs/src/draw.js t.dat 3 | tee -a out.log
+./rel1/cpp/build/draw t.dat 2 | tee -a out.log
+./rel1/python/draw.py t.dat  4 | tee -a out.log
+
+echo | tee -a out.log
+echo "nodejs stack" | tee -a out.log
+./rel1/nodejs/src/stack.js t.dat | tee -a out.log
+./rel1/nodejs/src/draw.js t.dat | tee -a out.log
+
+echo | tee -a out.log
+echo "cpp stack" | tee -a out.log
+./rel1/cpp/build/stack t.dat | tee -a out.log
+./rel1/cpp/build/draw t.dat | tee -a out.log

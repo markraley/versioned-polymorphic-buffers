@@ -46,7 +46,7 @@ def save_deck(file_name, deck):
     f.write(bytes)
     f.close()
 
-    print('write: ', file_name,
+    print('(python) write: ', file_name,
             ', version=', get_high_version(), sep='', end='')
     print(', cards=', len(deck.cards), sep='', end='')
     print(', bytes=', len(bytes), sep='')
@@ -71,7 +71,7 @@ def load_deck(file_name):
 
     f_in.close()
 
-    print('read: ', file_name,
+    print('(python) read: ', file_name,
             ', version=', header.version, sep='', end='')
     print(', cards=', len(deck.cards), sep='', end='')
     print(', bytes=', bytes_read, sep='')

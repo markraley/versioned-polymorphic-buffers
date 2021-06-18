@@ -46,11 +46,13 @@ int main(int argc, char* argv[])
       if (deck->cards.size() < count) {
          cout << "too few cards remaining\n";
       } else {
+         cout <<"(cpp) draw:";
          for (auto i = 0; i < count; i++) {
             Card *c =  deck->cards.back();
-            cout <<"draw: "<< c->get_name() <<endl;
+            cout <<" "<< c->get_name();
             deck->cards.pop_back();
          }
+         cout <<endl;
 
          // write the modified deck back out
 
