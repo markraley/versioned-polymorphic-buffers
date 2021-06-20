@@ -39,7 +39,7 @@ const persist = require("./persist");
         if (args.length > 1)
             count = args[1]
 
-        console.log('stack ' + count)
+        console.log('stack ' + count + ' cards')
 
         var deck = library.build_poker_deck(count)
 

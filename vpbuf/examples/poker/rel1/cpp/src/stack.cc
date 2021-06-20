@@ -52,7 +52,7 @@ int main(int argc, char* argv[])
       if (argc == 3)
          count = stoi(argv[2]);
 
-      cout <<"stack "<< count <<endl;
+      cout <<"stack "<< count <<" cards"<<endl;
 
       Deck *deck = build_poker_deck(count);
 

@@ -19,7 +19,7 @@ def main():
 
     args = p.parse_args()
 
-    print('draw', args.count)
+    print('draw', args.count, 'cards')
 
     # load the specified deck
 
