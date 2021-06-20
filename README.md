@@ -1,11 +1,9 @@
 # versioned-polymorphic-buffers
 Versioned Polymorphic Buffers (vpbuf) - data interchange format
 
-Versioned Polymorphic Buffers (vpbuf) is a language, platform, and wire protocol neutral way of serializing structured data, either as flatten messages or to file. Instead of being permissive about data elements, all elements (integers, strings, vectors, maps) etc are versioned and may come in and out of scope as the version
-number advances between releases.
+Versioned Polymorphic Buffers (vpbuf) is a language, platform, and wire protocol neutral way of serializing structured data, either as flatten messages or to file. Instead of being permissive about data elements, all elements have a version range assiged to them and may come in and out of scope as the version numbers advance between releases.
 
-Currently cplusplus, python, and javascript are supported using a binary wire format based on AMF3. Other formats, such as json, are intended to be added as well.
-
+Currently cplusplus, python, and javascript are supported using a binary wire format based on AMF3. Another format, such as json, is intended to be implemented.
 
 Versioning Basics - vpbuf/examples/poker
 ----------------------------------------
@@ -32,10 +30,12 @@ pod Deck
     vector *Card cards 1
 ```
 
-Pod member elements (such as version and tag above) are defined as
+Simple pod members (string and varint types above) are defined as
 ```
-<type> <name> <lowest version supported> [<highest_version_supported>]
+<type> <name> <lowest version supported> [<highest version supported>]
 ```
+Complex pod members, such as vector and map, have additional parameters that will
+be covered in more detail later. They also have the same versioning parameters.
 
 If the high version number is omitted, the range is open ended. For now, only
 varints (integers) and strings are supported.
@@ -53,5 +53,12 @@ generating "./nodejs/src/vp_poker.js" 1 1
 generating "./cpp/src/vp_poker.cc" 1 1
 parse succeeded, type count is: 6
 ```
+
+
+TODO
+----
+    complete map implentation
+    scale into more translation units before adding additional languages
+    add alternative wire protocol protocols
 
 
