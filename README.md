@@ -101,6 +101,28 @@ Each implementation consists of the generated sources plus a persist source file
 Versioning - vpbuf/examples/poker/rel2
 ---------------------------------------------------------------
 
+Now let's advance the version number with a few simple changes.
+
+```
+target
+    language python 1 2 vp_poker "./python/vp_poker" py
+    language javascript 2 2 vp_poker "./nodejs/src" js
+    language cplusplus 1 2 vp_poker "./cpp/src" cc
+
+pod Header
+    varint version 1
+    string tag 1
+
+pod Card
+    varint id 1
+    string name 1 1
+
+pod Deck
+    vector *Card cards 1
+
+```
+
+We've made the name field obsolete by adding a "highest number of 1", and we've advanced the language highest version target specifier to "2". For javascript, we've raised the lowest version as well to demonstrate version out of range errors.
 TODO
 ----
     complete map implentation with coverage test
