@@ -34,11 +34,7 @@ Simple pod members (string and varint types above) are defined as
 ```
 <type> <name> <lowest version supported> [<highest version supported>]
 ```
-Complex pod members, such as vector and map, have additional parameters that will
-be covered in more detail later. They also have the same versioning parameters.
-
-If the high version number is omitted, the range is open ended. For now, only
-varints (integers) and strings are supported.
+Container pod members, such as vector and map, have additional parameters that will be covered in more detail later. They also have the same versioning parameters. If the high version number is omitted, the range is open ended.
 
 When the vpc compiler is run from the the examples/poker/rel1 the targeted
 sources are built. The pathing is relative to the vpc file location, so that
@@ -57,8 +53,9 @@ parse succeeded, type count is: 6
 
 TODO
 ----
-    complete map implentation
+    complete map implentation with coverage test
+    complete uno polymorphism example
     scale into more translation units before adding additional languages
-    add alternative wire protocol protocols
+    add alternative wire protocol (json?)
 
 
