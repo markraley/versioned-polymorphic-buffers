@@ -5,13 +5,11 @@ Versioned Polymorphic Buffers (vpbuf) is a language, platform, and wire protocol
 
 Currently cplusplus, python, and javascript are supported using a binary wire format based on AMF3. Another format, such as json, is intended to be implemented.
 
-Basics - Language Inter-Operability - vpbuf/examples/poker/rel1
+Basics - Language InterOperability - vpbuf/examples/poker/rel1
 ---------------------------------------------------------------
 
-The vpc compiler takes a .vpc the data specification and generates source code
-as specified in the target section into the language, versions, location, and
-file extension requested. The pod keyword can be read as struct and stands for
-"plain old data".
+The vpc compiler takes a data specification in vpc format (introduced here) and from that generates source code in the target section into the language, version range, location, and file extension specified. The pod keyword can be read as struct and stands for "plain old data".
+
 ```
 target
     language python 1 1 vp_poker "./python/vp_poker" py
@@ -31,9 +29,11 @@ pod Deck
 ```
 
 Simple pod members (string and varint types above) are defined as
+
 ```
 <type> <name> <lowest version supported> [<highest version supported>]
 ```
+
 Container pod members, such as vector and map, have additional parameters that will be covered in more detail later. They also have the same versioning parameters. If the high version number is omitted, the range is open ended.
 
 When the vpc compiler is run from the the examples/poker the targeted
@@ -49,7 +49,7 @@ generating "rel1/./nodejs/src/vp_poker.js" 1 1
 generating "rel1/./cpp/src/vp_poker.cc" 1 1
 parse succeeded, type count is: 6
 ```
-Thus we can then demonstrate language inter-operability with the stack and draw programs from 3 different languages.  The script run_all.sh stacks a deck with a few cards from each different program language implemented and removes them with the others.
+Thus we can then demonstrate language interoperability with the stack and draw programs from 3 different languages.  The script run_all.sh stacks a deck with a few cards from each different program language implemented and removes them with the others.
 
 ```
 $ ./run_all.sh
