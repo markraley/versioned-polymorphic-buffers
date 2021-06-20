@@ -49,7 +49,7 @@ generating "rel1/./nodejs/src/vp_poker.js" 1 1
 generating "rel1/./cpp/src/vp_poker.cc" 1 1
 parse succeeded, type count is: 6
 ```
-Thus we can then demonstrate language interoperability with the stack and draw programs from 3 different languages.  The script run_all.sh stacks a deck with a few cards from each different program language implemented and removes them with the others.
+Thus we can then demonstrate language interoperability with the stack and draw programs from 3 different languages.  The script run_r1.sh stacks a deck with a few cards from each different program language implemented and removes them with the others.
 
 ```
 $ ./run_all.sh
@@ -98,7 +98,7 @@ cards left 0
 
 Each implementation consists of the generated sources plus a persist source file that with user defined types and some other boiler plate code. Bringing up all three persist.<language extension> files and looking at them together may prove interesting.
 
-Versioning - vpbuf/examples/poker/rel2
+Version InterOperability - vpbuf/examples/poker/rel2
 ---------------------------------------------------------------
 
 Now let's advance the version number with a few simple changes.

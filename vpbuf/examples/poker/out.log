@@ -3,6 +3,34 @@ stack 4  cards
 (python) write: t.dat, version=2, cards=4, bytes=22
 draw 2 cards
 (nodejs) read: t.dat, version=2, cards=4, bytes=22
-(nodejs) draw: not set not set
+(nodejs) draw: Four of Diamonds Three of Diamonds
 (nodejs) write: t.dat, version=2, cards=2, bytes=18
 cards left 2
+draw 2 cards
+(cpp) read: t.dat, version= 2, cards=2, bytes=18
+(cpp) draw: not set not set
+(cpp) write: t.dat, version=2, cards=0, bytes=14
+cards left 0
+-------
+stack 7 cards
+(nodejs) write: t.dat, version=2, cards=7, bytes=28
+draw 4 cards
+(cpp) read: t.dat, version= 2, cards=7, bytes=28
+(cpp) draw: not set not set not set not set
+(cpp) write: t.dat, version=2, cards=3, bytes=20
+cards left 3
+draw 3 cards
+version test failed
+-------
+stack 5 cards
+(cpp) write: t.dat, version=2, cards=5, bytes=24
+draw 3 cards
+(python) read: t.dat, version=2, cards=5, bytes=24
+(python) draw: Five of Diamonds Four of Diamonds Three of Diamonds
+(python) write: t.dat, version=2, cards=2, bytes=18
+cards left 2
+draw 2 cards
+(nodejs) read: t.dat, version=2, cards=2, bytes=18
+(nodejs) draw: Two of Diamonds Ace of Diamonds
+(nodejs) write: t.dat, version=2, cards=0, bytes=14
+cards left 0

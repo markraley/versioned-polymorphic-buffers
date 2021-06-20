@@ -21,7 +21,8 @@ class Card:
         self.id = id
 
     def get_name(self):
-        return self.name
+        i = self.id - 1
+        return rank_arr[i % len(rank_arr)] + ' of ' + suit_arr[i // len(rank_arr)]
 
 class Deck:
     def __init__(self):

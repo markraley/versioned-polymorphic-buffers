@@ -24,7 +24,11 @@ module.exports = {
         this.id = id
 
         this.get_name = function() {
-            return this.name
+            var i = this.id - 1
+            var rank_arr = vp.factory.rank_arr
+            var l = rank_arr.length
+            return '' + vp.factory.rank_arr[i % l]
+                        + ' of ' + vp.factory.suit_arr[Math.floor(i / l)]
         }
     },
 
