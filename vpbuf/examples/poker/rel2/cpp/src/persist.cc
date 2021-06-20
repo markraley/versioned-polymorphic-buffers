@@ -20,7 +20,14 @@ class Header {
 class Card {
    public:
       Card(string name = "not set", int id = 0): name(name), id(id) {};
-      string get_name() { return string(this->name); };
+      string get_name()
+      {
+         int i = this->id - 1;
+         int l = rank_arr.size();
+         return string(rank_arr[i % l]
+                        + " of " + suit_arr[i / l]);
+      };
+
       std::string name;
       int id;
 };

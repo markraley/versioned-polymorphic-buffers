@@ -8,7 +8,7 @@ draw 2 cards
 cards left 2
 draw 2 cards
 (cpp) read: t.dat, version= 2, cards=2, bytes=18
-(cpp) draw: not set not set
+(cpp) draw: Two of Diamonds Ace of Diamonds
 (cpp) write: t.dat, version=2, cards=0, bytes=14
 cards left 0
 -------
@@ -16,7 +16,7 @@ stack 7 cards
 (nodejs) write: t.dat, version=2, cards=7, bytes=28
 draw 4 cards
 (cpp) read: t.dat, version= 2, cards=7, bytes=28
-(cpp) draw: not set not set not set not set
+(cpp) draw: Seven of Diamonds Six of Diamonds Five of Diamonds Four of Diamonds
 (cpp) write: t.dat, version=2, cards=3, bytes=20
 cards left 3
 draw 3 cards
