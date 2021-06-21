@@ -49,7 +49,7 @@ generating "rel1/./nodejs/src/vp_poker.js" 1 1
 generating "rel1/./cpp/src/vp_poker.cc" 1 1
 parse succeeded, type count is: 6
 ```
-Examples 1, 2 and 3 demonstrate language interoperability with the stack and draw programs from 3 different languages which depend on the vpc generated sources. The script run_r1.sh stacks a deck with a few cards from each different program language implemented and removes them with the other implementation.
+Examples 1, 2 and 3 demonstrate language interoperability with the stack and draw programs from 3 different languages which depend on the vpc generated sources. The script run_r1.sh stacks a deck with a few cards from each different program language implemented and removes them with the other implementations. The vrange is 1-1 in all example output, which means the lowest and highest supported versions are 1 and 1 respectively.
 
 ```
 $ ./run_r1.sh
@@ -121,7 +121,7 @@ pod Deck
 
 ```
 
-The Card.name field is redundant (the Card.id field suffices by itself) and takes up much message space so by adding a number 1 to the Card.name line the vrange is closed out to 1-1. For javascript only, we've raised the lowest version as well to demonstrate version out of range errors.
+The Card.name field is redundant (the Card.id field suffices by itself) and takes up much message space so by adding a number 1 to the Card.name line the vrange is closed out to 1-1. For javascript only, we've raised the lowest version as well to demonstrate version out of range errors. There are 3 possible vranges here, 1-1 as before, 1-2, and 2-2, new vranges being only possible with release 2.
 
 ```
 $ ./run_r2.sh
@@ -161,6 +161,8 @@ card pop: Two of Diamonds Ace of Diamonds
 write: t.dat, version=2, cards=0, bytes=14
 cards left 0
 ```
+
+Example 4 demonstrates a deck stacked by release 1 (vpc version 1) being read by a release 2 program as expected. Example 5 shows a release 2 stack cannot be read by a release one program and instead displays version errors as expected. Example 5 is a language interop test within release 2. This demonstrates interoperability between versions.
 
 ### TODO
 
