@@ -37,7 +37,7 @@ int main(int argc, char* argv[])
       if (argc == 3)
          count = stoi(argv[2]);
 
-      cout <<"[vrange="<< get_low_version() <<":"<< get_high_version()
+      cout <<"[vrange="<< get_low_version() <<"-"<< get_high_version()
                <<", cpp] DRAW " << count <<" cards"<<endl;
 
       // load the specified deck

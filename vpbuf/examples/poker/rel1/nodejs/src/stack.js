@@ -40,7 +40,7 @@ var vp = require('./vp_poker');
         if (args.length > 1)
             count = args[1]
 
-        console.log('[vrange='+ vp.get_low_version() +':'+ vp.get_high_version()
+        console.log('[vrange='+ vp.get_low_version() +'-'+ vp.get_high_version()
                             +', nodejs] STACK '+ count + ' cards')
 
         var deck = library.build_poker_deck(count)

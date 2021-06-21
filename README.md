@@ -53,43 +53,43 @@ Thus we can then demonstrate language interoperability with the stack and draw p
 
 ```
 $ ./run_r1.sh
--------
-[vrange=1:1, python] STACK 4 cards
+----- Example 1 -----
+[vrange=1-1, python] STACK 4 cards
 write: t.dat, version=1, cards=4, bytes=93
-[vrange=1:1, nodejs] DRAW 2 cards
+[vrange=1-1, nodejs] DRAW 2 cards
 read: t.dat, version=1, cards=4, bytes=93
 card pop: Four of Diamonds Three of Diamonds
 write: t.dat, version=1, cards=2, bytes=52
 cards left 2
-[vrange=1:1, cpp] DRAW 2 cards
+[vrange=1-1, cpp] DRAW 2 cards
 read: t.dat, version= 1, cards=2, bytes=52
 card pop: Two of Diamonds Ace of Diamonds
 write: t.dat, version=1, cards=0, bytes=14
 cards left 0
 
--------
-[vrange=1:1, nodejs] STACK 7 cards
+----- Example 2 -----
+[vrange=1-1, nodejs] STACK 7 cards
 write: t.dat, version=1, cards=7, bytes=153
-[vrange=1:1, cpp] DRAW 4 cards
+[vrange=1-1, cpp] DRAW 4 cards
 read: t.dat, version= 1, cards=7, bytes=153
 card pop: Seven of Diamonds Six of Diamonds Five of Diamonds Four of Diamonds
 write: t.dat, version=1, cards=3, bytes=73
 cards left 3
-[vrange=1:1, python] DRAW 3 cards
+[vrange=1-1, python] DRAW 3 cards
 read: t.dat, version=1, cards=3, bytes=73
 card pop: Three of Diamonds Two of Diamonds Ace of Diamonds
 write: t.dat, version=1, cards=0, bytes=14
 cards left 0
 
--------
-[vrange=1:1, cpp] STACK 5 cards
+----- Example 3 -----
+[vrange=1-1, cpp] STACK 5 cards
 write: t.dat, version=1, cards=5, bytes=113
-[vrange=1:1, python] DRAW 3 cards
+[vrange=1-1, python] DRAW 3 cards
 read: t.dat, version=1, cards=5, bytes=113
 card pop: Five of Diamonds Four of Diamonds Three of Diamonds
 write: t.dat, version=1, cards=2, bytes=52
 cards left 2
-[vrange=1:1, nodejs] DRAW 2 cards
+[vrange=1-1, nodejs] DRAW 2 cards
 read: t.dat, version=1, cards=2, bytes=52
 card pop: Two of Diamonds Ace of Diamonds
 write: t.dat, version=1, cards=0, bytes=14
@@ -124,38 +124,38 @@ pod Deck
 We've made the name field obsolete by adding a "highest number of 1", and we've advanced the language highest version target specifier to "2". For javascript, we've raised the lowest version as well to demonstrate version out of range errors.
 
 ```
--------
-[vrange=1:1, nodejs] STACK 7 cards
+$ ./run_r2.sh
+----- Example 4 -----
+[vrange=1-1, nodejs] STACK 7 cards
 write: t.dat, version=1, cards=7, bytes=153
-[vrange=1:2, cpp] DRAW 4 cards
+[vrange=1-2, cpp] DRAW 4 cards
 read: t.dat, version= 1, cards=7, bytes=153
 card pop: Seven of Diamonds Six of Diamonds Five of Diamonds Four of Diamonds
 write: t.dat, version=2, cards=3, bytes=20
 cards left 3
-[vrange=1:2, python] DRAW 3 cards
+[vrange=1-2, python] DRAW 3 cards
 read: t.dat, version=2, cards=3, bytes=20
 card pop: Three of Diamonds Two of Diamonds Ace of Diamonds
 write: t.dat, version=2, cards=0, bytes=14
 cards left 0
--------
-[vrange=1:2, python] STACK 4 cards
+
+----- Example 5 -----
+[vrange=1-2, python] STACK 4 cards
 write: t.dat, version=2, cards=4, bytes=22
-[vrange=1:1, nodejs] DRAW 2 cards
+[vrange=1-1, nodejs] DRAW 2 cards
 version mismatch
-[vrange=1:2, cpp] DRAW 2 cards
-read: t.dat, version= 2, cards=4, bytes=22
-card pop: Four of Diamonds Three of Diamonds
-write: t.dat, version=2, cards=2, bytes=18
-cards left 2
--------
-[vrange=1:2, cpp] STACK 5 cards
+[vrange=1-1, cpp] DRAW 2 cards
+version out of range
+
+----- Example 6 -----
+[vrange=1-2, cpp] STACK 5 cards
 write: t.dat, version=2, cards=5, bytes=24
-[vrange=1:2, python] DRAW 3 cards
+[vrange=1-2, python] DRAW 3 cards
 read: t.dat, version=2, cards=5, bytes=24
 card pop: Five of Diamonds Four of Diamonds Three of Diamonds
 write: t.dat, version=2, cards=2, bytes=18
 cards left 2
-[vrange=2:2, nodejs] DRAW 2 cards
+[vrange=2-2, nodejs] DRAW 2 cards
 read: t.dat, version=2, cards=2, bytes=18
 card pop: Two of Diamonds Ace of Diamonds
 write: t.dat, version=2, cards=0, bytes=14

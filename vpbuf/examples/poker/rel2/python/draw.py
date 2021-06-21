@@ -19,7 +19,7 @@ def main():
 
     args = p.parse_args()
 
-    print('[vrange=',get_low_version(),':',get_high_version(),
+    print('[vrange=',get_low_version(),'-',get_high_version(),
             ', python] DRAW ', args.count, ' cards', sep='')
 
     # load the specified deck
