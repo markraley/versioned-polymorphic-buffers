@@ -2,9 +2,9 @@
 
 Versioned Polymorphic Buffers (vpbuf) - data interchange format
 
-Versioned Polymorphic Buffers (vpbuf) is a language, platform, and wire protocol neutral way of serializing structured data, either as flatten messages or to file. Instead of being permissive about data elements, all elements have a version range assiged to them and may come in and out of scope as the version numbers advance between releases.
+Versioned Polymorphic Buffers (vpbuf) is a language, platform, and wire protocol neutral way of serializing structured data, either as flatten messages or to file. All data elements have a version range assiged to them and may come in and out of scope as the version numbers are advanced between releases as demonstrated in the example that follows.
 
-Currently cplusplus, python, and javascript are supported using a binary wire format based on AMF3. Another format, such as json, is intended to be implemented.
+Currently cplusplus, python, and javascript are supported using a binary wire format based on AMF3.
 
 ## Basics - Language Interoperability - vpbuf/examples/poker/rel1
 
@@ -28,16 +28,16 @@ pod Deck
     vector *Card cards 1
 ```
 
-Simple pod members (string and varint types above) are defined as
+Simple pod members types, such as string and varint, are defined as
 
 ```
 <type> <name> <lowest version supported> [<highest version supported>]
 ```
 
-Container pod members, such as vector and map, have additional parameters that will be covered in more detail later. They also have the same versioning parameters. If the high version number is omitted, the range is open ended.
+Container pod members, such as vector and map, have additional parameters that will be covered in more detail later. They also have the same versioning parameters - the vrange. If the high version number is omitted, the vrange is open ended. If a second version number is added on the line, the second one is the highest version that carries that data element and the vrange is closed.
 
 When the vpc compiler is run from the the examples/poker the targeted
-sources are built. The pathing is relative to the vpc file location, so that
+sources are generated. The pathing is relative to the vpc file location, so that
 the auto generated sources always go to the same places. Caution should be used,
 as the specified locations and extensions will be overwritten. A nonsense extension can be used during development, and a target can be disabled by placing a minus sign '-' directly in front of the keyword 'language' with no spaces.
 
@@ -49,7 +49,7 @@ generating "rel1/./nodejs/src/vp_poker.js" 1 1
 generating "rel1/./cpp/src/vp_poker.cc" 1 1
 parse succeeded, type count is: 6
 ```
-Thus we can then demonstrate language interoperability with the stack and draw programs from 3 different languages.  The script run_r1.sh stacks a deck with a few cards from each different program language implemented and removes them with the others.
+Examples 1, 2 and 3 demonstrate language interoperability with the stack and draw programs from 3 different languages which depend on the vpc generated sources. The script run_r1.sh stacks a deck with a few cards from each different program language implemented and removes them with the other implementation.
 
 ```
 $ ./run_r1.sh
@@ -96,11 +96,11 @@ write: t.dat, version=1, cards=0, bytes=14
 cards left 0
 ```
 
-Each implementation consists of the generated sources plus a persist source file that with user defined types and some other boiler plate code. Bringing up all three persist.<language extension> files and looking at them together may prove interesting.
+Each implementation consists of the generated sources plus a persist source file that with user defined types and some other boiler plate code. Bringing up all three persist files and reviewing them side by side si recommended.
 
 ## Version Interoperability - vpbuf/examples/poker/rel2
 
-Now let's advance the version number with a few simple changes.
+In poker release 2 the target version numbers are advanced to 2.
 
 ```
 target
@@ -121,7 +121,7 @@ pod Deck
 
 ```
 
-We've made the name field obsolete by adding a "highest number of 1", and we've advanced the language highest version target specifier to "2". For javascript, we've raised the lowest version as well to demonstrate version out of range errors.
+The Card.name field is redundant (the Card.id field suffices by itself) and takes up much message space so by adding a number 1 to the Card.name line the vrange is closed out to 1-1. For javascript only, we've raised the lowest version as well to demonstrate version out of range errors.
 
 ```
 $ ./run_r2.sh
