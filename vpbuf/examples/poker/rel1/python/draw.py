@@ -35,7 +35,7 @@ def main():
     else:
         # modify the deck by removing cards
 
-        print('(python) draw:', end='')
+        print('card pop:', end='')
         for i in range(0, int(args.count)):
             c = deck.cards.pop()
             print(' ' + c.get_name(), end='')

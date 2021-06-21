@@ -53,7 +53,7 @@ size_t save_deck(string deck_name, Deck &deck) {
 
    size_t bytes_out = wc.write_file(deck_name);
 
-   cout <<"(cpp) write: "<< deck_name <<", version="<< v
+   cout <<"write: "<< deck_name <<", version="<< v
          <<", cards="<< deck.cards.size()
          <<", bytes="<< bytes_out << endl;
 
@@ -76,7 +76,7 @@ Deck *load_deck(string deck_name) {
       deck = new Deck();
       read_Deck(v, rc, *deck);
 
-      cout <<"(cpp) read: "<< deck_name <<", version= "<< v
+      cout <<"read: "<< deck_name <<", version= "<< v
             <<", cards="<< deck->cards.size()
             <<", bytes="<< rc.buf_arr.size() << endl;
    }

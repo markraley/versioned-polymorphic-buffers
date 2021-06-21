@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
       if (deck->cards.size() < count) {
          cout << "too few cards remaining\n";
       } else {
-         cout <<"(cpp) draw:";
+         cout <<"card pop:";
          for (auto i = 0; i < count; i++) {
             Card *c =  deck->cards.back();
             cout <<" "<< c->get_name();
