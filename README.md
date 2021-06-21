@@ -164,6 +164,10 @@ cards left 0
 
 Example 4 demonstrates a deck stacked by release 1 (vpc version 1) being read by a release 2 program successfully as expected. Example 5 shows that a release 2 stack cannot be read by a release 1 program and instead displays version errors as expected. Example 6 is a language interop test within release 2. Comparing the stacked deck size from example 3 and 6 - there is a substantial decrease in file size for a 5 card stack from 113 bytes to 24 bytes as a result of removing the Card.name data from the message/file. This demonstrates interoperability between versions.
 
+## Polymorphism
+
+The uno example, which is in progress, will demonstrate this feature. There is a simple polymorphism test in the vectors coverage test and search for the keyword 'poly' in the vectors.vpc file.
+
 ### TODO
 
 complete map implentation with coverage test
