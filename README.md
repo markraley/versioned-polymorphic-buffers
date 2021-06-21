@@ -166,7 +166,7 @@ Example 4 demonstrates a deck stacked by release 1 (vpc version 1) being read by
 
 ## Polymorphism
 
-The uno example, which is in progress, will demonstrate this feature. There is a simple polymorphism test in the vectors coverage test and search for the keyword 'poly' in the vectors.vpc file.
+The uno example, which is in progress, will demonstrate this feature. There is a simple polymorphism test in the vectors coverage test - search for the 'poly Base' in the vectors.vpc file and 'vectors_G' in the test sources.
 
 ### TODO
 
