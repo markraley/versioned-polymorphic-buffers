@@ -5,7 +5,7 @@ Versioned Polymorphic Buffers (vpbuf) is a language, platform, and wire protocol
 
 Currently cplusplus, python, and javascript are supported using a binary wire format based on AMF3. Another format, such as json, is intended to be implemented.
 
-Basics - Language InterOperability - vpbuf/examples/poker/rel1
+## Basics - Language Interoperability - vpbuf/examples/poker/rel1
 ---------------------------------------------------------------
 
 The vpc compiler takes a data specification in vpc format (introduced here) and from that generates source code in the target section into the language, version range, location, and file extension specified. The pod keyword can be read as struct and stands for "plain old data".
@@ -98,7 +98,7 @@ cards left 0
 
 Each implementation consists of the generated sources plus a persist source file that with user defined types and some other boiler plate code. Bringing up all three persist.<language extension> files and looking at them together may prove interesting.
 
-Version InterOperability - vpbuf/examples/poker/rel2
+## Version Interoperability - vpbuf/examples/poker/rel2
 ---------------------------------------------------------------
 
 Now let's advance the version number with a few simple changes.
@@ -124,7 +124,7 @@ pod Deck
 
 We've made the name field obsolete by adding a "highest number of 1", and we've advanced the language highest version target specifier to "2". For javascript, we've raised the lowest version as well to demonstrate version out of range errors.
 
-TODO
+### TODO
 ----
     complete map implentation with coverage test
     complete uno polymorphism example
