@@ -166,9 +166,11 @@ Example 4 demonstrates a deck stacked by release 1 (vpc version 1) being read by
 
 ### TODO
 
-    complete map implentation with coverage test
-    complete uno polymorphism example
-    scale into more translation units before adding additional languages
-    add alternative wire protocol (json?)
+complete map implentation with coverage test
+complete uno polymorphism example
+refactor before adding additional languages
+upgrade boost version
+improve parse error handling/reporting
+add alternative wire protocol (json?)
 
 
