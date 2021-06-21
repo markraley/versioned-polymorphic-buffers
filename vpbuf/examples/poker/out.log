@@ -3,11 +3,7 @@
 write: t.dat, version=2, cards=4, bytes=22
 [vrange=1:1, nodejs] DRAW 2 cards
 version mismatch
-[vrange=1:2, cpp] DRAW 2 cards
-read: t.dat, version= 2, cards=4, bytes=22
-card pop: Four of Diamonds Three of Diamonds
-write: t.dat, version=2, cards=2, bytes=18
-cards left 2
+[vrange=1:1, cpp] DRAW 2 cards
 -------
 [vrange=1:2, cpp] STACK 5 cards
 write: t.dat, version=2, cards=5, bytes=24

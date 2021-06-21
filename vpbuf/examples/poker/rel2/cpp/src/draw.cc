@@ -44,6 +44,9 @@ int main(int argc, char* argv[])
 
       Deck *deck = load_deck(deck_name);
 
+      if (!deck)
+         exit(1);
+
       // modify the deck by removing cards
 
       if (deck->cards.size() < count) {
