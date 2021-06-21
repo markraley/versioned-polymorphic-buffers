@@ -1,0 +1,27 @@
+target  -language cplusplus 1 1 vp_uno "." cc
+        -language python 1 1 vp_uno "." py
+        language javascript 1 1 vp_uno "./nodejs/src" js
+
+pod Header
+    varint version 1
+    string tag 1
+
+poly Card
+    varint id 1
+
+poly Action is Card
+
+pod Value is Card
+    varint value 1
+    string color 1
+
+pod Reverse is Action
+    string name 1
+
+pod Skip is Action
+    string name 1
+
+pod Deck
+    vector *Card cards 1
+
+
