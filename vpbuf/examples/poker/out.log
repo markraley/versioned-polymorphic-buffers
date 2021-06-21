@@ -1,36 +1,39 @@
 -------
-stack 4  cards
-(python) write: t.dat, version=2, cards=4, bytes=22
-draw 2 cards
-(nodejs) read: t.dat, version=2, cards=4, bytes=22
+[vrange=1:1, python] stack 4 cards
+(python) write: t.dat, version=1, cards=4, bytes=93
+[vrange=1:1, nodejs] draw 2 cards
+(nodejs) read: t.dat, version=1, cards=4, bytes=93
 (nodejs) draw: Four of Diamonds Three of Diamonds
-(nodejs) write: t.dat, version=2, cards=2, bytes=18
+(nodejs) write: t.dat, version=1, cards=2, bytes=52
 cards left 2
-draw 2 cards
-(cpp) read: t.dat, version= 2, cards=2, bytes=18
+[vrange=1:1, cpp] draw 2 cards
+(cpp) read: t.dat, version= 1, cards=2, bytes=52
 (cpp) draw: Two of Diamonds Ace of Diamonds
-(cpp) write: t.dat, version=2, cards=0, bytes=14
+(cpp) write: t.dat, version=1, cards=0, bytes=14
 cards left 0
 -------
-stack 7 cards
-(nodejs) write: t.dat, version=2, cards=7, bytes=28
-draw 4 cards
-(cpp) read: t.dat, version= 2, cards=7, bytes=28
+[vrange=1:1, nodejs] stack 7 cards
+(nodejs) write: t.dat, version=1, cards=7, bytes=153
+[vrange=1:1, cpp] draw 4 cards
+(cpp) read: t.dat, version= 1, cards=7, bytes=153
 (cpp) draw: Seven of Diamonds Six of Diamonds Five of Diamonds Four of Diamonds
-(cpp) write: t.dat, version=2, cards=3, bytes=20
+(cpp) write: t.dat, version=1, cards=3, bytes=73
 cards left 3
-draw 3 cards
-version test failed
+[vrange=1:1, python] draw 3 cards
+(python) read: t.dat, version=1, cards=3, bytes=73
+(python) draw: Three of Diamonds Two of Diamonds Ace of Diamonds
+(python) write: t.dat, version=1, cards=0, bytes=14
+cards left 0
 -------
-stack 5 cards
-(cpp) write: t.dat, version=2, cards=5, bytes=24
-draw 3 cards
-(python) read: t.dat, version=2, cards=5, bytes=24
+[vrange=1:1, cpp] stack 5 cards
+(cpp) write: t.dat, version=1, cards=5, bytes=113
+[vrange=1:1, python] draw 3 cards
+(python) read: t.dat, version=1, cards=5, bytes=113
 (python) draw: Five of Diamonds Four of Diamonds Three of Diamonds
-(python) write: t.dat, version=2, cards=2, bytes=18
+(python) write: t.dat, version=1, cards=2, bytes=52
 cards left 2
-draw 2 cards
-(nodejs) read: t.dat, version=2, cards=2, bytes=18
+[vrange=1:1, nodejs] draw 2 cards
+(nodejs) read: t.dat, version=1, cards=2, bytes=52
 (nodejs) draw: Two of Diamonds Ace of Diamonds
-(nodejs) write: t.dat, version=2, cards=0, bytes=14
+(nodejs) write: t.dat, version=1, cards=0, bytes=14
 cards left 0

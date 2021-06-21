@@ -35,7 +35,8 @@ def main():
 
     args = p.parse_args()
 
-    print('stack', args.count, ' cards')
+    print('[vrange=',get_low_version(),':',get_high_version(),
+            ', python] stack ', args.count, ' cards', sep='')
 
     deck = build_poker_deck(int(args.count))
 

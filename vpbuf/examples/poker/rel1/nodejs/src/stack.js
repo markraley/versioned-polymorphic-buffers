@@ -4,6 +4,7 @@
 "use strict";
 
 const persist = require("./persist");
+var vp = require('./vp_poker');
 
 // ---------------------------------------------------------------------
 
@@ -39,7 +40,8 @@ const persist = require("./persist");
         if (args.length > 1)
             count = args[1]
 
-        console.log('stack ' + count + ' cards')
+        console.log('[vrange='+ vp.get_low_version() +':'+ vp.get_high_version()
+                            +', nodejs] stack '+ count + ' cards')
 
         var deck = library.build_poker_deck(count)
 

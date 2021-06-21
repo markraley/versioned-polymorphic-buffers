@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 # Software released under the MIT license (see project root for license file)
 
+import sys
 from pyamf import amf3
 from vp_poker.persist import *
 from vp_poker.vp_poker import *
@@ -19,7 +20,8 @@ def main():
 
     args = p.parse_args()
 
-    print('draw', args.count, 'cards')
+    print('[vrange=',get_low_version(),':',get_high_version(),
+            ', python] draw ', args.count, ' cards', sep='')
 
     # load the specified deck
 
