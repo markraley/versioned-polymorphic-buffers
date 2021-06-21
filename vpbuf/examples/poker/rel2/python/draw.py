@@ -19,7 +19,8 @@ def main():
 
     args = p.parse_args()
 
-    print('draw', args.count, 'cards')
+    print('[vrange=',get_low_version(),':',get_high_version(),
+            ', python] DRAW ', args.count, ' cards', sep='')
 
     # load the specified deck
 
@@ -33,7 +34,7 @@ def main():
     else:
         # modify the deck by removing cards
 
-        print('(python) draw:', end='')
+        print('card pop:', end='')
         for i in range(0, int(args.count)):
             c = deck.cards.pop()
             print(' ' + c.get_name(), end='')

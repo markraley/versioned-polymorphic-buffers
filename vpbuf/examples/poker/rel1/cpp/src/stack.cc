@@ -53,7 +53,7 @@ int main(int argc, char* argv[])
          count = stoi(argv[2]);
 
       cout <<"[vrange="<< get_low_version() <<":"<< get_high_version()
-               <<", cpp] stack " << count <<" cards"<<endl;
+               <<", cpp] STACK " << count <<" cards"<<endl;
 
       Deck *deck = build_poker_deck(count);
 

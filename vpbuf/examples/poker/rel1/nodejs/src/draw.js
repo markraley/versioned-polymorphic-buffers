@@ -22,7 +22,7 @@ var vp = require('./vp_poker');
             count = args[1]
 
         console.log('[vrange='+ vp.get_low_version() +':'+ vp.get_high_version()
-                            +', nodejs] draw '+ count + ' cards')
+                            +', nodejs] DRAW '+ count + ' cards')
 
         // set some variables as read callback will run in this context
 

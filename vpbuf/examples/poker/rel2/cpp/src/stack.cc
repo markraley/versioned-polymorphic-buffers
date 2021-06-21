@@ -52,7 +52,8 @@ int main(int argc, char* argv[])
       if (argc == 3)
          count = stoi(argv[2]);
 
-      cout <<"stack "<< count <<" cards"<<endl;
+      cout <<"[vrange="<< get_low_version() <<":"<< get_high_version()
+               <<", cpp] STACK " << count <<" cards"<<endl;
 
       Deck *deck = build_poker_deck(count);
 

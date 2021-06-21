@@ -1,39 +1,36 @@
 -------
-[vrange=1:1, python] stack 4 cards
-write: t.dat, version=1, cards=4, bytes=93
-[vrange=1:1, nodejs] draw 2 cards
-read: t.dat, version=1, cards=4, bytes=93
+[vrange=1:2, python] STACK 4 cards
+write: t.dat, version=2, cards=4, bytes=22
+[vrange=2:2, nodejs] DRAW 2 cards
+read: t.dat, version=2, cards=4, bytes=22
 card pop: Four of Diamonds Three of Diamonds
-write: t.dat, version=1, cards=2, bytes=52
+write: t.dat, version=2, cards=2, bytes=18
 cards left 2
-[vrange=1:1, cpp] draw 2 cards
-read: t.dat, version= 1, cards=2, bytes=52
+[vrange=1:2, cpp] DRAW 2 cards
+read: t.dat, version= 2, cards=2, bytes=18
 card pop: Two of Diamonds Ace of Diamonds
-write: t.dat, version=1, cards=0, bytes=14
+write: t.dat, version=2, cards=0, bytes=14
 cards left 0
 -------
-[vrange=1:1, nodejs] stack 7 cards
-write: t.dat, version=1, cards=7, bytes=153
-[vrange=1:1, cpp] draw 4 cards
-read: t.dat, version= 1, cards=7, bytes=153
+[vrange=2:2, nodejs] STACK 7 cards
+write: t.dat, version=2, cards=7, bytes=28
+[vrange=1:2, cpp] DRAW 4 cards
+read: t.dat, version= 2, cards=7, bytes=28
 card pop: Seven of Diamonds Six of Diamonds Five of Diamonds Four of Diamonds
-write: t.dat, version=1, cards=3, bytes=73
+write: t.dat, version=2, cards=3, bytes=20
 cards left 3
-[vrange=1:1, python] draw 3 cards
-read: t.dat, version=1, cards=3, bytes=73
-card pop: Three of Diamonds Two of Diamonds Ace of Diamonds
-write: t.dat, version=1, cards=0, bytes=14
-cards left 0
+[vrange=1:1, python] DRAW 3 cards
+version test failed
 -------
-[vrange=1:1, cpp] stack 5 cards
-write: t.dat, version=1, cards=5, bytes=113
-[vrange=1:1, python] draw 3 cards
-read: t.dat, version=1, cards=5, bytes=113
+[vrange=1:2, cpp] STACK 5 cards
+write: t.dat, version=2, cards=5, bytes=24
+[vrange=1:2, python] DRAW 3 cards
+read: t.dat, version=2, cards=5, bytes=24
 card pop: Five of Diamonds Four of Diamonds Three of Diamonds
-write: t.dat, version=1, cards=2, bytes=52
+write: t.dat, version=2, cards=2, bytes=18
 cards left 2
-[vrange=1:1, nodejs] draw 2 cards
-read: t.dat, version=1, cards=2, bytes=52
+[vrange=2:2, nodejs] DRAW 2 cards
+read: t.dat, version=2, cards=2, bytes=18
 card pop: Two of Diamonds Ace of Diamonds
-write: t.dat, version=1, cards=0, bytes=14
+write: t.dat, version=2, cards=0, bytes=14
 cards left 0

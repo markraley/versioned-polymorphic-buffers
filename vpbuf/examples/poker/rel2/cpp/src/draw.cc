@@ -37,7 +37,8 @@ int main(int argc, char* argv[])
       if (argc == 3)
          count = stoi(argv[2]);
 
-      cout <<"draw "<< count <<" cards"<<endl;
+      cout <<"[vrange="<< get_low_version() <<":"<< get_high_version()
+               <<", cpp] DRAW " << count <<" cards"<<endl;
 
       // load the specified deck
 
@@ -48,7 +49,7 @@ int main(int argc, char* argv[])
       if (deck->cards.size() < count) {
          cout << "too few cards remaining\n";
       } else {
-         cout <<"(cpp) draw:";
+         cout <<"card pop:";
          for (auto i = 0; i < count; i++) {
             Card *c =  deck->cards.back();
             cout <<" "<< c->get_name();

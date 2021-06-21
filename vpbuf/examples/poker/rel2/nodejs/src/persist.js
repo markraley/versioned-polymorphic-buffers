@@ -46,7 +46,7 @@ module.exports = {
         vp.write_Deck(v, write_context, deck)
 
         var bytes_out = write_context.write_File(file_name)
-        console.log('(nodejs) write: ' + file_name + ', version=' + v
+        console.log('write: ' + file_name + ', version=' + v
                     + ', cards=' + deck.cards.length
                     + ', bytes=' + bytes_out)
     },
@@ -87,7 +87,7 @@ module.exports = {
             var v = this.hh.version
             this.deck = vp.read_Deck(v, read_context)
 
-            console.log('(nodejs) read: ' + this.file_name + ', version=' + v
+            console.log('read: ' + this.file_name + ', version=' + v
                         + ', cards=' + this.deck.cards.length
                         + ', bytes=' + data.length)
 
@@ -97,7 +97,7 @@ module.exports = {
 
                 // modify the deck by removing cards
 
-                process.stdout.write('(nodejs) draw:')
+                process.stdout.write('card pop:')
                 for (var i = 0; i < this.draw_count; i++) {
                     var c = this.deck.cards.pop()
                     process.stdout.write(' ' + c.get_name())
