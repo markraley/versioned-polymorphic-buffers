@@ -25,6 +25,7 @@ module.exports = {
 
     Action: function() {
         module.exports.Card.call(this)
+        this.color = 'not set'
         this.get_name = function() {
             return '' + this.color + ' ' + this.name
         }
@@ -34,7 +35,7 @@ module.exports = {
         module.exports.Card.call(this)
         this.id = id
         this.value = value;
-        this.color = color;
+        this.color =color
         this.get_name = function() {
             return '' + this.color + ' ' + this.value
         }

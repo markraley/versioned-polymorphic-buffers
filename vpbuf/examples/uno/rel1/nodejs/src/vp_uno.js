@@ -37,6 +37,7 @@ module.exports = {
 	},
 
 	write_Action: function(ver, wc, payload) {
+		wc.write_String(payload.color);
 	},
 
 	write_Value: function(ver, wc, payload) {
@@ -45,12 +46,10 @@ module.exports = {
 	},
 
 	write_Reverse: function(ver, wc, payload) {
-		wc.write_String(payload.color);
 		this.write_Action(ver, wc, payload)
 	},
 
 	write_Skip: function(ver, wc, payload) {
-		wc.write_String(payload.color);
 		this.write_Action(ver, wc, payload)
 	},
 
@@ -97,6 +96,7 @@ module.exports = {
 		if (t == 1) {
 			payload = this.read_Skip(ver, rc)
 		}
+		payload.color = rc.read_String();
 		return payload;
 	},
 
@@ -109,13 +109,11 @@ module.exports = {
 
 	read_Reverse: function(ver, rc) {
 		var payload = new this.factory.Reverse();
-		payload.color = rc.read_String();
 		return payload;
 	},
 
 	read_Skip: function(ver, rc) {
 		var payload = new this.factory.Skip();
-		payload.color = rc.read_String();
 		return payload;
 	},
 
