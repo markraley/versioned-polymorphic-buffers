@@ -14,13 +14,22 @@ var vp = require('./vp_uno');
             var d = new persist.Deck()
             var count = 0
 
-            for (const i of persist.suit_arr) {
-                for (const j of persist.rank_arr) {
+            for (const c of persist.color_arr) {
+                if (++count > max_count)
+                    return d
+                d.cards.push(new persist.Skip(count, c))
+
+                if (++count > max_count)
+                    return d
+                d.cards.push(new persist.Reverse(count, c))
+
+                for (var k = 0; k < 10; k++) {
                     if (++count > max_count)
                         return d
-                    d.cards.push(new persist.Value(count, count % 10, "Red"))
+                    d.cards.push(new persist.Value(count, k, c))
                 }
             }
+
             return d
         }
     };

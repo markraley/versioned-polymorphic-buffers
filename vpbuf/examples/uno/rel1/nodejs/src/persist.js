@@ -8,11 +8,7 @@ var vp = require('./vp_uno');
 // -----------------------------------------------------------------------------
 
 module.exports = {
-    suit_arr: [ 'Diamonds', 'Clubs', 'Hearts', 'Spades' ],
-    rank_arr: [ 'Ace',   'Two',   'Three', 'Four',
-                 'Five',  'Six',   'Seven',
-                 'Eight', 'Nine',  'Ten',
-                 'Jack',  'Queen', 'King' ],
+    color_arr: [ 'Red', 'Yellow', 'Green', 'Blue' ],
 
     Header: function(version = 1, tag = "not set") {
         this.version = version
@@ -29,6 +25,9 @@ module.exports = {
 
     Action: function() {
         module.exports.Card.call(this)
+        this.get_name = function() {
+            return '' + this.color + ' ' + this.name
+        }
     },
 
     Value: function(id = -1, value = 1, color = "not set") {
@@ -37,20 +36,22 @@ module.exports = {
         this.value = value;
         this.color = color;
         this.get_name = function() {
-            return '' + this.color + this.value
+            return '' + this.color + ' ' + this.value
         }
     },
 
-    Reverse: function(id = 0, name = "Reverse") {
-        module.exports.Action.call(this);
+    Reverse: function(id = 0, color = "not set") {
+        module.exports.Action.call(this)
         this.id = id
-        this.name = name;
+        this.name = "Reverse"
+        this.color = color
     },
 
-    Skip: function(id = 0, name = "Skip") {
-        module.exports.Action.call(this);
+    Skip: function(id = 0, color = "not set") {
+        module.exports.Action.call(this)
         this.id = id
-        this.name = name;
+        this.name = "Skip"
+        this.color = color
     },
 
     Deck: function() {
