@@ -55,6 +55,13 @@ module.exports = {
         this.color = color
     },
 
+    DrawTwo: function(id = 0, color = "not set") {
+        module.exports.Action.call(this)
+        this.id = id
+        this.name = "Draw Two"
+        this.color = color
+    },
+
     Deck: function() {
         this.cards = []
     },
@@ -152,3 +159,6 @@ module.exports.Reverse.prototype.constructor = module.exports.Reverse;
 
 module.exports.Skip.prototype = Object.create(module.exports.Action.prototype);
 module.exports.Skip.prototype.constructor = module.exports.Skip;
+
+module.exports.DrawTwo.prototype = Object.create(module.exports.Action.prototype);
+module.exports.DrawTwo.prototype.constructor = module.exports.DrawTwo;

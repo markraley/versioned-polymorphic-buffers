@@ -9,16 +9,16 @@ pod Header
 poly Card
     varint id 1
 
-poly Action is Card
-    string color 1
-
 pod Value is Card
     varint value 1
     string color 1
 
-pod Reverse is Action
+poly Action is Card
+    string color 1
 
+pod Reverse is Action
 pod Skip is Action
+pod DrawTwo is Action
 
 pod Deck
     vector *Card cards 1

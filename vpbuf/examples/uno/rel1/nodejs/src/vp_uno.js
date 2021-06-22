@@ -19,29 +19,34 @@ module.exports = {
 
 	write_Card: function(ver, wc, payload) {
 		var c = payload.constructor.name;
-		if (c == 'Reverse') {
+		if (c == 'Value') {
 			wc.write_Integer(0)
+			this.write_Value(ver, wc, payload)
+		}
+		if (c == 'Reverse') {
+			wc.write_Integer(1)
 			wc.write_Integer(0)
 			this.write_Reverse(ver, wc, payload)
 		}
 		if (c == 'Skip') {
-			wc.write_Integer(0)
+			wc.write_Integer(1)
 			wc.write_Integer(1)
 			this.write_Skip(ver, wc, payload)
 		}
-		if (c == 'Value') {
+		if (c == 'DrawTwo') {
 			wc.write_Integer(1)
-			this.write_Value(ver, wc, payload)
+			wc.write_Integer(2)
+			this.write_DrawTwo(ver, wc, payload)
 		}
 		wc.write_Integer(payload.id);
 	},
 
-	write_Action: function(ver, wc, payload) {
+	write_Value: function(ver, wc, payload) {
+		wc.write_Integer(payload.value);
 		wc.write_String(payload.color);
 	},
 
-	write_Value: function(ver, wc, payload) {
-		wc.write_Integer(payload.value);
+	write_Action: function(ver, wc, payload) {
 		wc.write_String(payload.color);
 	},
 
@@ -50,6 +55,10 @@ module.exports = {
 	},
 
 	write_Skip: function(ver, wc, payload) {
+		this.write_Action(ver, wc, payload)
+	},
+
+	write_DrawTwo: function(ver, wc, payload) {
 		this.write_Action(ver, wc, payload)
 	},
 
@@ -78,12 +87,19 @@ module.exports = {
 		var t = rc.read_Integer(ver, rc)
 		var payload;
 		if (t == 0) {
-			payload = this.read_Action(ver, rc)
-		}
-		if (t == 1) {
 			payload = this.read_Value(ver, rc)
 		}
+		if (t == 1) {
+			payload = this.read_Action(ver, rc)
+		}
 		payload.id = rc.read_Integer();
+		return payload;
+	},
+
+	read_Value: function(ver, rc) {
+		var payload = new this.factory.Value();
+		payload.value = rc.read_Integer();
+		payload.color = rc.read_String();
 		return payload;
 	},
 
@@ -96,13 +112,9 @@ module.exports = {
 		if (t == 1) {
 			payload = this.read_Skip(ver, rc)
 		}
-		payload.color = rc.read_String();
-		return payload;
-	},
-
-	read_Value: function(ver, rc) {
-		var payload = new this.factory.Value();
-		payload.value = rc.read_Integer();
+		if (t == 2) {
+			payload = this.read_DrawTwo(ver, rc)
+		}
 		payload.color = rc.read_String();
 		return payload;
 	},
@@ -114,6 +126,11 @@ module.exports = {
 
 	read_Skip: function(ver, rc) {
 		var payload = new this.factory.Skip();
+		return payload;
+	},
+
+	read_DrawTwo: function(ver, rc) {
+		var payload = new this.factory.DrawTwo();
 		return payload;
 	},
 

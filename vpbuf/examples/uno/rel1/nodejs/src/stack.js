@@ -12,23 +12,27 @@ var vp = require('./vp_uno');
     var library = {
         build_uno_deck: function(max_count) {
             var d = new persist.Deck()
+            var build_arr = []
             var count = 0
 
             for (const c of persist.color_arr) {
-                if (++count > max_count)
-                    return d
-                d.cards.push(new persist.Skip(count, c))
+                build_arr.push(new persist.Skip(++count, c))
+                build_arr.push(new persist.Reverse(++count, c))
+                build_arr.push(new persist.DrawTwo(++count, c))
 
-                if (++count > max_count)
-                    return d
-                d.cards.push(new persist.Reverse(count, c))
+                build_arr.push(new persist.Skip(++count, c))
+                build_arr.push(new persist.Reverse(++count, c))
+                build_arr.push(new persist.DrawTwo(++count, c))
 
-                for (var k = 0; k < 10; k++) {
-                    if (++count > max_count)
-                        return d
-                    d.cards.push(new persist.Value(count, k, c))
+                build_arr.push(new persist.Value(++count, 0, c))
+
+                for (var k = 1; k < 10; k++) {
+                    build_arr.push(new persist.Value(++count, k, c))
+                    build_arr.push(new persist.Value(++count, k, c))
                 }
             }
+
+            d.cards = build_arr.slice(count - max_count)
 
             return d
         }
