@@ -16,13 +16,12 @@ var vp = require('./vp_uno');
             var count = 0
 
             for (const c of persist.color_arr) {
-                build_arr.push(new persist.Skip(++count, c))
-                build_arr.push(new persist.Reverse(++count, c))
-                build_arr.push(new persist.DrawTwo(++count, c))
 
-                build_arr.push(new persist.Skip(++count, c))
-                build_arr.push(new persist.Reverse(++count, c))
-                build_arr.push(new persist.DrawTwo(++count, c))
+                for (var k = 0; k < 2; k++) {
+                    build_arr.push(new persist.Skip(++count, c))
+                    build_arr.push(new persist.Reverse(++count, c))
+                    build_arr.push(new persist.DrawTwo(++count, c))
+                }
 
                 build_arr.push(new persist.Value(++count, 0, c))
 
