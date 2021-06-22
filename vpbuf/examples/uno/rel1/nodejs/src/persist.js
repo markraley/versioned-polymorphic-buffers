@@ -23,7 +23,7 @@ module.exports = {
         this.id = id
 
         this.get_name = function() {
-            return this.id
+            return this.name
         }
     },
 

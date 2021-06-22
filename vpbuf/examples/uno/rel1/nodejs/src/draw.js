@@ -2,7 +2,7 @@
 // Software released under the MIT license (see project root for license file)
 
 const persist = require("./persist");
-var vp = require('./vp_poker');
+var vp = require('./vp_uno');
 
 // ---------------------------------------------------------------------
 
