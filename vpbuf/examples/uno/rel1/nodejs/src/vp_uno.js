@@ -45,11 +45,11 @@ module.exports = {
 	},
 
 	write_Reverse: function(ver, wc, payload) {
-		wc.write_String(payload.name);
+		wc.write_String(payload.color);
 	},
 
 	write_Skip: function(ver, wc, payload) {
-		wc.write_String(payload.name);
+		wc.write_String(payload.color);
 	},
 
 	write_Deck: function(ver, wc, payload) {
@@ -107,13 +107,13 @@ module.exports = {
 
 	read_Reverse: function(ver, rc) {
 		var payload = new this.factory.Reverse();
-		payload.name = rc.read_String();
+		payload.color = rc.read_String();
 		return payload;
 	},
 
 	read_Skip: function(ver, rc) {
 		var payload = new this.factory.Skip();
-		payload.name = rc.read_String();
+		payload.color = rc.read_String();
 		return payload;
 	},
 

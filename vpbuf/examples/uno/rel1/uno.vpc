@@ -16,10 +16,10 @@ pod Value is Card
     string color 1
 
 pod Reverse is Action
-    string name 1
+    string color 1
 
 pod Skip is Action
-    string name 1
+    string color 1
 
 pod Deck
     vector *Card cards 1

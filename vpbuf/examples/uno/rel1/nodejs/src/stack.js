@@ -18,8 +18,7 @@ var vp = require('./vp_uno');
                 for (const j of persist.rank_arr) {
                     if (++count > max_count)
                         return d
-                    var c = new persist.Skip(count, "skippy")
-                    d.cards.push(c)
+                    d.cards.push(new persist.Value(count, count % 10, "Red"))
                 }
             }
             return d

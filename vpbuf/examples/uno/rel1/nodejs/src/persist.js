@@ -31,10 +31,14 @@ module.exports = {
         module.exports.Card.call(this)
     },
 
-    Value: function(value = 1, color = "not set") {
+    Value: function(id = -1, value = 1, color = "not set") {
         module.exports.Card.call(this)
+        this.id = id
         this.value = value;
         this.color = color;
+        this.get_name = function() {
+            return '' + this.color + this.value
+        }
     },
 
     Reverse: function(id = 0, name = "Reverse") {
