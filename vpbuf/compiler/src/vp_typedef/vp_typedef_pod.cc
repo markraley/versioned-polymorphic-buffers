@@ -174,6 +174,13 @@ vp_typedef_pod::serialize_out_js(
       (*jj)->serialize_out_js(ofs, in + 1, type_map, tar_lang);
    }
 
+   if (parent_name.size() > 0) {
+      vp_typedef *p = GetVPType(parent_name, type_map);
+
+      if (p->parent_name.size() > 0)
+         ofs <<tab(in+1)<< "this.write_" << parent_name << "(ver, wc, payload)\n";
+   }
+
    ofs << tab(in) << "},\n\n";
 }
 

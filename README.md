@@ -174,7 +174,9 @@ complete map implentation with coverage test
 complete uno polymorphism example
 refactor before adding additional languages
 upgrade boost version
+add comments to vpc interface description language
 improve parse error handling/reporting
+improve generated code polymorphism error handling
 add alternative wire protocol (json?)
 
 

@@ -46,10 +46,12 @@ module.exports = {
 
 	write_Reverse: function(ver, wc, payload) {
 		wc.write_String(payload.color);
+		this.write_Action(ver, wc, payload)
 	},
 
 	write_Skip: function(ver, wc, payload) {
 		wc.write_String(payload.color);
+		this.write_Action(ver, wc, payload)
 	},
 
 	write_Deck: function(ver, wc, payload) {
