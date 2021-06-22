@@ -64,9 +64,11 @@ from vp_uno.vp_uno import *
 def save_deck(file_name, deck):
     stream = amf3.util.BufferedByteStream()
     e = amf3.Encoder(stream)
+    e.string_references = False # disables string caching
+
     output_buffer = amf3.DataOutput(e)
 
-    h = Header(get_high_version(), 'vp_uno')
+    h = Header(get_high_version(), 'VP_UNO')
     write_Header(1, e, h) # header version is always 1
 
     write_Deck(get_high_version(), e, deck)

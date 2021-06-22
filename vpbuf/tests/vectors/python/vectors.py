@@ -48,6 +48,7 @@ class Test_vector_A:
     def serialize(self):
         stream = amf3.util.BufferedByteStream()
         e = amf3.Encoder(stream)
+        e.string_references = False # disables string caching
 
         self.h1.version = -99
         self.h1.test_name = self.test_name
@@ -118,6 +119,7 @@ class Test_vector_B:
     def serialize(self):
         stream = amf3.util.BufferedByteStream()
         e = amf3.Encoder(stream)
+        e.string_references = False # disables string caching
 
         self.h1.version = -99
         self.h1.test_name = self.test_name
@@ -188,6 +190,7 @@ class Test_vector_C:
     def serialize(self):
         stream = amf3.util.BufferedByteStream()
         e = amf3.Encoder(stream)
+        e.string_references = False # disables string caching
 
         self.h1.version = 101
         self.h1.test_name = self.test_name
@@ -257,6 +260,7 @@ class Test_vector_D:
     def serialize(self):
         stream = amf3.util.BufferedByteStream()
         e = amf3.Encoder(stream)
+        e.string_references = False # disables string caching
 
         self.h1.version = 101
         self.h1.test_name = self.test_name
@@ -326,6 +330,7 @@ class Test_vector_E:
     def serialize(self):
         stream = amf3.util.BufferedByteStream()
         e = amf3.Encoder(stream)
+        e.string_references = False # disables string caching
 
         self.h1.version = 1121
         self.h1.test_name = self.test_name
@@ -395,6 +400,7 @@ class Test_vector_F:
     def serialize(self):
         stream = amf3.util.BufferedByteStream()
         e = amf3.Encoder(stream)
+        e.string_references = False # disables string caching
 
         self.h1.version = 1121
         self.h1.test_name = self.test_name
@@ -465,6 +471,7 @@ class Test_vector_G:
     def serialize(self):
         stream = amf3.util.BufferedByteStream()
         e = amf3.Encoder(stream)
+        e.string_references = False # disables string caching
 
         self.h1.version = 1
         self.h1.test_name = self.test_name

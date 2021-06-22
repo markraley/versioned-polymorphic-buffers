@@ -35,6 +35,8 @@ from vp_poker.vp_poker import *
 def save_deck(file_name, deck):
     stream = amf3.util.BufferedByteStream()
     e = amf3.Encoder(stream)
+    e.string_references = False # disables string caching
+
     output_buffer = amf3.DataOutput(e)
 
     h = Header(get_high_version(), 'VP_POKER')
