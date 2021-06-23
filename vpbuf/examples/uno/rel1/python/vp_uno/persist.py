@@ -4,11 +4,7 @@ from pyamf import amf3
 
 # ------------------------------------------------------------------------------
 
-suit_arr = [ 'Diamonds', 'Clubs', 'Hearts', 'Spades' ]
-rank_arr = [ 'Ace',   'Two',   'Three', 'Four',
-             'Five',  'Six',   'Seven',
-             'Eight', 'Nine',  'Ten',
-             'Jack',  'Queen', 'King' ]
+color_arr = [ 'Red', 'Yellow', 'Green', 'Blue' ]
 
 class Header():
     def __init__(self, version = 1, tag = "not set"):

@@ -13,15 +13,23 @@ import argparse
 
 def build_poker_deck(card_count):
     deck = Deck()
+    build_arr = []
 
     count = 0
-    for s in suit_arr:
-        for r in rank_arr:
-            count += 1
-            if (count > card_count):
-                return deck;
-            deck.cards.append(Value(count, count % 10, "Red"))
- #           deck.cards.append(Skip(count, "Green"))
+    for c in color_arr:
+
+        for k in range(0,2):
+            build_arr.append(Skip(++count, c))
+            build_arr.append(Reverse(++count, c))
+            build_arr.append(DrawTwo(++count, c))
+
+        build_arr.append(Value(++count, 0, c))
+
+        for k in range(1,10):
+            build_arr.append(Value(++count, k, c))
+            build_arr.append(Value(++count, k, c))
+
+    deck.cards = build_arr[len(build_arr) - card_count:]
 
     return deck
 
