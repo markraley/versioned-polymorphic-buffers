@@ -2,10 +2,7 @@
 
 using namespace std;
 
-vector<string> suit_arr = {"Diamonds", "Clubs", "Hearts", "Spades" };
-vector<string> rank_arr = {"Ace", "Two", "Three", "Four", "Five",
-                           "Six", "Seven", "Eight", "Nine", "Ten",
-                           "Jack", "Queen", "King"};
+vector<string> color_arr = {"Red", "Yellow", "Green", "Blue" };
 
 // -----------------------------------------------------------------------------
 

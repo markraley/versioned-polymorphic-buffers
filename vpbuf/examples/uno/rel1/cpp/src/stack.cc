@@ -24,16 +24,21 @@ Deck *build_uno_deck(int max_cards) {
    Deck *deck = new Deck;
    int count = 0;
 
-   for (auto i = 0; i < suit_arr.size(); i++) {
-      for (auto j = 0; j < rank_arr.size(); j++) {
-         count += 1;
-         if (count > max_cards)
-            return deck;
-//         Card *card = new Value(count, 3, "Red");
-//         Card *card = new Reverse(count, "Green");
-         deck->cards.push_back(new Reverse(count, "Green"));
+   for (auto c = 0; c < color_arr.size(); c++) {
+      for (auto k = 0; k < 2; k++) {
+         deck->cards.push_back(new Skip(++count, color_arr[c]));
+         deck->cards.push_back(new Reverse(++count, color_arr[c]));
+         deck->cards.push_back(new DrawTwo(++count, color_arr[c]));
+      }
+
+      deck->cards.push_back(new Value(++count, 0, color_arr[c]));
+
+      for (auto k = 1; k < 10; k++) {
+         deck->cards.push_back(new Value(++count, k, color_arr[c]));
+         deck->cards.push_back(new Value(++count, k, color_arr[c]));
       }
    }
+
    return deck;
 }
 

@@ -28,15 +28,15 @@ cards left 0
 
 ----- Example 3 -----
 [vrange=1-1, cpp] STACK 5 cards
-write: t.dat, version=1, cards=5, bytes=77
+write: t.dat, version=1, cards=100, bytes=1262
 [vrange=1-1, python] DRAW 3 cards
-read: t.dat, version=1, cards=5, bytes=77
-card pop: Green Reverse Green Reverse Green Reverse
-write: t.dat, version=1, cards=2, bytes=38
-cards left 2
+read: t.dat, version=1, cards=100, bytes=1262
+card pop: Blue 9 Blue 9 Blue 8
+write: t.dat, version=1, cards=97, bytes=1226
+cards left 97
 [vrange=1-1, nodejs] DRAW 2 cards
-read: t.dat, version=1, cards=2, bytes=38
-card pop: Green Reverse Green Reverse
-write: t.dat, version=1, cards=0, bytes=12
-cards left 0
+read: t.dat, version=1, cards=97, bytes=1226
+card pop: Blue 8 Blue 7
+write: t.dat, version=1, cards=95, bytes=1202
+cards left 95
 
