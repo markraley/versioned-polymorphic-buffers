@@ -170,8 +170,9 @@ The uno example, which is in progress, will demonstrate this feature. There is a
 
 ### TODO
 
-complete map implentation with coverage test
 complete uno polymorphism example
+complete map implentation with coverage test
+build instructions/refinements
 refactor before adding additional languages
 upgrade boost version
 add comments to vpc interface description language
