@@ -66,6 +66,13 @@ vp_typedef_pod::serialize_out_cpp(
       (*jj)->serialize_out_cpp(ofs, in + 1, type_map, tar_lang);
    }
 
+   if (parent_name.size() > 0) {
+      vp_typedef *p = GetVPType(parent_name, type_map);
+
+      if (p->parent_name.size() > 0)
+         ofs <<tab(in+1)<<"write_"<< parent_name <<"(nVersion, wc, payload);\n";
+   }
+
    ofs << tab(in) << "}\n\n";
 }
 
@@ -120,14 +127,11 @@ vp_typedef_pod::serialize_out_py(
 
    out_stream << "def write_" << type_name << "(ver, f, payload):\n";
 
-   for (jj = pod_items.begin(); jj != pod_items.end(); ++jj)
-   {
+   for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
       (*jj)->serialize_out_py(out_stream, type_map, tar_lang);
    }
 
-   if (parent_name.size() > 0)
-   {
-
+   if (parent_name.size() > 0) {
       vp_typedef *p = GetVPType(parent_name, type_map);
 
       if (p->parent_name.size() > 0)
@@ -149,8 +153,7 @@ vp_typedef_pod::serialize_in_py(
 
    out_stream << "\tpayload = " << type_name << "()\n";
 
-   for (jj = pod_items.begin(); jj != pod_items.end(); ++jj)
-   {
+   for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
       (*jj)->serialize_in_py(out_stream, type_map, tar_lang);
    }
 

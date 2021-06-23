@@ -20,7 +20,7 @@ typedef vector<byte> ByteVec;
 
 // -----------------------------------------------------------------------------
 
-Deck *build_poker_deck(int max_cards) {
+Deck *build_uno_deck(int max_cards) {
    Deck *deck = new Deck;
    int count = 0;
 
@@ -29,7 +29,8 @@ Deck *build_poker_deck(int max_cards) {
          count += 1;
          if (count > max_cards)
             return deck;
-         Card *card = new Value(count, 3, "Red");
+//         Card *card = new Value(count, 3, "Red");
+         Card *card = new Reverse(count, "Green");
          deck->cards.push_back(card);
       }
    }
@@ -55,7 +56,7 @@ int main(int argc, char* argv[])
       cout <<"[vrange="<< get_low_version() <<"-"<< get_high_version()
                <<", cpp] STACK " << count <<" cards"<<endl;
 
-      Deck *deck = build_poker_deck(count);
+      Deck *deck = build_uno_deck(count);
 
       size_t bytes_out = save_deck(deck_name, *deck);
 

@@ -61,14 +61,17 @@ namespace vp_uno {
 
 	void write_Reverse(long nVersion, write_context &wc, Reverse &payload)
 	{
+		write_Action(nVersion, wc, payload);
 	}
 
 	void write_Skip(long nVersion, write_context &wc, Skip &payload)
 	{
+		write_Action(nVersion, wc, payload);
 	}
 
 	void write_DrawTwo(long nVersion, write_context &wc, DrawTwo &payload)
 	{
+		write_Action(nVersion, wc, payload);
 	}
 
 	void write_Deck(long nVersion, write_context &wc, Deck &payload)
@@ -134,7 +137,7 @@ namespace vp_uno {
 
 	Reverse *read_Reverse(long nVersion, read_context &rc)
 	{
-		Reverse *payload_ptr = new Reverse;
+		auto *payload_ptr = new Reverse;
 		auto &payload = *payload_ptr;
 		return payload_ptr;
 	}
