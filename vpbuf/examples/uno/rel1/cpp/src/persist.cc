@@ -19,10 +19,55 @@ class Header {
 
 class Card {
    public:
-      Card(string name = "not set", int id = 0): name(name), id(id) {};
-      string get_name() { return string(this->name); };
-      std::string name;
+      Card(int id): id(id) {};
+      Card() : id(-1) {}
+      virtual ~Card() = 0;
+      virtual string get_name() = 0;
       int id;
+};
+
+Card::~Card() {}
+
+class Value : public Card {
+   public:
+      int value;
+      string color;
+      Value(
+            int id = -1,
+            int value = -1,
+            string color = "not set"
+         ) : Card(id), value(value), color(color) {};
+
+      string get_name() { return string(this->color); };
+};
+
+class Action : public Card {
+   public:
+      string color;
+      Action(int id = -1, string color = "not set")
+         : Card(id), color(color) {};
+      string get_name() { return string(this->color); }
+      virtual ~Action() = 0;
+};
+
+Action::~Action() {}
+
+class Reverse : public Action {
+   public:
+      Reverse(int id = -1, string color = "not set")
+         : Action(id, color) {}
+};
+
+class Skip : public Action {
+   public:
+      Skip(int id = -1, string color = "not set")
+         : Action(id, color) {}
+};
+
+class DrawTwo : public Action {
+   public:
+      DrawTwo(int id = -1, string color = "not set")
+         : Action(id, color) {}
 };
 
 class Deck {

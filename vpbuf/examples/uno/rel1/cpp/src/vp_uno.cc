@@ -134,7 +134,7 @@ namespace vp_uno {
 
 	Reverse *read_Reverse(long nVersion, read_context &rc)
 	{
-		auto *payload_ptr = new Reverse;
+		Reverse *payload_ptr = new Reverse;
 		auto &payload = *payload_ptr;
 		return payload_ptr;
 	}

@@ -29,7 +29,7 @@ Deck *build_poker_deck(int max_cards) {
          count += 1;
          if (count > max_cards)
             return deck;
-         Card *card = new Card(rank_arr[j] + " of " + suit_arr[i], count);
+         Card *card = new Value(count, 3, "Red");
          deck->cards.push_back(card);
       }
    }
