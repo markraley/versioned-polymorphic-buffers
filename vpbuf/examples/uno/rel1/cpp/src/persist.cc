@@ -38,15 +38,16 @@ class Value : public Card {
             string color = "not set"
          ) : Card(id), value(value), color(color) {};
 
-      string get_name() { return string(this->color); };
+      string get_name()
+         { return string(this->color) +" "+ to_string(this->value);};
 };
 
 class Action : public Card {
    public:
-      string color;
-      Action(int id = -1, string color = "not set")
-         : Card(id), color(color) {};
-      string get_name() { return string(this->color); }
+      string color, name;
+      Action(int id = -1, string color = "not set", string name = "not set")
+         : Card(id), color(color), name(name) {};
+      string get_name() { return string(this->color +" "+ this->name); }
       virtual ~Action() = 0;
 };
 
@@ -55,19 +56,19 @@ Action::~Action() {}
 class Reverse : public Action {
    public:
       Reverse(int id = -1, string color = "not set")
-         : Action(id, color) {}
+         : Action(id, color, "Reverse") {}
 };
 
 class Skip : public Action {
    public:
       Skip(int id = -1, string color = "not set")
-         : Action(id, color) {}
+         : Action(id, color, "Skip") {}
 };
 
 class DrawTwo : public Action {
    public:
       DrawTwo(int id = -1, string color = "not set")
-         : Action(id, color) {}
+         : Action(id, color, "DrawTwo") {}
 };
 
 class Deck {

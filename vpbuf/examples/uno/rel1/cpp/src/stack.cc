@@ -30,8 +30,8 @@ Deck *build_uno_deck(int max_cards) {
          if (count > max_cards)
             return deck;
 //         Card *card = new Value(count, 3, "Red");
-         Card *card = new Reverse(count, "Green");
-         deck->cards.push_back(card);
+//         Card *card = new Reverse(count, "Green");
+         deck->cards.push_back(new Reverse(count, "Green"));
       }
    }
    return deck;
