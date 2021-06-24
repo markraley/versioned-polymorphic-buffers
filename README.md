@@ -164,11 +164,11 @@ cards left 0
 
 Example 4 demonstrates a deck stacked by release 1 (vpc version 1) being read by a release 2 program successfully as expected. Example 5 shows that a release 2 stack cannot be read by a release 1 program and instead displays version errors as expected. Example 6 is a language interop test within release 2. Comparing the stacked deck size from example 3 and 6 - there is a substantial decrease in file size for a 5 card stack from 113 bytes to 24 bytes as a result of removing the Card.name data from the message/file. This demonstrates interoperability between versions.
 
-## Polymorphic Interoperability - vpbuf/uno/rel1
+## Polymorphic Language Interoperability - vpbuf/examples/uno/rel1
 
-Two new keywords - - 'poly' and 'is'- are introduced to the vpc IDL To implement polymorphism, read as 'polymorphic class' and 'is a' respectively. A poly is a type that maybe be inherited from, that is, on the right side of the 'is' keyword..
+Two new keywords - 'poly' and 'is' - are introduced to the vpc IDL in order to implement polymorphism. They may be read as 'polymorphic class or struct' and 'is a' respectively. A poly is a type that maybe be inherited from and is allowed on the right side of the 'is' keyword.
 
-Reverse, Skip, and DrawTwo cards are all of type Action, which is in turn of type Card, demonstrating 3 tier polymorphism. Value is of type Card as well.
+Reverse, Skip, and DrawTwo cards are all of type Action, which is in turn of type Card (3 tier polymorphism). Value is of type Card as well.
 
 
 ```
@@ -247,13 +247,12 @@ cards left 0
 
 ### TODO
 
-complete uno polymorphism example
-complete map implentation with coverage test
-build instructions/refinements
-refactor before adding additional languages
-upgrade boost version
-add comments to vpc interface description language
-improve parse error handling/reporting
-improve generated code polymorphism error handling
-
+    complete uno polymorphism example
+    complete map implentation with coverage test
+    build instructions/refinements
+    refactor before adding additional languages
+    upgrade boost version
+    add comments to vpc interface description language
+    improve parse error handling/reporting
+    improve generated code polymorphism error handling
 
