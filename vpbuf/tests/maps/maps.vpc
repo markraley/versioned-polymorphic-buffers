@@ -11,4 +11,10 @@ pod A
     string s1 1
 
 pod OuterA
+    map varint A lookup 1
+
+pod OuterB
+    map string A lookup 1
+
+pod OuterC
     map varint string lookup 1

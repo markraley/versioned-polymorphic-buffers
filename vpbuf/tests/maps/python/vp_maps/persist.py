@@ -35,3 +35,11 @@ class A:
 class OuterA:
     def __init__(self):
         self.lookup = {}
+
+class OuterB:
+    def __init__(self):
+        self.lookup = {}
+
+class OuterC:
+    def __init__(self):
+        self.lookup = {}

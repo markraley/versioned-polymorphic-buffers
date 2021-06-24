@@ -30,6 +30,18 @@ def write_OuterA(ver, f, payload):
 	write_int(ver, f, len(payload.lookup))
 	for k, v in iter(payload.lookup.items()):
 		write_int(ver, f, k)
+		write_A(ver, f, v)
+
+def write_OuterB(ver, f, payload):
+	write_int(ver, f, len(payload.lookup))
+	for k, v in iter(payload.lookup.items()):
+		write_str(ver, f, k)
+		write_A(ver, f, v)
+
+def write_OuterC(ver, f, payload):
+	write_int(ver, f, len(payload.lookup))
+	for k, v in iter(payload.lookup.items()):
+		write_int(ver, f, k)
 		write_str(ver, f, v)
 
 def read_int(ver, f):
@@ -56,6 +68,36 @@ def read_A(ver, f):
 
 def read_OuterA(ver, f):
 	payload = OuterA()
+	payload.lookup = {}
+	count = read_int(ver, f)
+	i = 0
+	while (i < count):
+		k = int()
+		k = read_int(ver, f)
+		t = A()
+		t = read_A(ver, f)
+		payload.lookup[k] = t
+		i = i + 1
+
+	return payload
+
+def read_OuterB(ver, f):
+	payload = OuterB()
+	payload.lookup = {}
+	count = read_int(ver, f)
+	i = 0
+	while (i < count):
+		k = str()
+		k = read_str(ver, f)
+		t = A()
+		t = read_A(ver, f)
+		payload.lookup[k] = t
+		i = i + 1
+
+	return payload
+
+def read_OuterC(ver, f):
+	payload = OuterC()
 	payload.lookup = {}
 	count = read_int(ver, f)
 	i = 0
