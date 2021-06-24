@@ -57,11 +57,11 @@ pod_map::serialize_out_py(
    vp_key->get_type_python(local_key_type);
    vp_typedefs[payload_index]->get_type_python(payload_type);
 
-   out_stream << tab(in) << "write_int(ver, f, len(payload." << name << "))\n";
+   out_stream <<tab(in)<< "write_int(ver, f, len(payload." << name << "))\n";
 
-   out_stream << tab(in) << "for k, v in payload." << name << ".iteritems():\n";
-   out_stream << tab(in + 1) << "write_" << local_key_type << "(ver, f, k)\n";
-   out_stream << tab(in + 1) << "write_" << payload_type << "(ver, f, v)\n";
+   out_stream <<tab(in)<< "for k, v in iter(payload." << name << ".items()):\n";
+   out_stream <<tab(in+1) << "write_" << local_key_type << "(ver, f, k)\n";
+   out_stream <<tab(in+1) << "write_" << payload_type << "(ver, f, v)\n";
 
 }
 
