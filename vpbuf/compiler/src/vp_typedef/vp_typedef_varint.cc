@@ -114,7 +114,7 @@ vp_typedef_varint::serialize_in_js(
 
 std::string vp_typedef_varint::format_in_js(const std::string var_name)
 {
-   return "var " + var_name + ":int = read_int(ver, input)\n";
+   return "var " + var_name + " = rc.read_Integer()\n";
 }
 
 void vp_typedef_varint::add_pod_item(pod_item *) {};

@@ -116,6 +116,6 @@ pod_varint::serialize_in_js(
 
 std::string pod_varint::declare_js()
 {
-   return "var " + name + " = 0;";
+   return "var " + name + " = 0";
 }
 

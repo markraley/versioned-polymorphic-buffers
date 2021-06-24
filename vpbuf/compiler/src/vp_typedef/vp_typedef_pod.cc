@@ -211,8 +211,7 @@ vp_typedef_pod::serialize_in_js(
 string
 vp_typedef_pod::format_in_js(const string var_name)
 {
-   return "var " + var_name + ":" + type_name
-            + " = read_" + type_name + "(ver, input)\n";
+   return "var " + var_name + " = this.read_" + type_name + "(ver, rc)\n";
 }
 
 // ----------------------------------------------------------------------------

@@ -12,27 +12,15 @@ module.exports = {
     },
 
     OuterA: function() {
-        this.v = [];
+        this.lookup = {}
     },
 
     OuterB: function() {
-        this.v = [];
+        this.lookup = {}
     },
 
     OuterC: function() {
-        this.v = [];
-    },
-
-    OuterD: function() {
-        this.v = [];
-    },
-
-    OuterE: function() {
-        this.v = [];
-    },
-
-    OuterF: function() {
-        this.v = [];
+        this.lookup = {}
     },
 
     Base: function() {
@@ -49,10 +37,6 @@ module.exports = {
         module.exports.Base.call(this);
         this.i1 = i2;
         this.s1 = s2;
-    },
-
-    OuterG: function() {
-        this.v = [];
     }
 };
 

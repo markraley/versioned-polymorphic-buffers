@@ -76,11 +76,7 @@ vp_typedef_string::serialize_in_js(
 std::string
 vp_typedef_string::format_in_js(const std::string var_name)
 {
-   std::string t;
-
-   get_type_js(t);
-
-   return "var " + var_name + " = read_" + t + "(ver, input)\n";
+   return "var " + var_name + " = this.read_String(ver, rc)\n";
 }
 
 void vp_typedef_string::add_pod_item(pod_item *) {};

@@ -152,5 +152,5 @@ pod_typed::declare_js()
 
    vp_typedefs[payload_index]->get_type_js(t);
 
-   return "var " + name + ":" + t + " = new " + t + "();";
+   return "var " + name + " = new " + t + "()";
 }
