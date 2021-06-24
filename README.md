@@ -164,9 +164,86 @@ cards left 0
 
 Example 4 demonstrates a deck stacked by release 1 (vpc version 1) being read by a release 2 program successfully as expected. Example 5 shows that a release 2 stack cannot be read by a release 1 program and instead displays version errors as expected. Example 6 is a language interop test within release 2. Comparing the stacked deck size from example 3 and 6 - there is a substantial decrease in file size for a 5 card stack from 113 bytes to 24 bytes as a result of removing the Card.name data from the message/file. This demonstrates interoperability between versions.
 
-## Polymorphism
+## Polymorphic Interoperability - vpbuf/uno/rel1
 
-The uno example, which is in progress, will demonstrate this feature. There is a simple polymorphism test in the vectors coverage test - search for 'poly Base' in the vectors.vpc file and 'vectors_G' in the test sources.
+Two new keywords - - 'poly' and 'is'- are introduced to the vpc IDL To implement polymorphism, read as 'polymorphic class' and 'is a' respectively. A poly is a type that maybe be inherited from, that is, on the right side of the 'is' keyword..
+
+Reverse, Skip, and DrawTwo cards are all of type Action, which is in turn of type Card, demonstrating 3 tier polymorphism. Value is of type Card as well.
+
+
+```
+target  language cplusplus 1 1 vp_uno "./cpp/src" cc
+        language python 1 1 vp_uno "./python/vp_uno" py
+        language javascript 1 1 vp_uno "./nodejs/src" js
+
+pod Header
+    varint version 1
+    string tag 1
+
+poly Card
+    varint id 1
+
+pod Value is Card
+    varint value 1
+    string color 1
+
+poly Action is Card
+    string color 1
+
+pod Reverse is Action
+pod Skip is Action
+pod DrawTwo is Action
+
+pod Deck
+    vector *Card cards 1
+```
+
+The vpbuf/uno/run_1.sh demonstrates polymorphic language interoperability.
+
+```
+$ ./run_r1.sh
+----- Example 1 -----
+[vrange=1-1, python] STACK 4 cards
+write: t.dat, version=1, cards=4, bytes=60
+[vrange=1-1, nodejs] DRAW 2 cards
+read: t.dat, version=1, cards=4, bytes=60
+card pop: Blue 9 Blue 9
+write: t.dat, version=1, cards=2, bytes=36
+cards left 2
+[vrange=1-1, cpp] DRAW 2 cards
+read: t.dat, version= 1, cards=2, bytes=36
+card pop: Blue 8 Blue 8
+write: t.dat, version=1, cards=0, bytes=12
+cards left 0
+
+----- Example 2 -----
+[vrange=1-1, nodejs] STACK 7 cards
+write: t.dat, version=1, cards=7, bytes=96
+[vrange=1-1, cpp] DRAW 4 cards
+read: t.dat, version= 1, cards=7, bytes=96
+card pop: Blue 9 Blue 9 Blue 8 Blue 8
+write: t.dat, version=1, cards=3, bytes=48
+cards left 3
+[vrange=1-1, python] DRAW 3 cards
+read: t.dat, version=1, cards=3, bytes=48
+card pop: Blue 7 Blue 7 Blue 6
+write: t.dat, version=1, cards=0, bytes=12
+cards left 0
+
+----- Example 3 -----
+[vrange=1-1, cpp] STACK 5 cards
+write: t.dat, version=1, cards=5, bytes=72
+[vrange=1-1, python] DRAW 3 cards
+read: t.dat, version=1, cards=5, bytes=72
+card pop: Blue 9 Blue 9 Blue 8
+write: t.dat, version=1, cards=2, bytes=36
+cards left 2
+[vrange=1-1, nodejs] DRAW 2 cards
+read: t.dat, version=1, cards=2, bytes=36
+card pop: Blue 8 Blue 7
+write: t.dat, version=1, cards=0, bytes=12
+cards left 0
+```
 
 ### TODO
 
@@ -178,6 +255,5 @@ upgrade boost version
 add comments to vpc interface description language
 improve parse error handling/reporting
 improve generated code polymorphism error handling
-add alternative wire protocol (json?)
 
 
