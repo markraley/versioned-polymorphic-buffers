@@ -22,7 +22,11 @@ pod_map::serialize_out_cpp(
    if (code_emitted)
       in++;
 
-   std::string payload_type, local_key_type;
+   std::string payload_type, local_key_type, payload_prefix;
+
+   if (vp_typedefs[payload_index]->is_pod()
+         || vp_typedefs[payload_index]->is_poly())
+      payload_prefix = "*";
 
    vp_typedef *tdi = vp_typedefs[payload_index];
    vp_typedef *vp_key = GetVPType(key_type, type_map);
@@ -32,8 +36,9 @@ pod_map::serialize_out_cpp(
    ofs <<tab(in)<<"write_int(wc, payload."<< name <<".size());\n";
    ofs <<tab(in)<< "for (auto ii = payload." << name << ".begin();"
                      << "ii != payload." << name << ".end(); ii++) {\n";
-   ofs <<tab(in+1)<<"write_" << local_key_type << "(nVersion, wc, (ii->first));\n";
-   ofs <<tab(in+1)<<"write_" << payload_type << "(nVersion, wc, (ii->second));\n";
+   ofs <<tab(in+1)<<"write_"<< local_key_type << "(nVersion, wc, ii->first);\n";
+   ofs <<tab(in+1)<<"write_"<< payload_type <<"(nVersion, wc, "
+                              << payload_prefix <<"(ii->second));\n";
    ofs <<tab(in)<<"}\n";
 }
 

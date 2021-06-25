@@ -28,7 +28,7 @@ namespace vp_maps {
 	{
 		write_int(wc, payload.lookup.size());
 		for (auto ii = payload.lookup.begin();ii != payload.lookup.end(); ii++) {
-			write_int(nVersion, wc, (ii->first));
+			write_int(nVersion, wc, ii->first);
 			write_A(nVersion, wc, *(ii->second));
 		}
 	}
@@ -37,7 +37,7 @@ namespace vp_maps {
 	{
 		write_int(wc, payload.lookup.size());
 		for (auto ii = payload.lookup.begin();ii != payload.lookup.end(); ii++) {
-			write_string(nVersion, wc, (ii->first));
+			write_string(nVersion, wc, ii->first);
 			write_A(nVersion, wc, *(ii->second));
 		}
 	}
@@ -46,7 +46,7 @@ namespace vp_maps {
 	{
 		write_int(wc, payload.lookup.size());
 		for (auto ii = payload.lookup.begin();ii != payload.lookup.end(); ii++) {
-			write_int(nVersion, wc, (ii->first));
+			write_int(nVersion, wc, ii->first);
 			write_string(nVersion, wc, (ii->second));
 		}
 	}
