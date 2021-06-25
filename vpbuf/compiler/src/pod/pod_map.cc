@@ -142,9 +142,11 @@ pod_map::serialize_out_js(
    vp_key->get_type_js(local_key_type);
    vp_typedefs[payload_index]->get_type_js(payload_type);
 
-   ofs <<tab(in)<<"wc.write_Integer(Object.keys(payload."<< name <<").length)\n";
+   ofs <<tab(in)<<"wc.write_Integer(Object.keys(payload."
+                  << name <<").length)\n";
 
-   ofs <<tab(in)<<"for (const [k, v] of Object.entries(payload."<< name <<")) {\n";
+   ofs <<tab(in)<<"for (const [k, v] of Object.entries(payload."
+                  << name <<")) {\n";
    ofs <<tab(in+1)<<"this.write_" << local_key_type << "(ver, wc, k)\n";
    ofs <<tab(in+1)<<"this.write_" << payload_type << "(ver, wc, v)\n";
    ofs <<tab(in)<<"}\n";
