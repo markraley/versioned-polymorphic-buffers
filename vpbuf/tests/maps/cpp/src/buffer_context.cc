@@ -125,7 +125,7 @@ void read_int(long nVersion, read_context &rc, int &i)
 
 // -----------------------------------------------------------------------------
 
-void write_string(write_context &wc, std::string &s)
+void write_string(write_context &wc, const std::string &s)
 {
    pushInteger(wc.buf_arr, (int) 6);  // tag
    pushInteger(wc.buf_arr, (s.length() << 1) | 0x1);
@@ -133,7 +133,7 @@ void write_string(write_context &wc, std::string &s)
       wc.buf_arr.push_back(s[j]);
 }
 
-void write_string(long nVersion, write_context &wc, std::string &s)
+void write_string(long nVersion, write_context &wc, const std::string &s)
 {
    pushInteger(wc.buf_arr, (int) 6);  // tag
    pushInteger(wc.buf_arr, (s.length() << 1) | 0x1);

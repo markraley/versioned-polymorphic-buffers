@@ -26,14 +26,29 @@ namespace vp_maps {
 
 	void write_OuterA(long nVersion, write_context &wc, OuterA &payload)
 	{
+		write_int(wc, payload.lookup.size());
+		for (auto ii = payload.lookup.begin();ii != payload.lookup.end(); ii++) {
+			write_int(nVersion, wc, (ii->first));
+			write_A(nVersion, wc, *(ii->second));
+		}
 	}
 
 	void write_OuterB(long nVersion, write_context &wc, OuterB &payload)
 	{
+		write_int(wc, payload.lookup.size());
+		for (auto ii = payload.lookup.begin();ii != payload.lookup.end(); ii++) {
+			write_string(nVersion, wc, (ii->first));
+			write_A(nVersion, wc, *(ii->second));
+		}
 	}
 
 	void write_OuterC(long nVersion, write_context &wc, OuterC &payload)
 	{
+		write_int(wc, payload.lookup.size());
+		for (auto ii = payload.lookup.begin();ii != payload.lookup.end(); ii++) {
+			write_int(nVersion, wc, (ii->first));
+			write_string(nVersion, wc, (ii->second));
+		}
 	}
 
 	void read_Header(long nVersion, read_context &rc, Header &payload)

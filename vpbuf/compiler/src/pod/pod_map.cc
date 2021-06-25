@@ -9,17 +9,32 @@
 
 void
 pod_map::serialize_out_cpp(
-   ofstream &out_stream,
+   ofstream &ofs,
    int in,
    TypeMap &type_map,
    TarLang &tar_lang)
 {
    bool present, code_emitted;
-   code_version_test_cpp(out_stream, present, code_emitted, in,
+   code_version_test_cpp(ofs, present, code_emitted, in,
                            nBegin, nEnd, tar_lang.start, tar_lang.end);
    if (!present)
       return;
-   // TODO:implement
+   if (code_emitted)
+      in++;
+
+   std::string payload_type, local_key_type;
+
+   vp_typedef *tdi = vp_typedefs[payload_index];
+   vp_typedef *vp_key = GetVPType(key_type, type_map);
+   vp_key->get_type_cpp(local_key_type);
+   vp_typedefs[payload_index]->get_type_cpp(payload_type);
+
+   ofs <<tab(in)<<"write_int(wc, payload."<< name <<".size());\n";
+   ofs <<tab(in)<< "for (auto ii = payload." << name << ".begin();"
+                     << "ii != payload." << name << ".end(); ii++) {\n";
+   ofs <<tab(in+1)<<"write_" << local_key_type << "(nVersion, wc, (ii->first));\n";
+   ofs <<tab(in+1)<<"write_" << payload_type << "(nVersion, wc, (ii->second));\n";
+   ofs <<tab(in)<<"}\n";
 }
 
 void
