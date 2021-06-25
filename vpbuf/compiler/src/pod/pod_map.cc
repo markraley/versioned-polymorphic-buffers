@@ -105,16 +105,17 @@ pod_map::serialize_in_py(
    vp_typedefs[payload_index]->get_type_python(payload_type);
 
    ofs <<tab(in)<< "payload." << name << " = {}\n";
-   ofs <<tab(in) << "count = read_int(ver, f)\n";
-   ofs <<tab(in) << "i = 0\n";
-   ofs <<tab(in) << "while (i < count):\n";
-   ofs <<tab(in + 1) << "k = " << local_key_type << "()\n";
-   ofs <<tab(in + 1) << vp_key->format_in_py("k");
-   ofs <<tab(in + 1) << "t = " << payload_type << "()\n";
-   ofs <<tab(in + 1) << vp_typedefs[payload_index]->format_in_py("t");
+   ofs <<tab(in)<< "count = read_int(ver, f)\n";
+   ofs <<tab(in)<< "i = 0\n";
+   ofs <<tab(in)<< "while (i < count):\n";
 
-   ofs <<tab(in + 1) << "payload." << name << "[k] = t\n";
-   ofs <<tab(in + 1) << "i = i + 1\n\n";
+   ofs <<tab(in+1)<< "k = " << local_key_type << "()\n";
+   ofs <<tab(in+1)<< vp_key->format_in_py("k");
+   ofs <<tab(in+1)<< "t = " << payload_type << "()\n";
+   ofs <<tab(in+1)<< vp_typedefs[payload_index]->format_in_py("t");
+
+   ofs <<tab(in+1)<< "payload." << name << "[k] = t\n";
+   ofs <<tab(in+1)<< "i = i + 1\n\n";
 
 }
 
@@ -176,9 +177,7 @@ pod_map::serialize_in_js(
    ofs <<tab(in)<< "payload." << name << " = {}\n";
    ofs <<tab(in) << "var count = rc.read_Integer()\n";
    ofs <<tab(in) << "for (var i = 0; i < count; i++) {\n";
-//   ofs <<tab(in + 1) << "k = " << local_key_type << "()\n";
    ofs <<tab(in + 1) << vp_key->format_in_js("k");
-//   ofs <<tab(in + 1) << "t = " << payload_type << "()\n";
    ofs <<tab(in + 1) << vp_typedefs[payload_index]->format_in_js("t");
 
    ofs <<tab(in + 1) << "payload." << name << "[k] = t\n";
