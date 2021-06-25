@@ -65,14 +65,44 @@ namespace vp_maps {
 
 	void read_OuterA(long nVersion, read_context &rc, OuterA &payload)
 	{
+		int count_lookup;
+		read_int(rc, count_lookup);
+		for (auto i = 0; i < count_lookup; i++) {
+			int k;
+			read_int(rc, k);
+			auto *v = new A;
+			read_A(nVersion, rc, *v);
+			payload.lookup[k] = v;
+		}
+
 	}
 
 	void read_OuterB(long nVersion, read_context &rc, OuterB &payload)
 	{
+		int count_lookup;
+		read_int(rc, count_lookup);
+		for (auto i = 0; i < count_lookup; i++) {
+			string k;
+			read_string(rc, k);
+			auto *v = new A;
+			read_A(nVersion, rc, *v);
+			payload.lookup[k] = v;
+		}
+
 	}
 
 	void read_OuterC(long nVersion, read_context &rc, OuterC &payload)
 	{
+		int count_lookup;
+		read_int(rc, count_lookup);
+		for (auto i = 0; i < count_lookup; i++) {
+			int k;
+			read_int(rc, k);
+			string v;
+			read_string(rc, v);
+			payload.lookup[k] = v;
+		}
+
 	}
 
 }

@@ -44,16 +44,47 @@ pod_map::serialize_out_cpp(
 
 void
 pod_map::serialize_in_cpp(
-   ofstream &out_stream,
+   ofstream &ofs,
    int in,
    TypeMap &type_map,
    TarLang &tar_lang)
 {
    bool present, code_emitted;
-   code_version_test_cpp(out_stream, present, code_emitted, in,
+   code_version_test_cpp(ofs, present, code_emitted, in,
                            nBegin, nEnd, tar_lang.start, tar_lang.end);
    if (!present)
       return;
+   if (code_emitted)
+      in++;
+
+   std::string payload_type, local_key_type;
+
+   vp_typedef *tdi = vp_typedefs[payload_index];
+   vp_typedef *vp_key = GetVPType(key_type, type_map);
+   vp_key->get_type_cpp(local_key_type);
+   vp_typedefs[payload_index]->get_type_cpp(payload_type);
+
+   ofs << tab(in) <<"int count_"<< name <<";\n";
+   ofs << tab(in) <<"read_int(rc, count_"<< name <<");\n";
+   ofs << tab(in) <<"for (auto i = 0; i < count_"<< name <<"; i++) {\n";
+
+   ofs <<tab(in+1)<< local_key_type <<" k;\n";
+   ofs <<tab(in+1)<<"read_"<< local_key_type <<"(rc, k);\n";
+
+   if (vp_typedefs[payload_index]->is_pod()
+         || vp_typedefs[payload_index]->is_poly()) {
+      ofs <<tab(in+1)<< "auto *v = new "<< payload_type <<";\n";
+      ofs <<tab(in+1)<<"read_"<< payload_type <<"(nVersion, rc, *v);\n";
+   } else {
+      ofs <<tab(in+1)<< payload_type <<" v;\n";
+      ofs <<tab(in+1)<<"read_"<< payload_type <<"(rc, v);\n";
+   }
+
+//   ofs <<tab(in + 1) << vp_key->format_in_cpp("k");
+//   ofs <<tab(in + 1) << vp_typedefs[payload_index]->format_in_cpp("t");
+
+   ofs <<tab(in + 1) << "payload." << name << "[k] = v;\n";
+   ofs <<tab(in)<< "}\n\n";
 }
 
 // --- python ------------------------------------------------------------------
