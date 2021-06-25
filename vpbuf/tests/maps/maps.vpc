@@ -1,4 +1,4 @@
-target  -language cplusplus 1 1 vp_maps "./cpp/src" cpp
+target  language cplusplus 1 1 vp_maps "./cpp/src" cpp
         language python 1 1 vp_maps "./python/vp_maps" py
         language javascript 1 1 vp_maps "./nodejs/src" js
 
