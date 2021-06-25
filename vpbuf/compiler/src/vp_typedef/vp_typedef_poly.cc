@@ -262,6 +262,7 @@ vp_typedef_poly::format_in_js(const std::string var_name)
 
 bool vp_typedef_poly::is_terminal() { return false; }
 bool vp_typedef_poly::is_poly() { return true; }
+bool vp_typedef_poly::is_pod() { return false; }
 
 void
 vp_typedef_poly::get_terminals(Terminals &terminals, const TypeMap &type_map)

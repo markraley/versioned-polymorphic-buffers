@@ -122,4 +122,5 @@ void vp_typedef_varint::add_pod_item_range(unsigned int nBegin, unsigned int nEn
 void vp_typedef_varint::add_subclass(const std::string &t) {};
 bool vp_typedef_varint::is_terminal() { return true; };
 bool vp_typedef_varint::is_poly() { return false; };
+bool vp_typedef_varint::is_pod() { return false; };
 void vp_typedef_varint::get_terminals(Terminals &terminals, const TypeMap &type_map) {};

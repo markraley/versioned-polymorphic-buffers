@@ -26,6 +26,7 @@ struct vp_typedef_string : public vp_typedef
    virtual void add_subclass(const std::string &t);
    virtual bool is_terminal();
    virtual bool is_poly();
+   virtual bool is_pod();
    virtual void get_terminals(Terminals &terminals, const TypeMap &type_map);
 
 };

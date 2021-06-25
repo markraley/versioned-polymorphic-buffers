@@ -99,6 +99,9 @@ vp_typedef_character::is_terminal() { return true; };
 bool
 vp_typedef_character::is_poly() { return false; };
 
+bool
+vp_typedef_character::is_pod() { return false; };
+
 void
 vp_typedef_character::get_terminals
    (Terminals &terminals, const TypeMap &type_map) {};

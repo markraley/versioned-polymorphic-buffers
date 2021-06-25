@@ -89,6 +89,7 @@ struct vp_typedef
    virtual void add_subclass(const string &) = 0;
    virtual bool is_terminal() = 0;
    virtual bool is_poly() = 0;
+   virtual bool is_pod() = 0;
    virtual void get_terminals(Terminals &, const TypeMap &) = 0;
 };
 
