@@ -199,11 +199,10 @@ int main(int argc, char* argv[])
       assert(h1.version == h2.version);
       assert(h1.test_name == h2.test_name);
       assert(o1.lookup.size() == o2.lookup.size());
-//      for (auto ii = o1.lookup.begin();ii != o1.lookup.end(); ii++) {
-//         auto p = o2.lookup[ii->first];
-//         assert((ii->second)->s1 == p->s1);
-//         assert((ii->second)->i1 == p->i1);
-//      }
+      for (auto ii = o1.lookup.begin();ii != o1.lookup.end(); ii++) {
+         auto p = o2.lookup[ii->first];
+         assert((ii->second) == p);
+      }
    }
 }
 
