@@ -38,24 +38,24 @@ tab(int n)
 bool
 code_header_cpp(ofstream &ofs, int &in, const TarLang &tar_lang)
 {
-   ofs << tab(in) <<"#pragma once\n";
-   ofs << tab(in) <<"namespace "<< tar_lang.name_space <<" {\n\n";
+   ofs <<tab(in)<<"#pragma once\n";
+   ofs <<tab(in)<<"namespace "<< tar_lang.name_space <<" {\n\n";
 
    in += 1;
 
-   ofs << tab(in) <<"bool version_check(long ver)\n";
-   ofs << tab(in) << "{\n";
-   ofs << tab(in+1) <<"return (ver < "<< tar_lang.start
+   ofs <<tab(in)<<"bool version_check(long ver)\n";
+   ofs <<tab(in)<< "{\n";
+   ofs <<tab(in+1)<<"return (ver < "<< tar_lang.start
          << " || ver > "<< tar_lang.end <<") ? false : true;\n";
-   ofs << tab(in) <<"}\n";
+   ofs <<tab(in)<<"}\n";
 
-   ofs << tab(in) <<"long get_high_version() {\n";
-   ofs << tab(in+1) <<"return "<< tar_lang.end <<";\n";
-   ofs << tab(in) <<"}\n";
+   ofs <<tab(in)<<"long get_high_version() {\n";
+   ofs <<tab(in+1)<<"return "<< tar_lang.end <<";\n";
+   ofs <<tab(in)<<"}\n";
 
-   ofs << tab(in) <<"long get_low_version() {\n";
-   ofs << tab(in+1) <<"return "<< tar_lang.start <<";\n";
-   ofs << tab(in) <<"}\n\n";
+   ofs <<tab(in)<<"long get_low_version() {\n";
+   ofs <<tab(in+1)<<"return "<< tar_lang.start <<";\n";
+   ofs <<tab(in)<<"}\n\n";
    return true;
 }
 
@@ -72,9 +72,9 @@ code_footer_cpp(ofstream &ofs, int &in, const TarLang &tar_lang)
 bool
 code_header_js(ofstream &ofs, int &in, const TarLang &tar_lang)
 {
-   ofs << tab(in) <<"// vpbuf generated code - do not modify\n";
-   ofs << tab(in) <<"\"use strict\";\n";
-   ofs << tab(in) <<"module.exports = {\n\n";
+   ofs <<tab(in)<<"// vpbuf generated code - do not modify\n";
+   ofs <<tab(in)<<"\"use strict\";\n";
+   ofs <<tab(in)<<"module.exports = {\n\n";
 
    in += 1;
    ofs <<tab(in)<< "factory: null, // must be set to class factory object\n\n";
@@ -85,18 +85,18 @@ code_header_js(ofstream &ofs, int &in, const TarLang &tar_lang)
 bool
 code_footer_js(ofstream &ofs, int &in, const TarLang &tar_lang)
 {
-   ofs << tab(in) <<"version_check: function(ver) {\n";
-   ofs << tab(in+1) <<"return (ver < "<< tar_lang.start
+   ofs <<tab(in)<<"version_check: function(ver) {\n";
+   ofs <<tab(in+1)<<"return (ver < "<< tar_lang.start
          << " || ver > "<< tar_lang.end <<") ? false : true;\n";
-   ofs << tab(in) <<"},\n";
+   ofs <<tab(in)<<"},\n";
 
-   ofs << tab(in) <<"get_high_version: function(ver) {\n";
-   ofs << tab(in+1) <<"return "<< tar_lang.end <<"\n";
-   ofs << tab(in) <<"},\n";
+   ofs <<tab(in)<<"get_high_version: function(ver) {\n";
+   ofs <<tab(in+1)<<"return "<< tar_lang.end <<"\n";
+   ofs << tab(in)<<"},\n";
 
-   ofs << tab(in) <<"get_low_version: function(ver) {\n";
-   ofs << tab(in+1) <<"return "<< tar_lang.start <<"\n";
-   ofs << tab(in) <<"}\n";
+   ofs <<tab(in)<<"get_low_version: function(ver) {\n";
+   ofs <<tab(in+1)<<"return "<< tar_lang.start <<"\n";
+   ofs <<tab(in)<<"}\n";
 
    ofs << "};\n";
 
@@ -838,7 +838,8 @@ main(int argc, char *argv[])
    bool r = phrase_parse(iter, end, vpc, space, result);
 
    if (r && iter == end) {
-      std::cout <<"parse succeeded, type count is: "<< vpc.vp_typedefs.size() <<"\n";
+      std::cout <<"parse succeeded, type count is: "
+                        << vpc.vp_typedefs.size() <<"\n";
       return 0;
    } else {
       std::cout <<"parse failed near:\n";
