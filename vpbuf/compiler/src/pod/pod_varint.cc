@@ -21,7 +21,7 @@ pod_varint::serialize_out_cpp(
    if (code_emitted)
       in++;
 
-   out_stream << tab(in) << "write_int(wc, payload." << name << ");\n";
+   out_stream <<tab(in)<< "write_int(wc, payload." << name << ");\n";
 }
 
 void
@@ -39,7 +39,7 @@ pod_varint::serialize_in_cpp(
    if (code_emitted)
       in++;
 
-   out_stream << tab(in) << "read_int(rc, payload." << name << ");\n";
+   out_stream <<tab(in)<< "read_int(rc, payload." << name << ");\n";
 }
 
 // --- python ------------------------------------------------------------------
@@ -56,7 +56,7 @@ pod_varint::serialize_out_py(
    if (!present)
       return;
 
-   out_stream << tab(in) << "write_int(ver, f, payload." << name << ")\n";
+   out_stream <<tab(in)<<"write_int(ver, f, payload."<< name <<")\n";
 }
 
 void
@@ -71,7 +71,7 @@ pod_varint::serialize_in_py(
    if (!present)
       return;
 
-   out_stream << tab(in) << "payload." << name << " = read_int(ver, f)\n";
+   out_stream <<tab(in)<<"payload."<< name <<" = read_int(ver, f)\n";
 }
 
 // --- javascript --------------------------------------------------------------
@@ -91,7 +91,7 @@ pod_varint::serialize_out_js(
    if (code_emitted)
       in++;
 
-   out_stream << tab(in) << "wc.write_Integer(payload." << name <<");\n";
+   out_stream <<tab(in)<<"wc.write_Integer(payload." << name <<");\n";
 
 }
 
@@ -110,8 +110,7 @@ pod_varint::serialize_in_js(
    if (code_emitted)
       in++;
 
-   out_stream << tab(in) << "payload."
-      << name << " = rc.read_Integer();\n";
+   out_stream <<tab(in)<<"payload."<< name <<" = rc.read_Integer();\n";
 }
 
 std::string pod_varint::declare_js()

@@ -27,19 +27,18 @@ pod_vector::serialize_out_cpp(
       ref_prefix = "*";
 
    if (code_emitted)
-      ofs << tab(in++) << "{\n";
+      ofs <<tab(in++)<<"{\n";
 
-   ofs << tab(in) << "write_int(wc, payload."
-            << name << ".size());\n";
+   ofs <<tab(in)<<"write_int(wc, payload."<< name <<".size());\n";
 
-   ofs << tab(in) << "for (auto ii = payload." << name << ".begin();"
-                     << "ii != payload." << name << ".end(); ii++)\n";
+   ofs <<tab(in)<<"for (auto ii = payload."<< name <<".begin();"
+                     <<"ii != payload."<< name << ".end(); ii++)\n";
 
-   ofs << tab(in+1) << "write_" << vec_type
-            << "(nVersion, wc, "<< ref_prefix <<"(*ii));\n";
+   ofs <<tab(in+1)<<"write_"<< vec_type
+            <<"(nVersion, wc, "<< ref_prefix <<"(*ii));\n";
 
    if (code_emitted)
-      ofs << tab(--in) << "}\n";
+      ofs <<tab(--in)<<"}\n";
 }
 
 void
@@ -61,32 +60,26 @@ pod_vector::serialize_in_cpp(
    if (code_emitted)
       ofs << tab(in++) << "{\n";
 
-   ofs << tab(in) <<"int count_"<< name <<";\n";
-   ofs << tab(in) <<"read_int(rc, count_"<< name <<");\n";
-   ofs << tab(in) <<"for (auto i = 0; i < count_"<< name <<"; i++) {\n";
+   ofs <<tab(in)<<"int count_"<< name <<";\n";
+   ofs <<tab(in)<<"read_int(rc, count_"<< name <<");\n";
+   ofs <<tab(in)<<"for (auto i = 0; i < count_"<< name <<"; i++) {\n";
 
    if (vp_typedefs[payload_index]->is_poly())
-      ofs << tab(in+1) << "auto *pod = read_"
-               << vec_type
-               << "(nVersion, rc);\n";
+      ofs <<tab(in+1)<<"auto *pod = read_"<< vec_type <<"(nVersion, rc);\n";
    else if (is_ptr) {
-      ofs <<tab(in+1)<< "auto pod = new " << vec_type << ";\n";
+      ofs <<tab(in+1)<<"auto pod = new "<< vec_type <<";\n";
 
-      ofs << tab(in+1) << "read_"
-               << vec_type
-               << "(nVersion, rc, *pod);\n";
+      ofs <<tab(in+1)<<"read_"<< vec_type <<"(nVersion, rc, *pod);\n";
    } else {
       ofs <<tab(in+1)<< vec_type <<" pod;\n";
-      ofs << tab(in+1) << "read_"
-               << vec_type
-               << "(nVersion, rc, pod);\n";
+      ofs <<tab(in+1)<<"read_"<< vec_type <<"(nVersion, rc, pod);\n";
    }
 
-   ofs << tab(in+1) << "payload." << name << ".push_back(pod);\n";
-   ofs << tab(in) << "}\n";
+   ofs <<tab(in+1)<<"payload."<< name <<".push_back(pod);\n";
+   ofs <<tab(in) << "}\n";
 
    if (code_emitted)
-      ofs << tab(--in) << "}\n";
+      ofs <<tab(--in)<<"}\n";
 }
 
 // --- python ------------------------------------------------------------------
@@ -105,15 +98,14 @@ pod_vector::serialize_out_py(ofstream &out_stream,
    std::string vec_type;
    vp_typedefs[payload_index]->get_type_python(vec_type);
 
-   out_stream << tab(in) << "count = len(payload." << name << ")\n";
-   out_stream << tab(in) << "write_int(ver, f, count)\n";
+   out_stream <<tab(in)<<"count = len(payload." << name <<")\n";
+   out_stream <<tab(in)<<"write_int(ver, f, count)\n";
 
-   out_stream << tab(in) << "i = 0\n";
-   out_stream << tab(in) << "while (i < count):\n";
-   out_stream << tab(in + 1) << "write_" << vec_type
+   out_stream <<tab(in)<<"i = 0\n";
+   out_stream <<tab(in)<<"while (i < count):\n";
+   out_stream <<tab(in+1)<<"write_" << vec_type
             << "(ver, f, payload." << name << "[i])\n";
-   out_stream << tab(in + 1) << "i = i + 1\n";
-
+   out_stream <<tab(in+1)<<"i = i + 1\n";
 }
 
 void
@@ -130,15 +122,15 @@ pod_vector::serialize_in_py(ofstream &out_stream,
    std::string vec_type;
    vp_typedefs[payload_index]->get_type_python(vec_type);
 
-   out_stream << tab(in) << "payload." << name << " = []\n";
-   out_stream << tab(in) << "count = read_int(ver, f)\n";
-   out_stream << tab(in) << "i = 0\n";
+   out_stream <<tab(in)<< "payload."<< name <<" = []\n";
+   out_stream <<tab(in)<< "count = read_int(ver, f)\n";
+   out_stream <<tab(in)<< "i = 0\n";
 
-   out_stream << tab(in) << "while (i < count):\n";
-   out_stream << tab(in + 1) << vp_typedefs[payload_index]->format_in_py( "t");
+   out_stream <<tab(in)<<"while (i < count):\n";
+   out_stream <<tab(in+1)<< vp_typedefs[payload_index]->format_in_py( "t");
 
-   out_stream << tab(in + 1) << "payload." << name << ".append(t)\n";
-   out_stream << tab(in + 1) << "i = i + 1\n";
+   out_stream <<tab(in+1)<<"payload." << name << ".append(t)\n";
+   out_stream <<tab(in+1)<<"i = i + 1\n";
 
 }
 
@@ -162,11 +154,10 @@ pod_vector::serialize_out_js(
    std::string vec_type, type_payload;
    vp_typedefs[payload_index]->get_type_js(vec_type);
 
-   out_stream << tab(in) <<"wc.write_Integer(payload."<< name << ".length);\n"
-      << tab(in) << "for (var i = 0; i < payload."
-                                 << name << ".length; i++)\n"
-         << tab(in + 1) << "this.write_" << vec_type
-      << "(ver, wc, payload." << name << "[i]);\n";
+   out_stream <<tab(in)<<"wc.write_Integer(payload."<< name <<".length);\n"
+      <<tab(in)<<"for (var i = 0; i < payload."<< name <<".length; i++)\n"
+      <<tab(in+1)<<"this.write_"<< vec_type
+                        <<"(ver, wc, payload."<< name <<"[i]);\n";
 }
 
 void
@@ -189,12 +180,11 @@ pod_vector::serialize_in_js(
    std::string t;
 
    out_stream <<
-      tab(in) << "var count = rc.read_Integer();\n" <<
-      tab(in) << "for (var i = 0; i < count; i++) {\n" <<
-         tab(in + 1) << "var c = this.read_" << vec_type << "(ver, rc);\n" <<
-         tab(in + 1) << "payload." << name << ".push(c);\n" <<
-         tab(in) << "}\n"
-      ;
+      tab(in)<< "var count = rc.read_Integer();\n"
+      <<tab(in)<< "for (var i = 0; i < count; i++) {\n"
+      <<tab(in+1)<< "var c = this.read_" << vec_type << "(ver, rc);\n"
+      <<tab(in+1)<< "payload." << name << ".push(c);\n"
+      <<tab(in)<< "}\n";
 }
 
 std::string

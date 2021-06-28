@@ -22,7 +22,7 @@ pod_string::serialize_out_cpp(
    if (code_emitted)
       in++;
 
-   ofs << tab(in) << "write_string(wc, payload." << name << ");\n";
+   ofs <<tab(in)<< "write_string(wc, payload." << name << ");\n";
 }
 
 void
@@ -40,7 +40,7 @@ pod_string::serialize_in_cpp(
    if (code_emitted)
       in++;
 
-   ofs << tab(in) << "read_string(rc, payload." << name << ");\n";
+   ofs <<tab(in)<< "read_string(rc, payload." << name << ");\n";
 }
 
 // --- python ------------------------------------------------------------------
@@ -57,7 +57,7 @@ pod_string::serialize_out_py(
    if (!present)
       return;
 
-   out_stream << tab(in) << "write_str(ver, f, payload." << name << ")\n";
+   out_stream <<tab(in)<< "write_str(ver, f, payload." << name << ")\n";
 }
 
 void
@@ -72,7 +72,7 @@ pod_string::serialize_in_py(
    if (!present)
       return;
 
-   out_stream << tab(in) << "payload." << name << " = read_str(ver, f)\n";
+   out_stream <<tab(in)<< "payload." << name << " = read_str(ver, f)\n";
 }
 
 // --- javascript --------------------------------------------------------------
@@ -92,7 +92,7 @@ pod_string::serialize_out_js(
    if (code_emitted)
       in++;
 
-   out_stream << tab(in)
+   out_stream <<tab(in)
       << "wc.write_String(payload." << name << ");\n";
 }
 
@@ -111,7 +111,7 @@ pod_string::serialize_in_js(
    if (code_emitted)
       in++;
 
-   out_stream << tab(in)
+   out_stream <<tab(in)
       << "payload." << name << " = rc.read_String();\n";
 }
 

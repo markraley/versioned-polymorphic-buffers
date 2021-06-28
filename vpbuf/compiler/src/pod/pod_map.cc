@@ -80,9 +80,6 @@ pod_map::serialize_in_cpp(
       ofs <<tab(in+1)<<"read_"<< payload_type <<"(rc, v);\n";
    }
 
-//   ofs <<tab(in + 1) << vp_key->format_in_cpp("k");
-//   ofs <<tab(in + 1) << vp_typedefs[payload_index]->format_in_cpp("t");
-
    ofs <<tab(in + 1) << "payload." << name << "[k] = v;\n";
    ofs <<tab(in)<< "}\n\n";
 }
@@ -206,12 +203,12 @@ pod_map::serialize_in_js(
    vp_typedefs[payload_index]->get_type_js(payload_type);
 
    ofs <<tab(in)<< "payload." << name << " = {}\n";
-   ofs <<tab(in) << "var count = rc.read_Integer()\n";
-   ofs <<tab(in) << "for (var i = 0; i < count; i++) {\n";
-   ofs <<tab(in + 1) << vp_key->format_in_js("k");
-   ofs <<tab(in + 1) << vp_typedefs[payload_index]->format_in_js("t");
+   ofs <<tab(in)<< "var count = rc.read_Integer()\n";
+   ofs <<tab(in)<< "for (var i = 0; i < count; i++) {\n";
+   ofs <<tab(in+1)<< vp_key->format_in_js("k");
+   ofs <<tab(in+1)<< vp_typedefs[payload_index]->format_in_js("t");
 
-   ofs <<tab(in + 1) << "payload." << name << "[k] = t\n";
+   ofs <<tab(in+1)<< "payload." << name << "[k] = t\n";
    ofs <<tab(in)<< "}\n\n";
 }
 

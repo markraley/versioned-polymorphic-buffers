@@ -26,11 +26,11 @@ pod_typed::serialize_out_cpp(
    vp_typedefs[payload_index]->get_type_cpp(t);
 
    if (is_ptr)
-      ofs << tab(in)
-         << "write_" << t << "(nVersion, wc, " << "payload." << name << ");\n";
+      ofs <<tab(in)
+         <<"write_" << t << "(nVersion, wc, " << "payload." << name << ");\n";
    else
-      ofs << tab(in)
-         << "write_" << t << "(nVersion, wc, " << "&payload." << name << ");\n";
+      ofs <<tab(in)
+         <<"write_" << t << "(nVersion, wc, " << "&payload." << name << ");\n";
 }
 
 void
@@ -54,12 +54,12 @@ pod_typed::serialize_in_cpp(
    // TODO: output braces below
 
    if (is_ptr) {
-      ofs << tab(in) << "payload."<< name <<" = new "<< t <<";\n";
-      ofs << tab(in)
-         << "read_"<< t <<"(nVersion, rc, payload."<< name <<");\n";
+      ofs <<tab(in)<< "payload."<< name <<" = new "<< t <<";\n";
+      ofs <<tab(in)
+         <<"read_"<< t <<"(nVersion, rc, payload."<< name <<");\n";
    } else
-      ofs << tab(in)
-         << "read_" << t << "(nVersion, rc, " << "&(payload."<< name <<"));\n";
+      ofs <<tab(in)
+         <<"read_" << t << "(nVersion, rc, " << "&(payload."<< name <<"));\n";
 }
 
 // --- python ------------------------------------------------------------------
@@ -79,8 +79,8 @@ pod_typed::serialize_out_py(
    std::string t;
    vp_typedefs[payload_index]->get_type_python(t);
 
-   out_stream << tab(in) << "write_" << t
-      << "(ver, f, payload." << name << ")\n";
+   out_stream <<tab(in)<< "write_" << t
+      <<"(ver, f, payload." << name << ")\n";
 }
 
 void
@@ -94,8 +94,8 @@ pod_typed::serialize_in_py(ofstream &out_stream,
    if (!present)
       return;
 
-   out_stream << tab(in)
-      << vp_typedefs[payload_index]->format_in_py("payload." + name);
+   out_stream <<tab(in)
+      <<vp_typedefs[payload_index]->format_in_py("payload." + name);
 }
 
 // --- javascript --------------------------------------------------------------
@@ -118,8 +118,8 @@ pod_typed::serialize_out_js(
 
    vp_typedefs[payload_index]->get_type_js(t);
 
-   out_stream << tab(in)
-      << "write_" << t << "(ver, output, payload." << name << ");\n";
+   out_stream <<tab(in)
+      <<"write_"<< t <<"(ver, output, payload."<< name <<");\n";
 }
 
 void
@@ -140,8 +140,8 @@ pod_typed::serialize_in_js(
 
    vp_typedefs[payload_index]->get_type_js(t);
 
-   out_stream << tab(in)
-      << "payload." << name << " = read_" << t << "(ver, input);\n";
+   out_stream <<tab(in)
+      <<"payload."<< name <<" = read_"<< t <<"(ver, input);\n";
 }
 
 std::string
