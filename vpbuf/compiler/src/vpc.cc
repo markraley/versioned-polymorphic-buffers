@@ -823,6 +823,12 @@ main(int argc, char *argv[])
    int result;
 
    std::filesystem::path vpc_file_path(std::filesystem::relative(argv[1]));
+
+   if (!std::filesystem::exists(vpc_file_path)) {
+      std::cout << "file not found\n";
+      return 2;
+   }
+
    vp_compiler vpc(vpc_file_path.remove_filename());
 
    std::string str(read_from_file(argv[1]));
