@@ -31,49 +31,49 @@ vp_typedef_character::format_in_py(const std::string var_name)
 
 void
 vp_typedef_character::serialize_out_cpp(
-   std::ofstream &out_stream, int in, TypeMap &type_map, TarLang &) {}
+   std::ofstream &ofs, int in, TypeMap &type_map, TarLang &) {}
 
 void
 vp_typedef_character::serialize_in_cpp(
-   std::ofstream &out_stream, int in, TypeMap &type_map, TarLang &) {}
+   std::ofstream &ofs, int in, TypeMap &type_map, TarLang &) {}
 
 
 void
 vp_typedef_character::serialize_out_py(
-   std::ofstream &out_stream, TypeMap &type_map, TarLang &)
+   std::ofstream &ofs, TypeMap &type_map, TarLang &)
 {
-   out_stream << "def write_str(ver, f, payload):\n";
-   out_stream <<
+   ofs << "def write_str(ver, f, payload):\n";
+   ofs <<
 "\
     f.writeString(payload)\n\
 ";
-   out_stream << "\n";
+   ofs << "\n";
 }
 
 void
 vp_typedef_character::serialize_in_py(
-   std::ofstream &out_stream, TypeMap &type_map, TarLang &)
+   std::ofstream &ofs, TypeMap &type_map, TarLang &)
 {
-   out_stream << "def read_str(ver, f):\n";
-   out_stream <<
+   ofs << "def read_str(ver, f):\n";
+   ofs <<
 "\
    t = f.readInteger()\n\
    assert(t == 6)\n\
    return f.readString()\n\
 ";
 
-   out_stream << "\n";
+   ofs << "\n";
 }
 
 
 void
 vp_typedef_character::serialize_out_js(
-   std::ofstream &out_stream, int in, TypeMap &type_map, TarLang &)
+   std::ofstream &ofs, int in, TypeMap &type_map, TarLang &)
 {}
 
 void
 vp_typedef_character::serialize_in_js(
-   std::ofstream &out_stream, int in, TypeMap &type_map, TarLang &)
+   std::ofstream &ofs, int in, TypeMap &type_map, TarLang &)
 {}
 
 std::string

@@ -165,7 +165,7 @@ code_version_test_cpp(
 
 bool
 code_version_test_py(
-   ofstream &out_stream,
+   ofstream &ofs,
    int &nIndent,
    int nBegin,
    int nEnd,
@@ -179,14 +179,14 @@ code_version_test_py(
       if (nBegin > nLimit)
          is_present = false;
       else {
-         out_stream << "\tif (ver >= " << nBegin << "):\n";
+         ofs << "\tif (ver >= " << nBegin << "):\n";
          in = 1;
       }
    } else if (nBegin > nBase || nEnd != 0) {
       if (nEnd < nBase || nBegin > nLimit)
          is_present = false;
       else {
-         out_stream << "\tif (ver >= "
+         ofs << "\tif (ver >= "
             << nBegin << " and ver <= " << nEnd << "):\n";
          in = 1;
       }

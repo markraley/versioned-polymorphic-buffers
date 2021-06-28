@@ -47,71 +47,71 @@ pod_string::serialize_in_cpp(
 
 void
 pod_string::serialize_out_py(
-   ofstream &out_stream,
+   ofstream &ofs,
    TypeMap &type_map,
    TarLang &tar_lang)
 {
    int in = 1;
-   bool present = code_version_test_py(out_stream, in,
+   bool present = code_version_test_py(ofs, in,
                                     nBegin, nEnd, tar_lang.start, tar_lang.end);
    if (!present)
       return;
 
-   out_stream <<tab(in)<< "write_str(ver, f, payload." << name << ")\n";
+   ofs <<tab(in)<< "write_str(ver, f, payload." << name << ")\n";
 }
 
 void
 pod_string::serialize_in_py(
-   ofstream &out_stream,
+   ofstream &ofs,
    TypeMap &type_map,
    TarLang &tar_lang)
 {
    int in = 1;
-   bool present = code_version_test_py(out_stream, in,
+   bool present = code_version_test_py(ofs, in,
                                     nBegin, nEnd, tar_lang.start, tar_lang.end);
    if (!present)
       return;
 
-   out_stream <<tab(in)<< "payload." << name << " = read_str(ver, f)\n";
+   ofs <<tab(in)<< "payload." << name << " = read_str(ver, f)\n";
 }
 
 // --- javascript --------------------------------------------------------------
 
 void
 pod_string::serialize_out_js(
-   ofstream &out_stream,
+   ofstream &ofs,
    int in,
    TypeMap &type_map,
    TarLang &tar_lang)
 {
    bool present, code_emitted;
-   code_version_test_js(out_stream, present, code_emitted, in,
+   code_version_test_js(ofs, present, code_emitted, in,
                            nBegin, nEnd, tar_lang.start, tar_lang.end);
    if (!present)
       return;
    if (code_emitted)
       in++;
 
-   out_stream <<tab(in)
+   ofs <<tab(in)
       << "wc.write_String(payload." << name << ");\n";
 }
 
 void
 pod_string::serialize_in_js(
-   ofstream &out_stream,
+   ofstream &ofs,
    int in,
    TypeMap &type_map,
    TarLang &tar_lang)
 {
    bool present, code_emitted;
-   code_version_test_js(out_stream, present, code_emitted, in,
+   code_version_test_js(ofs, present, code_emitted, in,
                            nBegin, nEnd, tar_lang.start, tar_lang.end);
    if (!present)
       return;
    if (code_emitted)
       in++;
 
-   out_stream <<tab(in)
+   ofs <<tab(in)
       << "payload." << name << " = rc.read_String();\n";
 }
 

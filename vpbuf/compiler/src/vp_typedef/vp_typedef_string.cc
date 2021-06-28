@@ -37,18 +37,18 @@ vp_typedef_string::format_in_py(const std::string var_name)
 
 void
 vp_typedef_string::serialize_out_cpp(
-   std::ofstream &out_stream, int in, TypeMap &type_map, TarLang &) {}
+   std::ofstream &ofs, int in, TypeMap &type_map, TarLang &) {}
 
 void vp_typedef_string::serialize_in_cpp(
-   std::ofstream &out_stream, int in, TypeMap &type_map, TarLang &) {}
+   std::ofstream &ofs, int in, TypeMap &type_map, TarLang &) {}
 
 // -----------------------------------------------------------------------------
 
 void vp_typedef_string::serialize_out_py(
-   std::ofstream &out_stream, TypeMap &type_map, TarLang &) {}
+   std::ofstream &ofs, TypeMap &type_map, TarLang &) {}
 
 void vp_typedef_string::serialize_in_py(
-   std::ofstream &out_stream, TypeMap &type_map, TarLang &) {}
+   std::ofstream &ofs, TypeMap &type_map, TarLang &) {}
 
 // -----------------------------------------------------------------------------
 

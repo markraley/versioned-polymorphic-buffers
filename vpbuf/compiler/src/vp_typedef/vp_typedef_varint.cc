@@ -35,7 +35,7 @@ vp_typedef_varint::format_in_py(const std::string var_name)
 
 void
 vp_typedef_varint::serialize_out_cpp(
-   ofstream &out_stream,
+   ofstream &ofs,
    int in,
    TypeMap &type_map,
    TarLang &tar_lang)
@@ -44,7 +44,7 @@ vp_typedef_varint::serialize_out_cpp(
 
 void
 vp_typedef_varint::serialize_in_cpp(
-   ofstream &out_stream,
+   ofstream &ofs,
    int in,
    TypeMap &type_map,
    TarLang &tar_lang)
@@ -55,35 +55,35 @@ vp_typedef_varint::serialize_in_cpp(
 
 void
 vp_typedef_varint::serialize_out_py(
-   ofstream &out_stream,
+   ofstream &ofs,
    TypeMap &type_map,
    TarLang &tar_lang)
 {
 
-   out_stream << "def write_int(ver, f, payload):\n";
-   out_stream <<
+   ofs << "def write_int(ver, f, payload):\n";
+   ofs <<
 "\
     f.writeInteger(payload)\n\
 ";
-   out_stream << "\n";
+   ofs << "\n";
 }
 
 void
 vp_typedef_varint::serialize_in_py(
-   ofstream &out_stream,
+   ofstream &ofs,
    TypeMap &type_map,
    TarLang &tar_lang)
 {
-   out_stream << "def read_int(ver, f):\n";
+   ofs << "def read_int(ver, f):\n";
 
-   out_stream <<
+   ofs <<
 "\
    t = f.readInteger()\n\
    assert(t == 4)\n\
    return f.readInteger()\n\
 ";
 
-   out_stream << "\n";
+   ofs << "\n";
 }
 
 // --- javascript --------------------------------------------------------------

@@ -66,12 +66,12 @@ pod_typed::serialize_in_cpp(
 
 void
 pod_typed::serialize_out_py(
-   ofstream &out_stream,
+   ofstream &ofs,
    TypeMap &type_map,
    TarLang &tar_lang)
 {
    int in = 1;
-   bool present = code_version_test_py(out_stream, in,
+   bool present = code_version_test_py(ofs, in,
                                     nBegin, nEnd, tar_lang.start, tar_lang.end);
    if (!present)
       return;
@@ -79,22 +79,22 @@ pod_typed::serialize_out_py(
    std::string t;
    vp_typedefs[payload_index]->get_type_python(t);
 
-   out_stream <<tab(in)<< "write_" << t
+   ofs <<tab(in)<< "write_" << t
       <<"(ver, f, payload." << name << ")\n";
 }
 
 void
-pod_typed::serialize_in_py(ofstream &out_stream,
+pod_typed::serialize_in_py(ofstream &ofs,
    TypeMap &type_map,
    TarLang &tar_lang)
 {
    int in = 1;
-   bool present = code_version_test_py(out_stream, in,
+   bool present = code_version_test_py(ofs, in,
                                     nBegin, nEnd, tar_lang.start, tar_lang.end);
    if (!present)
       return;
 
-   out_stream <<tab(in)
+   ofs <<tab(in)
       <<vp_typedefs[payload_index]->format_in_py("payload." + name);
 }
 
@@ -102,14 +102,14 @@ pod_typed::serialize_in_py(ofstream &out_stream,
 
 void
 pod_typed::serialize_out_js(
-   ofstream &out_stream,
+   ofstream &ofs,
    int in,
    TypeMap &type_map,
    TarLang &tar_lang)
 {
    std::string t;
    bool present, code_emitted;
-   code_version_test_js(out_stream, present, code_emitted, in,
+   code_version_test_js(ofs, present, code_emitted, in,
                            nBegin, nEnd, tar_lang.start, tar_lang.end);
    if (!present)
       return;
@@ -118,20 +118,20 @@ pod_typed::serialize_out_js(
 
    vp_typedefs[payload_index]->get_type_js(t);
 
-   out_stream <<tab(in)
+   ofs <<tab(in)
       <<"write_"<< t <<"(ver, output, payload."<< name <<");\n";
 }
 
 void
 pod_typed::serialize_in_js(
-   ofstream &out_stream,
+   ofstream &ofs,
    int in,
    TypeMap &type_map,
    TarLang &tar_lang)
 {
    std::string t;
    bool present, code_emitted;
-   code_version_test_js(out_stream, present, code_emitted, in,
+   code_version_test_js(ofs, present, code_emitted, in,
                            nBegin, nEnd, tar_lang.start, tar_lang.end);
    if (!present)
       return;
@@ -140,7 +140,7 @@ pod_typed::serialize_in_js(
 
    vp_typedefs[payload_index]->get_type_js(t);
 
-   out_stream <<tab(in)
+   ofs <<tab(in)
       <<"payload."<< name <<" = read_"<< t <<"(ver, input);\n";
 }
 

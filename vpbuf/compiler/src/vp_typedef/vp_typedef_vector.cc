@@ -41,21 +41,21 @@ std::string vp_typedef_vector::format_in_py(const std::string var_name)
 
 void
 vp_typedef_vector::serialize_out_cpp(
-   ofstream &out_stream, int in, TypeMap &type_map, TarLang &) {}
+   ofstream &ofs, int in, TypeMap &type_map, TarLang &) {}
 
 void
 vp_typedef_vector::serialize_in_cpp(
-   std::ofstream &out_stream, int in, TypeMap &type_map, TarLang &) {}
+   std::ofstream &ofs, int in, TypeMap &type_map, TarLang &) {}
 
 // --- python ------------------------------------------------------------------
 
 void
 vp_typedef_vector::serialize_out_py(
-   std::ofstream &out_stream, TypeMap &type_map, TarLang &) {}
+   std::ofstream &ofs, TypeMap &type_map, TarLang &) {}
 
 void
 vp_typedef_vector::serialize_in_py(
-   std::ofstream &out_stream, TypeMap &type_map, TarLang &)
+   std::ofstream &ofs, TypeMap &type_map, TarLang &)
 {
 #if 0
    std::string t;
@@ -64,11 +64,11 @@ vp_typedef_vector::serialize_in_py(
 
    if (t == "str")
    {
-      out_stream << "def read_" << type_name << "(ver, f):\n";
-      out_stream << "\treturn read_str(ver, f)\n";
+      ofs << "def read_" << type_name << "(ver, f):\n";
+      ofs << "\treturn read_str(ver, f)\n";
    }
 
-   out_stream << "\n\n";
+   ofs << "\n\n";
 #endif
 }
 
@@ -76,11 +76,11 @@ vp_typedef_vector::serialize_in_py(
 
 void
 vp_typedef_vector::serialize_out_js(
-   ofstream &out_stream, int in, TypeMap &type_map, TarLang &) {}
+   ofstream &ofs, int in, TypeMap &type_map, TarLang &) {}
 
 void
 vp_typedef_vector::serialize_in_js(
-   ofstream &out_stream, int in, TypeMap &type_map, TarLang &) {}
+   ofstream &ofs, int in, TypeMap &type_map, TarLang &) {}
 
 std::string
 vp_typedef_vector::format_in_js(const std::string var_name)

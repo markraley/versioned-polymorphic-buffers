@@ -119,45 +119,45 @@ vp_typedef_pod::serialize_in_cpp(
 
 void
 vp_typedef_pod::serialize_out_py(
-   ofstream &out_stream,
+   ofstream &ofs,
    TypeMap &type_map,
    TarLang &tar_lang)
 {
    PodItems::iterator jj;
 
-   out_stream << "def write_" << type_name << "(ver, f, payload):\n";
+   ofs << "def write_" << type_name << "(ver, f, payload):\n";
 
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
-      (*jj)->serialize_out_py(out_stream, type_map, tar_lang);
+      (*jj)->serialize_out_py(ofs, type_map, tar_lang);
    }
 
    if (parent_name.size() > 0) {
       vp_typedef *p = GetVPType(parent_name, type_map);
 
       if (p->parent_name.size() > 0)
-         out_stream << "\twrite_" << parent_name << "(ver, f, payload)\n";
+         ofs << "\twrite_" << parent_name << "(ver, f, payload)\n";
    }
 
-   out_stream << "\n";
+   ofs << "\n";
 }
 
 void
 vp_typedef_pod::serialize_in_py(
-   ofstream &out_stream,
+   ofstream &ofs,
    TypeMap &type_map,
    TarLang &tar_lang)
 {
    PodItems::iterator jj;
 
-   out_stream << "def read_" << type_name << "(ver, f):\n";
+   ofs << "def read_" << type_name << "(ver, f):\n";
 
-   out_stream << "\tpayload = " << type_name << "()\n";
+   ofs << "\tpayload = " << type_name << "()\n";
 
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
-      (*jj)->serialize_in_py(out_stream, type_map, tar_lang);
+      (*jj)->serialize_in_py(ofs, type_map, tar_lang);
    }
 
-   out_stream << "\treturn payload\n\n";
+   ofs << "\treturn payload\n\n";
 }
 
 // --- javascript --------------------------------------------------------------

@@ -118,65 +118,65 @@ vp_typedef_poly::serialize_in_cpp(
 // --- python ------------------------------------------------------------------
 
 void
-vp_typedef_poly::serialize_out_py(ofstream &out_stream,
+vp_typedef_poly::serialize_out_py(ofstream &ofs,
    TypeMap &type_map,
    TarLang &tar_lang)
 {
    PodItems::iterator jj;
 
-   out_stream << "def write_" << type_name << "(ver, f, payload):\n";
+   ofs << "def write_" << type_name << "(ver, f, payload):\n";
 
    if (parent_name.size() == 0) {
       Terminals terms;
 
       get_terminals(terms, type_map);
 
-      out_stream << "\tc = type(payload).__name__\n";
+      ofs << "\tc = type(payload).__name__\n";
 
       for (size_t i = 0; i < terms.size() ; i++) {
-         out_stream << "\tif (c == \"" << terms[i].name << "\"):\n";
+         ofs << "\tif (c == \"" << terms[i].name << "\"):\n";
 
          size_t k = terms[i].layers.size() - 1;
          for (size_t j = 0;  j < terms[i].layers.size(); j++, k--)
-            out_stream << "\t\twrite_int(ver, f,"
+            ofs << "\t\twrite_int(ver, f,"
                      << terms[i].layers[k] << ")\n";
 
-         out_stream << "\t\twrite_" << terms[i].name
+         ofs << "\t\twrite_" << terms[i].name
                      << "(ver, f, payload)\n";
       }
    }
 
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
-      (*jj)->serialize_out_py(out_stream, type_map, tar_lang);
+      (*jj)->serialize_out_py(ofs, type_map, tar_lang);
    }
 
-   out_stream << "\n\n";
+   ofs << "\n\n";
 }
 
 void
 vp_typedef_poly::serialize_in_py(
-   ofstream &out_stream,
+   ofstream &ofs,
    TypeMap &type_map,
    TarLang &tar_lang)
 {
    PodItems::iterator jj;
 
-   out_stream << "def read_" << type_name << "(ver, f):\n";
+   ofs << "def read_" << type_name << "(ver, f):\n";
 
-   out_stream << "\tt = read_int(ver, f)\n";
+   ofs << "\tt = read_int(ver, f)\n";
 
    for (size_t i = 0; i < polys.size() ; i++)
    {
-      out_stream << "\tif (t == " << i << "):\n";
-      out_stream << "\t\tpayload = read_" << polys[i] << "(ver, f)\n";
+      ofs << "\tif (t == " << i << "):\n";
+      ofs << "\t\tpayload = read_" << polys[i] << "(ver, f)\n";
    }
 
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj)
    {
-      (*jj)->serialize_in_py(out_stream, type_map, tar_lang);
+      (*jj)->serialize_in_py(ofs, type_map, tar_lang);
    }
 
-   out_stream << "\treturn payload\n\n";
+   ofs << "\treturn payload\n\n";
 }
 
 // --- javascript --------------------------------------------------------------

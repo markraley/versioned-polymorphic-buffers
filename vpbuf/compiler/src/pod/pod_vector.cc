@@ -85,12 +85,12 @@ pod_vector::serialize_in_cpp(
 // --- python ------------------------------------------------------------------
 
 void
-pod_vector::serialize_out_py(ofstream &out_stream,
+pod_vector::serialize_out_py(ofstream &ofs,
    TypeMap &type_map,
    TarLang &tar_lang)
 {
    int in = 1;
-   bool present = code_version_test_py(out_stream, in,
+   bool present = code_version_test_py(ofs, in,
                                     nBegin, nEnd, tar_lang.start, tar_lang.end);
    if (!present)
       return;
@@ -98,23 +98,23 @@ pod_vector::serialize_out_py(ofstream &out_stream,
    std::string vec_type;
    vp_typedefs[payload_index]->get_type_python(vec_type);
 
-   out_stream <<tab(in)<<"count = len(payload." << name <<")\n";
-   out_stream <<tab(in)<<"write_int(ver, f, count)\n";
+   ofs <<tab(in)<<"count = len(payload." << name <<")\n";
+   ofs <<tab(in)<<"write_int(ver, f, count)\n";
 
-   out_stream <<tab(in)<<"i = 0\n";
-   out_stream <<tab(in)<<"while (i < count):\n";
-   out_stream <<tab(in+1)<<"write_" << vec_type
+   ofs <<tab(in)<<"i = 0\n";
+   ofs <<tab(in)<<"while (i < count):\n";
+   ofs <<tab(in+1)<<"write_" << vec_type
             << "(ver, f, payload." << name << "[i])\n";
-   out_stream <<tab(in+1)<<"i = i + 1\n";
+   ofs <<tab(in+1)<<"i = i + 1\n";
 }
 
 void
-pod_vector::serialize_in_py(ofstream &out_stream,
+pod_vector::serialize_in_py(ofstream &ofs,
    TypeMap &type_map,
    TarLang &tar_lang)
 {
    int in = 1;
-   bool present = code_version_test_py(out_stream, in,
+   bool present = code_version_test_py(ofs, in,
                                     nBegin, nEnd, tar_lang.start, tar_lang.end);
    if (!present)
       return;
@@ -122,15 +122,15 @@ pod_vector::serialize_in_py(ofstream &out_stream,
    std::string vec_type;
    vp_typedefs[payload_index]->get_type_python(vec_type);
 
-   out_stream <<tab(in)<< "payload."<< name <<" = []\n";
-   out_stream <<tab(in)<< "count = read_int(ver, f)\n";
-   out_stream <<tab(in)<< "i = 0\n";
+   ofs <<tab(in)<< "payload."<< name <<" = []\n";
+   ofs <<tab(in)<< "count = read_int(ver, f)\n";
+   ofs <<tab(in)<< "i = 0\n";
 
-   out_stream <<tab(in)<<"while (i < count):\n";
-   out_stream <<tab(in+1)<< vp_typedefs[payload_index]->format_in_py( "t");
+   ofs <<tab(in)<<"while (i < count):\n";
+   ofs <<tab(in+1)<< vp_typedefs[payload_index]->format_in_py( "t");
 
-   out_stream <<tab(in+1)<<"payload." << name << ".append(t)\n";
-   out_stream <<tab(in+1)<<"i = i + 1\n";
+   ofs <<tab(in+1)<<"payload." << name << ".append(t)\n";
+   ofs <<tab(in+1)<<"i = i + 1\n";
 
 }
 
@@ -138,13 +138,13 @@ pod_vector::serialize_in_py(ofstream &out_stream,
 
 void
 pod_vector::serialize_out_js(
-   ofstream &out_stream,
+   ofstream &ofs,
    int in,
    TypeMap &type_map,
    TarLang &tar_lang)
 {
    bool present, code_emitted;
-   code_version_test_js(out_stream, present, code_emitted, in,
+   code_version_test_js(ofs, present, code_emitted, in,
                            nBegin, nEnd, tar_lang.start, tar_lang.end);
    if (!present)
       return;
@@ -154,7 +154,7 @@ pod_vector::serialize_out_js(
    std::string vec_type, type_payload;
    vp_typedefs[payload_index]->get_type_js(vec_type);
 
-   out_stream <<tab(in)<<"wc.write_Integer(payload."<< name <<".length);\n"
+   ofs <<tab(in)<<"wc.write_Integer(payload."<< name <<".length);\n"
       <<tab(in)<<"for (var i = 0; i < payload."<< name <<".length; i++)\n"
       <<tab(in+1)<<"this.write_"<< vec_type
                         <<"(ver, wc, payload."<< name <<"[i]);\n";
@@ -162,13 +162,13 @@ pod_vector::serialize_out_js(
 
 void
 pod_vector::serialize_in_js(
-   ofstream &out_stream,
+   ofstream &ofs,
    int in,
    TypeMap &type_map,
    TarLang &tar_lang)
 {
    bool present, code_emitted;
-   code_version_test_js(out_stream, present, code_emitted, in,
+   code_version_test_js(ofs, present, code_emitted, in,
                            nBegin, nEnd, tar_lang.start, tar_lang.end);
    if (!present)
       return;
@@ -179,7 +179,7 @@ pod_vector::serialize_in_js(
    vp_typedefs[payload_index]->get_type_js(vec_type);
    std::string t;
 
-   out_stream <<
+   ofs <<
       tab(in)<< "var count = rc.read_Integer();\n"
       <<tab(in)<< "for (var i = 0; i < count; i++) {\n"
       <<tab(in+1)<< "var c = this.read_" << vec_type << "(ver, rc);\n"
