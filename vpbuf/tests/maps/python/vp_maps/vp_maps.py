@@ -44,6 +44,18 @@ def write_OuterC(ver, f, payload):
 		write_int(ver, f, k)
 		write_str(ver, f, v)
 
+def write_D1(ver, f, payload):
+	write_A(ver, f, payload.apod)
+	write_int(ver, f, payload.i)
+	write_str(ver, f, payload.s)
+	write_A(ver, f, payload.aref)
+
+def write_OuterD(ver, f, payload):
+	write_int(ver, f, len(payload.lookup))
+	for k, v in iter(payload.lookup.items()):
+		write_str(ver, f, k)
+		write_D1(ver, f, v)
+
 def read_int(ver, f):
    t = f.readInteger()
    assert(t == 4)
@@ -106,6 +118,29 @@ def read_OuterC(ver, f):
 		k = read_int(ver, f)
 		t = str()
 		t = read_str(ver, f)
+		payload.lookup[k] = t
+		i = i + 1
+
+	return payload
+
+def read_D1(ver, f):
+	payload = D1()
+	payload.apod = read_A(ver, f)
+	payload.i = read_int(ver, f)
+	payload.s = read_str(ver, f)
+	payload.aref = read_A(ver, f)
+	return payload
+
+def read_OuterD(ver, f):
+	payload = OuterD()
+	payload.lookup = {}
+	count = read_int(ver, f)
+	i = 0
+	while (i < count):
+		k = str()
+		k = read_str(ver, f)
+		t = D1()
+		t = read_D1(ver, f)
 		payload.lookup[k] = t
 		i = i + 1
 

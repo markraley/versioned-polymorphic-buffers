@@ -18,3 +18,12 @@ pod OuterB
 
 pod OuterC
     map varint string lookup 1
+
+pod D1
+    A apod 1
+    varint i 1
+    string s 1
+    *A aref 1
+
+pod OuterD
+    map string D1 lookup 1

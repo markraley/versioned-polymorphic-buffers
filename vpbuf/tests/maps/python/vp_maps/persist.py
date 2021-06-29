@@ -28,7 +28,7 @@ class OuterG:
 # ------------------------------------------------------------------------------
 
 class A:
-    def __init__(self, i = 0, s = ""):
+    def __init__(self, i = 0, s = "not set"):
         self.i1 = i
         self.s1 = s
 
@@ -41,5 +41,16 @@ class OuterB:
         self.lookup = {}
 
 class OuterC:
+    def __init__(self):
+        self.lookup = {}
+
+class D1:
+    def __init__(self, i = 0, s = "not set"):
+        self.apod = A(i + 5, 'apod' + s)
+        self.i = i
+        self.s = s
+        self.aref = A(i - 5, 'aref' + s)
+
+class OuterD:
     def __init__(self):
         self.lookup = {}

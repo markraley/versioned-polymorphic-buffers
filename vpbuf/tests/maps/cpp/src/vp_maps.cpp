@@ -51,6 +51,23 @@ namespace vp_maps {
 		}
 	}
 
+	void write_D1(long nVersion, write_context &wc, D1 &payload)
+	{
+		write_A(nVersion, wc, &payload.apod);
+		write_int(wc, payload.i);
+		write_string(wc, payload.s);
+		write_A(nVersion, wc, payload.aref);
+	}
+
+	void write_OuterD(long nVersion, write_context &wc, OuterD &payload)
+	{
+		write_int(wc, payload.lookup.size());
+		for (auto ii = payload.lookup.begin();ii != payload.lookup.end(); ii++) {
+			write_string(nVersion, wc, ii->first);
+			write_D1(nVersion, wc, *(ii->second));
+		}
+	}
+
 	void read_Header(long nVersion, read_context &rc, Header &payload)
 	{
 		read_int(rc, payload.version);
@@ -100,6 +117,29 @@ namespace vp_maps {
 			read_int(rc, k);
 			string v;
 			read_string(rc, v);
+			payload.lookup[k] = v;
+		}
+
+	}
+
+	void read_D1(long nVersion, read_context &rc, D1 &payload)
+	{
+		read_A(nVersion, rc, &(payload.apod));
+		read_int(rc, payload.i);
+		read_string(rc, payload.s);
+		payload.aref = new A;
+		read_A(nVersion, rc, payload.aref);
+	}
+
+	void read_OuterD(long nVersion, read_context &rc, OuterD &payload)
+	{
+		int count_lookup;
+		read_int(rc, count_lookup);
+		for (auto i = 0; i < count_lookup; i++) {
+			string k;
+			read_string(rc, k);
+			auto *v = new D1;
+			read_D1(nVersion, rc, *v);
 			payload.lookup[k] = v;
 		}
 

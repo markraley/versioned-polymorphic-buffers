@@ -46,6 +46,21 @@ module.exports = {
 		}
 	},
 
+	write_D1: function(ver, wc, payload) {
+		this.write_A(ver, wc, payload.apod)
+		wc.write_Integer(payload.i);
+		wc.write_String(payload.s);
+		this.write_A(ver, wc, payload.aref)
+	},
+
+	write_OuterD: function(ver, wc, payload) {
+		wc.write_Integer(Object.keys(payload.lookup).length)
+		for (const [k, v] of Object.entries(payload.lookup)) {
+			this.write_String(ver, wc, k)
+			this.write_D1(ver, wc, v)
+		}
+	},
+
 	read_String: function(ver, rc) {
 		return rc.read_String();
 	},
@@ -101,6 +116,28 @@ module.exports = {
 		for (var i = 0; i < count; i++) {
 			var k = rc.read_Integer()
 			var t = this.read_String(ver, rc)
+			payload.lookup[k] = t
+		}
+
+		return payload;
+	},
+
+	read_D1: function(ver, rc) {
+		var payload = new this.factory.D1();
+		payload.apod = this.read_A(ver, rc)
+		payload.i = rc.read_Integer();
+		payload.s = rc.read_String();
+		payload.aref = this.read_A(ver, rc)
+		return payload;
+	},
+
+	read_OuterD: function(ver, rc) {
+		var payload = new this.factory.OuterD();
+		payload.lookup = {}
+		var count = rc.read_Integer()
+		for (var i = 0; i < count; i++) {
+			var k = this.read_String(ver, rc)
+			var t = this.read_D1(ver, rc)
 			payload.lookup[k] = t
 		}
 

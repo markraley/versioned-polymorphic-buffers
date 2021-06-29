@@ -11,6 +11,13 @@ module.exports = {
         this.s1 = s1;
     },
 
+    D1: function(i = 1, s = "not set") {
+        this.apod = new module.exports.A(i + 5, 'apod' + s)
+        this.i = i
+        this.s = s
+        this.aref = new module.exports.A(i - 5, 'aref' + s)
+    },
+
     OuterA: function() {
         this.lookup = {}
     },
@@ -20,6 +27,10 @@ module.exports = {
     },
 
     OuterC: function() {
+        this.lookup = {}
+    },
+
+    OuterD: function() {
         this.lookup = {}
     },
 
