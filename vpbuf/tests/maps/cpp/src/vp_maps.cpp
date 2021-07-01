@@ -53,7 +53,7 @@ namespace vp_maps {
 
 	void write_D1(long nVersion, write_context &wc, D1 &payload)
 	{
-		write_A(nVersion, wc, (payload.apod));
+		write_A(nVersion, wc, payload.apod);
 		write_int(wc, payload.i);
 		write_string(wc, payload.s);
 		write_A(nVersion, wc, *(payload.aref));
@@ -124,7 +124,7 @@ namespace vp_maps {
 
 	void read_D1(long nVersion, read_context &rc, D1 &payload)
 	{
-		read_A(nVersion, rc, (payload.apod));
+		read_A(nVersion, rc, payload.apod);
 		read_int(rc, payload.i);
 		read_string(rc, payload.s);
 		payload.aref = new A;
