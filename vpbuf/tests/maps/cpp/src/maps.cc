@@ -256,8 +256,8 @@ int main(int argc, char* argv[])
       assert(o1.lookup.size() == o2.lookup.size());
       for (auto ii = o1.lookup.begin();ii != o1.lookup.end(); ii++) {
          auto p = o2.lookup[ii->first];
-//         assert((ii->second)->s1 == p->s1);
-//         assert((ii->second)->i1 == p->i1);
+         assert((ii->second)->s == p->s);
+         assert((ii->second)->i == p->i);
       }
    }
 
