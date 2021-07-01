@@ -265,7 +265,8 @@ struct var_generate_code
       std::vector <TarLang>::iterator tt;
       TypeMap type_map;
 
-      std::cout <<"vpc_path: "<< this->vpc_path <<"\n";
+      std::cout <<"vpc_path: "<<
+         (this->vpc_path.size() ? this->vpc_path : "<current>") <<"\n";
 
       for (ii = vp_typedefs.begin(); ii != vp_typedefs.end(); ++ii)
          type_map[(*ii)->type_name] = *ii;
@@ -828,6 +829,10 @@ main(int argc, char *argv[])
       std::cout << "file not found\n";
       return 2;
    }
+
+   std::cout <<"Versioned Polymorphic Buffers Compiler (VPC)";
+   std::cout <<" by Mark Raley, pre-release\n";
+   std::cout <<"parsing: "<< argv[1] <<"\n";
 
    vp_compiler vpc(vpc_file_path.remove_filename());
 
