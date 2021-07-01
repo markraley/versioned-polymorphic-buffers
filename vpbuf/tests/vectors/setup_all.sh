@@ -14,12 +14,13 @@ fi
 
 if [ ! -d "./cpp/build" ]; then
 	mkdir ./cpp/build
+	pushd ./cpp/build
+	cmake ..
+	popd
 fi
 
-pushd .
+vpc vectors.vpc
 
-cd ./cpp/build
-cmake ..
+pushd ./cpp/build
 cmake --build .
-
 popd
