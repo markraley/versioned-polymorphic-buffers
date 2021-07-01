@@ -53,10 +53,10 @@ namespace vp_maps {
 
 	void write_D1(long nVersion, write_context &wc, D1 &payload)
 	{
-		write_A(nVersion, wc, &payload.apod);
+		write_A(nVersion, wc, (payload.apod));
 		write_int(wc, payload.i);
 		write_string(wc, payload.s);
-		write_A(nVersion, wc, payload.aref);
+		write_A(nVersion, wc, *(payload.aref));
 	}
 
 	void write_OuterD(long nVersion, write_context &wc, OuterD &payload)
@@ -124,11 +124,11 @@ namespace vp_maps {
 
 	void read_D1(long nVersion, read_context &rc, D1 &payload)
 	{
-		read_A(nVersion, rc, &(payload.apod));
+		read_A(nVersion, rc, (payload.apod));
 		read_int(rc, payload.i);
 		read_string(rc, payload.s);
 		payload.aref = new A;
-		read_A(nVersion, rc, payload.aref);
+		read_A(nVersion, rc, *(payload.aref));
 	}
 
 	void read_OuterD(long nVersion, read_context &rc, OuterD &payload)

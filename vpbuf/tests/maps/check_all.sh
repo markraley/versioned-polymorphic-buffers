@@ -9,3 +9,7 @@ diff python/out/maps_B.dat nodejs/out/maps_B.dat
 echo 'comparing maps_C'
 diff python/out/maps_C.dat cpp/out/maps_C.dat
 diff python/out/maps_C.dat nodejs/out/maps_C.dat
+
+echo 'comparing maps_D'
+diff python/out/maps_D.dat cpp/out/maps_D.dat
+diff python/out/maps_D.dat nodejs/out/maps_D.dat

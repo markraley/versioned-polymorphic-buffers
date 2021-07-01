@@ -10,8 +10,19 @@ class Header {
 
 class A {
    public:
+      A(int i = -1, string s = "not set") : i1(i), s1(s) {}
       int i1;
       string s1;
+};
+
+class D1 {
+   public:
+      D1(int i = -1, string s = "not set")
+         : i(i), s(s), aref(new A(i-5, "aref" + s)), apod(i+5, "apod" + s) {}
+      A apod;
+      int i;
+      string s;
+      A *aref;
 };
 
 class OuterA {
@@ -27,6 +38,11 @@ class OuterB {
 class OuterC {
    public:
       map<int, string> lookup;
+};
+
+class OuterD {
+   public:
+      map<string, D1 *> lookup;
 };
 
 class Base {

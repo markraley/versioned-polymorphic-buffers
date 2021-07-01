@@ -204,6 +204,65 @@ int main(int argc, char* argv[])
          assert((ii->second) == p);
       }
    }
+
+   // ------------------------------------------------------------------
+   // maps_D -
+
+   {
+      string test_id_str = "maps_D";
+      int count = 10;
+      int base = 50000;
+
+      Header h1;
+      OuterD o1;
+
+      {
+         // initialize test data structures and write to file
+         write_context wc;
+
+         h1.version = -99;
+         h1.test_name = test_id_str;
+
+
+         for (auto i = 0; i < count; i++) {
+            int j = base + i;
+            o1.lookup[to_string(j)] = new D1(j, "D1-" + to_string(j));
+         }
+
+         write_Header(1, wc, h1);
+         write_OuterD(1, wc, o1);
+
+         size_t bytes_out = wc.write_file(out_dir + test_id_str + file_ext);
+         std::cout << test_id_str <<" "<< bytes_out <<" bytes written\n";
+      }
+
+      Header h2;
+      OuterD o2;
+
+      {
+         // read the file just written
+         read_context rc(out_dir + test_id_str + file_ext);
+
+         read_Header(1, rc, h2);
+         read_OuterD(1, rc, o2);
+
+         std::cout << test_id_str <<" "<< rc.get_buffer_size() <<" bytes read\n";
+      }
+
+      // compare data written against data read in
+
+      assert(h1.version == h2.version);
+      assert(h1.test_name == h2.test_name);
+      assert(o1.lookup.size() == o2.lookup.size());
+      for (auto ii = o1.lookup.begin();ii != o1.lookup.end(); ii++) {
+         auto p = o2.lookup[ii->first];
+//         assert((ii->second)->s1 == p->s1);
+//         assert((ii->second)->i1 == p->i1);
+      }
+   }
+
+   // ------------------------------------------------------------------
+
 }
 
 // -----------------------------------------------------------------------------
