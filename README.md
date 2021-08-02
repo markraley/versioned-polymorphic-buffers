@@ -245,6 +245,9 @@ write: t.dat, version=1, cards=0, bytes=12
 cards left 0
 ```
 
+### active development
+    developing shuffle feature for classes (pod/poly)
+
 ### TODO
 
     complete uno polymorphism example
