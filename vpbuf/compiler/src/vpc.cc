@@ -610,13 +610,12 @@ struct vp_compiler : qi::grammar<Iterator, ascii::space_type>
    qi::rule<Iterator, ascii::space_type> poly_def;
    qi::rule<Iterator, qi::locals<int, int>, ascii::space_type> format_set;
    qi::rule<Iterator,  ascii::space_type> root;
-   qi::rule<Iterator,  ascii::space_type> type_stmt;
-   qi::rule<Iterator,  ascii::space_type> type_specifier;
    qi::rule<Iterator,  ascii::space_type> type_vector;
    qi::rule<Iterator, target_language(), ascii::space_type> target;
    qi::rule<Iterator, target_language(), ascii::space_type> target_ignore;
    qi::rule<Iterator, ascii::space_type> target_list;
    qi::rule<Iterator, ascii::space_type> version_sequence;
+   qi::rule<Iterator, ascii::space_type> vrange, pod_options, pod_options_arg_list;
    qi::rule<Iterator, std::string(), ascii::space_type>
       identifier, sequence_type, lang_specifier, quoted_string;
    qi::rule<Iterator, qi::locals<int>, ascii::space_type>
@@ -711,6 +710,11 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
    version_sequence = (uint_ >> uint_)[version_sequence_add(_1, _2)]
                         | uint_[version_sequence_add(_1, 0)];
 
+   vrange = (uint_ >> lit("-") >> uint_)
+               | (uint_)
+               | qi::attr(("unspecified"))
+            ;
+
    item_varint = lit("varint") >> identifier[pod_item_varint_add(_1)]
                         >> version_sequence;
    item_string = lit("string") >> identifier[pod_item_string_add(_1)]
@@ -750,23 +754,24 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
                               [sequence_format_hint_add(_1, _2)]
                   );
 
-   type_specifier = type_vector;
-
-   type_stmt = lit("type") >> identifier[add_var(_1, ref(nvars), VPTypeVector)]
-                     >> lit("is") >> type_specifier;
-
    type_list = *(item_varint | item_string | item_map
                | item_vector  | item_typed);
 
    type_name = identifier [add_var(_1, ref(nvars), VPTypePod)];
 
-   pod_parent %= lit("is") >> var_ref[subclass_to_parent_add(_1)];
+   pod_parent = (lit("is") >> var_ref)[subclass_to_parent_add(_1)]
+                  | qi::attr(("unspecified"));
 
-   pod_def = lit("pod")
-            >> type_name >> ((pod_parent >> type_list) | type_list);
-   poly_def = lit("poly")
-            >> identifier [add_var(_1, ref(nvars), VPTypePoly)]
-            >> ((pod_parent >> type_list) | type_list);
+   pod_options = (lit(":") >> pod_options_arg_list)
+                  | qi::attr(("unspecified"));
+
+   pod_options_arg_list = identifier >> *(lit(",") >> identifier);
+
+   pod_def = lit("pod") >> type_name >> pod_parent >> vrange
+               >> pod_options >> type_list;
+
+   poly_def = (lit("poly") >> identifier)[add_var(_1, ref(nvars), VPTypePoly)]
+            >> pod_parent >> vrange >> pod_options >> type_list;
 
    // name, version start, version end, name space, path out, file extension
    target %= lit("language") >> lang_specifier >> uint_ >> uint_
@@ -780,7 +785,7 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
 
    format_set = lit("target")
       >> (target_list
-      >> +(poly_def | pod_def | type_stmt))
+      >> +(poly_def | pod_def))
                [gen_code(boost::phoenix::ref(tlist), ref(nvars))];
 
    root %= format_set ;
@@ -847,7 +852,7 @@ main(int argc, char *argv[])
                         << vpc.vp_typedefs.size() <<"\n";
       return 0;
    } else {
-      std::cout <<"parse failed near:\n";
+      std::cout <<"parse ***FAILED*** near:\n";
       int c = 0;
       while (iter != end && c < 3) {
          c += (*iter == '\n') ? 1 : 0;
