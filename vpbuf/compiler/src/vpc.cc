@@ -610,7 +610,6 @@ struct vp_compiler : qi::grammar<Iterator, ascii::space_type>
    qi::rule<Iterator, ascii::space_type> poly_def;
    qi::rule<Iterator, qi::locals<int, int>, ascii::space_type> format_set;
    qi::rule<Iterator,  ascii::space_type> root;
-   qi::rule<Iterator,  ascii::space_type> type_vector;
    qi::rule<Iterator, target_language(), ascii::space_type> target;
    qi::rule<Iterator, target_language(), ascii::space_type> target_ignore;
    qi::rule<Iterator, ascii::space_type> target_list;
@@ -744,15 +743,6 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
                (var_ref_ptr >> identifier)[pod_item_type_add(_1, _2, true)]
             ) >> version_sequence
             ;
-
-   type_vector = lit("vector")
-               >> ( var_ref[type_payload_add(_1, false, 1)]
-                  | var_ref_ptr[type_payload_add(_1, true, VPTypeVector)]
-                  )
-               >> *( lit(",")
-                     >> (lang_specifier >> lit("as") >> sequence_type)
-                              [sequence_format_hint_add(_1, _2)]
-                  );
 
    type_list = *(item_varint | item_string | item_map
                | item_vector  | item_typed);
