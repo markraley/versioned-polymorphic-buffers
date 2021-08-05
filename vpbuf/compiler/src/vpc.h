@@ -31,6 +31,11 @@ struct target_language
    string file_ext;
 };
 
+typedef struct {
+   unsigned int nBegin;
+   unsigned int nEnd;
+} VRange;
+
 BOOST_FUSION_ADAPT_STRUCT(
     target_language,
     (string, name)
@@ -65,8 +70,9 @@ struct pod_item;
 struct vp_typedef
 {
    string type_name;
-   ImplMap     impls;
+   ImplMap impls;
    string parent_name;
+   VRange vrange;
 
    virtual void serialize_out_cpp(ofstream &, int, TypeMap &, TarLang &) = 0;
    virtual void serialize_in_cpp(ofstream &, int, TypeMap &, TarLang &) = 0;
@@ -86,6 +92,7 @@ struct vp_typedef
 
    virtual void add_pod_item(pod_item *) = 0;
    virtual void add_pod_item_range(unsigned int nBegin, unsigned int nEnd) = 0;
+   virtual void add_range(unsigned int nBegin, unsigned int nEnd) = 0;
    virtual void add_subclass(const string &) = 0;
    virtual bool is_terminal() = 0;
    virtual bool is_poly() = 0;

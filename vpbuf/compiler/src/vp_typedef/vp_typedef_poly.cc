@@ -327,6 +327,13 @@ void vp_typedef_poly::add_pod_item_range(unsigned int nBegin, unsigned int nEnd)
    (*jj)->nEnd = nEnd;
 }
 
+void
+vp_typedef_poly::add_range(unsigned int nBegin, unsigned int nEnd)
+{
+   this->vrange.nBegin = nBegin;
+   this->vrange.nEnd = nEnd;
+}
+
 // ## get_type_python
 void vp_typedef_poly::get_type_python(std::string &result)
 {
