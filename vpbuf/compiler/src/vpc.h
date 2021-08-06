@@ -31,9 +31,10 @@ struct target_language
    string file_ext;
 };
 
-typedef struct {
+typedef struct VRange {
    unsigned int nBegin;
    unsigned int nEnd;
+   VRange() : nBegin(1), nEnd(0) {};
 } VRange;
 
 BOOST_FUSION_ADAPT_STRUCT(

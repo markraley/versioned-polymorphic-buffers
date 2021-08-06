@@ -600,6 +600,26 @@ struct version_sequence_adder
    TypeVector &vp_typedefs;
 };
 
+struct typedef_vrange_adder
+{
+   template <typename, typename>
+   struct result { typedef void type; };
+
+   typedef_vrange_adder(TypeVector &vp_typedefs)
+      : vp_typedefs(vp_typedefs) {}
+
+   void operator()(unsigned int nBegin, unsigned int nEnd) const
+   {
+      TypeVector::reverse_iterator ii;
+
+      ii = vp_typedefs.rbegin();
+
+      (*ii)->add_range(nBegin, nEnd);
+   };
+
+   TypeVector &vp_typedefs;
+};
+
 template <typename Iterator>
 struct vp_compiler : qi::grammar<Iterator, ascii::space_type>
 {
@@ -621,7 +641,8 @@ struct vp_compiler : qi::grammar<Iterator, ascii::space_type>
    qi::rule<Iterator, target_language(), ascii::space_type> target_ignore;
    qi::rule<Iterator, ascii::space_type> target_list;
    qi::rule<Iterator, ascii::space_type> version_sequence;
-   qi::rule<Iterator, ascii::space_type> vrange, pod_options, pod_options_arg_list;
+   qi::rule<Iterator, ascii::space_type> typedef_vrange, pod_options,
+                                          pod_options_arg_list;
    qi::rule<Iterator, std::string(), ascii::space_type>
       identifier, sequence_type, lang_specifier, quoted_string;
    qi::rule<Iterator, qi::locals<int>, ascii::space_type>
@@ -640,6 +661,7 @@ struct vp_compiler : qi::grammar<Iterator, ascii::space_type>
    function<sequence_format_hint_adder> sequence_format_hint_add;
    function<subclass_to_parent_adder> subclass_to_parent_add;
    function<version_sequence_adder> version_sequence_add;
+   function<typedef_vrange_adder> typedef_vrange_add;
 };
 
 
@@ -658,6 +680,7 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
    , sequence_format_hint_add(vp_typedefs)
    , subclass_to_parent_add(vp_typedefs)
    , version_sequence_add(vp_typedefs)
+   , typedef_vrange_add(vp_typedefs)
    , vpc_path(vpc_path)
 {
    using namespace qi::labels;
@@ -716,8 +739,8 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
    version_sequence = (uint_ >> uint_)[version_sequence_add(_1, _2)]
                         | uint_[version_sequence_add(_1, 0)];
 
-   vrange = (uint_ >> lit("-") >> uint_)
-               | (uint_)
+   typedef_vrange = (uint_ >> lit("-") >> uint_)[typedef_vrange_add(_1, _2)]
+               | uint_[typedef_vrange_add(_1, 0)]
                | qi::attr(("unspecified"))
             ;
 
@@ -764,11 +787,11 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
 
    pod_options_arg_list = identifier >> *(lit(",") >> identifier);
 
-   pod_def = lit("pod") >> type_name >> pod_parent >> vrange
+   pod_def = lit("pod") >> type_name >> pod_parent >> typedef_vrange
                >> pod_options >> type_list;
 
    poly_def = (lit("poly") >> identifier)[add_var(_1, ref(nvars), VPTypePoly)]
-            >> pod_parent >> vrange >> pod_options >> type_list;
+            >> pod_parent >> typedef_vrange >> pod_options >> type_list;
 
    // name, version start, version end, name space, path out, file extension
    target = lit("language") >> lang_specifier >> uint_ >> uint_
