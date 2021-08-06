@@ -23,13 +23,6 @@ vp_typedef_pod::add_pod_item_range(unsigned int nBegin, unsigned int nEnd)
 }
 
 void
-vp_typedef_pod::add_range(unsigned int nBegin, unsigned int nEnd)
-{
-   this->vrange.nBegin = nBegin;
-   this->vrange.nEnd = nEnd;
-}
-
-void
 vp_typedef_pod::get_type_python(std::string &result)
 {
    result = type_name;

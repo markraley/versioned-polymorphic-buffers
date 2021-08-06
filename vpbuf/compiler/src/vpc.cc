@@ -233,6 +233,13 @@ code_version_test_js(
    }
 }
 
+void
+vp_typedef::add_range(unsigned int nBegin, unsigned int nEnd)
+{
+   this->vrange.nBegin = nBegin;
+   this->vrange.nEnd = nEnd;
+}
+
 // -----------------------------------------------------------------------------
 
 vp_typedef *GetVPType(std::string &type_name, const TypeMap &type_map)

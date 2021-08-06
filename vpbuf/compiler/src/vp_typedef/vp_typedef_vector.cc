@@ -93,8 +93,6 @@ vp_typedef_vector::format_in_js(const std::string var_name)
 void vp_typedef_vector::add_pod_item(pod_item *) {};
 void vp_typedef_vector::add_pod_item_range
       (unsigned int nBegin, unsigned int nEnd) {};
-void vp_typedef_vector::add_range
-      (unsigned int nBegin, unsigned int nEnd) {};
 void vp_typedef_vector::add_subclass(const std::string &t) {};
 bool vp_typedef_vector::is_terminal() { return true; };
 bool vp_typedef_vector::is_poly() { return false; };
