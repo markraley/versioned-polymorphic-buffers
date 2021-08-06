@@ -57,6 +57,10 @@ vp_typedef_pod::serialize_out_cpp(
 {
    PodItems::iterator jj;
 
+   // check if this typedef is in the targeted version range
+   if (!this->vrange.overlap(tar_lang.start, tar_lang.end))
+      return;
+
    ofs << tab(in) << "void write_" << type_name
       << "(long nVersion, "
       << "write_context &wc, " << type_name << " &payload)\n";
@@ -85,6 +89,10 @@ vp_typedef_pod::serialize_in_cpp(
 {
    PodItems::iterator jj;
    bool is_polymorphic = (parent_name.size() > 0);
+
+   // check if this typedef is in the targeted version range
+   if (!this->vrange.overlap(tar_lang.start, tar_lang.end))
+      return;
 
    if (is_polymorphic) {
       ofs <<tab(in)<< type_name <<" *read_" << type_name
@@ -125,6 +133,10 @@ vp_typedef_pod::serialize_out_py(
 {
    PodItems::iterator jj;
 
+   // check if this typedef is in the targeted version range
+   if (!this->vrange.overlap(tar_lang.start, tar_lang.end))
+      return;
+
    ofs << "def write_" << type_name << "(ver, f, payload):\n";
 
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
@@ -149,6 +161,10 @@ vp_typedef_pod::serialize_in_py(
 {
    PodItems::iterator jj;
 
+   // check if this typedef is in the targeted version range
+   if (!this->vrange.overlap(tar_lang.start, tar_lang.end))
+      return;
+
    ofs << "def read_" << type_name << "(ver, f):\n";
 
    ofs << "\tpayload = " << type_name << "()\n";
@@ -170,6 +186,10 @@ vp_typedef_pod::serialize_out_js(
    TarLang &tar_lang)
 {
    PodItems::iterator jj;
+
+   // check if this typedef is in the targeted version range
+   if (!this->vrange.overlap(tar_lang.start, tar_lang.end))
+      return;
 
    ofs <<tab(in)<<"write_"<< type_name <<": function(ver, wc, payload) {\n";
 
@@ -195,6 +215,10 @@ vp_typedef_pod::serialize_in_js(
    TarLang &tar_lang)
 {
    PodItems::iterator jj;
+
+   // check if this typedef is in the targeted version range
+   if (!this->vrange.overlap(tar_lang.start, tar_lang.end))
+      return;
 
    ofs <<tab(in)<< "read_"<< type_name <<": function(ver, rc) {\n";
 

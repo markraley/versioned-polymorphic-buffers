@@ -30,6 +30,10 @@ vp_typedef_poly::serialize_out_cpp(
 {
    Terminals terms;
 
+   // check if this typedef is in the targeted version range
+   if (!this->vrange.overlap(tar_lang.start, tar_lang.end))
+      return;
+
    if (parent_name.size() == 0) {
       get_terminals(terms, type_map);
       code_out_protos_cpp(ofs, in, terms);
@@ -90,6 +94,10 @@ vp_typedef_poly::serialize_in_cpp(
    TypeMap &type_map,
    TarLang &tar_lang)
 {
+   // check if this typedef is in the targeted version range
+   if (!this->vrange.overlap(tar_lang.start, tar_lang.end))
+      return;
+
    code_in_protos_cpp(ofs, in, polys);
 
    ofs <<tab(in)<< type_name <<"* read_" << type_name
@@ -123,6 +131,10 @@ vp_typedef_poly::serialize_out_py(ofstream &ofs,
    TarLang &tar_lang)
 {
    PodItems::iterator jj;
+
+   // check if this typedef is in the targeted version range
+   if (!this->vrange.overlap(tar_lang.start, tar_lang.end))
+      return;
 
    ofs << "def write_" << type_name << "(ver, f, payload):\n";
 
@@ -161,6 +173,10 @@ vp_typedef_poly::serialize_in_py(
 {
    PodItems::iterator jj;
 
+   // check if this typedef is in the targeted version range
+   if (!this->vrange.overlap(tar_lang.start, tar_lang.end))
+      return;
+
    ofs << "def read_" << type_name << "(ver, f):\n";
 
    ofs << "\tt = read_int(ver, f)\n";
@@ -189,6 +205,10 @@ vp_typedef_poly::serialize_out_js(
    TarLang &tar_lang)
 {
    PodItems::iterator jj;
+
+   // check if this typedef is in the targeted version range
+   if (!this->vrange.overlap(tar_lang.start, tar_lang.end))
+      return;
 
    ofs <<tab(in)<<"write_"<< type_name <<": function(ver, wc, payload) {\n";
 
@@ -227,8 +247,11 @@ vp_typedef_poly::serialize_in_js(
    TypeMap &type_map,
    TarLang &tar_lang)
 {
-
    PodItems::iterator jj;
+
+   // check if this typedef is in the targeted version range
+   if (!this->vrange.overlap(tar_lang.start, tar_lang.end))
+      return;
 
    ofs <<tab(in)<< "read_"<< type_name <<": function(ver, rc) {\n";
 

@@ -22,7 +22,7 @@ enum {
    VPTypeIntrinsic
 } vp_typedef_types;
 
-struct target_language
+struct target_language // just this way for boost interface
 {
    string name;
    string name_space;
@@ -35,6 +35,7 @@ typedef struct VRange {
    unsigned int nBegin;
    unsigned int nEnd;
    VRange() : nBegin(1), nEnd(0) {};
+   bool overlap(unsigned int nBase, unsigned int nLimit);
 } VRange;
 
 BOOST_FUSION_ADAPT_STRUCT(

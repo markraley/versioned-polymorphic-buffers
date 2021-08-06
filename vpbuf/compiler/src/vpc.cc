@@ -233,11 +233,25 @@ code_version_test_js(
    }
 }
 
-void
-vp_typedef::add_range(unsigned int nBegin, unsigned int nEnd)
+void vp_typedef::add_range(unsigned int nBegin, unsigned int nEnd)
 {
    this->vrange.nBegin = nBegin;
    this->vrange.nEnd = nEnd;
+}
+
+bool VRange::overlap(unsigned int nBase, unsigned int nLimit)
+{
+   bool present = true;
+
+   if (this->nBegin > nBase && this->nEnd == 0) { // open range
+      if (this->nBegin > nLimit)
+         present = false;
+   } else if (this->nBegin > nBase || this->nEnd != 0) {
+      if (this->nEnd < nBase || this->nBegin > nLimit)
+         present = false;
+   }
+
+   return present;
 }
 
 // -----------------------------------------------------------------------------
