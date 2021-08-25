@@ -646,7 +646,7 @@ struct vp_compiler : qi::grammar<Iterator, ascii::space_type>
    vp_compiler(std::string vpc_path);
 
    qi::rule<Iterator, ascii::space_type>
-            type_list, type_name, item_varint, item_string, item_typed;
+            type_list, item_varint, item_string, item_typed;
    qi::rule<Iterator, ascii::space_type> pod_def;
    qi::rule<Iterator, ascii::space_type> poly_def;
    qi::rule<Iterator, qi::locals<int, int>, ascii::space_type> format_set;
@@ -791,8 +791,6 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
    type_list = *(item_varint | item_string | item_map
                | item_vector  | item_typed);
 
-   type_name = identifier [add_var(_1, ref(nvars), VPTypePod)];
-
    pod_parent = (lit("is") >> var_ref)[subclass_to_parent_add(_1)]
                   | qi::attr(("unspecified"));
 
@@ -801,7 +799,8 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
 
    pod_options_arg_list = identifier >> *(lit(",") >> identifier);
 
-   pod_def = lit("pod") >> type_name >> pod_parent >> typedef_vrange
+   pod_def = lit("pod") >> identifier [add_var(_1, ref(nvars), VPTypePod)]
+               >> pod_parent >> typedef_vrange
                >> pod_options >> type_list;
 
    poly_def = (lit("poly") >> identifier)[add_var(_1, ref(nvars), VPTypePoly)]
@@ -827,14 +826,12 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
 #if 0
    debug(format_set);
    debug(type_list);
-   debug(type_name);
    debug(pod_def);
    debug(item_varint);
    debug(item_string);
 #endif
    format_set.name("format_set");
    type_list.name("type_list");
-   type_name.name("type_name");
    pod_def.name("pod_def");
 }
 
