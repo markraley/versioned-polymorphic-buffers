@@ -16,6 +16,7 @@ set(sources
 
 		${vpbuf_src_dir}/compiler/src/vp_typedef/vp_typedef_varint.cc
 		${vpbuf_src_dir}/compiler/src/vp_typedef/vp_typedef_pod.cc
+		${vpbuf_src_dir}/compiler/src/vp_typedef/vp_typedef_reorder_pod.cc
 		${vpbuf_src_dir}/compiler/src/vp_typedef/vp_typedef_vector.cc
 		${vpbuf_src_dir}/compiler/src/vp_typedef/vp_typedef_poly.cc
 		${vpbuf_src_dir}/compiler/src/vp_typedef/vp_typedef_string.cc
