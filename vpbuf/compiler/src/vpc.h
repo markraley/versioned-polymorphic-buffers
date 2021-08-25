@@ -19,7 +19,8 @@ enum {
    VPTypePod = 0,
    VPTypePoly,
    VPTypeVector,
-   VPTypeIntrinsic
+   VPTypeIntrinsic,
+   VPTypeReorderPod
 } vp_typedef_types;
 
 struct target_language // just this way for boost interface

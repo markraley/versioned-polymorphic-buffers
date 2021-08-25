@@ -383,6 +383,13 @@ struct var_adder
          new_run->type_name = var;
 
          vp_typedefs.push_back(new_run);
+      } else if (nType == VPTypeReorderPod) {
+
+         vp_typedef_pod *new_run = new vp_typedef_pod();
+
+         new_run->type_name = var;
+
+         vp_typedefs.push_back(new_run);
       }
    };
 
@@ -647,7 +654,7 @@ struct vp_compiler : qi::grammar<Iterator, ascii::space_type>
 
    qi::rule<Iterator, ascii::space_type>
             type_list, item_varint, item_string, item_typed;
-   qi::rule<Iterator, ascii::space_type> pod_def;
+   qi::rule<Iterator, ascii::space_type> pod_def, reorder_pod_def;
    qi::rule<Iterator, ascii::space_type> poly_def;
    qi::rule<Iterator, qi::locals<int, int>, ascii::space_type> format_set;
    qi::rule<Iterator,  ascii::space_type> root;
@@ -799,7 +806,13 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
 
    pod_options_arg_list = identifier >> *(lit(",") >> identifier);
 
-   pod_def = lit("pod") >> identifier [add_var(_1, ref(nvars), VPTypePod)]
+   pod_def = lit("pod")
+               >> identifier [add_var(_1, ref(nvars), VPTypePod)]
+               >> pod_parent >> typedef_vrange
+               >> pod_options >> type_list;
+
+   reorder_pod_def = lit("rpod") >>
+               identifier [add_var(_1, ref(nvars), VPTypeReorderPod)]
                >> pod_parent >> typedef_vrange
                >> pod_options >> type_list;
 
@@ -818,7 +831,7 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
 
    format_set = lit("target")
       >> (target_list
-      >> +(poly_def | pod_def))
+      >> +(poly_def | pod_def | reorder_pod_def))
                [gen_code(boost::phoenix::ref(tlist), ref(nvars))];
 
    root %= format_set ;
