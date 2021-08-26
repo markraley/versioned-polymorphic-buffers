@@ -13,6 +13,7 @@
 #include "vp_typedef_character.h"
 #include "vp_typedef_map.h"
 #include "vp_typedef_pod.h"
+#include "vp_typedef_reorder_pod.h"
 #include "vp_typedef_poly.h"
 #include "vp_typedef_varint.h"
 #include "vp_typedef_string.h"
@@ -385,7 +386,7 @@ struct var_adder
          vp_typedefs.push_back(new_run);
       } else if (nType == VPTypeReorderPod) {
 
-         vp_typedef_pod *new_run = new vp_typedef_pod();
+         auto new_run = new vp_typedef_reorder_pod();
 
          new_run->type_name = var;
 
