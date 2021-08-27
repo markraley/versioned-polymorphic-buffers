@@ -328,10 +328,10 @@ struct var_generate_code
             code_header_python(ostr, in, *tt);
 
             for (ii = vp_typedefs.begin(); ii != vp_typedefs.end(); ++ii)
-               (*ii)->serialize_out_py(ostr, type_map, *tt);
+               (*ii)->serialize_out_py(ostr, in, type_map, *tt);
 
             for (ii = vp_typedefs.begin(); ii != vp_typedefs.end(); ++ii)
-               (*ii)->serialize_in_py(ostr, type_map, *tt);
+               (*ii)->serialize_in_py(ostr, in, type_map, *tt);
 
          } else if (tt->name == "javascript") {
             code_header_js(ostr, in, *tt);
@@ -385,7 +385,6 @@ struct var_adder
 
          vp_typedefs.push_back(new_run);
       } else if (nType == VPTypeReorderPod) {
-
          auto new_run = new vp_typedef_reorder_pod();
 
          new_run->type_name = var;

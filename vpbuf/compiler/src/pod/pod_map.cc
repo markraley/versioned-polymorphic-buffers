@@ -89,10 +89,10 @@ pod_map::serialize_in_cpp(
 void
 pod_map::serialize_out_py(
    ofstream &ofs,
+   int in,
    TypeMap &type_map,
    TarLang &tar_lang)
 {
-   int in = 1;
    bool present = code_version_test_py(ofs, in,
                                     nBegin, nEnd, tar_lang.start, tar_lang.end);
    if (!present)
@@ -116,10 +116,10 @@ pod_map::serialize_out_py(
 void
 pod_map::serialize_in_py(
    ofstream &ofs,
+   int in,
    TypeMap &type_map,
    TarLang &tar_lang)
 {
-   int in = 1;
    bool present = code_version_test_py(ofs, in,
                                     nBegin, nEnd, tar_lang.start, tar_lang.end);
    if (!present)

@@ -40,7 +40,7 @@ vp_typedef_character::serialize_in_cpp(
 
 void
 vp_typedef_character::serialize_out_py(
-   std::ofstream &ofs, TypeMap &type_map, TarLang &)
+   std::ofstream &ofs, int in, TypeMap &type_map, TarLang &)
 {
    ofs << "def write_str(ver, f, payload):\n";
    ofs <<
@@ -52,7 +52,7 @@ vp_typedef_character::serialize_out_py(
 
 void
 vp_typedef_character::serialize_in_py(
-   std::ofstream &ofs, TypeMap &type_map, TarLang &)
+   std::ofstream &ofs, int in, TypeMap &type_map, TarLang &)
 {
    ofs << "def read_str(ver, f):\n";
    ofs <<

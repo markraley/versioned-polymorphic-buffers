@@ -126,7 +126,9 @@ vp_typedef_poly::serialize_in_cpp(
 // --- python ------------------------------------------------------------------
 
 void
-vp_typedef_poly::serialize_out_py(ofstream &ofs,
+vp_typedef_poly::serialize_out_py(
+   ofstream &ofs,
+   int in,
    TypeMap &type_map,
    TarLang &tar_lang)
 {
@@ -159,7 +161,7 @@ vp_typedef_poly::serialize_out_py(ofstream &ofs,
    }
 
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
-      (*jj)->serialize_out_py(ofs, type_map, tar_lang);
+      (*jj)->serialize_out_py(ofs, in + 1, type_map, tar_lang);
    }
 
    ofs << "\n\n";
@@ -168,6 +170,7 @@ vp_typedef_poly::serialize_out_py(ofstream &ofs,
 void
 vp_typedef_poly::serialize_in_py(
    ofstream &ofs,
+   int in,
    TypeMap &type_map,
    TarLang &tar_lang)
 {
@@ -189,7 +192,7 @@ vp_typedef_poly::serialize_in_py(
 
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj)
    {
-      (*jj)->serialize_in_py(ofs, type_map, tar_lang);
+      (*jj)->serialize_in_py(ofs, in + 1, type_map, tar_lang);
    }
 
    ofs << "\treturn payload\n\n";

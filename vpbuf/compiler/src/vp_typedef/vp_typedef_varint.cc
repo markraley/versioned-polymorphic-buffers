@@ -56,6 +56,7 @@ vp_typedef_varint::serialize_in_cpp(
 void
 vp_typedef_varint::serialize_out_py(
    ofstream &ofs,
+   int in,
    TypeMap &type_map,
    TarLang &tar_lang)
 {
@@ -71,6 +72,7 @@ vp_typedef_varint::serialize_out_py(
 void
 vp_typedef_varint::serialize_in_py(
    ofstream &ofs,
+   int in,
    TypeMap &type_map,
    TarLang &tar_lang)
 {

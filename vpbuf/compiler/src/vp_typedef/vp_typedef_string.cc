@@ -45,10 +45,10 @@ void vp_typedef_string::serialize_in_cpp(
 // -----------------------------------------------------------------------------
 
 void vp_typedef_string::serialize_out_py(
-   std::ofstream &ofs, TypeMap &type_map, TarLang &) {}
+   std::ofstream &ofs, int in, TypeMap &type_map, TarLang &) {}
 
 void vp_typedef_string::serialize_in_py(
-   std::ofstream &ofs, TypeMap &type_map, TarLang &) {}
+   std::ofstream &ofs, int in, TypeMap &type_map, TarLang &) {}
 
 // -----------------------------------------------------------------------------
 

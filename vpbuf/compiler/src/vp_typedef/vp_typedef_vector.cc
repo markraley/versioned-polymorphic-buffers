@@ -51,11 +51,11 @@ vp_typedef_vector::serialize_in_cpp(
 
 void
 vp_typedef_vector::serialize_out_py(
-   std::ofstream &ofs, TypeMap &type_map, TarLang &) {}
+   std::ofstream &ofs, int in, TypeMap &type_map, TarLang &) {}
 
 void
 vp_typedef_vector::serialize_in_py(
-   std::ofstream &ofs, TypeMap &type_map, TarLang &)
+   std::ofstream &ofs, int in, TypeMap &type_map, TarLang &)
 {
 #if 0
    std::string t;

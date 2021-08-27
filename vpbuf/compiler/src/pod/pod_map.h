@@ -15,8 +15,8 @@ struct pod_map : public pod_item
    virtual void serialize_out_cpp(ofstream &, int, TypeMap &, TarLang &);
    virtual void serialize_in_cpp(ofstream &, int, TypeMap &, TarLang &);
 
-   virtual void serialize_out_py(ofstream &, TypeMap &, TarLang &);
-   virtual void serialize_in_py(ofstream &, TypeMap &, TarLang &);
+   virtual void serialize_out_py(ofstream &, int, TypeMap &, TarLang &);
+   virtual void serialize_in_py(ofstream &, int, TypeMap &, TarLang &);
 
    virtual void serialize_out_js(ofstream &, int, TypeMap &, TarLang &);
    virtual void serialize_in_js(ofstream &, int, TypeMap &, TarLang &);
