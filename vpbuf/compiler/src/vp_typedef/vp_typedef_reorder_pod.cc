@@ -138,7 +138,7 @@ vp_typedef_reorder_pod::serialize_out_py(
    if (!this->vrange.overlap(tar_lang.start, tar_lang.end))
       return;
 
-   ofs << "def write_" << type_name << "(ver, f, payload):\n";
+   ofs <<tab(in)<< "def write_"<< type_name <<"(ver, f, payload):\n";
 
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
       (*jj)->serialize_out_py(ofs, in + 1, type_map, tar_lang);
@@ -148,7 +148,7 @@ vp_typedef_reorder_pod::serialize_out_py(
       vp_typedef *p = GetVPType(parent_name, type_map);
 
       if (p->parent_name.size() > 0)
-         ofs << "\twrite_" << parent_name << "(ver, f, payload)\n";
+         ofs <<tab(in+1)<< "write_"<< parent_name <<"(ver, f, payload)\n";
    }
 
    ofs << "\n";
@@ -167,15 +167,15 @@ vp_typedef_reorder_pod::serialize_in_py(
    if (!this->vrange.overlap(tar_lang.start, tar_lang.end))
       return;
 
-   ofs << "def read_" << type_name << "(ver, f):\n";
+   ofs <<tab(in)<<"def read_"<< type_name <<"(ver, f):\n";
 
-   ofs << "\tpayload = " << type_name << "()\n";
+   ofs <<tab(in+1)<<"payload = "<< type_name <<"()\n";
 
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
       (*jj)->serialize_in_py(ofs, in + 1, type_map, tar_lang);
    }
 
-   ofs << "\treturn payload\n\n";
+   ofs <<tab(in+1)<< "return payload\n\n";
 }
 
 // --- javascript --------------------------------------------------------------
