@@ -15,6 +15,10 @@ struct vp_typedef_reorder_pod : public vp_typedef
    virtual void serialize_out_js(ofstream &, int, TypeMap &, TarLang &);
    virtual void serialize_in_js(ofstream &, int, TypeMap &, TarLang &);
 
+   virtual void gen_cpp_utils(ofstream &, int, TypeMap &, TarLang &);
+   virtual void gen_py_utils(ofstream &, int, TypeMap &, TarLang &);
+   virtual void gen_js_utils(ofstream &, int, TypeMap &, TarLang &);
+
    virtual std::string format_in_py(const std::string var_name);
    virtual std::string format_in_js(const std::string var_name);
 

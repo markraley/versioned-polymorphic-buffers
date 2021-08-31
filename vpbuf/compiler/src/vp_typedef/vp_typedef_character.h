@@ -27,5 +27,4 @@ struct vp_typedef_character : public vp_typedef
    virtual bool is_poly();
    virtual bool is_pod();
    virtual void get_terminals(Terminals &terminals, const TypeMap &type_map);
-
 };

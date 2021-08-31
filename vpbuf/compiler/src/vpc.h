@@ -86,6 +86,10 @@ struct vp_typedef
    virtual void serialize_out_js(ofstream &, int, TypeMap &, TarLang &) = 0;
    virtual void serialize_in_js(ofstream &, int, TypeMap &, TarLang &) = 0;
 
+   virtual void gen_cpp_utils(ofstream &, int, TypeMap &, TarLang &);
+   virtual void gen_py_utils(ofstream &, int, TypeMap &, TarLang &);
+   virtual void gen_js_utils(ofstream &, int, TypeMap &, TarLang &);
+
    virtual string format_in_py(const string var_name) = 0;
    virtual string format_in_js(const string var_name) = 0;
 
@@ -101,7 +105,6 @@ struct vp_typedef
    virtual bool is_pod() = 0;
    virtual void get_terminals(Terminals &, const TypeMap &) = 0;
    void add_range(unsigned int nBegin, unsigned int nEnd);
-
 };
 
 typedef std::vector <vp_typedef *> TypeVector;

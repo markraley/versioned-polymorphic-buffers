@@ -234,6 +234,33 @@ code_version_test_js(
    }
 }
 
+void vp_typedef::gen_cpp_utils(
+   ofstream &ofs,
+   int in,
+   TypeMap &type_map,
+   TarLang &tar_lang)
+{
+   // empty stub
+}
+
+void vp_typedef::gen_py_utils(
+   ofstream &ofs,
+   int in,
+   TypeMap &type_map,
+   TarLang &tar_lang)
+{
+   // empty stub
+}
+
+void vp_typedef::gen_js_utils(
+   ofstream &ofs,
+   int in,
+   TypeMap &type_map,
+   TarLang &tar_lang)
+{
+   // empty stub
+}
+
 void vp_typedef::add_range(unsigned int nBegin, unsigned int nEnd)
 {
    this->vrange.nBegin = nBegin;

@@ -46,6 +46,33 @@ vp_typedef_reorder_pod::format_in_py(const std::string var_name)
    return var_name + " = read_" + type_name + "(ver, f)\n";
 }
 
+void vp_typedef_reorder_pod::gen_cpp_utils(
+   ofstream &ofs,
+   int in,
+   TypeMap &type_map,
+   TarLang &tar_lang)
+{
+   // empty stub
+}
+
+void vp_typedef_reorder_pod::gen_py_utils(
+   ofstream &ofs,
+   int in,
+   TypeMap &type_map,
+   TarLang &tar_lang)
+{
+   // empty stub
+}
+
+void vp_typedef_reorder_pod::gen_js_utils(
+   ofstream &ofs,
+   int in,
+   TypeMap &type_map,
+   TarLang &tar_lang)
+{
+   // empty stub
+}
+
 // --- cpp ---------------------------------------------------------------------
 
 void
@@ -140,8 +167,12 @@ vp_typedef_reorder_pod::serialize_out_py(
 
    ofs <<tab(in)<< "def write_"<< type_name <<"(ver, f, payload):\n";
 
+   ofs <<tab(in+1)<< "for i in range(0, "<< pod_items.size() <<"):\n";
+   int k = 0;
+   // TODO: replace this with match/case when available
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
-      (*jj)->serialize_out_py(ofs, in + 1, type_map, tar_lang);
+      ofs <<tab(in+2)<<"if i=="<< k++ <<":\n";
+      (*jj)->serialize_out_py(ofs, in+3, type_map, tar_lang);
    }
 
    if (parent_name.size() > 0) {
