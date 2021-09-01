@@ -355,6 +355,9 @@ struct var_generate_code
             code_header_python(ostr, in, *tt);
 
             for (ii = vp_typedefs.begin(); ii != vp_typedefs.end(); ++ii)
+               (*ii)->gen_py_utils(ostr, in, type_map, *tt);
+
+            for (ii = vp_typedefs.begin(); ii != vp_typedefs.end(); ++ii)
                (*ii)->serialize_out_py(ostr, in, type_map, *tt);
 
             for (ii = vp_typedefs.begin(); ii != vp_typedefs.end(); ++ii)

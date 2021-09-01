@@ -55,15 +55,6 @@ void vp_typedef_reorder_pod::gen_cpp_utils(
    // empty stub
 }
 
-void vp_typedef_reorder_pod::gen_py_utils(
-   ofstream &ofs,
-   int in,
-   TypeMap &type_map,
-   TarLang &tar_lang)
-{
-   // empty stub
-}
-
 void vp_typedef_reorder_pod::gen_js_utils(
    ofstream &ofs,
    int in,
@@ -152,6 +143,46 @@ vp_typedef_reorder_pod::serialize_in_cpp(
 
 // --- python ------------------------------------------------------------------
 
+void vp_typedef_reorder_pod::gen_py_utils(
+   ofstream &ofs,
+   int in,
+   TypeMap &type_map,
+   TarLang &tar_lang)
+{
+
+   // build type specific vlist which stores item version requirements by index
+
+   ofs <<tab(in)<< "vlist_"<< type_name <<" = [\n";
+   auto jj_last = prev(pod_items.end());
+   for (auto jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
+      ofs <<tab(in+1)<<"( "<< (*jj)->nBegin <<", "<< (*jj)->nEnd <<" )";
+      if (jj_last == jj)
+         ofs << "\n";
+      else
+         ofs << ",\n";
+
+   }
+   ofs << "]\n\n";
+
+   // build type specific function to return list of indexes
+   // for a specifified version
+
+   ofs <<tab(in)<< "def get_vlist_"<< type_name <<"(ver):\n";
+
+   ofs <<tab(in+1)<< "c, v = 0, []\n";
+
+   ofs <<tab(in+1)<< "for p in vlist_"<< type_name<< ":\n";
+   ofs <<tab(in+2)<< "if (p[1] == 0 and ver >= p[0]) "<<
+            "or (ver >= p[0] and ver <= p[1]):\n";
+   ofs <<tab(in+3)<< "v.append(c)\n";
+   ofs <<tab(in+3)<< "c += 1\n";
+
+   ofs <<tab(in+1)<< "return v\n";
+
+   ofs << "\n";
+
+}
+
 void
 vp_typedef_reorder_pod::serialize_out_py(
    ofstream &ofs,
@@ -167,7 +198,7 @@ vp_typedef_reorder_pod::serialize_out_py(
 
    ofs <<tab(in)<< "def write_"<< type_name <<"(ver, f, payload):\n";
 
-   ofs <<tab(in+1)<< "for i in range(0, "<< pod_items.size() <<"):\n";
+   ofs <<tab(in+1)<< "for i in get_vlist_"<< type_name <<"(ver):\n";
    int k = 0;
    // TODO: replace this with match/case when available
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
