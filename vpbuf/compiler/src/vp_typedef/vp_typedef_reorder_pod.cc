@@ -233,9 +233,17 @@ vp_typedef_reorder_pod::serialize_in_py(
 
    ofs <<tab(in+1)<<"payload = "<< type_name <<"()\n";
 
+   ofs <<tab(in+1)<< "for i in get_vlist_"<< type_name <<"(ver):\n";
+   int k = 0;
+   // TODO: replace this with match/case when available
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
-      (*jj)->serialize_in_py(ofs, in + 1, type_map, tar_lang);
+      ofs <<tab(in+2)<<"if i=="<< k++ <<":\n";
+      (*jj)->serialize_in_py(ofs, in+3, type_map, tar_lang);
    }
+
+//   for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
+//      (*jj)->serialize_in_py(ofs, in + 1, type_map, tar_lang);
+//   }
 
    ofs <<tab(in+1)<< "return payload\n\n";
 }
