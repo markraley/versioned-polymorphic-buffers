@@ -202,7 +202,8 @@ vp_typedef_reorder_pod::serialize_out_py(
    int k = 0;
    // TODO: replace this with match/case when available
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
-      ofs <<tab(in+2)<<"if i=="<< k++ <<":\n";
+      ofs <<tab(in+2)<< ((jj == pod_items.begin())?"if":"elif")
+                                                <<" i=="<< k++ <<":\n";
       (*jj)->serialize_out_py(ofs, in+3, type_map, tar_lang);
    }
 
@@ -237,7 +238,8 @@ vp_typedef_reorder_pod::serialize_in_py(
    int k = 0;
    // TODO: replace this with match/case when available
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
-      ofs <<tab(in+2)<<"if i=="<< k++ <<":\n";
+      ofs <<tab(in+2)<< ((jj == pod_items.begin())?"if":"elif")
+                                                <<" i=="<< k++ <<":\n";
       (*jj)->serialize_in_py(ofs, in+3, type_map, tar_lang);
    }
 
