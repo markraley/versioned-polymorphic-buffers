@@ -243,10 +243,6 @@ vp_typedef_reorder_pod::serialize_in_py(
       (*jj)->serialize_in_py(ofs, in+3, type_map, tar_lang);
    }
 
-//   for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
-//      (*jj)->serialize_in_py(ofs, in + 1, type_map, tar_lang);
-//   }
-
    ofs <<tab(in+1)<< "return payload\n\n";
 }
 
