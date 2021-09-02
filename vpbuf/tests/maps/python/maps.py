@@ -25,6 +25,19 @@ def file_to_buffer(file_name):
 out_dir = "./out/"
 file_ext = ".dat"
 
+class write_context:
+    def __init__(self):
+        self.stream = amf3.util.BufferedByteStream()
+        self.encoder = amf3.Encoder(self.stream)
+        self.encoder.string_references = False # disables string caching
+
+class read_context:
+    def __init__(self, test_name):
+        self.istream = file_to_buffer(out_dir + test_name + file_ext)
+        self.decoder = amf3.Decoder(self.istream)
+        self.bytes_read = len(self.istream)
+        print(test_name, len(self.istream), 'bytes read')
+
 # ------------------------------------------------------------------------------
 # maps_A -
 
@@ -46,9 +59,7 @@ class Test_maps_A:
     # initialize the data structures under test and serialize
 
     def serialize(self):
-        stream = amf3.util.BufferedByteStream()
-        e = amf3.Encoder(stream)
-        e.string_references = False # disables string caching
+        wc = write_context()
 
         self.h1.version = -99
         self.h1.test_name = self.test_name
@@ -57,24 +68,23 @@ class Test_maps_A:
             j = self.base + i
             self.o1.lookup[j] = A(j, 'A-' + str(j))
 
-        write_Header(1, e, self.h1)
-        write_OuterA(1, e, self.o1)
+        write_Header(1, wc, self.h1)
+        write_OuterA(1, wc, self.o1)
 
-        self.bytes_written = buffer_to_file(out_dir + self.test_name + file_ext, e)
+        out_file = out_dir + self.test_name + file_ext
+        self.bytes_written = buffer_to_file(out_file, wc.encoder)
 
         print(self.test_name, self.bytes_written, 'bytes written')
 
     # deserialize the data structures under test
 
     def load(self):
-        istream = file_to_buffer(out_dir + self.test_name + file_ext)
-        decoder = amf3.Decoder(istream)
+        rc = read_context(self.test_name)
 
-        self.bytes_read = len(istream)
-        print(self.test_name, len(istream), 'bytes read')
+        self.h2 = read_Header(1, rc)
+        self.o2 = read_OuterA(1, rc)
 
-        self.h2 = read_Header(1, decoder)
-        self.o2 = read_OuterA(1, decoder)
+        self.bytes_read = rc.bytes_read
 
     # compare the serialized and deserialized data structures against each other
 
@@ -115,9 +125,7 @@ class Test_maps_B:
     # initialize the data structures under test and serialize
 
     def serialize(self):
-        stream = amf3.util.BufferedByteStream()
-        e = amf3.Encoder(stream)
-        e.string_references = False # disables string caching
+        wc = write_context()
 
         self.h1.version = -99
         self.h1.test_name = self.test_name
@@ -126,24 +134,23 @@ class Test_maps_B:
             j = self.base + i
             self.o1.lookup[str(j)] = A(j, 'B-' + str(j))
 
-        write_Header(1, e, self.h1)
-        write_OuterB(1, e, self.o1)
+        write_Header(1, wc, self.h1)
+        write_OuterB(1, wc, self.o1)
 
-        self.bytes_written = buffer_to_file(out_dir + self.test_name + file_ext, e)
+        out_file = out_dir + self.test_name + file_ext
+        self.bytes_written = buffer_to_file(out_file, wc.encoder)
 
         print(self.test_name, self.bytes_written, 'bytes written')
 
     # deserialize the data structures under test
 
     def load(self):
-        istream = file_to_buffer(out_dir + self.test_name + file_ext)
-        decoder = amf3.Decoder(istream)
+        rc = read_context(self.test_name)
 
-        self.bytes_read = len(istream)
-        print(self.test_name, len(istream), 'bytes read')
+        self.h2 = read_Header(1, rc)
+        self.o2 = read_OuterB(1, rc)
 
-        self.h2 = read_Header(1, decoder)
-        self.o2 = read_OuterB(1, decoder)
+        self.bytes_read = rc.bytes_read
 
     # compare the serialized and deserialized data structures against each other
 
@@ -184,9 +191,7 @@ class Test_maps_C:
     # initialize the data structures under test and serialize
 
     def serialize(self):
-        stream = amf3.util.BufferedByteStream()
-        e = amf3.Encoder(stream)
-        e.string_references = False # disables string caching
+        wc = write_context()
 
         self.h1.version = -99
         self.h1.test_name = self.test_name
@@ -195,24 +200,23 @@ class Test_maps_C:
             j = self.base + i
             self.o1.lookup[j] = 'C-' + str(j)
 
-        write_Header(1, e, self.h1)
-        write_OuterC(1, e, self.o1)
+        write_Header(1, wc, self.h1)
+        write_OuterC(1, wc, self.o1)
 
-        self.bytes_written = buffer_to_file(out_dir + self.test_name + file_ext, e)
+        out_file = out_dir + self.test_name + file_ext
+        self.bytes_written = buffer_to_file(out_file, wc.encoder)
 
         print(self.test_name, self.bytes_written, 'bytes written')
 
     # deserialize the data structures under test
 
     def load(self):
-        istream = file_to_buffer(out_dir + self.test_name + file_ext)
-        decoder = amf3.Decoder(istream)
+        rc = read_context(self.test_name)
 
-        self.bytes_read = len(istream)
-        print(self.test_name, len(istream), 'bytes read')
+        self.h2 = read_Header(1, rc)
+        self.o2 = read_OuterC(1, rc)
 
-        self.h2 = read_Header(1, decoder)
-        self.o2 = read_OuterC(1, decoder)
+        self.bytes_read = rc.bytes_read
 
     # compare the serialized and deserialized data structures against each other
 
@@ -254,9 +258,7 @@ class Test_maps_D:
     # initialize the data structures under test and serialize
 
     def serialize(self):
-        stream = amf3.util.BufferedByteStream()
-        e = amf3.Encoder(stream)
-        e.string_references = False # disables string caching
+        wc = write_context()
 
         self.h1.version = -99
         self.h1.test_name = self.test_name
@@ -265,24 +267,23 @@ class Test_maps_D:
             j = self.base + i
             self.o1.lookup[str(j)] = D1(j, 'D1-' + str(j))
 
-        write_Header(1, e, self.h1)
-        write_OuterD(1, e, self.o1)
+        write_Header(1, wc, self.h1)
+        write_OuterD(1, wc, self.o1)
 
-        self.bytes_written = buffer_to_file(out_dir + self.test_name + file_ext, e)
+        out_file = out_dir + self.test_name + file_ext
+        self.bytes_written = buffer_to_file(out_file, wc.encoder)
 
         print(self.test_name, self.bytes_written, 'bytes written')
 
     # deserialize the data structures under test
 
     def load(self):
-        istream = file_to_buffer(out_dir + self.test_name + file_ext)
-        decoder = amf3.Decoder(istream)
+        rc = read_context(self.test_name)
 
-        self.bytes_read = len(istream)
-        print(self.test_name, len(istream), 'bytes read')
+        self.h2 = read_Header(1, rc)
+        self.o2 = read_OuterD(1, rc)
 
-        self.h2 = read_Header(1, decoder)
-        self.o2 = read_OuterD(1, decoder)
+        self.bytes_read = rc.bytes_read
 
     # compare the serialized and deserialized data structures against each other
 
