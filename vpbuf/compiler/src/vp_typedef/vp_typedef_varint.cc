@@ -61,10 +61,10 @@ vp_typedef_varint::serialize_out_py(
    TarLang &tar_lang)
 {
 
-   ofs << "def write_int(ver, f, payload):\n";
+   ofs << "def write_int(ver, wc, payload):\n";
    ofs <<
 "\
-    f.writeInteger(payload)\n\
+    wc.encoder.writeInteger(payload) # amf3\n\
 ";
    ofs << "\n";
 }
@@ -76,13 +76,13 @@ vp_typedef_varint::serialize_in_py(
    TypeMap &type_map,
    TarLang &tar_lang)
 {
-   ofs << "def read_int(ver, f):\n";
+   ofs << "def read_int(ver, rc):\n";
 
    ofs <<
 "\
-   t = f.readInteger()\n\
+   t = rc.decoder.readInteger() # amf3\n\
    assert(t == 4)\n\
-   return f.readInteger()\n\
+   return rc.decoder.readInteger()\n\
 ";
 
    ofs << "\n";

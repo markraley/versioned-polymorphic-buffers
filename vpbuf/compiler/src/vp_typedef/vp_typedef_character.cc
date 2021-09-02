@@ -42,10 +42,10 @@ void
 vp_typedef_character::serialize_out_py(
    std::ofstream &ofs, int in, TypeMap &type_map, TarLang &)
 {
-   ofs << "def write_str(ver, f, payload):\n";
+   ofs << "def write_str(ver, wc, payload):\n";
    ofs <<
 "\
-    f.writeString(payload)\n\
+    wc.encoder.writeString(payload) # amf3\n\
 ";
    ofs << "\n";
 }
@@ -54,12 +54,12 @@ void
 vp_typedef_character::serialize_in_py(
    std::ofstream &ofs, int in, TypeMap &type_map, TarLang &)
 {
-   ofs << "def read_str(ver, f):\n";
+   ofs << "def read_str(ver, rc):\n";
    ofs <<
 "\
-   t = f.readInteger()\n\
+   t = rc.decoder.readInteger() # amf3\n\
    assert(t == 6)\n\
-   return f.readString()\n\
+   return rc.decoder.readString()\n\
 ";
 
    ofs << "\n";
