@@ -12,11 +12,11 @@ def get_high_version():
 def get_low_version():
 	return 1
 
-def write_int(ver, f, payload):
-    f.writeInteger(payload)
+def write_int(ver, wc, payload):
+    wc.encoder.writeInteger(payload) # amf3
 
-def write_str(ver, f, payload):
-    f.writeString(payload)
+def write_str(ver, wc, payload):
+    wc.encoder.writeString(payload) # amf3
 
 def write_Header(ver, f, payload):
 	write_int(ver, f, payload.version)
@@ -35,15 +35,15 @@ def write_Deck(ver, f, payload):
 		write_Card(ver, f, payload.cards[i])
 		i = i + 1
 
-def read_int(ver, f):
-   t = f.readInteger()
+def read_int(ver, rc):
+   t = rc.decoder.readInteger() # amf3
    assert(t == 4)
-   return f.readInteger()
+   return rc.decoder.readInteger()
 
-def read_str(ver, f):
-   t = f.readInteger()
+def read_str(ver, rc):
+   t = rc.decoder.readInteger() # amf3
    assert(t == 6)
-   return f.readString()
+   return rc.decoder.readString()
 
 def read_Header(ver, f):
 	payload = Header()

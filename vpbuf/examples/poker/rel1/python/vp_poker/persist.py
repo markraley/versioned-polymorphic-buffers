@@ -29,49 +29,71 @@ class Deck:
 
 # ------------------------------------------------------------------------------
 
-from vp_poker.vp_poker import *
-
-def save_deck(file_name, deck):
-    stream = amf3.util.BufferedByteStream()
-    e = amf3.Encoder(stream)
-    e.string_references = False # disables string caching
-
-    output_buffer = amf3.DataOutput(e)
-
-    h = Header(get_high_version(), 'VP_POKER')
-    write_Header(1, e, h) # header version is always 1
-
-    write_Deck(get_high_version(), e, deck)
-
+def buffer_to_file(file_name, encoder):
+    output_buffer = amf3.DataOutput(encoder)
     f = open(file_name, "wb")
     bytes = output_buffer.stream.getvalue()
     f.write(bytes)
     f.close()
+    return len(bytes)
+
+def file_to_buffer(file_name):
+    f_in = open(file_name, "rb")
+    istream = amf3.util.BufferedByteStream(f_in)
+    f_in.close()
+    return istream
+
+# ------------------------------------------------------------------------------
+
+class write_context:
+    def __init__(self):
+        self.stream = amf3.util.BufferedByteStream()
+        self.encoder = amf3.Encoder(self.stream)
+        self.encoder.string_references = False # disables string caching
+
+class read_context:
+    def __init__(self, file_name):
+        self.istream = file_to_buffer(file_name)
+        self.decoder = amf3.Decoder(self.istream)
+        self.bytes_read = len(self.istream)
+        print(file_name, len(self.istream), 'bytes read')
+
+# ------------------------------------------------------------------------------
+
+from vp_poker.vp_poker import *
+
+def save_deck(file_name, deck):
+
+    wc = write_context()
+
+    h = Header(get_high_version(), 'VP_POKER')
+    write_Header(1, wc, h) # header version is always 1
+
+    write_Deck(get_high_version(), wc, deck)
+
+    bytes_written = buffer_to_file(file_name, wc.encoder)
 
     print('write: ', file_name,
             ', version=', get_high_version(), sep='', end='')
     print(', cards=', len(deck.cards), sep='', end='')
-    print(', bytes=', len(bytes), sep='')
+    print(', bytes=', bytes_written, sep='')
 
-    return(len(bytes))
+    return(bytes_written)
 
 # ------------------------------------------------------------------------------
 
 def load_deck(file_name):
-    f_in = open(file_name, "rb")
-    istream = amf3.util.BufferedByteStream(f_in)
-    bytes_read = len(istream)
+    rc = read_context(file_name)
 
-    decoder = amf3.Decoder(istream)
-    header = read_Header(1, decoder)
+    header = read_Header(1, rc)
 
     if (not version_check(header.version)):
         print('version test failed')
         return None
 
-    deck = read_Deck(header.version, decoder)
+    deck = read_Deck(header.version, rc)
 
-    f_in.close()
+    bytes_read = rc.bytes_read
 
     print('read: ', file_name,
             ', version=', header.version, sep='', end='')
