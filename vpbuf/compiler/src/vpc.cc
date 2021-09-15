@@ -693,7 +693,10 @@ struct vp_compiler : qi::grammar<Iterator, ascii::space_type>
    qi::rule<Iterator, ascii::space_type> target_list;
    qi::rule<Iterator, ascii::space_type> version_sequence;
    qi::rule<Iterator, ascii::space_type> typedef_vrange, pod_options,
-                                          pod_options_arg_list;
+                                          pod_options_arg_list,
+                                          pod_options_arg_item,
+                                          pod_options_arg_item_params,
+                                          pop_option_vrange;
    qi::rule<Iterator, std::string(), ascii::space_type>
       identifier, sequence_type, lang_specifier, quoted_string;
    qi::rule<Iterator, qi::locals<int>, ascii::space_type>
@@ -795,6 +798,11 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
                | qi::attr(("unspecified"))
             ;
 
+   pop_option_vrange = (uint_ >> lit("-") >> uint_)
+               | uint_
+               | qi::attr(("unspecified"))
+            ;
+
    item_varint = lit("varint") >> identifier[pod_item_varint_add(_1)]
                         >> version_sequence;
    item_string = lit("string") >> identifier[pod_item_string_add(_1)]
@@ -834,7 +842,13 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
    pod_options = (lit(":") >> pod_options_arg_list)
                   | qi::attr(("unspecified"));
 
-   pod_options_arg_list = identifier >> *(lit(",") >> identifier);
+   pod_options_arg_item_params = lit("(") >> pop_option_vrange >> lit(")")
+                              | qi::attr(("unspecified"));
+
+   pod_options_arg_item = identifier >> pod_options_arg_item_params;
+
+   pod_options_arg_list = pod_options_arg_item
+                           >> *(lit(",") >> pod_options_arg_item);
 
    pod_def = lit("pod")
                >> identifier [add_var(_1, ref(nvars), VPTypePod)]
