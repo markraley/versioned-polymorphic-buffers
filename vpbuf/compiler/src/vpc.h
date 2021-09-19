@@ -70,12 +70,17 @@ typedef struct target_language TarLang;
 
 struct pod_item;
 
+typedef struct vptype_option {
+   std::string name;
+} VPTypeOption;
+
 struct vp_typedef
 {
    string type_name;
    ImplMap impls;
    string parent_name;
    VRange vrange;
+   std::vector<VPTypeOption> vptype_options;
 
    virtual void serialize_out_cpp(ofstream &, int, TypeMap &, TarLang &) = 0;
    virtual void serialize_in_cpp(ofstream &, int, TypeMap &, TarLang &) = 0;
