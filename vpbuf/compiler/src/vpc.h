@@ -71,7 +71,8 @@ typedef struct target_language TarLang;
 struct pod_item;
 
 typedef struct vptype_option {
-   std::string name;
+   std::string opt_name;
+   std::string opt_type;
 } VPTypeOption;
 
 struct vp_typedef
