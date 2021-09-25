@@ -181,6 +181,44 @@ void vp_typedef_reorder_pod::gen_py_utils(
 
    ofs << "\n";
 
+   // ----------------------------
+
+
+   // build type specific vlist which stores item version requirements by index
+
+   {
+      ofs <<tab(in)<< "rlist_"<< type_name <<" = [\n";
+      auto jj_last = prev(vptype_options.end());
+      for (auto jj = vptype_options.begin(); jj != vptype_options.end(); ++jj) {
+         ofs <<tab(in+1)<<"( "
+                     << (*jj).vrange.nBegin <<", "
+                     << (*jj).vrange.nEnd <<", "
+                     <<"'"<< (*jj).opt_name  <<"', "
+                     << (*jj).opt_class
+                     <<" )";
+         if (jj_last == jj)
+            ofs << "\n";
+         else
+            ofs << ",\n";
+
+      }
+      ofs << "]\n\n";
+   }
+
+   // ----------------------------
+
+   {
+      ofs <<tab(in)<< "def get_rlist_"<< type_name <<"(ver):\n";
+
+      ofs <<tab(in+1)<< "for p in rlist_"<< type_name<< ":\n";
+      ofs <<tab(in+2)<< "if (p[1] == 0 and ver >= p[0]) "<<
+               "or (ver >= p[0] and ver <= p[1]):\n";
+      ofs <<tab(in+3)<< "return p\n";
+
+      ofs <<tab(in+1)<< "return None\n";
+
+      ofs << "\n";
+   }
 }
 
 void
@@ -313,6 +351,7 @@ vp_typedef_reorder_pod::format_in_js(const string var_name)
 bool vp_typedef_reorder_pod::is_terminal() { return true; }
 bool vp_typedef_reorder_pod::is_poly() { return false; }
 bool vp_typedef_reorder_pod::is_pod() { return true; }
+bool vp_typedef_reorder_pod::is_reorder_pod() { return true; }
 void vp_typedef_reorder_pod::add_subclass(const std::string &t) {}
 void vp_typedef_reorder_pod::get_terminals
    (Terminals &terminals, const TypeMap &type_map) {}

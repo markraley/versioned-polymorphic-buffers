@@ -107,7 +107,11 @@ code_footer_js(ofstream &ofs, int &in, const TarLang &tar_lang)
 // --- python header -----------------------------------------------------------
 
 bool
-code_header_python(ofstream &ofs, int &in, const TarLang &tar_lang)
+code_header_python(
+   ofstream &ofs,
+   int &in,
+   const TarLang &tar_lang,
+   TypeVector &vp_typedefs)
 {
    ofs <<"from "<< tar_lang.name_space <<".persist import *\n\n";
 
@@ -124,6 +128,20 @@ code_header_python(ofstream &ofs, int &in, const TarLang &tar_lang)
 
    ofs <<tab(in)<< "def get_low_version():\n";
    ofs <<tab(in+1)<< "return "<< tar_lang.start <<"\n\n";
+
+   ofs <<tab(in)<< "def init_reorder_map(map, ver):\n";
+   bool any_found = false;
+   for (auto ii = vp_typedefs.begin(); ii != vp_typedefs.end(); ++ii) {
+      if ((*ii)->is_reorder_pod()) {
+         ofs <<tab(in+1)<<"map['"
+                     << (*ii)->type_name <<"'] = get_rlist_"
+                     << (*ii)->type_name <<"(ver)\n";
+         any_found = true;
+      }
+   }
+   if (!any_found)
+      ofs <<tab(in+1)<< "pass\n";
+   ofs <<"\n";
 
    return true;
 }
@@ -282,6 +300,8 @@ bool VRange::overlap(unsigned int nBase, unsigned int nLimit)
    return present;
 }
 
+bool vp_typedef::is_reorder_pod() { return false;}
+
 // -----------------------------------------------------------------------------
 
 vp_typedef *GetVPType(std::string &type_name, const TypeMap &type_map)
@@ -352,7 +372,7 @@ struct var_generate_code
 
             code_footer_cpp(ostr, in, *tt);
          } else if (tt->name == "python") {
-            code_header_python(ostr, in, *tt);
+            code_header_python(ostr, in, *tt, vp_typedefs);
 
             for (ii = vp_typedefs.begin(); ii != vp_typedefs.end(); ++ii)
                (*ii)->gen_py_utils(ostr, in, type_map, *tt);
