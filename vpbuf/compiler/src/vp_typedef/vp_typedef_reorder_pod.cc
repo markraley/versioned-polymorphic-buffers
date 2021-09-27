@@ -213,7 +213,7 @@ void vp_typedef_reorder_pod::gen_py_utils(
       ofs <<tab(in+1)<< "for p in rlist_"<< type_name<< ":\n";
       ofs <<tab(in+2)<< "if (p[1] == 0 and ver >= p[0]) "<<
                "or (ver >= p[0] and ver <= p[1]):\n";
-      ofs <<tab(in+3)<< "return p\n";
+      ofs <<tab(in+3)<< "return [p[2], p[3](get_vlist_"<< type_name <<"(ver))]\n";
 
       ofs <<tab(in+1)<< "return None\n";
 
@@ -236,7 +236,7 @@ vp_typedef_reorder_pod::serialize_out_py(
 
    ofs <<tab(in)<< "def write_"<< type_name <<"(ver, f, payload):\n";
 
-   ofs <<tab(in+1)<< "for i in get_vlist_"<< type_name <<"(ver):\n";
+   ofs <<tab(in+1)<< "for i in f.reorder_map['"<< type_name <<"'][1]():\n";
    int k = 0;
    // TODO: replace this with match/case when available
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
@@ -272,7 +272,7 @@ vp_typedef_reorder_pod::serialize_in_py(
 
    ofs <<tab(in+1)<<"payload = "<< type_name <<"()\n";
 
-   ofs <<tab(in+1)<< "for i in get_vlist_"<< type_name <<"(ver):\n";
+   ofs <<tab(in+1)<< "for i in f.reorder_map['"<< type_name <<"'][1]():\n";
    int k = 0;
    // TODO: replace this with match/case when available
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
