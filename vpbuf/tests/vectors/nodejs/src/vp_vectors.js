@@ -10,6 +10,16 @@ module.exports = {
 		[ 1, 0 ]
 	],
 
+	get_vlist_Header: function(ver) {
+		var v = [];
+		this.vlist_Header.forEach(function(p, i) {
+			if ((p[1] == 0 && ver >= p[0]) || (ver >= p[0] && ver <= p[1])) {
+				v.push(i);
+			}
+		});
+		return v;
+	},
+
 	rlist_Header: [
 		[ 1, 0, 'h1', persist.flip ]
 	],

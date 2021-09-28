@@ -79,21 +79,17 @@ void vp_typedef_reorder_pod::gen_js_utils(
 
    ofs <<tab(in)<< "get_vlist_"<< type_name <<": function(ver) {\n";
 
-   ofs <<tab(in+1)<< "var c = 0;var v = [];\n";
-
-   ofs <<tab(in+1)<< "for (var i = 0; i < vlist_"
-                              << type_name << ".length; i++) {\n";
-   ofs <<tab(in+2)<< "var p = vlist_"<< type_name << "[i];\n";
+   ofs <<tab(in+1)<< "var v = [];\n";
+   ofs <<tab(in+1)<< "this.vlist_"<< type_name <<".forEach(function(p, i) {\n";
    ofs <<tab(in+2)<< "if ((p[1] == 0 && ver >= p[0]) "<<
             "|| (ver >= p[0] && ver <= p[1])) {\n";
-   ofs <<tab(in+3)<< "v.append(c);\n";
-   ofs <<tab(in+3)<< "c += 1;\n";
+   ofs <<tab(in+3)<< "v.push(i);\n";
    ofs <<tab(in+2)<< "}\n";
 
-   ofs <<tab(in+1)<< "}\n";
+   ofs <<tab(in+1)<< "});\n";
 
 
-   ofs <<tab(in+1)<< "return v\n";
+   ofs <<tab(in+1)<< "return v;\n";
 
    ofs <<tab(in)<< "},\n\n";
 
