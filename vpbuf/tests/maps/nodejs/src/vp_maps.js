@@ -1,7 +1,8 @@
 // vpbuf generated code - do not modify
 "use strict";
-module.exports = {
+var persist = require("./persist");
 
+module.exports = {
 	factory: null, // must be set to class factory object
 
 	write_String: function(ver, wc, payload) {

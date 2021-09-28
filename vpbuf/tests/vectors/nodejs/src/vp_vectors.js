@@ -1,8 +1,18 @@
 // vpbuf generated code - do not modify
 "use strict";
-module.exports = {
+var persist = require("./persist");
 
+module.exports = {
 	factory: null, // must be set to class factory object
+
+	vlist_Header: [
+		[ 1, 0 ],
+		[ 1, 0 ]
+	],
+
+	rlist_Header: [
+		[ 1, 0, 'h1', persist.flip ]
+	],
 
 	write_String: function(ver, wc, payload) {
 		wc.write_String(payload);

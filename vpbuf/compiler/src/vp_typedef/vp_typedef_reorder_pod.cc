@@ -61,7 +61,40 @@ void vp_typedef_reorder_pod::gen_js_utils(
    TypeMap &type_map,
    TarLang &tar_lang)
 {
-   // empty stub
+   ofs <<tab(in)<< "vlist_"<< type_name <<": [\n";
+   auto jj_last = prev(pod_items.end());
+   for (auto jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
+      ofs <<tab(in+1)<<"[ "<< (*jj)->nBegin <<", "<< (*jj)->nEnd <<" ]";
+      if (jj_last == jj)
+         ofs << "\n";
+      else
+         ofs << ",\n";
+
+   }
+   ofs <<tab(in)<< "],\n\n";
+
+   // -------
+
+      {
+      ofs <<tab(in)<< "rlist_"<< type_name <<": [\n";
+      auto jj_last = prev(vptype_options.end());
+      for (auto jj = vptype_options.begin(); jj != vptype_options.end(); ++jj) {
+         ofs <<tab(in+1)<<"[ "
+                     << (*jj).vrange.nBegin <<", "
+                     << (*jj).vrange.nEnd <<", "
+                     <<"'"<< (*jj).opt_name  <<"', persist."
+                     << (*jj).opt_class
+                     <<" ]";
+         if (jj_last == jj)
+            ofs << "\n";
+         else
+            ofs << ",\n";
+
+      }
+      ofs <<tab(in)<< "],\n\n";
+   }
+
+   // --------
 }
 
 // --- cpp ---------------------------------------------------------------------
@@ -162,7 +195,7 @@ void vp_typedef_reorder_pod::gen_py_utils(
          ofs << ",\n";
 
    }
-   ofs << "]\n\n";
+   ofs <<tab(in)<< "]\n\n";
 
    // build type specific function to return list of indexes
    // for a specifified version
@@ -202,7 +235,7 @@ void vp_typedef_reorder_pod::gen_py_utils(
             ofs << ",\n";
 
       }
-      ofs << "]\n\n";
+      ofs <<tab(in)<< "]\n\n";
    }
 
    // ----------------------------

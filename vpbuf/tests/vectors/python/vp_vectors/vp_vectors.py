@@ -13,7 +13,30 @@ def get_low_version():
 	return 1
 
 def init_reorder_map(map, ver):
-	pass
+	map['Header'] = get_rlist_Header(ver)
+
+vlist_Header = [
+	( 1, 0 ),
+	( 1, 0 )
+]
+
+def get_vlist_Header(ver):
+	c, v = 0, []
+	for p in vlist_Header:
+		if (p[1] == 0 and ver >= p[0]) or (ver >= p[0] and ver <= p[1]):
+			v.append(c)
+			c += 1
+	return v
+
+rlist_Header = [
+	( 1, 0, 'h1', flip )
+]
+
+def get_rlist_Header(ver):
+	for p in rlist_Header:
+		if (p[1] == 0 and ver >= p[0]) or (ver >= p[0] and ver <= p[1]):
+			return [p[2], p[3](get_vlist_Header(ver))]
+	return None
 
 def write_int(ver, wc, payload):
     wc.encoder.writeInteger(payload) # amf3
@@ -22,8 +45,11 @@ def write_str(ver, wc, payload):
     wc.encoder.writeString(payload) # amf3
 
 def write_Header(ver, f, payload):
-	write_int(ver, f, payload.version)
-	write_str(ver, f, payload.test_name)
+	for i in f.reorder_map['Header'][1]():
+		if i==0:
+			write_int(ver, f, payload.version)
+		elif i==1:
+			write_str(ver, f, payload.test_name)
 
 def write_A(ver, f, payload):
 	write_int(ver, f, payload.i1)
@@ -115,8 +141,11 @@ def read_str(ver, rc):
 
 def read_Header(ver, f):
 	payload = Header()
-	payload.version = read_int(ver, f)
-	payload.test_name = read_str(ver, f)
+	for i in f.reorder_map['Header'][1]():
+		if i==0:
+			payload.version = read_int(ver, f)
+		elif i==1:
+			payload.test_name = read_str(ver, f)
 	return payload
 
 def read_A(ver, f):

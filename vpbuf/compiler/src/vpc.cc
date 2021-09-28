@@ -73,9 +73,10 @@ code_footer_cpp(ofstream &ofs, int &in, const TarLang &tar_lang)
 bool
 code_header_js(ofstream &ofs, int &in, const TarLang &tar_lang)
 {
-   ofs <<tab(in)<<"// vpbuf generated code - do not modify\n";
-   ofs <<tab(in)<<"\"use strict\";\n";
-   ofs <<tab(in)<<"module.exports = {\n\n";
+   ofs <<tab(in)<< "// vpbuf generated code - do not modify\n";
+   ofs <<tab(in)<< "\"use strict\";\n";
+   ofs <<tab(in)<< "var persist = require(\"./persist\");\n\n";
+   ofs <<tab(in)<< "module.exports = {\n";
 
    in += 1;
    ofs <<tab(in)<< "factory: null, // must be set to class factory object\n\n";
@@ -385,6 +386,9 @@ struct var_generate_code
 
          } else if (tt->name == "javascript") {
             code_header_js(ostr, in, *tt);
+
+            for (ii = vp_typedefs.begin(); ii != vp_typedefs.end(); ++ii)
+               (*ii)->gen_js_utils(ostr, in, type_map, *tt);
 
             for (ii = vp_typedefs.begin(); ii != vp_typedefs.end(); ++ii)
                (*ii)->serialize_out_js(ostr, in, type_map, *tt);

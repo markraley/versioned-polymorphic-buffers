@@ -53,6 +53,10 @@ module.exports = {
 
     OuterG: function() {
         this.v = [];
+    },
+
+    flip: function() {
+        return [];
     }
 };
 
