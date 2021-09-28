@@ -61,6 +61,8 @@ void vp_typedef_reorder_pod::gen_js_utils(
    TypeMap &type_map,
    TarLang &tar_lang)
 {
+   // ------ vlist
+
    ofs <<tab(in)<< "vlist_"<< type_name <<": [\n";
    auto jj_last = prev(pod_items.end());
    for (auto jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
@@ -73,7 +75,29 @@ void vp_typedef_reorder_pod::gen_js_utils(
    }
    ofs <<tab(in)<< "],\n\n";
 
-   // -------
+   // vlist wrapper function
+
+   ofs <<tab(in)<< "get_vlist_"<< type_name <<": function(ver) {\n";
+
+   ofs <<tab(in+1)<< "var c = 0;var v = [];\n";
+
+   ofs <<tab(in+1)<< "for (var i = 0; i < vlist_"
+                              << type_name << ".length; i++) {\n";
+   ofs <<tab(in+2)<< "var p = vlist_"<< type_name << "[i];\n";
+   ofs <<tab(in+2)<< "if ((p[1] == 0 && ver >= p[0]) "<<
+            "|| (ver >= p[0] && ver <= p[1])) {\n";
+   ofs <<tab(in+3)<< "v.append(c);\n";
+   ofs <<tab(in+3)<< "c += 1;\n";
+   ofs <<tab(in+2)<< "}\n";
+
+   ofs <<tab(in+1)<< "}\n";
+
+
+   ofs <<tab(in+1)<< "return v\n";
+
+   ofs <<tab(in)<< "},\n\n";
+
+   // ------- rlist
 
       {
       ofs <<tab(in)<< "rlist_"<< type_name <<": [\n";
@@ -183,7 +207,7 @@ void vp_typedef_reorder_pod::gen_py_utils(
    TarLang &tar_lang)
 {
 
-   // build type specific vlist which stores item version requirements by index
+   // vlist
 
    ofs <<tab(in)<< "vlist_"<< type_name <<" = [\n";
    auto jj_last = prev(pod_items.end());
@@ -197,8 +221,7 @@ void vp_typedef_reorder_pod::gen_py_utils(
    }
    ofs <<tab(in)<< "]\n\n";
 
-   // build type specific function to return list of indexes
-   // for a specifified version
+   // vlist wrapper function
 
    ofs <<tab(in)<< "def get_vlist_"<< type_name <<"(ver):\n";
 
