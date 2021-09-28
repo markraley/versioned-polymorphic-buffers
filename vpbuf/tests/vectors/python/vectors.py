@@ -30,6 +30,8 @@ class write_context:
         self.stream = amf3.util.BufferedByteStream()
         self.encoder = amf3.Encoder(self.stream)
         self.encoder.string_references = False # disables string caching
+        self.reorder_map = {}
+        init_reorder_map(self.reorder_map, 1)
 
 class read_context:
     def __init__(self, test_name):
@@ -37,6 +39,8 @@ class read_context:
         self.decoder = amf3.Decoder(self.istream)
         self.bytes_read = len(self.istream)
         print(test_name, len(self.istream), 'bytes read')
+        self.reorder_map = {}
+        init_reorder_map(self.reorder_map, 1)
 
 # ------------------------------------------------------------------------------
 # vectors_A - test vector of pointer to struct

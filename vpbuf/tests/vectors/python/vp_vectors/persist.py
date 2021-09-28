@@ -55,3 +55,14 @@ class OuterE:
 class OuterF:
     def __init__(self):
         self.v = []
+
+# ------------------------------------------------------------------------------
+
+class flip:
+    def __init__(self, base_arr = []):
+        self.base_arr = base_arr
+
+    def __call__(self):
+        tmp = self.base_arr
+        self.base_arr = list(reversed(tmp))
+        return tmp
