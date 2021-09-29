@@ -1,5 +1,7 @@
 // Software released under the MIT license (see project root for license file)
 
+var persist = require("./persist");
+var vp = require('./vp_vectors');
 const fs = require('fs');
 const assert = require('chai').assert;
 "use strict";
@@ -10,6 +12,11 @@ const tools = require('./tools');
     var wc = {
         buf_arr: [],
         reorder_map: {},
+
+        init: function(ver) {
+            this.buf_arr = [];
+            vp.init_reorder_map(this.reorder_map, ver);
+        },
 
         _write_Integer: function(i) {
 //          console.log('writing i', i);

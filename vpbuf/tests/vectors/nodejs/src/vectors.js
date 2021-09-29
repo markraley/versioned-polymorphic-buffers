@@ -37,9 +37,7 @@ const out_dir = './out/';
                 this.g.v.push(new persist.A(j, 'A-' + j));
             }
 
-            write_context.buf_arr = [];
-            vp.init_reorder_map(write_context.reorder_map, 1);
-            console.log(write_context.reorder_map);
+            write_context.init(1);
 
             vp.write_Header(1, write_context, this.h);
             vp.write_OuterA(1, write_context, this.g);
@@ -51,9 +49,7 @@ const out_dir = './out/';
         },
 
         on_read_complete: function(data) {
-            read_context.dv = new DataView(tools.toArrayBuffer(data));
-            read_context.cur_pos = 0;
-            vp.init_reorder_map(read_context.reorder_map, 1);
+            read_context.init(1, data);
 
             Test_vectors_A.hh = vp.read_Header(1, read_context);
             Test_vectors_A.gg = vp.read_OuterA(1, read_context);
@@ -101,7 +97,8 @@ const out_dir = './out/';
                 this.g.v.push(new persist.A(j, 'A-' + j));
             }
 
-            write_context.buf_arr = [];
+            write_context.init(1);
+
             vp.write_Header(1, write_context, this.h);
             vp.write_OuterB(1, write_context, this.g);
 
@@ -112,8 +109,7 @@ const out_dir = './out/';
         },
 
         on_read_complete: function(data) {
-            read_context.dv = new DataView(tools.toArrayBuffer(data));
-            read_context.cur_pos = 0;
+            read_context.init(1, data);
 
             Test_vectors_B.hh = vp.read_Header(1, read_context);
             Test_vectors_B.gg = vp.read_OuterB(1, read_context);
@@ -159,7 +155,8 @@ const out_dir = './out/';
                 this.g.v.push('C-' + j);
             }
 
-            write_context.buf_arr = [];
+            write_context.init(1);
+
             vp.write_Header(1, write_context, this.h);
             vp.write_OuterC(1, write_context, this.g);
 
@@ -170,8 +167,7 @@ const out_dir = './out/';
         },
 
         on_read_complete: function(data) {
-            read_context.dv = new DataView(tools.toArrayBuffer(data));
-            read_context.cur_pos = 0;
+            read_context.init(1, data);
 
             Test_vectors_C.hh = vp.read_Header(1, read_context);
             Test_vectors_C.gg = vp.read_OuterC(1, read_context);
@@ -217,7 +213,8 @@ const out_dir = './out/';
                 this.g.v.push('D-' + j);
             }
 
-            write_context.buf_arr = [];
+            write_context.init(1);
+
             vp.write_Header(1, write_context, this.h);
             vp.write_OuterD(1, write_context, this.g);
 
@@ -228,8 +225,7 @@ const out_dir = './out/';
         },
 
         on_read_complete: function(data) {
-            read_context.dv = new DataView(tools.toArrayBuffer(data));
-            read_context.cur_pos = 0;
+            read_context.init(1, data);
 
             Test_vectors_D.hh = vp.read_Header(1, read_context);
             Test_vectors_D.gg = vp.read_OuterD(1, read_context);
@@ -275,7 +271,8 @@ const out_dir = './out/';
                 this.g.v.push(j);
             }
 
-            write_context.buf_arr = [];
+            write_context.init(1);
+
             vp.write_Header(1, write_context, this.h);
             vp.write_OuterE(1, write_context, this.g);
 
@@ -286,8 +283,7 @@ const out_dir = './out/';
         },
 
         on_read_complete: function(data) {
-            read_context.dv = new DataView(tools.toArrayBuffer(data));
-            read_context.cur_pos = 0;
+            read_context.init(1, data);
 
             Test_vectors_E.hh = vp.read_Header(1, read_context);
             Test_vectors_E.gg = vp.read_OuterE(1, read_context);
@@ -333,7 +329,8 @@ const out_dir = './out/';
                 this.g.v.push(j);
             }
 
-            write_context.buf_arr = [];
+            write_context.init(1);
+
             vp.write_Header(1, write_context, this.h);
             vp.write_OuterF(1, write_context, this.g);
 
@@ -344,8 +341,7 @@ const out_dir = './out/';
         },
 
         on_read_complete: function(data) {
-            read_context.dv = new DataView(tools.toArrayBuffer(data));
-            read_context.cur_pos = 0;
+            read_context.init(1, data);
 
             Test_vectors_F.hh = vp.read_Header(1, read_context);
             Test_vectors_F.gg = vp.read_OuterF(1, read_context);
@@ -392,7 +388,8 @@ const out_dir = './out/';
                 this.g.v.push(new persist.Derived2(j, 'D2-' + j));
             }
 
-            write_context.buf_arr = [];
+            write_context.init(1);
+
             vp.write_Header(1, write_context, this.h);
             vp.write_OuterG(1, write_context, this.g);
 
@@ -403,8 +400,7 @@ const out_dir = './out/';
         },
 
         on_read_complete: function(data) {
-            read_context.dv = new DataView(tools.toArrayBuffer(data));
-            read_context.cur_pos = 0;
+            read_context.init(1, data);
 
             Test_vectors_G.hh = vp.read_Header(1, read_context);
             Test_vectors_G.gg = vp.read_OuterG(1, read_context);

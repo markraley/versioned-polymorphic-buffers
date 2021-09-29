@@ -3,11 +3,21 @@
 const assert = require('chai').assert;
 "use strict";
 
+var persist = require("./persist");
+var vp = require('./vp_vectors');
+var tools = require('./tools');
+
 (function() {
     var rc = {
         cur_pos: 0,
         dv: new DataView(new ArrayBuffer()),
         reorder_map: {},
+
+        init: function(ver, data) {
+            this.dv = new DataView(tools.toArrayBuffer(data));
+            this.cur_pos = 0;
+            vp.init_reorder_map(this.reorder_map, ver);
+        },
 
         _read_Integer: function() {
             var result = 0, varLen = 0;

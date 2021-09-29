@@ -58,7 +58,6 @@ module.exports = {
     flip: function(base_arr) {
         console.log("constructed");
         return function() {
-            console.log(base_arr);
             return base_arr;
         }
     }
