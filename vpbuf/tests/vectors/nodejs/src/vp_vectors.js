@@ -5,6 +5,10 @@ var persist = require("./persist");
 module.exports = {
 	factory: null, // must be set to class factory object
 
+	init_reorder_map: function(map, ver) {
+		map['Header'] = get_rlist_Header(ver)
+	},
+
 	vlist_Header: [
 		[ 1, 0 ],
 		[ 1, 0 ]
@@ -23,6 +27,14 @@ module.exports = {
 	rlist_Header: [
 		[ 1, 0, 'h1', persist.flip ]
 	],
+
+	get_rlist_Header: function (ver) {
+		for (const p in rlist_Header) {
+			if ((p[1] == 0 && ver >= p[0]) || (ver >= p[0] && ver <= p[1]))
+				return [p[2], p[3](get_vlist_Header(ver))]
+		}
+		return None
+	},
 
 	write_String: function(ver, wc, payload) {
 		wc.write_String(payload);

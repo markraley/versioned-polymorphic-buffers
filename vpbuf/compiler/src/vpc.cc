@@ -71,7 +71,11 @@ code_footer_cpp(ofstream &ofs, int &in, const TarLang &tar_lang)
 // --- javascript header and footer --------------------------------------------
 
 bool
-code_header_js(ofstream &ofs, int &in, const TarLang &tar_lang)
+code_header_js(
+   ofstream &ofs,
+   int &in,
+   const TarLang &tar_lang,
+   TypeVector &vp_typedefs)
 {
    ofs <<tab(in)<< "// vpbuf generated code - do not modify\n";
    ofs <<tab(in)<< "\"use strict\";\n";
@@ -80,6 +84,17 @@ code_header_js(ofstream &ofs, int &in, const TarLang &tar_lang)
 
    in += 1;
    ofs <<tab(in)<< "factory: null, // must be set to class factory object\n\n";
+
+   ofs <<tab(in)<< "init_reorder_map: function(map, ver) {\n";
+
+   for (auto ii = vp_typedefs.begin(); ii != vp_typedefs.end(); ++ii) {
+      if ((*ii)->is_reorder_pod()) {
+         ofs <<tab(in+1)<<"map['"
+                     << (*ii)->type_name <<"'] = get_rlist_"
+                     << (*ii)->type_name <<"(ver)\n";
+      }
+   }
+   ofs <<tab(in)<< "},\n\n";
 
    return true;
 }
@@ -385,7 +400,7 @@ struct var_generate_code
                (*ii)->serialize_in_py(ostr, in, type_map, *tt);
 
          } else if (tt->name == "javascript") {
-            code_header_js(ostr, in, *tt);
+            code_header_js(ostr, in, *tt, vp_typedefs);
 
             for (ii = vp_typedefs.begin(); ii != vp_typedefs.end(); ++ii)
                (*ii)->gen_js_utils(ostr, in, type_map, *tt);

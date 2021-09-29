@@ -114,7 +114,21 @@ void vp_typedef_reorder_pod::gen_js_utils(
       ofs <<tab(in)<< "],\n\n";
    }
 
-   // --------
+   // ------ rlist wrapper function
+
+   {
+      ofs <<tab(in)<< "get_rlist_"<< type_name <<": function (ver) {\n";
+
+      ofs <<tab(in+1)<< "for (const p in rlist_"<< type_name<< ") {\n";
+      ofs <<tab(in+2)<< "if ((p[1] == 0 && ver >= p[0]) "<<
+               "|| (ver >= p[0] && ver <= p[1]))\n";
+      ofs <<tab(in+3)<< "return [p[2], p[3](get_vlist_"<< type_name <<"(ver))]\n";
+      ofs <<tab(in+1)<< "}\n";
+
+      ofs <<tab(in+1)<< "return None\n";
+
+      ofs <<tab(in)<< "},\n\n";
+   }
 }
 
 // --- cpp ---------------------------------------------------------------------
@@ -233,10 +247,7 @@ void vp_typedef_reorder_pod::gen_py_utils(
 
    ofs << "\n";
 
-   // ----------------------------
-
-
-   // build type specific vlist which stores item version requirements by index
+   // ------ rlist
 
    {
       ofs <<tab(in)<< "rlist_"<< type_name <<" = [\n";
@@ -257,7 +268,7 @@ void vp_typedef_reorder_pod::gen_py_utils(
       ofs <<tab(in)<< "]\n\n";
    }
 
-   // ----------------------------
+   // ------ rlist wrapper function
 
    {
       ofs <<tab(in)<< "def get_rlist_"<< type_name <<"(ver):\n";

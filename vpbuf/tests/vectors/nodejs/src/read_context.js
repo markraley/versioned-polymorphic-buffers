@@ -7,6 +7,7 @@ const assert = require('chai').assert;
     var rc = {
         cur_pos: 0,
         dv: new DataView(new ArrayBuffer()),
+        reorder_map: {},
 
         _read_Integer: function() {
             var result = 0, varLen = 0;

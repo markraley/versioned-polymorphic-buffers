@@ -9,6 +9,8 @@ const tools = require('./tools');
 (function() {
     var wc = {
         buf_arr: [],
+        reorder_map: {},
+
         _write_Integer: function(i) {
 //          console.log('writing i', i);
             if (i >= 0 && i <= 0x7F) {
