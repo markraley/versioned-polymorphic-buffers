@@ -56,9 +56,10 @@ module.exports = {
     },
 
     flip: function(base_arr) {
-        console.log("constructed");
         return function() {
-            return base_arr;
+            var tmp = base_arr.slice()
+            base_arr.reverse()
+            return tmp
         }
     }
 };

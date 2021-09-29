@@ -13,29 +13,29 @@ def get_low_version():
 	return 1
 
 def init_reorder_map(map, ver):
-	map['Header'] = get_rlist_Header(ver)
+	map['A'] = get_rlist_A(ver)
 
-vlist_Header = [
+vlist_A = [
 	( 1, 0 ),
 	( 1, 0 )
 ]
 
-def get_vlist_Header(ver):
+def get_vlist_A(ver):
 	c, v = 0, []
-	for p in vlist_Header:
+	for p in vlist_A:
 		if (p[1] == 0 and ver >= p[0]) or (ver >= p[0] and ver <= p[1]):
 			v.append(c)
 			c += 1
 	return v
 
-rlist_Header = [
+rlist_A = [
 	( 1, 0, 'h1', flip )
 ]
 
-def get_rlist_Header(ver):
-	for p in rlist_Header:
+def get_rlist_A(ver):
+	for p in rlist_A:
 		if (p[1] == 0 and ver >= p[0]) or (ver >= p[0] and ver <= p[1]):
-			return [p[2], p[3](get_vlist_Header(ver))]
+			return [p[2], p[3](get_vlist_A(ver))]
 	return None
 
 def write_int(ver, wc, payload):
@@ -45,15 +45,15 @@ def write_str(ver, wc, payload):
     wc.encoder.writeString(payload) # amf3
 
 def write_Header(ver, f, payload):
-	for i in f.reorder_map['Header'][1]():
-		if i==0:
-			write_int(ver, f, payload.version)
-		elif i==1:
-			write_str(ver, f, payload.test_name)
+	write_int(ver, f, payload.version)
+	write_str(ver, f, payload.test_name)
 
 def write_A(ver, f, payload):
-	write_int(ver, f, payload.i1)
-	write_str(ver, f, payload.s1)
+	for i in f.reorder_map['A'][1]():
+		if i==0:
+			write_int(ver, f, payload.i1)
+		elif i==1:
+			write_str(ver, f, payload.s1)
 
 def write_OuterA(ver, f, payload):
 	count = len(payload.v)
@@ -141,17 +141,17 @@ def read_str(ver, rc):
 
 def read_Header(ver, f):
 	payload = Header()
-	for i in f.reorder_map['Header'][1]():
-		if i==0:
-			payload.version = read_int(ver, f)
-		elif i==1:
-			payload.test_name = read_str(ver, f)
+	payload.version = read_int(ver, f)
+	payload.test_name = read_str(ver, f)
 	return payload
 
 def read_A(ver, f):
 	payload = A()
-	payload.i1 = read_int(ver, f)
-	payload.s1 = read_str(ver, f)
+	for i in f.reorder_map['A'][1]():
+		if i==0:
+			payload.i1 = read_int(ver, f)
+		elif i==1:
+			payload.s1 = read_str(ver, f)
 	return payload
 
 def read_OuterA(ver, f):

@@ -6,17 +6,17 @@ module.exports = {
 	factory: null, // must be set to class factory object
 
 	init_reorder_map: function(map, ver) {
-		map['Header'] = this.get_rlist_Header(ver)
+		map['A'] = this.get_rlist_A(ver)
 	},
 
-	vlist_Header: [
+	vlist_A: [
 		[ 1, 0 ],
 		[ 1, 0 ]
 	],
 
-	get_vlist_Header: function(ver) {
+	get_vlist_A: function(ver) {
 		var v = [];
-		this.vlist_Header.forEach(function(p, i) {
+		this.vlist_A.forEach(function(p, i) {
 			if ((p[1] == 0 && ver >= p[0]) || (ver >= p[0] && ver <= p[1])) {
 				v.push(i);
 			}
@@ -24,15 +24,15 @@ module.exports = {
 		return v;
 	},
 
-	rlist_Header: [
+	rlist_A: [
 		[ 1, 0, 'h1', persist.flip ]
 	],
 
-	get_rlist_Header: function (ver) {
-		for (var i = 0; i < this.rlist_Header.length; i++) {
-			var p = this.rlist_Header[i]
+	get_rlist_A: function (ver) {
+		for (var i = 0; i < this.rlist_A.length; i++) {
+			var p = this.rlist_A[i]
 			if ((p[1] == 0 && ver >= p[0]) || (ver >= p[0] && ver <= p[1]))
-				return [p[2], p[3](this.get_vlist_Header(ver))]
+				return [p[2], p[3](this.get_vlist_A(ver))]
 		}
 		return []
 	},
@@ -46,21 +46,21 @@ module.exports = {
 	},
 
 	write_Header: function(ver, wc, payload) {
-		var v = wc.reorder_map['Header'][1]();
-		for (var i = 0; i < v.length; i++)
-			switch(v[i]) {
-				case 0:
-				wc.write_Integer(payload.version);
-				break;
-				case 1:
-				wc.write_String(payload.test_name);
-				break;
-			};
+		wc.write_Integer(payload.version);
+		wc.write_String(payload.test_name);
 	},
 
 	write_A: function(ver, wc, payload) {
-		wc.write_Integer(payload.i1);
-		wc.write_String(payload.s1);
+		var v = wc.reorder_map['A'][1]();
+		for (var i = 0; i < v.length; i++)
+			switch(v[i]) {
+				case 0:
+				wc.write_Integer(payload.i1);
+				break;
+				case 1:
+				wc.write_String(payload.s1);
+				break;
+			};
 	},
 
 	write_OuterA: function(ver, wc, payload) {
@@ -137,23 +137,23 @@ module.exports = {
 
 	read_Header: function(ver, rc) {
 		var payload = new this.factory.Header();
-		var v = rc.reorder_map['Header'][1]();
-		for (var i = 0; i < v.length; i++)
-			switch(v[i]) {
-				case 0:
-				payload.version = rc.read_Integer();
-				break;
-				case 1:
-				payload.test_name = rc.read_String();
-				break;
-			};
+		payload.version = rc.read_Integer();
+		payload.test_name = rc.read_String();
 		return payload;
 	},
 
 	read_A: function(ver, rc) {
 		var payload = new this.factory.A();
-		payload.i1 = rc.read_Integer();
-		payload.s1 = rc.read_String();
+		var v = rc.reorder_map['A'][1]();
+		for (var i = 0; i < v.length; i++)
+			switch(v[i]) {
+				case 0:
+				payload.i1 = rc.read_Integer();
+				break;
+				case 1:
+				payload.s1 = rc.read_String();
+				break;
+			};
 		return payload;
 	},
 
