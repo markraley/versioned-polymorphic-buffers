@@ -90,7 +90,7 @@ code_header_js(
    for (auto ii = vp_typedefs.begin(); ii != vp_typedefs.end(); ++ii) {
       if ((*ii)->is_reorder_pod()) {
          ofs <<tab(in+1)<<"map['"
-                     << (*ii)->type_name <<"'] = get_rlist_"
+                     << (*ii)->type_name <<"'] = this.get_rlist_"
                      << (*ii)->type_name <<"(ver)\n";
       }
    }

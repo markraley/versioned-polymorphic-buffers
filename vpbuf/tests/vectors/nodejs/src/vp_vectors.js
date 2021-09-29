@@ -6,7 +6,7 @@ module.exports = {
 	factory: null, // must be set to class factory object
 
 	init_reorder_map: function(map, ver) {
-		map['Header'] = get_rlist_Header(ver)
+		map['Header'] = this.get_rlist_Header(ver)
 	},
 
 	vlist_Header: [
@@ -29,11 +29,12 @@ module.exports = {
 	],
 
 	get_rlist_Header: function (ver) {
-		for (const p in rlist_Header) {
+		for (var i = 0; i < this.rlist_Header.length; i++) {
+			var p = this.rlist_Header[i]
 			if ((p[1] == 0 && ver >= p[0]) || (ver >= p[0] && ver <= p[1]))
-				return [p[2], p[3](get_vlist_Header(ver))]
+				return [p[2], p[3](this.get_vlist_Header(ver))]
 		}
-		return None
+		return []
 	},
 
 	write_String: function(ver, wc, payload) {

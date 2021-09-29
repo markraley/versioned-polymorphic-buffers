@@ -38,6 +38,9 @@ const out_dir = './out/';
             }
 
             write_context.buf_arr = [];
+            vp.init_reorder_map(write_context.reorder_map, 1);
+            console.log(write_context.reorder_map);
+
             vp.write_Header(1, write_context, this.h);
             vp.write_OuterA(1, write_context, this.g);
 
