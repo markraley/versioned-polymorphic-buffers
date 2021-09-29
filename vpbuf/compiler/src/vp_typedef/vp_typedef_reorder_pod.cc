@@ -359,6 +359,7 @@ vp_typedef_reorder_pod::serialize_out_js(
    TarLang &tar_lang)
 {
    PodItems::iterator jj;
+   int j = 0;
 
    // check if this typedef is in the targeted version range
    if (!this->vrange.overlap(tar_lang.start, tar_lang.end))
@@ -366,9 +367,16 @@ vp_typedef_reorder_pod::serialize_out_js(
 
    ofs <<tab(in)<<"write_"<< type_name <<": function(ver, wc, payload) {\n";
 
+   ofs <<tab(in+1)<< "var v = wc.reorder_map['"<< type_name <<"'][1]();\n";
+   ofs <<tab(in+1)<< "for (var i = 0; i < v.length; i++)\n";
+   ofs <<tab(in+2)<< "switch(v[i]) {\n";
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
-      (*jj)->serialize_out_js(ofs, in + 1, type_map, tar_lang);
+      ofs <<tab(in+3)<< "case "<< j++ <<":\n";
+      (*jj)->serialize_out_js(ofs, in+3, type_map, tar_lang);
+      ofs <<tab(in+3)<< "break;\n";
    }
+
+   ofs <<tab(in+2)<< "};\n";
 
    if (parent_name.size() > 0) {
       vp_typedef *p = GetVPType(parent_name, type_map);
@@ -388,6 +396,7 @@ vp_typedef_reorder_pod::serialize_in_js(
    TarLang &tar_lang)
 {
    PodItems::iterator jj;
+   int j = 0;
 
    // check if this typedef is in the targeted version range
    if (!this->vrange.overlap(tar_lang.start, tar_lang.end))
@@ -397,9 +406,17 @@ vp_typedef_reorder_pod::serialize_in_js(
 
    ofs <<tab(in+1) <<"var payload = new this.factory." << type_name << "();\n";
 
+   ofs <<tab(in+1)<< "var v = rc.reorder_map['"<< type_name <<"'][1]();\n";
+   ofs <<tab(in+1)<< "for (var i = 0; i < v.length; i++)\n";
+   ofs <<tab(in+2)<< "switch(v[i]) {\n";
+
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
-      (*jj)->serialize_in_js(ofs, in + 1, type_map, tar_lang);
+      ofs <<tab(in+3)<< "case "<< j++ <<":\n";
+      (*jj)->serialize_in_js(ofs, in+3, type_map, tar_lang);
+      ofs <<tab(in+3)<< "break;\n";
    }
+
+   ofs <<tab(in+2)<< "};\n";
 
    ofs <<tab(in+1)<< "return payload;\n";
    ofs <<tab(in)<< "},\n\n";

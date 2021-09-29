@@ -53,6 +53,7 @@ const out_dir = './out/';
         on_read_complete: function(data) {
             read_context.dv = new DataView(tools.toArrayBuffer(data));
             read_context.cur_pos = 0;
+            vp.init_reorder_map(read_context.reorder_map, 1);
 
             Test_vectors_A.hh = vp.read_Header(1, read_context);
             Test_vectors_A.gg = vp.read_OuterA(1, read_context);

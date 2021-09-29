@@ -55,8 +55,12 @@ module.exports = {
         this.v = [];
     },
 
-    flip: function() {
-        return [];
+    flip: function(base_arr) {
+        console.log("constructed");
+        return function() {
+            console.log(base_arr);
+            return base_arr;
+        }
     }
 };
 

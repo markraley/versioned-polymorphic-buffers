@@ -46,8 +46,16 @@ module.exports = {
 	},
 
 	write_Header: function(ver, wc, payload) {
-		wc.write_Integer(payload.version);
-		wc.write_String(payload.test_name);
+		var v = wc.reorder_map['Header'][1]();
+		for (var i = 0; i < v.length; i++)
+			switch(v[i]) {
+				case 0:
+				wc.write_Integer(payload.version);
+				break;
+				case 1:
+				wc.write_String(payload.test_name);
+				break;
+			};
 	},
 
 	write_A: function(ver, wc, payload) {
@@ -129,8 +137,16 @@ module.exports = {
 
 	read_Header: function(ver, rc) {
 		var payload = new this.factory.Header();
-		payload.version = rc.read_Integer();
-		payload.test_name = rc.read_String();
+		var v = rc.reorder_map['Header'][1]();
+		for (var i = 0; i < v.length; i++)
+			switch(v[i]) {
+				case 0:
+				payload.version = rc.read_Integer();
+				break;
+				case 1:
+				payload.test_name = rc.read_String();
+				break;
+			};
 		return payload;
 	},
 
