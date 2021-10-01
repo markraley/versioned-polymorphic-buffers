@@ -12,7 +12,9 @@ vp_typedef_reorder_pod::add_pod_item(pod_item *new_item)
 }
 
 void
-vp_typedef_reorder_pod::add_pod_item_range(unsigned int nBegin, unsigned int nEnd)
+vp_typedef_reorder_pod::add_pod_item_range(
+   unsigned int nBegin,
+   unsigned int nEnd)
 {
    PodItems::reverse_iterator jj;
 
@@ -52,7 +54,38 @@ void vp_typedef_reorder_pod::gen_cpp_utils(
    TypeMap &type_map,
    TarLang &tar_lang)
 {
-   // empty stub
+   // ------ vlist
+
+   ofs <<tab(in)<< "vector<tuple<int, int>> vlist_"<< type_name <<" = {\n";
+   auto jj_last = prev(pod_items.end());
+   for (auto jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
+      ofs <<tab(in+1)<<"{ "<< (*jj)->nBegin <<", "<< (*jj)->nEnd <<" }";
+      if (jj_last == jj)
+         ofs << "\n";
+      else
+         ofs << ",\n";
+
+   }
+   ofs <<tab(in)<< "};\n\n";
+
+   // ------- rlist
+
+   ofs <<tab(in)<< "vector<tuple<int, int, string>> rlist_"
+               << type_name <<" = {\n";
+   auto jj_rlast = prev(vptype_options.end());
+   for (auto jj = vptype_options.begin(); jj != vptype_options.end(); ++jj) {
+      ofs <<tab(in+1)<<"{ "
+                  << (*jj).vrange.nBegin <<", "
+                  << (*jj).vrange.nEnd <<", "
+                  <<"\""<< (*jj).opt_name <<"\"}";
+      if (jj_rlast == jj)
+         ofs << "\n";
+      else
+         ofs << ",\n";
+
+   }
+   ofs <<tab(in)<< "};\n\n";
+
 }
 
 void vp_typedef_reorder_pod::gen_js_utils(
@@ -95,42 +128,40 @@ void vp_typedef_reorder_pod::gen_js_utils(
 
    // ------- rlist
 
-      {
-      ofs <<tab(in)<< "rlist_"<< type_name <<": [\n";
-      auto jj_last = prev(vptype_options.end());
-      for (auto jj = vptype_options.begin(); jj != vptype_options.end(); ++jj) {
-         ofs <<tab(in+1)<<"[ "
-                     << (*jj).vrange.nBegin <<", "
-                     << (*jj).vrange.nEnd <<", "
-                     <<"'"<< (*jj).opt_name  <<"', persist."
-                     << (*jj).opt_class
-                     <<" ]";
-         if (jj_last == jj)
-            ofs << "\n";
-         else
-            ofs << ",\n";
+   ofs <<tab(in)<< "rlist_"<< type_name <<": [\n";
+   auto jj_rlast = prev(vptype_options.end());
+   for (auto jj = vptype_options.begin(); jj != vptype_options.end(); ++jj) {
+      ofs <<tab(in+1)<<"[ "
+                  << (*jj).vrange.nBegin <<", "
+                  << (*jj).vrange.nEnd <<", "
+                  <<"'"<< (*jj).opt_name  <<"', persist."
+                  << (*jj).opt_class
+                  <<" ]";
+      if (jj_rlast == jj)
+         ofs << "\n";
+      else
+         ofs << ",\n";
 
-      }
-      ofs <<tab(in)<< "],\n\n";
    }
+   ofs <<tab(in)<< "],\n\n";
 
    // ------ rlist wrapper function
 
-   {
-      ofs <<tab(in)<< "get_rlist_"<< type_name <<": function (ver) {\n";
+   ofs <<tab(in)<< "get_rlist_"<< type_name <<": function (ver) {\n";
 
-      ofs <<tab(in+1)<< "for (var i = 0; i < this.rlist_"
-                                             << type_name << ".length; i++) {\n";
-      ofs <<tab(in+2)<< "var p = this.rlist_"<< type_name <<"[i]\n";
-      ofs <<tab(in+2)<< "if ((p[1] == 0 && ver >= p[0]) "<<
-               "|| (ver >= p[0] && ver <= p[1]))\n";
-      ofs <<tab(in+3)<< "return [p[2], p[3](this.get_vlist_"<< type_name <<"(ver))]\n";
-      ofs <<tab(in+1)<< "}\n";
+   ofs <<tab(in+1)<< "for (var i = 0; i < this.rlist_"
+                     << type_name << ".length; i++) {\n";
+   ofs <<tab(in+2)<< "var p = this.rlist_"<< type_name <<"[i]\n";
+   ofs <<tab(in+2)<< "if ((p[1] == 0 && ver >= p[0]) "<<
+            "|| (ver >= p[0] && ver <= p[1]))\n";
+   ofs <<tab(in+3)<< "return [p[2], p[3](this.get_vlist_"
+                     << type_name <<"(ver))]\n";
+   ofs <<tab(in+1)<< "}\n";
 
-      ofs <<tab(in+1)<< "return []\n";
+   ofs <<tab(in+1)<< "return []\n";
 
-      ofs <<tab(in)<< "},\n\n";
-   }
+   ofs <<tab(in)<< "},\n\n";
+
 }
 
 // --- cpp ---------------------------------------------------------------------
@@ -251,39 +282,36 @@ void vp_typedef_reorder_pod::gen_py_utils(
 
    // ------ rlist
 
-   {
-      ofs <<tab(in)<< "rlist_"<< type_name <<" = [\n";
-      auto jj_last = prev(vptype_options.end());
-      for (auto jj = vptype_options.begin(); jj != vptype_options.end(); ++jj) {
-         ofs <<tab(in+1)<<"( "
-                     << (*jj).vrange.nBegin <<", "
-                     << (*jj).vrange.nEnd <<", "
-                     <<"'"<< (*jj).opt_name  <<"', "
-                     << (*jj).opt_class
-                     <<" )";
-         if (jj_last == jj)
-            ofs << "\n";
-         else
-            ofs << ",\n";
+   ofs <<tab(in)<< "rlist_"<< type_name <<" = [\n";
+   auto jj_rlast = prev(vptype_options.end());
+   for (auto jj = vptype_options.begin(); jj != vptype_options.end(); ++jj) {
+      ofs <<tab(in+1)<<"( "
+                  << (*jj).vrange.nBegin <<", "
+                  << (*jj).vrange.nEnd <<", "
+                  <<"'"<< (*jj).opt_name  <<"', "
+                  << (*jj).opt_class
+                  <<" )";
+      if (jj_rlast == jj)
+         ofs << "\n";
+      else
+         ofs << ",\n";
 
-      }
-      ofs <<tab(in)<< "]\n\n";
    }
+   ofs <<tab(in)<< "]\n\n";
 
    // ------ rlist wrapper function
 
-   {
-      ofs <<tab(in)<< "def get_rlist_"<< type_name <<"(ver):\n";
+   ofs <<tab(in)<< "def get_rlist_"<< type_name <<"(ver):\n";
 
-      ofs <<tab(in+1)<< "for p in rlist_"<< type_name<< ":\n";
-      ofs <<tab(in+2)<< "if (p[1] == 0 and ver >= p[0]) "<<
-               "or (ver >= p[0] and ver <= p[1]):\n";
-      ofs <<tab(in+3)<< "return [p[2], p[3](get_vlist_"<< type_name <<"(ver))]\n";
+   ofs <<tab(in+1)<< "for p in rlist_"<< type_name<< ":\n";
+   ofs <<tab(in+2)<< "if (p[1] == 0 and ver >= p[0]) "<<
+            "or (ver >= p[0] and ver <= p[1]):\n";
+   ofs <<tab(in+3)<< "return [p[2], p[3](get_vlist_"
+                           << type_name <<"(ver))]\n";
 
-      ofs <<tab(in+1)<< "return None\n";
+   ofs <<tab(in+1)<< "return None\n";
 
-      ofs << "\n";
-   }
+   ofs << "\n";
 }
 
 void
@@ -382,7 +410,8 @@ vp_typedef_reorder_pod::serialize_out_js(
       vp_typedef *p = GetVPType(parent_name, type_map);
 
       if (p->parent_name.size() > 0)
-         ofs <<tab(in+1)<< "this.write_" << parent_name << "(ver, wc, payload)\n";
+         ofs <<tab(in+1)<< "this.write_"
+                           << parent_name << "(ver, wc, payload)\n";
    }
 
    ofs << tab(in) << "},\n\n";

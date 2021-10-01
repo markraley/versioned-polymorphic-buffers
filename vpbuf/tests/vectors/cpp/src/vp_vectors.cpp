@@ -12,6 +12,15 @@ namespace vp_vectors {
 		return 1;
 	}
 
+	vector<tuple<int, int>> vlist_A = {
+		{ 1, 0 },
+		{ 1, 0 }
+	};
+
+	vector<tuple<int, int, string>> rlist_A = {
+		{ 1, 0, "h1"}
+	};
+
 	void write_Header(long nVersion, write_context &wc, Header &payload)
 	{
 		write_int(wc, payload.version);
