@@ -60,8 +60,8 @@ class Derived1 : public Base {
       string get_s() {return s1;}
 
       virtual ~Derived1() {}
-         int i1;
-         string s1;
+      int i1;
+      string s1;
 };
 
 class Derived2 : public Base {
@@ -73,11 +73,29 @@ class Derived2 : public Base {
       string get_s() {return s1;}
 
       virtual ~Derived2() {}
-         int i1;
-         string s1;
+      int i1;
+      string s1;
 };
 
 class OuterG {
    public:
       std::vector<Base *> v;
 };
+
+
+class ReorderCog {
+   public:
+      virtual ~ReorderCog() {};
+};
+
+class flip : public ReorderCog {
+   vector <int> base_list;
+
+   public:
+      flip(vector <int> &v) : base_list(v) {};
+
+      vector<int> &operator ()() { return base_list; }
+
+   virtual ~flip() {}
+};
+

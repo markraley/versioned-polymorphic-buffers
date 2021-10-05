@@ -86,6 +86,17 @@ void vp_typedef_reorder_pod::gen_cpp_utils(
    }
    ofs <<tab(in)<< "};\n\n";
 
+   ofs <<tab(in)<< "ReorderCog *rcog_factory_"<< type_name
+                     <<"(string &n, vector<int> &v) {\n";
+
+   for (auto jj = vptype_options.begin(); jj != vptype_options.end(); ++jj) {
+      ofs <<tab(in+1)<< "if (n == \"" << (*jj).opt_class <<"\")\n";
+      ofs <<tab(in+2)<< "return new "<< (*jj).opt_class <<"(v);\n";
+   }
+
+   ofs <<tab(in+1)<< "return(NULL);\n";
+   ofs <<tab(in)<< "}\n\n";
+
 }
 
 void vp_typedef_reorder_pod::gen_js_utils(

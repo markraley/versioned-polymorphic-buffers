@@ -21,6 +21,12 @@ namespace vp_vectors {
 		{ 1, 0, "h1"}
 	};
 
+	ReorderCog *rcog_factory_A(string &n, vector<int> &v) {
+		if (n == "flip")
+			return new flip(v);
+		return(NULL);
+	}
+
 	void write_Header(long nVersion, write_context &wc, Header &payload)
 	{
 		write_int(wc, payload.version);
