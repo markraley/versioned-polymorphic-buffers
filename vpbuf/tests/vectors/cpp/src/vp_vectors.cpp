@@ -22,9 +22,20 @@ namespace vp_vectors {
 	};
 
 	ReorderCog *rcog_factory_A(string &n, vector<int> &v) {
-		if (n == "flip")
+		if (n == "h1")
 			return new flip(v);
 		return(NULL);
+	}
+
+	vector<int> get_vlist_A(int ver) {
+		vector<int> v; int i = 0;
+		for (auto tt = vlist_A.begin(); tt != vlist_A.end(); tt++, i++) {
+			if ((get<1>(*tt) == 0 && ver >= get<0>(*tt)) || (ver >= get<0>(*tt) && ver <= get<1>(*tt))) {
+				v.push_back(i);
+			}
+		};
+
+		return v;
 	}
 
 	void write_Header(long nVersion, write_context &wc, Header &payload)
