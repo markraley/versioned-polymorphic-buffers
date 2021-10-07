@@ -281,9 +281,19 @@ vp_typedef_reorder_pod::serialize_in_cpp(
       ofs <<tab(in+1)<< "auto *payload_ptr = new "<< type_name <<";\n";
       ofs <<tab(in+1)<< "auto &payload = *payload_ptr;\n";
 
+      ofs << tab(in+1) << "vector<int> v((*rc.reorder_map[\""
+         << type_name <<"\"])());\n\n";
+
+      int j = 0;
+      ofs <<tab(in+1)<< "for (auto i : v) \n";
+      ofs <<tab(in+2)<< "switch(i) {\n";;
       for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
-         (*jj)->serialize_in_cpp(ofs, in + 1, type_map, tar_lang);
+         ofs <<tab(in+3)<< "case "<< j++ <<":\n";
+         (*jj)->serialize_in_cpp(ofs, in+3, type_map, tar_lang);
+         ofs <<tab(in+3)<< "break;\n";
       }
+      ofs <<tab(in+2)<< "}\n";
+
       ofs <<tab(in+1)<< "return payload_ptr;\n";
 
       ofs << tab(in) << "}\n\n";
@@ -295,9 +305,18 @@ vp_typedef_reorder_pod::serialize_in_cpp(
       << type_name << " &payload)\n";
    ofs <<tab(in)<< "{\n";
 
+   ofs << tab(in+1) << "vector<int> v((*rc.reorder_map[\""
+      << type_name <<"\"])());\n\n";
+
+   int j = 0;
+   ofs <<tab(in+1)<< "for (auto i : v) \n";
+   ofs <<tab(in+2)<< "switch(i) {\n";;
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
-      (*jj)->serialize_in_cpp(ofs, in + 1, type_map, tar_lang);
+      ofs <<tab(in+3)<< "case "<< j++ <<":\n";
+      (*jj)->serialize_in_cpp(ofs, in+3, type_map, tar_lang);
+      ofs <<tab(in+3)<< "break;\n";
    }
+   ofs <<tab(in+2)<< "}\n";
 
    ofs << tab(in) << "}\n\n";
 }

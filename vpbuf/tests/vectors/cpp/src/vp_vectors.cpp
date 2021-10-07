@@ -154,8 +154,17 @@ namespace vp_vectors {
 
 	void read_A(long nVersion, read_context &rc, A &payload)
 	{
-		read_int(rc, payload.i1);
-		read_string(rc, payload.s1);
+		vector<int> v((*rc.reorder_map["A"])());
+
+		for (auto i : v) 
+			switch(i) {
+				case 0:
+				read_int(rc, payload.i1);
+				break;
+				case 1:
+				read_string(rc, payload.s1);
+				break;
+			}
 	}
 
 	void read_OuterA(long nVersion, read_context &rc, OuterA &payload)
