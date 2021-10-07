@@ -86,7 +86,7 @@ class OuterG {
 
 class ReorderCog {
    public:
-      virtual vector<int> &operator ()() = 0;
+      virtual vector<int> operator ()() = 0;
       virtual string step() = 0;
       virtual ~ReorderCog();
 };
@@ -102,7 +102,11 @@ class flip : public ReorderCog {
 
       string step() {return "hello world"; }
 
-      vector<int> &operator ()() { return base_list; }
+      vector<int> operator ()() {
+         auto tmp(base_list);
+         reverse(base_list.begin(), base_list.end());
+         return tmp;
+      }
 
       ~flip() {}
 };

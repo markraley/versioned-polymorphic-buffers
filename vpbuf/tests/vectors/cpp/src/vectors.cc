@@ -6,6 +6,7 @@
 #include <vector>
 #include <map>
 #include <tuple>
+#include <algorithm>
 #include <cassert>
 #include <typeindex> // needed for class polymorphism
 
