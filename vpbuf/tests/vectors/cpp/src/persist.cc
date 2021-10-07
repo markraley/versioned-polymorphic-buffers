@@ -59,7 +59,7 @@ class Derived1 : public Base {
       int get_i() {return i1;};
       string get_s() {return s1;}
 
-      virtual ~Derived1() {}
+      ~Derived1() {}
       int i1;
       string s1;
 };
@@ -72,7 +72,7 @@ class Derived2 : public Base {
       int get_i() {return i1;};
       string get_s() {return s1;}
 
-      virtual ~Derived2() {}
+      ~Derived2() {}
       int i1;
       string s1;
 };
@@ -98,7 +98,7 @@ class flip : public ReorderCog {
       vector <int> base_list;
 
    public:
-      flip(vector <int> &v) : base_list(v) { cout << v.size();};
+      flip(vector <int> &v) : base_list(v) { };
 
       string step() {return "hello world"; }
 
