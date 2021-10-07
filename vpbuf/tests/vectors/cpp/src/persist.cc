@@ -82,19 +82,29 @@ class OuterG {
       std::vector<Base *> v;
 };
 
+// -----------------------------------------------------------------------------
+
 class ReorderCog {
    public:
-      virtual ~ReorderCog() {};
+      virtual vector<int> &operator ()() = 0;
+      virtual string step() = 0;
+      virtual ~ReorderCog();
 };
 
+ReorderCog::~ReorderCog() {}
+
 class flip : public ReorderCog {
-   vector <int> base_list;
+   public:
+      vector <int> base_list;
 
    public:
-      flip(vector <int> &v) : base_list(v) {};
+      flip(vector <int> &v) : base_list(v) { cout << v.size();};
+
+      string step() {return "hello world"; }
 
       vector<int> &operator ()() { return base_list; }
 
-   virtual ~flip() {}
+      ~flip() {}
 };
+
 

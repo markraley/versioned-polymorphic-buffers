@@ -56,8 +56,17 @@ namespace vp_vectors {
 
 	void write_A(long nVersion, write_context &wc, A &payload)
 	{
-		write_int(wc, payload.i1);
-		write_string(wc, payload.s1);
+		vector<int> v((*wc.reorder_map["A"])());
+
+		for (auto i : v) 
+			switch(i) {
+				case 0:
+				write_int(wc, payload.i1);
+				break;
+				case 1:
+				write_string(wc, payload.s1);
+				break;
+			}
 	}
 
 	void write_OuterA(long nVersion, write_context &wc, OuterA &payload)

@@ -235,9 +235,19 @@ vp_typedef_reorder_pod::serialize_out_cpp(
       << "write_context &wc, " << type_name << " &payload)\n";
    ofs << tab(in) << "{\n";
 
+   ofs << tab(in+1) << "vector<int> v((*wc.reorder_map[\""
+      << type_name <<"\"])());\n\n";
+
+   int j = 0;
+   ofs <<tab(in+1)<< "for (auto i : v) \n";
+   ofs <<tab(in+2)<< "switch(i) {\n";;
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
-      (*jj)->serialize_out_cpp(ofs, in + 1, type_map, tar_lang);
+      ofs <<tab(in+3)<< "case "<< j++ <<":\n";
+      (*jj)->serialize_out_cpp(ofs, in+3, type_map, tar_lang);
+      ofs <<tab(in+3)<< "break;\n";
    }
+   ofs <<tab(in+2)<< "}\n";
+
 
    if (parent_name.size() > 0) {
       vp_typedef *p = GetVPType(parent_name, type_map);
