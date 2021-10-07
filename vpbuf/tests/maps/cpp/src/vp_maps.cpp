@@ -145,4 +145,7 @@ namespace vp_maps {
 
 	}
 
+	void init_reorder_map(map<string, ReorderCog *> &rmap, int ver) {
+	}
+
 }

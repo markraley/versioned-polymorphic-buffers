@@ -269,4 +269,8 @@ namespace vp_vectors {
 		}
 	}
 
+	void init_reorder_map(map<string, ReorderCog *> &rmap, int ver) {
+		rmap["A"] = get_rcog_A(ver);
+	}
+
 }

@@ -62,6 +62,7 @@ pullInteger(
 
 class read_context {
    public:
+      map<string, ReorderCog *> reorder_map;
       ByteVec buf_arr;
       ByteVec::const_iterator ii;
 
@@ -80,6 +81,7 @@ class read_context {
 
 class write_context {
    public:
+      map<string, ReorderCog *> reorder_map;
       std::vector<byte> buf_arr;
 
       size_t write_file(string file_name)

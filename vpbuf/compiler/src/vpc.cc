@@ -37,7 +37,11 @@ tab(int n)
 // --- cpp header and footer ---------------------------------------------------
 
 bool
-code_header_cpp(ofstream &ofs, int &in, const TarLang &tar_lang)
+code_header_cpp(
+   ofstream &ofs,
+   int &in,
+   const TarLang &tar_lang,
+   TypeVector &vp_typedefs)
 {
    ofs <<tab(in)<<"#pragma once\n";
    ofs <<tab(in)<<"namespace "<< tar_lang.name_space <<" {\n\n";
@@ -57,12 +61,32 @@ code_header_cpp(ofstream &ofs, int &in, const TarLang &tar_lang)
    ofs <<tab(in)<<"long get_low_version() {\n";
    ofs <<tab(in+1)<<"return "<< tar_lang.start <<";\n";
    ofs <<tab(in)<<"}\n\n";
+
    return true;
 }
 
 bool
-code_footer_cpp(ofstream &ofs, int &in, const TarLang &tar_lang)
+code_footer_cpp(
+   ofstream &ofs,
+   int &in,
+   const TarLang &tar_lang,
+   TypeVector &vp_typedefs)
 {
+
+   // ------ init_reorder_map
+
+   ofs <<tab(in)<< "void init_reorder_map(map<string, ReorderCog *> &rmap, int ver) {\n";
+
+   for (auto ii = vp_typedefs.begin(); ii != vp_typedefs.end(); ++ii) {
+      if ((*ii)->is_reorder_pod()) {
+         ofs <<tab(in+1)<<"rmap[\""
+                     << (*ii)->type_name <<"\"] = get_rcog_"
+                     << (*ii)->type_name <<"(ver);\n";
+      }
+   }
+
+   ofs <<tab(in)<< "}\n\n";
+
    ofs << "}\n";
 
    return true;
@@ -378,7 +402,7 @@ struct var_generate_code
          int in = 0;
 
          if (tt->name == "cplusplus") {
-            code_header_cpp(ostr, in, *tt);
+            code_header_cpp(ostr, in, *tt, vp_typedefs);
 
             for (ii = vp_typedefs.begin(); ii != vp_typedefs.end(); ++ii)
                (*ii)->gen_cpp_utils(ostr, in, type_map, *tt);
@@ -389,7 +413,7 @@ struct var_generate_code
             for (ii = vp_typedefs.begin() ; ii != vp_typedefs.end(); ++ii)
                (*ii)->serialize_in_cpp(ostr, in, type_map, *tt);
 
-            code_footer_cpp(ostr, in, *tt);
+            code_footer_cpp(ostr, in, *tt, vp_typedefs);
          } else if (tt->name == "python") {
             code_header_python(ostr, in, *tt, vp_typedefs);
 
