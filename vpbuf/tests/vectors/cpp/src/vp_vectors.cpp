@@ -21,7 +21,7 @@ namespace vp_vectors {
 		{ 1, 0, "h1"}
 	};
 
-	ReorderCog *rcog_factory_A(string &n, vector<int> &v) {
+	ReorderCog *rcog_factory_A(string &n, vector<int> v) {
 		if (n == "h1")
 			return new flip(v);
 		return(NULL);
@@ -36,6 +36,16 @@ namespace vp_vectors {
 		};
 
 		return v;
+	}
+
+	ReorderCog *get_rcog_A(int ver) {
+		for (auto tt = rlist_A.begin(); tt != rlist_A.end(); tt++) {
+			if ((get<1>(*tt) == 0 && ver >= get<0>(*tt)) || (ver >= get<0>(*tt) && ver <= get<1>(*tt))) {
+				return rcog_factory_A(get<2>(*tt), get_vlist_A(ver));
+			}
+		};
+
+		return NULL;
 	}
 
 	void write_Header(long nVersion, write_context &wc, Header &payload)
