@@ -60,6 +60,10 @@ pullInteger(
 
 // -----------------------------------------------------------------------------
 
+namespace vp_vectors {
+   void init_reorder_map(map<string, ReorderCog *> &rmap, int ver);
+}
+
 class read_context {
    public:
       map<string, ReorderCog *> reorder_map;
@@ -70,6 +74,7 @@ class read_context {
 
       read_context(string file_name)
       {
+         vp_vectors::init_reorder_map(reorder_map, 1);
          std::ifstream ifile(file_name, std::ifstream::binary);
          ByteVec in_arr(std::istreambuf_iterator<char>(ifile), {});
          ifile.close();
@@ -92,6 +97,10 @@ class write_context {
          ofile1.close();
 
          return (buf_arr.size());
+      }
+
+      write_context() {
+         vp_vectors::init_reorder_map(reorder_map, 1);
       }
 };
 

@@ -82,7 +82,6 @@ class OuterG {
       std::vector<Base *> v;
 };
 
-
 class ReorderCog {
    public:
       virtual ~ReorderCog() {};
