@@ -88,7 +88,8 @@ class read_context {
 
       read_context(string file_name, long ver = 1) : m_ver(ver)
       {
-         set_version(m_ver);
+         if (!set_version(m_ver))
+            throw std::out_of_range("version out of range");
          std::ifstream ifile(file_name, std::ifstream::binary);
          ByteVec in_arr(std::istreambuf_iterator<char>(ifile), {});
          ifile.close();
@@ -125,7 +126,8 @@ class write_context {
       }
 
       write_context(long ver = 1) : m_ver(ver) {
-         set_version(m_ver);
+         if (!set_version(m_ver))
+            throw std::out_of_range("version out of range");
       }
 };
 
