@@ -62,7 +62,10 @@ pullInteger(
 
 namespace vp_vectors {
    void init_reorder_map(map<string, ReorderCog *> &rmap, int ver);
+   bool version_check(long);
 }
+
+using namespace vp_vectors;
 
 class read_context {
    public:
@@ -71,11 +74,21 @@ class read_context {
       ByteVec buf_arr;
       ByteVec::const_iterator ii;
 
+      bool set_version(long version) {
+         if (!version_check(version))
+            return false;
+         else {
+            m_ver = version;
+            init_reorder_map(reorder_map, version);
+            return true;
+         }
+      }
+
       size_t get_buffer_size() { return buf_arr.size(); }
 
-      read_context(string file_name, long ver) : m_ver(ver)
+      read_context(string file_name, long ver = 1) : m_ver(ver)
       {
-         vp_vectors::init_reorder_map(reorder_map, 1);
+         set_version(m_ver);
          std::ifstream ifile(file_name, std::ifstream::binary);
          ByteVec in_arr(std::istreambuf_iterator<char>(ifile), {});
          ifile.close();
@@ -91,6 +104,16 @@ class write_context {
       long m_ver;
       std::vector<byte> buf_arr;
 
+      bool set_version(long version) {
+         if (!version_check(version))
+            return false;
+         else {
+            m_ver = version;
+            init_reorder_map(reorder_map, version);
+            return true;
+         }
+      }
+
       size_t write_file(string file_name)
       {
          std::ofstream ofile1(file_name, std::ofstream::binary);
@@ -101,8 +124,8 @@ class write_context {
          return (buf_arr.size());
       }
 
-      write_context(long ver) : m_ver(ver) {
-         vp_vectors::init_reorder_map(reorder_map, 1);
+      write_context(long ver = 1) : m_ver(ver) {
+         set_version(m_ver);
       }
 };
 
