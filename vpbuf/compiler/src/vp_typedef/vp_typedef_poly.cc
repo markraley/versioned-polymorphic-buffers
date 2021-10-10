@@ -14,7 +14,7 @@ code_out_protos_cpp(ofstream &ofs, int in, Terminals &terms)
 
    for (size_t i = 0; i < terms.size() ; i++) {
       ofs <<tab(in)<< "void write_" << terms[i].name
-                  <<"(long, write_context &wc, "<< terms[i].name
+                  <<"(write_context &ctx, "<< terms[i].name
                                                 <<" &);\n";
    }
 
@@ -40,8 +40,7 @@ vp_typedef_poly::serialize_out_cpp(
    }
 
    ofs << tab(in) << "void write_" << type_name
-      << "(long nVersion, "
-      << "write_context &wc, "
+      << "(write_context &ctx, "
       << type_name << " &payload)\n";
    ofs << tab(in) << "{\n";
 
@@ -55,12 +54,12 @@ vp_typedef_poly::serialize_out_cpp(
 
          size_t k = terms[i].layers.size() - 1;
          for (size_t j = 0;  j < terms[i].layers.size(); j++, k--) {
-            ofs <<tab(in+2)<< "write_int(wc,"
+            ofs <<tab(in+2)<< "write_int(ctx,"
                      << terms[i].layers[k] << ");\n";
          }
 
          ofs <<tab(in+2)<< "write_" << terms[i].name
-                     << "(nVersion, wc, dynamic_cast<"<< terms[i].name
+                     << "(ctx, dynamic_cast<"<< terms[i].name
                                                    <<" &> (payload)" <<");\n";
          ofs <<tab(in+1)<< "}\n";
       }
@@ -81,7 +80,7 @@ code_in_protos_cpp(ofstream &ofs, int in, std::vector<string> &polys)
 
    for (size_t i = 0; i < polys.size() ; i++) {
       ofs <<tab(in)<< polys[i] <<"* read_" << polys[i]
-                  <<"(long, read_context &rc);\n";
+                  <<"(read_context &ctx);\n";
    }
 
    ofs << "\n";
@@ -101,16 +100,15 @@ vp_typedef_poly::serialize_in_cpp(
    code_in_protos_cpp(ofs, in, polys);
 
    ofs <<tab(in)<< type_name <<"* read_" << type_name
-      << "(long nVersion, "
-      << "read_context &rc)\n";
+      << "(read_context &ctx)\n";
    ofs <<tab(in)<< "{\n";
 
-   ofs <<tab(in+1)<< type_name <<"* payload_ptr; int t; read_int(rc, t);\n";
+   ofs <<tab(in+1)<< type_name <<"* payload_ptr; int t; read_int(ctx, t);\n";
 
    for (size_t i = 0; i < polys.size() ; i++)
    {
       ofs <<tab(in+1)<< "if (t == " << i << ")\n";
-      ofs <<tab(in+2)<< "payload_ptr = read_" << polys[i] << "(nVersion, rc);\n";
+      ofs <<tab(in+2)<< "payload_ptr = read_" << polys[i] << "(ctx);\n";
    }
 
    ofs <<tab(in+1)<< "auto &payload = *payload_ptr;\n";

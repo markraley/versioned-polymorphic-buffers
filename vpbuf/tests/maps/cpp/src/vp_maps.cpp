@@ -12,134 +12,134 @@ namespace vp_maps {
 		return 1;
 	}
 
-	void write_Header(long nVersion, write_context &wc, Header &payload)
+	void write_Header(write_context &ctx, Header &payload)
 	{
-		write_int(wc, payload.version);
-		write_string(wc, payload.test_name);
+		write_int(ctx, payload.version);
+		write_string(ctx, payload.test_name);
 	}
 
-	void write_A(long nVersion, write_context &wc, A &payload)
+	void write_A(write_context &ctx, A &payload)
 	{
-		write_int(wc, payload.i1);
-		write_string(wc, payload.s1);
+		write_int(ctx, payload.i1);
+		write_string(ctx, payload.s1);
 	}
 
-	void write_OuterA(long nVersion, write_context &wc, OuterA &payload)
+	void write_OuterA(write_context &ctx, OuterA &payload)
 	{
-		write_int(wc, payload.lookup.size());
+		write_int(ctx, payload.lookup.size());
 		for (auto ii = payload.lookup.begin();ii != payload.lookup.end(); ii++) {
-			write_int(nVersion, wc, ii->first);
-			write_A(nVersion, wc, *(ii->second));
+			write_int(ctx, ii->first);
+			write_A(ctx, *(ii->second));
 		}
 	}
 
-	void write_OuterB(long nVersion, write_context &wc, OuterB &payload)
+	void write_OuterB(write_context &ctx, OuterB &payload)
 	{
-		write_int(wc, payload.lookup.size());
+		write_int(ctx, payload.lookup.size());
 		for (auto ii = payload.lookup.begin();ii != payload.lookup.end(); ii++) {
-			write_string(nVersion, wc, ii->first);
-			write_A(nVersion, wc, *(ii->second));
+			write_string(ctx, ii->first);
+			write_A(ctx, *(ii->second));
 		}
 	}
 
-	void write_OuterC(long nVersion, write_context &wc, OuterC &payload)
+	void write_OuterC(write_context &ctx, OuterC &payload)
 	{
-		write_int(wc, payload.lookup.size());
+		write_int(ctx, payload.lookup.size());
 		for (auto ii = payload.lookup.begin();ii != payload.lookup.end(); ii++) {
-			write_int(nVersion, wc, ii->first);
-			write_string(nVersion, wc, (ii->second));
+			write_int(ctx, ii->first);
+			write_string(ctx, (ii->second));
 		}
 	}
 
-	void write_D1(long nVersion, write_context &wc, D1 &payload)
+	void write_D1(write_context &ctx, D1 &payload)
 	{
-		write_A(nVersion, wc, payload.apod);
-		write_int(wc, payload.i);
-		write_string(wc, payload.s);
-		write_A(nVersion, wc, *(payload.aref));
+		write_A(ctx, payload.apod);
+		write_int(ctx, payload.i);
+		write_string(ctx, payload.s);
+		write_A(ctx, *(payload.aref));
 	}
 
-	void write_OuterD(long nVersion, write_context &wc, OuterD &payload)
+	void write_OuterD(write_context &ctx, OuterD &payload)
 	{
-		write_int(wc, payload.lookup.size());
+		write_int(ctx, payload.lookup.size());
 		for (auto ii = payload.lookup.begin();ii != payload.lookup.end(); ii++) {
-			write_string(nVersion, wc, ii->first);
-			write_D1(nVersion, wc, *(ii->second));
+			write_string(ctx, ii->first);
+			write_D1(ctx, *(ii->second));
 		}
 	}
 
-	void read_Header(long nVersion, read_context &rc, Header &payload)
+	void read_Header(read_context &ctx, Header &payload)
 	{
-		read_int(rc, payload.version);
-		read_string(rc, payload.test_name);
+		read_int(ctx, payload.version);
+		read_string(ctx, payload.test_name);
 	}
 
-	void read_A(long nVersion, read_context &rc, A &payload)
+	void read_A(read_context &ctx, A &payload)
 	{
-		read_int(rc, payload.i1);
-		read_string(rc, payload.s1);
+		read_int(ctx, payload.i1);
+		read_string(ctx, payload.s1);
 	}
 
-	void read_OuterA(long nVersion, read_context &rc, OuterA &payload)
+	void read_OuterA(read_context &ctx, OuterA &payload)
 	{
 		int count_lookup;
-		read_int(rc, count_lookup);
+		read_int(ctx, count_lookup);
 		for (auto i = 0; i < count_lookup; i++) {
 			int k;
-			read_int(rc, k);
+			read_int(ctx, k);
 			auto *v = new A;
-			read_A(nVersion, rc, *v);
+			read_A(ctx, *v);
 			payload.lookup[k] = v;
 		}
 
 	}
 
-	void read_OuterB(long nVersion, read_context &rc, OuterB &payload)
+	void read_OuterB(read_context &ctx, OuterB &payload)
 	{
 		int count_lookup;
-		read_int(rc, count_lookup);
+		read_int(ctx, count_lookup);
 		for (auto i = 0; i < count_lookup; i++) {
 			string k;
-			read_string(rc, k);
+			read_string(ctx, k);
 			auto *v = new A;
-			read_A(nVersion, rc, *v);
+			read_A(ctx, *v);
 			payload.lookup[k] = v;
 		}
 
 	}
 
-	void read_OuterC(long nVersion, read_context &rc, OuterC &payload)
+	void read_OuterC(read_context &ctx, OuterC &payload)
 	{
 		int count_lookup;
-		read_int(rc, count_lookup);
+		read_int(ctx, count_lookup);
 		for (auto i = 0; i < count_lookup; i++) {
 			int k;
-			read_int(rc, k);
+			read_int(ctx, k);
 			string v;
-			read_string(rc, v);
+			read_string(ctx, v);
 			payload.lookup[k] = v;
 		}
 
 	}
 
-	void read_D1(long nVersion, read_context &rc, D1 &payload)
+	void read_D1(read_context &ctx, D1 &payload)
 	{
-		read_A(nVersion, rc, payload.apod);
-		read_int(rc, payload.i);
-		read_string(rc, payload.s);
+		read_A(ctx, payload.apod);
+		read_int(ctx, payload.i);
+		read_string(ctx, payload.s);
 		payload.aref = new A;
-		read_A(nVersion, rc, *(payload.aref));
+		read_A(ctx, *(payload.aref));
 	}
 
-	void read_OuterD(long nVersion, read_context &rc, OuterD &payload)
+	void read_OuterD(read_context &ctx, OuterD &payload)
 	{
 		int count_lookup;
-		read_int(rc, count_lookup);
+		read_int(ctx, count_lookup);
 		for (auto i = 0; i < count_lookup; i++) {
 			string k;
-			read_string(rc, k);
+			read_string(ctx, k);
 			auto *v = new D1;
-			read_D1(nVersion, rc, *v);
+			read_D1(ctx, *v);
 			payload.lookup[k] = v;
 		}
 

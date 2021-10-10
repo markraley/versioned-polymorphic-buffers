@@ -67,12 +67,13 @@ namespace vp_vectors {
 class read_context {
    public:
       map<string, ReorderCog *> reorder_map;
+      long m_ver;
       ByteVec buf_arr;
       ByteVec::const_iterator ii;
 
       size_t get_buffer_size() { return buf_arr.size(); }
 
-      read_context(string file_name)
+      read_context(string file_name, long ver) : m_ver(ver)
       {
          vp_vectors::init_reorder_map(reorder_map, 1);
          std::ifstream ifile(file_name, std::ifstream::binary);
@@ -87,6 +88,7 @@ class read_context {
 class write_context {
    public:
       map<string, ReorderCog *> reorder_map;
+      long m_ver;
       std::vector<byte> buf_arr;
 
       size_t write_file(string file_name)
@@ -99,7 +101,7 @@ class write_context {
          return (buf_arr.size());
       }
 
-      write_context() {
+      write_context(long ver) : m_ver(ver) {
          vp_vectors::init_reorder_map(reorder_map, 1);
       }
 };

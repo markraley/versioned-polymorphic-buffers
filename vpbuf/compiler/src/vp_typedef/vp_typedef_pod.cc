@@ -62,8 +62,7 @@ vp_typedef_pod::serialize_out_cpp(
       return;
 
    ofs << tab(in) << "void write_" << type_name
-      << "(long nVersion, "
-      << "write_context &wc, " << type_name << " &payload)\n";
+      << "(write_context &ctx, " << type_name << " &payload)\n";
    ofs << tab(in) << "{\n";
 
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
@@ -74,7 +73,7 @@ vp_typedef_pod::serialize_out_cpp(
       vp_typedef *p = GetVPType(parent_name, type_map);
 
       if (p->parent_name.size() > 0)
-         ofs <<tab(in+1)<<"write_"<< parent_name <<"(nVersion, wc, payload);\n";
+         ofs <<tab(in+1)<<"write_"<< parent_name <<"(ctx, payload);\n";
    }
 
    ofs << tab(in) << "}\n\n";
@@ -96,8 +95,7 @@ vp_typedef_pod::serialize_in_cpp(
 
    if (is_polymorphic) {
       ofs <<tab(in)<< type_name <<" *read_" << type_name
-         << "(long nVersion, "
-         << "read_context &rc)\n";
+         << "(read_context &ctx)\n";
       ofs <<tab(in)<< "{\n";
       ofs <<tab(in+1)<< "auto *payload_ptr = new "<< type_name <<";\n";
       ofs <<tab(in+1)<< "auto &payload = *payload_ptr;\n";
@@ -111,8 +109,7 @@ vp_typedef_pod::serialize_in_cpp(
    }
 
    ofs <<tab(in)<< "void read_" << type_name
-      << "(long nVersion, "
-      << "read_context &rc, "
+      << "(read_context &ctx, "
       << type_name << " &payload)\n";
    ofs <<tab(in)<< "{\n";
 

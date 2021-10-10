@@ -206,7 +206,7 @@ code_version_test_cpp(
       if (nBegin > nLimit)
          present = false;
       else {
-         ofs << tab(in) << "if (nVersion >= " << nBegin << ")\n";
+         ofs << tab(in) << "if (ctx->m_ver >= " << nBegin << ")\n";
          code_emitted = true;
       }
    } else if (nBegin > nBase || nEnd != 0) {
@@ -215,8 +215,8 @@ code_version_test_cpp(
       else if (nEnd == nLimit && nBegin == nBase)
          present = true;
       else {
-         ofs << tab(in) << "if (nVersion >= "
-            << nBegin << " && nVersion <= " << nEnd << ")\n";
+         ofs << tab(in) << "if (ctx->m_ver >= "
+            << nBegin << " && ctx->m_ver <= " << nEnd << ")\n";
          code_emitted = true;
       }
    }

@@ -21,7 +21,7 @@ pod_varint::serialize_out_cpp(
    if (code_emitted)
       in++;
 
-   ofs <<tab(in)<< "write_int(wc, payload." << name << ");\n";
+   ofs <<tab(in)<< "write_int(ctx, payload." << name << ");\n";
 }
 
 void
@@ -39,7 +39,7 @@ pod_varint::serialize_in_cpp(
    if (code_emitted)
       in++;
 
-   ofs <<tab(in)<< "read_int(rc, payload." << name << ");\n";
+   ofs <<tab(in)<< "read_int(ctx, payload." << name << ");\n";
 }
 
 // --- python ------------------------------------------------------------------

@@ -33,11 +33,11 @@ pod_map::serialize_out_cpp(
    vp_key->get_type_cpp(local_key_type);
    vp_typedefs[payload_index]->get_type_cpp(payload_type);
 
-   ofs <<tab(in)<<"write_int(wc, payload."<< name <<".size());\n";
+   ofs <<tab(in)<<"write_int(ctx, payload."<< name <<".size());\n";
    ofs <<tab(in)<< "for (auto ii = payload." << name << ".begin();"
                      << "ii != payload." << name << ".end(); ii++) {\n";
-   ofs <<tab(in+1)<<"write_"<< local_key_type << "(nVersion, wc, ii->first);\n";
-   ofs <<tab(in+1)<<"write_"<< payload_type <<"(nVersion, wc, "
+   ofs <<tab(in+1)<<"write_"<< local_key_type << "(ctx, ii->first);\n";
+   ofs <<tab(in+1)<<"write_"<< payload_type <<"(ctx, "
                               << payload_prefix <<"(ii->second));\n";
    ofs <<tab(in)<<"}\n";
 }
@@ -65,19 +65,19 @@ pod_map::serialize_in_cpp(
    vp_typedefs[payload_index]->get_type_cpp(payload_type);
 
    ofs << tab(in) <<"int count_"<< name <<";\n";
-   ofs << tab(in) <<"read_int(rc, count_"<< name <<");\n";
+   ofs << tab(in) <<"read_int(ctx, count_"<< name <<");\n";
    ofs << tab(in) <<"for (auto i = 0; i < count_"<< name <<"; i++) {\n";
 
    ofs <<tab(in+1)<< local_key_type <<" k;\n";
-   ofs <<tab(in+1)<<"read_"<< local_key_type <<"(rc, k);\n";
+   ofs <<tab(in+1)<<"read_"<< local_key_type <<"(ctx, k);\n";
 
    if (vp_typedefs[payload_index]->is_pod()
          || vp_typedefs[payload_index]->is_poly()) {
       ofs <<tab(in+1)<< "auto *v = new "<< payload_type <<";\n";
-      ofs <<tab(in+1)<<"read_"<< payload_type <<"(nVersion, rc, *v);\n";
+      ofs <<tab(in+1)<<"read_"<< payload_type <<"(ctx, *v);\n";
    } else {
       ofs <<tab(in+1)<< payload_type <<" v;\n";
-      ofs <<tab(in+1)<<"read_"<< payload_type <<"(rc, v);\n";
+      ofs <<tab(in+1)<<"read_"<< payload_type <<"(ctx, v);\n";
    }
 
    ofs <<tab(in + 1) << "payload." << name << "[k] = v;\n";

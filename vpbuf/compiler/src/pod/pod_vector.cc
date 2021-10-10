@@ -29,13 +29,13 @@ pod_vector::serialize_out_cpp(
    if (code_emitted)
       ofs <<tab(in++)<<"{\n";
 
-   ofs <<tab(in)<<"write_int(wc, payload."<< name <<".size());\n";
+   ofs <<tab(in)<<"write_int(ctx, payload."<< name <<".size());\n";
 
    ofs <<tab(in)<<"for (auto ii = payload."<< name <<".begin();"
                      <<"ii != payload."<< name << ".end(); ii++)\n";
 
    ofs <<tab(in+1)<<"write_"<< vec_type
-            <<"(nVersion, wc, "<< ref_prefix <<"(*ii));\n";
+            <<"(ctx, "<< ref_prefix <<"(*ii));\n";
 
    if (code_emitted)
       ofs <<tab(--in)<<"}\n";
@@ -61,18 +61,18 @@ pod_vector::serialize_in_cpp(
       ofs << tab(in++) << "{\n";
 
    ofs <<tab(in)<<"int count_"<< name <<";\n";
-   ofs <<tab(in)<<"read_int(rc, count_"<< name <<");\n";
+   ofs <<tab(in)<<"read_int(ctx, count_"<< name <<");\n";
    ofs <<tab(in)<<"for (auto i = 0; i < count_"<< name <<"; i++) {\n";
 
    if (vp_typedefs[payload_index]->is_poly())
-      ofs <<tab(in+1)<<"auto *pod = read_"<< vec_type <<"(nVersion, rc);\n";
+      ofs <<tab(in+1)<<"auto *pod = read_"<< vec_type <<"(ctx);\n";
    else if (is_ptr) {
       ofs <<tab(in+1)<<"auto pod = new "<< vec_type <<";\n";
 
-      ofs <<tab(in+1)<<"read_"<< vec_type <<"(nVersion, rc, *pod);\n";
+      ofs <<tab(in+1)<<"read_"<< vec_type <<"(ctx, *pod);\n";
    } else {
       ofs <<tab(in+1)<< vec_type <<" pod;\n";
-      ofs <<tab(in+1)<<"read_"<< vec_type <<"(nVersion, rc, pod);\n";
+      ofs <<tab(in+1)<<"read_"<< vec_type <<"(ctx, pod);\n";
    }
 
    ofs <<tab(in+1)<<"payload."<< name <<".push_back(pod);\n";

@@ -22,7 +22,7 @@ pod_string::serialize_out_cpp(
    if (code_emitted)
       in++;
 
-   ofs <<tab(in)<< "write_string(wc, payload." << name << ");\n";
+   ofs <<tab(in)<< "write_string(ctx, payload." << name << ");\n";
 }
 
 void
@@ -40,7 +40,7 @@ pod_string::serialize_in_cpp(
    if (code_emitted)
       in++;
 
-   ofs <<tab(in)<< "read_string(rc, payload." << name << ");\n";
+   ofs <<tab(in)<< "read_string(ctx, payload." << name << ");\n";
 }
 
 // --- python ------------------------------------------------------------------

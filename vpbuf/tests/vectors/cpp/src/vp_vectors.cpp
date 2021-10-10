@@ -48,241 +48,241 @@ namespace vp_vectors {
 		return NULL;
 	}
 
-	void write_Header(long nVersion, write_context &wc, Header &payload)
+	void write_Header(write_context &ctx, Header &payload)
 	{
-		write_int(wc, payload.version);
-		write_string(wc, payload.test_name);
+		write_int(ctx, payload.version);
+		write_string(ctx, payload.test_name);
 	}
 
-	void write_A(long nVersion, write_context &wc, A &payload)
+	void write_A(write_context &ctx, A &payload)
 	{
-		vector<int> v((*wc.reorder_map["A"])());
+		vector<int> v((*ctx.reorder_map["A"])());
 
 		for (auto i : v) 
 			switch(i) {
 				case 0:
-				write_int(wc, payload.i1);
+				write_int(ctx, payload.i1);
 				break;
 				case 1:
-				write_string(wc, payload.s1);
+				write_string(ctx, payload.s1);
 				break;
 			}
 	}
 
-	void write_OuterA(long nVersion, write_context &wc, OuterA &payload)
+	void write_OuterA(write_context &ctx, OuterA &payload)
 	{
-		write_int(wc, payload.v.size());
+		write_int(ctx, payload.v.size());
 		for (auto ii = payload.v.begin();ii != payload.v.end(); ii++)
-			write_A(nVersion, wc, *(*ii));
+			write_A(ctx, *(*ii));
 	}
 
-	void write_OuterB(long nVersion, write_context &wc, OuterB &payload)
+	void write_OuterB(write_context &ctx, OuterB &payload)
 	{
-		write_int(wc, payload.v.size());
+		write_int(ctx, payload.v.size());
 		for (auto ii = payload.v.begin();ii != payload.v.end(); ii++)
-			write_A(nVersion, wc, (*ii));
+			write_A(ctx, (*ii));
 	}
 
-	void write_OuterC(long nVersion, write_context &wc, OuterC &payload)
+	void write_OuterC(write_context &ctx, OuterC &payload)
 	{
-		write_int(wc, payload.v.size());
+		write_int(ctx, payload.v.size());
 		for (auto ii = payload.v.begin();ii != payload.v.end(); ii++)
-			write_string(nVersion, wc, (*ii));
+			write_string(ctx, (*ii));
 	}
 
-	void write_OuterD(long nVersion, write_context &wc, OuterD &payload)
+	void write_OuterD(write_context &ctx, OuterD &payload)
 	{
-		write_int(wc, payload.v.size());
+		write_int(ctx, payload.v.size());
 		for (auto ii = payload.v.begin();ii != payload.v.end(); ii++)
-			write_string(nVersion, wc, *(*ii));
+			write_string(ctx, *(*ii));
 	}
 
-	void write_OuterE(long nVersion, write_context &wc, OuterE &payload)
+	void write_OuterE(write_context &ctx, OuterE &payload)
 	{
-		write_int(wc, payload.v.size());
+		write_int(ctx, payload.v.size());
 		for (auto ii = payload.v.begin();ii != payload.v.end(); ii++)
-			write_int(nVersion, wc, (*ii));
+			write_int(ctx, (*ii));
 	}
 
-	void write_OuterF(long nVersion, write_context &wc, OuterF &payload)
+	void write_OuterF(write_context &ctx, OuterF &payload)
 	{
-		write_int(wc, payload.v.size());
+		write_int(ctx, payload.v.size());
 		for (auto ii = payload.v.begin();ii != payload.v.end(); ii++)
-			write_int(nVersion, wc, *(*ii));
+			write_int(ctx, *(*ii));
 	}
 
-	void write_Derived1(long, write_context &wc, Derived1 &);
-	void write_Derived2(long, write_context &wc, Derived2 &);
+	void write_Derived1(write_context &ctx, Derived1 &);
+	void write_Derived2(write_context &ctx, Derived2 &);
 
-	void write_Base(long nVersion, write_context &wc, Base &payload)
+	void write_Base(write_context &ctx, Base &payload)
 	{
 		const std::type_info& tid = typeid(payload);
 		if (std::type_index(tid) == std::type_index(typeid(Derived1))) {
-			write_int(wc,0);
-			write_Derived1(nVersion, wc, dynamic_cast<Derived1 &> (payload));
+			write_int(ctx,0);
+			write_Derived1(ctx, dynamic_cast<Derived1 &> (payload));
 		}
 		if (std::type_index(tid) == std::type_index(typeid(Derived2))) {
-			write_int(wc,1);
-			write_Derived2(nVersion, wc, dynamic_cast<Derived2 &> (payload));
+			write_int(ctx,1);
+			write_Derived2(ctx, dynamic_cast<Derived2 &> (payload));
 		}
 	}
 
-	void write_Derived1(long nVersion, write_context &wc, Derived1 &payload)
+	void write_Derived1(write_context &ctx, Derived1 &payload)
 	{
-		write_int(wc, payload.i1);
-		write_string(wc, payload.s1);
+		write_int(ctx, payload.i1);
+		write_string(ctx, payload.s1);
 	}
 
-	void write_Derived2(long nVersion, write_context &wc, Derived2 &payload)
+	void write_Derived2(write_context &ctx, Derived2 &payload)
 	{
-		write_int(wc, payload.i1);
-		write_string(wc, payload.s1);
+		write_int(ctx, payload.i1);
+		write_string(ctx, payload.s1);
 	}
 
-	void write_OuterG(long nVersion, write_context &wc, OuterG &payload)
+	void write_OuterG(write_context &ctx, OuterG &payload)
 	{
-		write_int(wc, payload.v.size());
+		write_int(ctx, payload.v.size());
 		for (auto ii = payload.v.begin();ii != payload.v.end(); ii++)
-			write_Base(nVersion, wc, *(*ii));
+			write_Base(ctx, *(*ii));
 	}
 
-	void read_Header(long nVersion, read_context &rc, Header &payload)
+	void read_Header(read_context &ctx, Header &payload)
 	{
-		read_int(rc, payload.version);
-		read_string(rc, payload.test_name);
+		read_int(ctx, payload.version);
+		read_string(ctx, payload.test_name);
 	}
 
-	void read_A(long nVersion, read_context &rc, A &payload)
+	void read_A(read_context &ctx, A &payload)
 	{
-		vector<int> v((*rc.reorder_map["A"])());
+		vector<int> v((*ctx.reorder_map["A"])());
 
 		for (auto i : v) 
 			switch(i) {
 				case 0:
-					read_int(rc, payload.i1);
+					read_int(ctx, payload.i1);
 					break;
 				case 1:
-					read_string(rc, payload.s1);
+					read_string(ctx, payload.s1);
 					break;
 			}
 	}
 
-	void read_OuterA(long nVersion, read_context &rc, OuterA &payload)
+	void read_OuterA(read_context &ctx, OuterA &payload)
 	{
 		int count_v;
-		read_int(rc, count_v);
+		read_int(ctx, count_v);
 		for (auto i = 0; i < count_v; i++) {
 			auto pod = new A;
-			read_A(nVersion, rc, *pod);
+			read_A(ctx, *pod);
 			payload.v.push_back(pod);
 		}
 	}
 
-	void read_OuterB(long nVersion, read_context &rc, OuterB &payload)
+	void read_OuterB(read_context &ctx, OuterB &payload)
 	{
 		int count_v;
-		read_int(rc, count_v);
+		read_int(ctx, count_v);
 		for (auto i = 0; i < count_v; i++) {
 			A pod;
-			read_A(nVersion, rc, pod);
+			read_A(ctx, pod);
 			payload.v.push_back(pod);
 		}
 	}
 
-	void read_OuterC(long nVersion, read_context &rc, OuterC &payload)
+	void read_OuterC(read_context &ctx, OuterC &payload)
 	{
 		int count_v;
-		read_int(rc, count_v);
+		read_int(ctx, count_v);
 		for (auto i = 0; i < count_v; i++) {
 			string pod;
-			read_string(nVersion, rc, pod);
+			read_string(ctx, pod);
 			payload.v.push_back(pod);
 		}
 	}
 
-	void read_OuterD(long nVersion, read_context &rc, OuterD &payload)
+	void read_OuterD(read_context &ctx, OuterD &payload)
 	{
 		int count_v;
-		read_int(rc, count_v);
+		read_int(ctx, count_v);
 		for (auto i = 0; i < count_v; i++) {
 			auto pod = new string;
-			read_string(nVersion, rc, *pod);
+			read_string(ctx, *pod);
 			payload.v.push_back(pod);
 		}
 	}
 
-	void read_OuterE(long nVersion, read_context &rc, OuterE &payload)
+	void read_OuterE(read_context &ctx, OuterE &payload)
 	{
 		int count_v;
-		read_int(rc, count_v);
+		read_int(ctx, count_v);
 		for (auto i = 0; i < count_v; i++) {
 			int pod;
-			read_int(nVersion, rc, pod);
+			read_int(ctx, pod);
 			payload.v.push_back(pod);
 		}
 	}
 
-	void read_OuterF(long nVersion, read_context &rc, OuterF &payload)
+	void read_OuterF(read_context &ctx, OuterF &payload)
 	{
 		int count_v;
-		read_int(rc, count_v);
+		read_int(ctx, count_v);
 		for (auto i = 0; i < count_v; i++) {
 			auto pod = new int;
-			read_int(nVersion, rc, *pod);
+			read_int(ctx, *pod);
 			payload.v.push_back(pod);
 		}
 	}
 
-	Derived1* read_Derived1(long, read_context &rc);
-	Derived2* read_Derived2(long, read_context &rc);
+	Derived1* read_Derived1(read_context &ctx);
+	Derived2* read_Derived2(read_context &ctx);
 
-	Base* read_Base(long nVersion, read_context &rc)
+	Base* read_Base(read_context &ctx)
 	{
-		Base* payload_ptr; int t; read_int(rc, t);
+		Base* payload_ptr; int t; read_int(ctx, t);
 		if (t == 0)
-			payload_ptr = read_Derived1(nVersion, rc);
+			payload_ptr = read_Derived1(ctx);
 		if (t == 1)
-			payload_ptr = read_Derived2(nVersion, rc);
+			payload_ptr = read_Derived2(ctx);
 		auto &payload = *payload_ptr;
 		return payload_ptr;
 	}
 
-	Derived1 *read_Derived1(long nVersion, read_context &rc)
+	Derived1 *read_Derived1(read_context &ctx)
 	{
 		auto *payload_ptr = new Derived1;
 		auto &payload = *payload_ptr;
-		read_int(rc, payload.i1);
-		read_string(rc, payload.s1);
+		read_int(ctx, payload.i1);
+		read_string(ctx, payload.s1);
 		return payload_ptr;
 	}
 
-	void read_Derived1(long nVersion, read_context &rc, Derived1 &payload)
+	void read_Derived1(read_context &ctx, Derived1 &payload)
 	{
-		read_int(rc, payload.i1);
-		read_string(rc, payload.s1);
+		read_int(ctx, payload.i1);
+		read_string(ctx, payload.s1);
 	}
 
-	Derived2 *read_Derived2(long nVersion, read_context &rc)
+	Derived2 *read_Derived2(read_context &ctx)
 	{
 		auto *payload_ptr = new Derived2;
 		auto &payload = *payload_ptr;
-		read_int(rc, payload.i1);
-		read_string(rc, payload.s1);
+		read_int(ctx, payload.i1);
+		read_string(ctx, payload.s1);
 		return payload_ptr;
 	}
 
-	void read_Derived2(long nVersion, read_context &rc, Derived2 &payload)
+	void read_Derived2(read_context &ctx, Derived2 &payload)
 	{
-		read_int(rc, payload.i1);
-		read_string(rc, payload.s1);
+		read_int(ctx, payload.i1);
+		read_string(ctx, payload.s1);
 	}
 
-	void read_OuterG(long nVersion, read_context &rc, OuterG &payload)
+	void read_OuterG(read_context &ctx, OuterG &payload)
 	{
 		int count_v;
-		read_int(rc, count_v);
+		read_int(ctx, count_v);
 		for (auto i = 0; i < count_v; i++) {
-			auto *pod = read_Base(nVersion, rc);
+			auto *pod = read_Base(ctx);
 			payload.v.push_back(pod);
 		}
 	}

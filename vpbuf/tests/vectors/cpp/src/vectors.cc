@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
 
       {
          // initialize test data structures and write to file
-         write_context wc;
+         write_context wc(1);
 
          h1.version = -99;
          h1.test_name = test_id_str;
@@ -62,8 +62,8 @@ int main(int argc, char* argv[])
             o1.v.push_back(a);
          }
 
-         write_Header(1, wc, h1);
-         write_OuterA(1, wc, o1);
+         write_Header(wc, h1);
+         write_OuterA(wc, o1);
 
          size_t bytes_out = wc.write_file(out_dir + test_id_str + file_ext);
          std::cout << test_id_str <<" "<< bytes_out <<" bytes written\n";
@@ -74,10 +74,10 @@ int main(int argc, char* argv[])
 
       {
          // read the file just written
-         read_context rc(out_dir + test_id_str + file_ext);
+         read_context rc(out_dir + test_id_str + file_ext, 1);
 
-         read_Header(1, rc, h2);
-         read_OuterA(1, rc, o2);
+         read_Header(rc, h2);
+         read_OuterA(rc, o2);
 
          std::cout << test_id_str <<" "<< rc.get_buffer_size() <<" bytes read\n";
       }
@@ -106,7 +106,7 @@ int main(int argc, char* argv[])
 
       {
          // initialize test data structures and write to file
-         write_context wc;
+         write_context wc(1);
 
          h1.version = -99;
          h1.test_name = test_id_str;
@@ -119,8 +119,8 @@ int main(int argc, char* argv[])
             o1.v.push_back(a);
          }
 
-         write_Header(1, wc, h1);
-         write_OuterB(1, wc, o1);
+         write_Header(wc, h1);
+         write_OuterB(wc, o1);
 
          size_t bytes_out = wc.write_file(out_dir + test_id_str + file_ext);
          std::cout << test_id_str <<" "<< bytes_out <<" bytes written\n";
@@ -131,10 +131,10 @@ int main(int argc, char* argv[])
 
       {
          // read the file just written
-         read_context rc(out_dir + test_id_str + file_ext);
+         read_context rc(out_dir + test_id_str + file_ext, 1);
 
-         read_Header(1, rc, h2);
-         read_OuterB(1, rc, o2);
+         read_Header(rc, h2);
+         read_OuterB(rc, o2);
 
          std::cout << test_id_str <<" "<< rc.get_buffer_size() <<" bytes read\n";
       }
@@ -163,7 +163,7 @@ int main(int argc, char* argv[])
 
       {
          // initialize test data structures and write to file
-         write_context wc;
+         write_context wc(1);
 
          h1.version = 101;
          h1.test_name = test_id_str;
@@ -171,8 +171,8 @@ int main(int argc, char* argv[])
          for (auto i = 0; i < count; i++)
             o1.v.push_back("C-" + std::to_string(base + i));
 
-         write_Header(1, wc, h1);
-         write_OuterC(1, wc, o1);
+         write_Header(wc, h1);
+         write_OuterC(wc, o1);
 
          size_t bytes_out = wc.write_file(out_dir + test_id_str + file_ext);
          std::cout << test_id_str <<" "<< bytes_out <<" bytes written\n";
@@ -183,10 +183,10 @@ int main(int argc, char* argv[])
 
       {
          // read the file just written
-         read_context rc(out_dir + test_id_str + file_ext);
+         read_context rc(out_dir + test_id_str + file_ext, 1);
 
-         read_Header(1, rc, h2);
-         read_OuterC(1, rc, o2);
+         read_Header(rc, h2);
+         read_OuterC(rc, o2);
 
          std::cout << test_id_str <<" "<< rc.get_buffer_size() <<" bytes read\n";
       }
@@ -213,7 +213,7 @@ int main(int argc, char* argv[])
 
       {
          // initialize test data structures and write to file
-         write_context wc;
+         write_context wc(1);
 
          h1.version = 101;
          h1.test_name = test_id_str;
@@ -221,8 +221,8 @@ int main(int argc, char* argv[])
          for (auto i = 0; i < count; i++)
             o1.v.push_back(new std::string("D-" + std::to_string(base + i)));
 
-         write_Header(1, wc, h1);
-         write_OuterD(1, wc, o1);
+         write_Header(wc, h1);
+         write_OuterD(wc, o1);
 
          size_t bytes_out = wc.write_file(out_dir + test_id_str + file_ext);
          std::cout << test_id_str <<" "<< bytes_out <<" bytes written\n";
@@ -233,10 +233,10 @@ int main(int argc, char* argv[])
 
       {
          // read the file just written
-         read_context rc(out_dir + test_id_str + file_ext);
+         read_context rc(out_dir + test_id_str + file_ext, 1);
 
-         read_Header(1, rc, h2);
-         read_OuterD(1, rc, o2);
+         read_Header(rc, h2);
+         read_OuterD(rc, o2);
 
          std::cout << test_id_str <<" "<< rc.get_buffer_size() <<" bytes read\n";
       }
@@ -263,7 +263,7 @@ int main(int argc, char* argv[])
 
       {
          // initialize test data structures and write to file
-         write_context wc;
+         write_context wc(1);
 
          h1.version = 1121;
          h1.test_name = test_id_str;
@@ -271,8 +271,8 @@ int main(int argc, char* argv[])
          for (auto i = 0; i < count; i++)
             o1.v.push_back(int(base + i));
 
-         write_Header(1, wc, h1);
-         write_OuterE(1, wc, o1);
+         write_Header(wc, h1);
+         write_OuterE(wc, o1);
 
          size_t bytes_out = wc.write_file(out_dir + test_id_str + file_ext);
          std::cout << test_id_str <<" "<< bytes_out <<" bytes written\n";
@@ -283,10 +283,10 @@ int main(int argc, char* argv[])
 
       {
          // read the file just written
-         read_context rc(out_dir + test_id_str + file_ext);
+         read_context rc(out_dir + test_id_str + file_ext, 1);
 
-         read_Header(1, rc, h2);
-         read_OuterE(1, rc, o2);
+         read_Header(rc, h2);
+         read_OuterE(rc, o2);
 
          std::cout << test_id_str <<" "<< rc.get_buffer_size() <<" bytes read\n";
       }
@@ -313,7 +313,7 @@ int main(int argc, char* argv[])
 
       {
          // initialize test data structures and write to file
-         write_context wc;
+         write_context wc(1);
 
          h1.version = 1121;
          h1.test_name = test_id_str;
@@ -321,8 +321,8 @@ int main(int argc, char* argv[])
          for (auto i = 0; i < count; i++)
             o1.v.push_back(new int(base + i));
 
-         write_Header(1, wc, h1);
-         write_OuterF(1, wc, o1);
+         write_Header(wc, h1);
+         write_OuterF(wc, o1);
 
          size_t bytes_out = wc.write_file(out_dir + test_id_str + file_ext);
          std::cout << test_id_str <<" "<< bytes_out <<" bytes written\n";
@@ -333,10 +333,10 @@ int main(int argc, char* argv[])
 
       {
          // read the file just written
-         read_context rc(out_dir + test_id_str + file_ext);
+         read_context rc(out_dir + test_id_str + file_ext, 1);
 
-         read_Header(1, rc, h2);
-         read_OuterF(1, rc, o2);
+         read_Header(rc, h2);
+         read_OuterF(rc, o2);
 
          std::cout << test_id_str <<" "<< rc.get_buffer_size() <<" bytes read\n";
       }
@@ -363,7 +363,7 @@ int main(int argc, char* argv[])
 
       {
          // initialize test data structures and write to file
-         write_context wc;
+         write_context wc(1);
 
          h1.version = 1;
          h1.test_name = test_id_str;
@@ -374,8 +374,8 @@ int main(int argc, char* argv[])
             o1.v.push_back(new Derived2(base + i, "D2-" + std::to_string(base + i)));
          }
 
-         write_Header(1, wc, h1);
-         write_OuterG(1, wc, o1);
+         write_Header(wc, h1);
+         write_OuterG(wc, o1);
 
          size_t bytes_out = wc.write_file(out_dir + test_id_str + file_ext);
          std::cout << test_id_str <<" "<< bytes_out <<" bytes written\n";
@@ -386,10 +386,10 @@ int main(int argc, char* argv[])
 
       {
          // read the file just written
-         read_context rc(out_dir + test_id_str + file_ext);
+         read_context rc(out_dir + test_id_str + file_ext, 1);
 
-         read_Header(1, rc, h2);
-         read_OuterG(1, rc, o2);
+         read_Header(rc, h2);
+         read_OuterG(rc, o2);
 
          std::cout << test_id_str <<" "<< rc.get_buffer_size() <<" bytes read\n";
       }

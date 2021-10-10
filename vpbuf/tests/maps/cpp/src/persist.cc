@@ -87,5 +87,9 @@ class OuterG {
 
 class ReorderCog {
    public:
-      virtual ~ReorderCog() {};
+      virtual vector<int> operator ()() = 0;
+      virtual string step() = 0;
+      virtual ~ReorderCog();
 };
+
+ReorderCog::~ReorderCog() {}

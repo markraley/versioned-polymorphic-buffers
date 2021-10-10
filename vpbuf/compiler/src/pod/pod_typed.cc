@@ -27,9 +27,9 @@ pod_typed::serialize_out_cpp(
 
    if (is_ptr)
       ofs <<tab(in)
-         <<"write_" << t <<"(nVersion, wc, *(payload."<< name <<"));\n";
+         <<"write_" << t <<"(ctx, *(payload."<< name <<"));\n";
    else
-      ofs <<tab(in)<<"write_" << t <<"(nVersion, wc, payload."<< name <<");\n";
+      ofs <<tab(in)<<"write_" << t <<"(ctx, payload."<< name <<");\n";
 }
 
 void
@@ -53,10 +53,10 @@ pod_typed::serialize_in_cpp(
    if (is_ptr) {
       ofs <<tab(in)<< "payload."<< name <<" = new "<< t <<";\n";
       ofs <<tab(in)
-         <<"read_"<< t <<"(nVersion, rc, *(payload."<< name <<"));\n";
+         <<"read_"<< t <<"(ctx, *(payload."<< name <<"));\n";
    } else
       ofs <<tab(in)
-         <<"read_" << t << "(nVersion, rc, payload."<< name <<");\n";
+         <<"read_" << t << "(ctx, payload."<< name <<");\n";
 }
 
 // --- python ------------------------------------------------------------------
