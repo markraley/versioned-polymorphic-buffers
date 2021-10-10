@@ -289,8 +289,8 @@ vp_typedef_reorder_pod::serialize_in_cpp(
       ofs <<tab(in+2)<< "switch(i) {\n";;
       for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
          ofs <<tab(in+3)<< "case "<< j++ <<":\n";
-         (*jj)->serialize_in_cpp(ofs, in+3, type_map, tar_lang);
-         ofs <<tab(in+3)<< "break;\n";
+         (*jj)->serialize_in_cpp(ofs, in+4, type_map, tar_lang);
+         ofs <<tab(in+4)<< "break;\n";
       }
       ofs <<tab(in+2)<< "}\n";
 
@@ -313,8 +313,8 @@ vp_typedef_reorder_pod::serialize_in_cpp(
    ofs <<tab(in+2)<< "switch(i) {\n";;
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
       ofs <<tab(in+3)<< "case "<< j++ <<":\n";
-      (*jj)->serialize_in_cpp(ofs, in+3, type_map, tar_lang);
-      ofs <<tab(in+3)<< "break;\n";
+      (*jj)->serialize_in_cpp(ofs, in+4, type_map, tar_lang);
+      ofs <<tab(in+4)<< "break;\n";
    }
    ofs <<tab(in+2)<< "}\n";
 

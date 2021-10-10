@@ -159,11 +159,11 @@ namespace vp_vectors {
 		for (auto i : v) 
 			switch(i) {
 				case 0:
-				read_int(rc, payload.i1);
-				break;
+					read_int(rc, payload.i1);
+					break;
 				case 1:
-				read_string(rc, payload.s1);
-				break;
+					read_string(rc, payload.s1);
+					break;
 			}
 	}
 
