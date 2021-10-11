@@ -12,48 +12,51 @@ namespace vp_poker {
 		return 1;
 	}
 
-	void write_Header(long nVersion, write_context &wc, Header &payload)
+	void write_Header(write_context &ctx, Header &payload)
 	{
-		write_int(wc, payload.version);
-		write_string(wc, payload.tag);
+		write_int(ctx, payload.version);
+		write_string(ctx, payload.tag);
 	}
 
-	void write_Card(long nVersion, write_context &wc, Card &payload)
+	void write_Card(write_context &ctx, Card &payload)
 	{
-		write_int(wc, payload.id);
-		if (nVersion >= 1 && nVersion <= 1)
-			write_string(wc, payload.name);
+		write_int(ctx, payload.id);
+		if (ctx->m_ver >= 1 && ctx->m_ver <= 1)
+			write_string(ctx, payload.name);
 	}
 
-	void write_Deck(long nVersion, write_context &wc, Deck &payload)
+	void write_Deck(write_context &ctx, Deck &payload)
 	{
-		write_int(wc, payload.cards.size());
+		write_int(ctx, payload.cards.size());
 		for (auto ii = payload.cards.begin();ii != payload.cards.end(); ii++)
-			write_Card(nVersion, wc, *(*ii));
+			write_Card(ctx, *(*ii));
 	}
 
-	void read_Header(long nVersion, read_context &rc, Header &payload)
+	void read_Header(read_context &ctx, Header &payload)
 	{
-		read_int(rc, payload.version);
-		read_string(rc, payload.tag);
+		read_int(ctx, payload.version);
+		read_string(ctx, payload.tag);
 	}
 
-	void read_Card(long nVersion, read_context &rc, Card &payload)
+	void read_Card(read_context &ctx, Card &payload)
 	{
-		read_int(rc, payload.id);
-		if (nVersion >= 1 && nVersion <= 1)
-			read_string(rc, payload.name);
+		read_int(ctx, payload.id);
+		if (ctx->m_ver >= 1 && ctx->m_ver <= 1)
+			read_string(ctx, payload.name);
 	}
 
-	void read_Deck(long nVersion, read_context &rc, Deck &payload)
+	void read_Deck(read_context &ctx, Deck &payload)
 	{
 		int count_cards;
-		read_int(rc, count_cards);
+		read_int(ctx, count_cards);
 		for (auto i = 0; i < count_cards; i++) {
 			auto pod = new Card;
-			read_Card(nVersion, rc, *pod);
+			read_Card(ctx, *pod);
 			payload.cards.push_back(pod);
 		}
+	}
+
+	void init_reorder_map(map<string, ReorderCog *> &rmap, int ver) {
 	}
 
 }

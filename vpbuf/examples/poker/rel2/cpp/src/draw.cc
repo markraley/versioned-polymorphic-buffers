@@ -12,15 +12,17 @@ using namespace std;
 typedef char byte;
 typedef vector<byte> ByteVec;
 
-// buffer management helper classes and functions
-#include "buffer_context.cc"
-
 // include classes to be serialized
 #include "persist.cc"
+
+// buffer management helper classes and functions
+#include "buffer_context.cc"
 
 // include output from vpc code generator
 #include "vp_poker.cc"
 using namespace vp_poker;
+
+#include "utils.cc"
 
 // -----------------------------------------------------------------------------
 

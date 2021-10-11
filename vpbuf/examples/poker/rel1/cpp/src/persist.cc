@@ -36,52 +36,15 @@ class Deck {
       }
 };
 
-// include output from vpc code generator
-#include "vp_poker.cc"
-using namespace vp_poker;
-
 // -----------------------------------------------------------------------------
 
-size_t save_deck(string deck_name, Deck &deck) {
-   long v = get_high_version();
-   Header header(v, "VP_POKER");
+class ReorderCog {
+   public:
+      virtual vector<int> operator ()() = 0;
+      virtual string step() = 0;
+      virtual ~ReorderCog();
+};
 
-   write_context wc;
-
-   write_Header(1, wc, header); // always version 1
-   write_Deck(v, wc, deck);
-
-   size_t bytes_out = wc.write_file(deck_name);
-
-   cout <<"write: "<< deck_name <<", version="<< v
-         <<", cards="<< deck.cards.size()
-         <<", bytes="<< bytes_out << endl;
-
-   return bytes_out;
-}
-
-// -----------------------------------------------------------------------------
-
-Deck *load_deck(string deck_name) {
-   Deck *deck = NULL;
-   Header header;
-
-   read_context rc(deck_name);
-   read_Header(1, rc, header);
-   int v = header.version;
-
-   if (!version_check(v)) {
-      cout << "version out of range\n";
-   } else {
-      deck = new Deck();
-      read_Deck(v, rc, *deck);
-
-      cout <<"read: "<< deck_name <<", version= "<< v
-            <<", cards="<< deck->cards.size()
-            <<", bytes="<< rc.buf_arr.size() << endl;
-   }
-
-   return deck;
-}
+ReorderCog::~ReorderCog() {}
 
 // -----------------------------------------------------------------------------

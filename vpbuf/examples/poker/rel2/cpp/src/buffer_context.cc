@@ -60,15 +60,36 @@ pullInteger(
 
 // -----------------------------------------------------------------------------
 
+namespace vp_poker {
+   void init_reorder_map(map<string, ReorderCog *> &rmap, int ver);
+   bool version_check(long);
+}
+
+using namespace vp_poker;
+
 class read_context {
    public:
+      map<string, ReorderCog *> reorder_map;
+      long m_ver;
       ByteVec buf_arr;
       ByteVec::const_iterator ii;
 
+      bool set_version(long version) {
+         if (!version_check(version))
+            return false;
+         else {
+            m_ver = version;
+            init_reorder_map(reorder_map, version);
+            return true;
+         }
+      }
+
       size_t get_buffer_size() { return buf_arr.size(); }
 
-      read_context(string file_name)
+      read_context(string file_name, long ver = 1) : m_ver(ver)
       {
+         if (!set_version(m_ver))
+            throw std::out_of_range("version out of range");
          std::ifstream ifile(file_name, std::ifstream::binary);
          ByteVec in_arr(std::istreambuf_iterator<char>(ifile), {});
          ifile.close();
@@ -80,7 +101,19 @@ class read_context {
 
 class write_context {
    public:
+      map<string, ReorderCog *> reorder_map;
+      long m_ver;
       std::vector<byte> buf_arr;
+
+      bool set_version(long version) {
+         if (!version_check(version))
+            return false;
+         else {
+            m_ver = version;
+            init_reorder_map(reorder_map, version);
+            return true;
+         }
+      }
 
       size_t write_file(string file_name)
       {
@@ -90,6 +123,11 @@ class write_context {
          ofile1.close();
 
          return (buf_arr.size());
+      }
+
+      write_context(long ver = 1) : m_ver(ver) {
+         if (!set_version(m_ver))
+            throw std::out_of_range("version out of range");
       }
 };
 

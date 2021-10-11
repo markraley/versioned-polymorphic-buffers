@@ -1,8 +1,12 @@
 // vpbuf generated code - do not modify
 "use strict";
-module.exports = {
+var persist = require("./persist");
 
+module.exports = {
 	factory: null, // must be set to class factory object
+
+	init_reorder_map: function(map, ver) {
+	},
 
 	write_String: function(ver, wc, payload) {
 		wc.write_String(payload);
