@@ -21,7 +21,7 @@ namespace vp_poker {
 	void write_Card(write_context &ctx, Card &payload)
 	{
 		write_int(ctx, payload.id);
-		if (ctx->m_ver >= 1 && ctx->m_ver <= 1)
+		if (ctx.m_ver >= 1 && ctx.m_ver <= 1)
 			write_string(ctx, payload.name);
 	}
 
@@ -41,7 +41,7 @@ namespace vp_poker {
 	void read_Card(read_context &ctx, Card &payload)
 	{
 		read_int(ctx, payload.id);
-		if (ctx->m_ver >= 1 && ctx->m_ver <= 1)
+		if (ctx.m_ver >= 1 && ctx.m_ver <= 1)
 			read_string(ctx, payload.name);
 	}
 

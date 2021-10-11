@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <map>
 #include <cassert>
 #include <typeindex> // needed for class polymorphism
 

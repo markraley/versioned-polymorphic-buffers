@@ -42,3 +42,41 @@ card pop: Two of Diamonds Ace of Diamonds
 write: t.dat, version=1, cards=0, bytes=14
 cards left 0
 
+----- Example 4 -----
+[vrange=1-1, nodejs] STACK 7 cards
+write: t.dat, version=1, cards=7, bytes=153
+[vrange=1-2, cpp] DRAW 4 cards
+read: t.dat, version= 1, cards=7, bytes=153
+card pop: Seven of Diamonds Six of Diamonds Five of Diamonds Four of Diamonds
+write: t.dat, version=2, cards=3, bytes=20
+cards left 3
+[vrange=1-2, python] DRAW 3 cards
+t.dat 20 bytes read
+read: t.dat, version=2, cards=3, bytes=20
+card pop:   
+write: t.dat, version=2, cards=0, bytes=14
+cards left 0
+
+----- Example 5 -----
+[vrange=1-2, python] STACK 4 cards
+write: t.dat, version=2, cards=4, bytes=22
+[vrange=1-1, nodejs] DRAW 2 cards
+version mismatch
+[vrange=1-1, cpp] DRAW 2 cards
+version out of range
+
+----- Example 6 -----
+[vrange=1-2, cpp] STACK 5 cards
+write: t.dat, version=2, cards=5, bytes=24
+[vrange=1-2, python] DRAW 3 cards
+t.dat 24 bytes read
+read: t.dat, version=2, cards=5, bytes=24
+card pop:   
+write: t.dat, version=2, cards=2, bytes=18
+cards left 2
+[vrange=2-2, nodejs] DRAW 2 cards
+read: t.dat, version=2, cards=2, bytes=18
+card pop: Two of Diamonds Ace of Diamonds
+write: t.dat, version=2, cards=0, bytes=14
+cards left 0
+

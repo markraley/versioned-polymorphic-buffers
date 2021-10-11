@@ -4,7 +4,7 @@ size_t save_deck(string deck_name, Deck &deck) {
    long v = get_high_version();
    Header header(v, "VP_POKER");
 
-   write_context wc(1);
+   write_context wc(v);
 
    write_Header(wc, header); // always version 1
    write_Deck(wc, deck);
