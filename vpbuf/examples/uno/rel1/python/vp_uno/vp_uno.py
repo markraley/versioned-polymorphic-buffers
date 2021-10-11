@@ -12,6 +12,9 @@ def get_high_version():
 def get_low_version():
 	return 1
 
+def init_reorder_map(map, ver):
+	pass
+
 def write_int(ver, wc, payload):
     wc.encoder.writeInteger(payload) # amf3
 

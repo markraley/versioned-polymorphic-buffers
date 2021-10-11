@@ -9,7 +9,7 @@ cards left 2
 [vrange=1-1, cpp] DRAW 2 cards
 read: t.dat, version= 1, cards=2, bytes=36
 card pop: Blue 8 Blue 8
-write: t.dat, version=1, cards=0, bytes=12
+write: t.dat, version=1, cards=0, bytes=14
 cards left 0
 
 ----- Example 2 -----
@@ -18,21 +18,21 @@ write: t.dat, version=1, cards=7, bytes=96
 [vrange=1-1, cpp] DRAW 4 cards
 read: t.dat, version= 1, cards=7, bytes=96
 card pop: Blue 9 Blue 9 Blue 8 Blue 8
-write: t.dat, version=1, cards=3, bytes=48
+write: t.dat, version=1, cards=3, bytes=50
 cards left 3
 [vrange=1-1, python] DRAW 3 cards
-t.dat 48 bytes read
-read: t.dat, version=1, cards=3, bytes=48
+t.dat 50 bytes read
+read: t.dat, version=1, cards=3, bytes=50
 card pop: Blue 7 Blue 7 Blue 6
 write: t.dat, version=1, cards=0, bytes=14
 cards left 0
 
 ----- Example 3 -----
 [vrange=1-1, cpp] STACK 5 cards
-write: t.dat, version=1, cards=5, bytes=72
+write: t.dat, version=1, cards=5, bytes=74
 [vrange=1-1, python] DRAW 3 cards
-t.dat 72 bytes read
-read: t.dat, version=1, cards=5, bytes=72
+t.dat 74 bytes read
+read: t.dat, version=1, cards=5, bytes=74
 card pop: Blue 9 Blue 9 Blue 8
 write: t.dat, version=1, cards=2, bytes=38
 cards left 2

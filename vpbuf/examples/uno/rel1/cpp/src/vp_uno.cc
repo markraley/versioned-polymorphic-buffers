@@ -12,170 +12,173 @@ namespace vp_uno {
 		return 1;
 	}
 
-	void write_Header(long nVersion, write_context &wc, Header &payload)
+	void write_Header(write_context &ctx, Header &payload)
 	{
-		write_int(wc, payload.version);
-		write_string(wc, payload.tag);
+		write_int(ctx, payload.version);
+		write_string(ctx, payload.tag);
 	}
 
-	void write_Value(long, write_context &wc, Value &);
-	void write_Reverse(long, write_context &wc, Reverse &);
-	void write_Skip(long, write_context &wc, Skip &);
-	void write_DrawTwo(long, write_context &wc, DrawTwo &);
+	void write_Value(write_context &ctx, Value &);
+	void write_Reverse(write_context &ctx, Reverse &);
+	void write_Skip(write_context &ctx, Skip &);
+	void write_DrawTwo(write_context &ctx, DrawTwo &);
 
-	void write_Card(long nVersion, write_context &wc, Card &payload)
+	void write_Card(write_context &ctx, Card &payload)
 	{
 		const std::type_info& tid = typeid(payload);
 		if (std::type_index(tid) == std::type_index(typeid(Value))) {
-			write_int(wc,0);
-			write_Value(nVersion, wc, dynamic_cast<Value &> (payload));
+			write_int(ctx,0);
+			write_Value(ctx, dynamic_cast<Value &> (payload));
 		}
 		if (std::type_index(tid) == std::type_index(typeid(Reverse))) {
-			write_int(wc,1);
-			write_int(wc,0);
-			write_Reverse(nVersion, wc, dynamic_cast<Reverse &> (payload));
+			write_int(ctx,1);
+			write_int(ctx,0);
+			write_Reverse(ctx, dynamic_cast<Reverse &> (payload));
 		}
 		if (std::type_index(tid) == std::type_index(typeid(Skip))) {
-			write_int(wc,1);
-			write_int(wc,1);
-			write_Skip(nVersion, wc, dynamic_cast<Skip &> (payload));
+			write_int(ctx,1);
+			write_int(ctx,1);
+			write_Skip(ctx, dynamic_cast<Skip &> (payload));
 		}
 		if (std::type_index(tid) == std::type_index(typeid(DrawTwo))) {
-			write_int(wc,1);
-			write_int(wc,2);
-			write_DrawTwo(nVersion, wc, dynamic_cast<DrawTwo &> (payload));
+			write_int(ctx,1);
+			write_int(ctx,2);
+			write_DrawTwo(ctx, dynamic_cast<DrawTwo &> (payload));
 		}
-		write_int(wc, payload.id);
+		write_int(ctx, payload.id);
 	}
 
-	void write_Value(long nVersion, write_context &wc, Value &payload)
+	void write_Value(write_context &ctx, Value &payload)
 	{
-		write_int(wc, payload.value);
-		write_string(wc, payload.color);
+		write_int(ctx, payload.value);
+		write_string(ctx, payload.color);
 	}
 
-	void write_Action(long nVersion, write_context &wc, Action &payload)
+	void write_Action(write_context &ctx, Action &payload)
 	{
-		write_string(wc, payload.color);
+		write_string(ctx, payload.color);
 	}
 
-	void write_Reverse(long nVersion, write_context &wc, Reverse &payload)
+	void write_Reverse(write_context &ctx, Reverse &payload)
 	{
-		write_Action(nVersion, wc, payload);
+		write_Action(ctx, payload);
 	}
 
-	void write_Skip(long nVersion, write_context &wc, Skip &payload)
+	void write_Skip(write_context &ctx, Skip &payload)
 	{
-		write_Action(nVersion, wc, payload);
+		write_Action(ctx, payload);
 	}
 
-	void write_DrawTwo(long nVersion, write_context &wc, DrawTwo &payload)
+	void write_DrawTwo(write_context &ctx, DrawTwo &payload)
 	{
-		write_Action(nVersion, wc, payload);
+		write_Action(ctx, payload);
 	}
 
-	void write_Deck(long nVersion, write_context &wc, Deck &payload)
+	void write_Deck(write_context &ctx, Deck &payload)
 	{
-		write_int(wc, payload.cards.size());
+		write_int(ctx, payload.cards.size());
 		for (auto ii = payload.cards.begin();ii != payload.cards.end(); ii++)
-			write_Card(nVersion, wc, *(*ii));
+			write_Card(ctx, *(*ii));
 	}
 
-	void read_Header(long nVersion, read_context &rc, Header &payload)
+	void read_Header(read_context &ctx, Header &payload)
 	{
-		read_int(rc, payload.version);
-		read_string(rc, payload.tag);
+		read_int(ctx, payload.version);
+		read_string(ctx, payload.tag);
 	}
 
-	Value* read_Value(long, read_context &rc);
-	Action* read_Action(long, read_context &rc);
+	Value* read_Value(read_context &ctx);
+	Action* read_Action(read_context &ctx);
 
-	Card* read_Card(long nVersion, read_context &rc)
+	Card* read_Card(read_context &ctx)
 	{
-		Card* payload_ptr; int t; read_int(rc, t);
+		Card* payload_ptr; int t; read_int(ctx, t);
 		if (t == 0)
-			payload_ptr = read_Value(nVersion, rc);
+			payload_ptr = read_Value(ctx);
 		if (t == 1)
-			payload_ptr = read_Action(nVersion, rc);
+			payload_ptr = read_Action(ctx);
 		auto &payload = *payload_ptr;
-		read_int(rc, payload.id);
+		read_int(ctx, payload.id);
 		return payload_ptr;
 	}
 
-	Value *read_Value(long nVersion, read_context &rc)
+	Value *read_Value(read_context &ctx)
 	{
 		auto *payload_ptr = new Value;
 		auto &payload = *payload_ptr;
-		read_int(rc, payload.value);
-		read_string(rc, payload.color);
+		read_int(ctx, payload.value);
+		read_string(ctx, payload.color);
 		return payload_ptr;
 	}
 
-	void read_Value(long nVersion, read_context &rc, Value &payload)
+	void read_Value(read_context &ctx, Value &payload)
 	{
-		read_int(rc, payload.value);
-		read_string(rc, payload.color);
+		read_int(ctx, payload.value);
+		read_string(ctx, payload.color);
 	}
 
-	Reverse* read_Reverse(long, read_context &rc);
-	Skip* read_Skip(long, read_context &rc);
-	DrawTwo* read_DrawTwo(long, read_context &rc);
+	Reverse* read_Reverse(read_context &ctx);
+	Skip* read_Skip(read_context &ctx);
+	DrawTwo* read_DrawTwo(read_context &ctx);
 
-	Action* read_Action(long nVersion, read_context &rc)
+	Action* read_Action(read_context &ctx)
 	{
-		Action* payload_ptr; int t; read_int(rc, t);
+		Action* payload_ptr; int t; read_int(ctx, t);
 		if (t == 0)
-			payload_ptr = read_Reverse(nVersion, rc);
+			payload_ptr = read_Reverse(ctx);
 		if (t == 1)
-			payload_ptr = read_Skip(nVersion, rc);
+			payload_ptr = read_Skip(ctx);
 		if (t == 2)
-			payload_ptr = read_DrawTwo(nVersion, rc);
+			payload_ptr = read_DrawTwo(ctx);
 		auto &payload = *payload_ptr;
-		read_string(rc, payload.color);
+		read_string(ctx, payload.color);
 		return payload_ptr;
 	}
 
-	Reverse *read_Reverse(long nVersion, read_context &rc)
+	Reverse *read_Reverse(read_context &ctx)
 	{
 		auto *payload_ptr = new Reverse;
 		auto &payload = *payload_ptr;
 		return payload_ptr;
 	}
 
-	void read_Reverse(long nVersion, read_context &rc, Reverse &payload)
+	void read_Reverse(read_context &ctx, Reverse &payload)
 	{
 	}
 
-	Skip *read_Skip(long nVersion, read_context &rc)
+	Skip *read_Skip(read_context &ctx)
 	{
 		auto *payload_ptr = new Skip;
 		auto &payload = *payload_ptr;
 		return payload_ptr;
 	}
 
-	void read_Skip(long nVersion, read_context &rc, Skip &payload)
+	void read_Skip(read_context &ctx, Skip &payload)
 	{
 	}
 
-	DrawTwo *read_DrawTwo(long nVersion, read_context &rc)
+	DrawTwo *read_DrawTwo(read_context &ctx)
 	{
 		auto *payload_ptr = new DrawTwo;
 		auto &payload = *payload_ptr;
 		return payload_ptr;
 	}
 
-	void read_DrawTwo(long nVersion, read_context &rc, DrawTwo &payload)
+	void read_DrawTwo(read_context &ctx, DrawTwo &payload)
 	{
 	}
 
-	void read_Deck(long nVersion, read_context &rc, Deck &payload)
+	void read_Deck(read_context &ctx, Deck &payload)
 	{
 		int count_cards;
-		read_int(rc, count_cards);
+		read_int(ctx, count_cards);
 		for (auto i = 0; i < count_cards; i++) {
-			auto *pod = read_Card(nVersion, rc);
+			auto *pod = read_Card(ctx);
 			payload.cards.push_back(pod);
 		}
+	}
+
+	void init_reorder_map(map<string, ReorderCog *> &rmap, int ver) {
 	}
 
 }
