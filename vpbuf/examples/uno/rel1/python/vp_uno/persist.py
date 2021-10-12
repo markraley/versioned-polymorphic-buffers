@@ -76,28 +76,42 @@ def file_to_buffer(file_name):
 # ------------------------------------------------------------------------------
 
 class write_context:
-    def __init__(self):
+    def __init__(self, ver = 1):
         self.stream = amf3.util.BufferedByteStream()
         self.encoder = amf3.Encoder(self.stream)
         self.encoder.string_references = False # disables string caching
+        self.reorder_map = {}
+        self.ver = ver
+        self.set_version(ver)
+
+    def set_version(self, ver):
+        self.ver = ver
+        init_reorder_map(self.reorder_map, ver)
 
 class read_context:
-    def __init__(self, file_name):
+    def __init__(self, file_name, ver = 1):
         self.istream = file_to_buffer(file_name)
         self.decoder = amf3.Decoder(self.istream)
         self.bytes_read = len(self.istream)
         print(file_name, len(self.istream), 'bytes read')
+        self.reorder_map = {}
+        self.ver = ver
+        self.set_version(ver)
+
+    def set_version(self, ver):
+        self.ver = ver
+        init_reorder_map(self.reorder_map, ver)
 
 # ------------------------------------------------------------------------------
 
 def save_deck(file_name, deck):
+    wc = write_context(1) # header version is always 1
 
-    wc = write_context()
+    h = Header(get_high_version(), 'VP_UNO')
+    write_Header(wc, h)
 
-    h = Header(get_high_version(), 'VP_POKER')
-    write_Header(1, wc, h) # header version is always 1
-
-    write_Deck(get_high_version(), wc, deck)
+    wc.set_version(get_high_version())
+    write_Deck(wc, deck)
 
     bytes_written = buffer_to_file(file_name, wc.encoder)
 
@@ -113,13 +127,14 @@ def save_deck(file_name, deck):
 def load_deck(file_name):
     rc = read_context(file_name)
 
-    header = read_Header(1, rc)
+    header = read_Header(rc)
 
     if (not version_check(header.version)):
         print('version test failed')
         return None
 
-    deck = read_Deck(header.version, rc)
+    rc.set_version(header.version)
+    deck = read_Deck(rc)
 
     bytes_read = rc.bytes_read
 

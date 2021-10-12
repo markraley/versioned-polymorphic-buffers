@@ -15,122 +15,122 @@ def get_low_version():
 def init_reorder_map(map, ver):
 	pass
 
-def write_int(ver, wc, payload):
-    wc.encoder.writeInteger(payload) # amf3
+def write_int(ctx, payload):
+    ctx.encoder.writeInteger(payload) # amf3
 
-def write_str(ver, wc, payload):
-    wc.encoder.writeString(payload) # amf3
+def write_str(ctx, payload):
+    ctx.encoder.writeString(payload) # amf3
 
-def write_Header(ver, f, payload):
-	write_int(ver, f, payload.version)
-	write_str(ver, f, payload.tag)
+def write_Header(ctx, payload):
+	write_int(ctx, payload.version)
+	write_str(ctx, payload.tag)
 
-def write_Card(ver, f, payload):
+def write_Card(ctx, payload):
 	c = type(payload).__name__
 	if (c == "Value"):
-		write_int(ver, f,0)
-		write_Value(ver, f, payload)
+		write_int(ctx,0)
+		write_Value(ctx, payload)
 	if (c == "Reverse"):
-		write_int(ver, f,1)
-		write_int(ver, f,0)
-		write_Reverse(ver, f, payload)
+		write_int(ctx,1)
+		write_int(ctx,0)
+		write_Reverse(ctx, payload)
 	if (c == "Skip"):
-		write_int(ver, f,1)
-		write_int(ver, f,1)
-		write_Skip(ver, f, payload)
+		write_int(ctx,1)
+		write_int(ctx,1)
+		write_Skip(ctx, payload)
 	if (c == "DrawTwo"):
-		write_int(ver, f,1)
-		write_int(ver, f,2)
-		write_DrawTwo(ver, f, payload)
-	write_int(ver, f, payload.id)
+		write_int(ctx,1)
+		write_int(ctx,2)
+		write_DrawTwo(ctx, payload)
+	write_int(ctx, payload.id)
 
 
-def write_Value(ver, f, payload):
-	write_int(ver, f, payload.value)
-	write_str(ver, f, payload.color)
+def write_Value(ctx, payload):
+	write_int(ctx, payload.value)
+	write_str(ctx, payload.color)
 
-def write_Action(ver, f, payload):
-	write_str(ver, f, payload.color)
+def write_Action(ctx, payload):
+	write_str(ctx, payload.color)
 
 
-def write_Reverse(ver, f, payload):
-	write_Action(ver, f, payload)
+def write_Reverse(ctx, payload):
+	write_Action(ctx, payload)
 
-def write_Skip(ver, f, payload):
-	write_Action(ver, f, payload)
+def write_Skip(ctx, payload):
+	write_Action(ctx, payload)
 
-def write_DrawTwo(ver, f, payload):
-	write_Action(ver, f, payload)
+def write_DrawTwo(ctx, payload):
+	write_Action(ctx, payload)
 
-def write_Deck(ver, f, payload):
+def write_Deck(ctx, payload):
 	count = len(payload.cards)
-	write_int(ver, f, count)
+	write_int(ctx, count)
 	i = 0
 	while (i < count):
-		write_Card(ver, f, payload.cards[i])
+		write_Card(ctx, payload.cards[i])
 		i = i + 1
 
-def read_int(ver, rc):
-   t = rc.decoder.readInteger() # amf3
+def read_int(ctx):
+   t = ctx.decoder.readInteger() # amf3
    assert(t == 4)
-   return rc.decoder.readInteger()
+   return ctx.decoder.readInteger()
 
-def read_str(ver, rc):
-   t = rc.decoder.readInteger() # amf3
+def read_str(ctx):
+   t = ctx.decoder.readInteger() # amf3
    assert(t == 6)
-   return rc.decoder.readString()
+   return ctx.decoder.readString()
 
-def read_Header(ver, f):
+def read_Header(ctx):
 	payload = Header()
-	payload.version = read_int(ver, f)
-	payload.tag = read_str(ver, f)
+	payload.version = read_int(ctx)
+	payload.tag = read_str(ctx)
 	return payload
 
-def read_Card(ver, f):
-	t = read_int(ver, f)
+def read_Card(ctx):
+	t = read_int(ctx)
 	if (t == 0):
-		payload = read_Value(ver, f)
+		payload = read_Value(ctx)
 	if (t == 1):
-		payload = read_Action(ver, f)
-	payload.id = read_int(ver, f)
+		payload = read_Action(ctx)
+	payload.id = read_int(ctx)
 	return payload
 
-def read_Value(ver, f):
+def read_Value(ctx):
 	payload = Value()
-	payload.value = read_int(ver, f)
-	payload.color = read_str(ver, f)
+	payload.value = read_int(ctx)
+	payload.color = read_str(ctx)
 	return payload
 
-def read_Action(ver, f):
-	t = read_int(ver, f)
+def read_Action(ctx):
+	t = read_int(ctx)
 	if (t == 0):
-		payload = read_Reverse(ver, f)
+		payload = read_Reverse(ctx)
 	if (t == 1):
-		payload = read_Skip(ver, f)
+		payload = read_Skip(ctx)
 	if (t == 2):
-		payload = read_DrawTwo(ver, f)
-	payload.color = read_str(ver, f)
+		payload = read_DrawTwo(ctx)
+	payload.color = read_str(ctx)
 	return payload
 
-def read_Reverse(ver, f):
+def read_Reverse(ctx):
 	payload = Reverse()
 	return payload
 
-def read_Skip(ver, f):
+def read_Skip(ctx):
 	payload = Skip()
 	return payload
 
-def read_DrawTwo(ver, f):
+def read_DrawTwo(ctx):
 	payload = DrawTwo()
 	return payload
 
-def read_Deck(ver, f):
+def read_Deck(ctx):
 	payload = Deck()
 	payload.cards = []
-	count = read_int(ver, f)
+	count = read_int(ctx)
 	i = 0
 	while (i < count):
-		t = read_Card(ver, f)
+		t = read_Card(ctx)
 		payload.cards.append(t)
 		i = i + 1
 	return payload

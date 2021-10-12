@@ -37,6 +37,7 @@ class write_context:
         self.set_version(ver)
 
     def set_version(self, ver):
+        self.ver = ver
         init_reorder_map(self.reorder_map, ver)
 
 class read_context:

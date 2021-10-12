@@ -21,7 +21,9 @@ class Card:
         self.id = id
 
     def get_name(self):
-        return self.name
+        i = self.id - 1
+        return (rank_arr[i % len(rank_arr)]
+                    + ' of ' + suit_arr[i // len(rank_arr)])
 
 class Deck:
     def __init__(self):
@@ -55,6 +57,7 @@ class write_context:
         self.set_version(ver)
 
     def set_version(self, ver):
+        self.ver = ver
         init_reorder_map(self.reorder_map, ver)
 
 class read_context:
@@ -76,7 +79,6 @@ class read_context:
 from vp_poker.vp_poker import *
 
 def save_deck(file_name, deck):
-
     wc = write_context(1) # header version is always 1
 
     h = Header(get_high_version(), 'VP_POKER')

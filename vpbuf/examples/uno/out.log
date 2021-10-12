@@ -1,8 +1,8 @@
 ----- Example 1 -----
 [vrange=1-1, python] STACK 4 cards
-write: t.dat, version=1, cards=4, bytes=62
+write: t.dat, version=1, cards=4, bytes=60
 [vrange=1-1, nodejs] DRAW 2 cards
-read: t.dat, version=1, cards=4, bytes=62
+read: t.dat, version=1, cards=4, bytes=60
 card pop: Blue 9 Blue 9
 write: t.dat, version=1, cards=2, bytes=36
 cards left 2
@@ -24,7 +24,7 @@ cards left 3
 t.dat 50 bytes read
 read: t.dat, version=1, cards=3, bytes=50
 card pop: Blue 7 Blue 7 Blue 6
-write: t.dat, version=1, cards=0, bytes=14
+write: t.dat, version=1, cards=0, bytes=12
 cards left 0
 
 ----- Example 3 -----
@@ -34,10 +34,10 @@ write: t.dat, version=1, cards=5, bytes=74
 t.dat 74 bytes read
 read: t.dat, version=1, cards=5, bytes=74
 card pop: Blue 9 Blue 9 Blue 8
-write: t.dat, version=1, cards=2, bytes=38
+write: t.dat, version=1, cards=2, bytes=36
 cards left 2
 [vrange=1-1, nodejs] DRAW 2 cards
-read: t.dat, version=1, cards=2, bytes=38
+read: t.dat, version=1, cards=2, bytes=36
 card pop: Blue 8 Blue 7
 write: t.dat, version=1, cards=0, bytes=12
 cards left 0
