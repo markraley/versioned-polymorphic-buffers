@@ -15,57 +15,57 @@ def get_low_version():
 def init_reorder_map(map, ver):
 	pass
 
-def write_int(ver, wc, payload):
-    wc.encoder.writeInteger(payload) # amf3
+def write_int(ctx, payload):
+    ctx.encoder.writeInteger(payload) # amf3
 
-def write_str(ver, wc, payload):
-    wc.encoder.writeString(payload) # amf3
+def write_str(ctx, payload):
+    ctx.encoder.writeString(payload) # amf3
 
-def write_Header(ver, f, payload):
-	write_int(ver, f, payload.version)
-	write_str(ver, f, payload.tag)
+def write_Header(ctx, payload):
+	write_int(ctx, payload.version)
+	write_str(ctx, payload.tag)
 
-def write_Card(ver, f, payload):
-	write_int(ver, f, payload.id)
-	write_str(ver, f, payload.name)
+def write_Card(ctx, payload):
+	write_int(ctx, payload.id)
+	write_str(ctx, payload.name)
 
-def write_Deck(ver, f, payload):
+def write_Deck(ctx, payload):
 	count = len(payload.cards)
-	write_int(ver, f, count)
+	write_int(ctx, count)
 	i = 0
 	while (i < count):
-		write_Card(ver, f, payload.cards[i])
+		write_Card(ctx, payload.cards[i])
 		i = i + 1
 
-def read_int(ver, rc):
-   t = rc.decoder.readInteger() # amf3
+def read_int(ctx):
+   t = ctx.decoder.readInteger() # amf3
    assert(t == 4)
-   return rc.decoder.readInteger()
+   return ctx.decoder.readInteger()
 
-def read_str(ver, rc):
-   t = rc.decoder.readInteger() # amf3
+def read_str(ctx):
+   t = ctx.decoder.readInteger() # amf3
    assert(t == 6)
-   return rc.decoder.readString()
+   return ctx.decoder.readString()
 
-def read_Header(ver, f):
+def read_Header(ctx):
 	payload = Header()
-	payload.version = read_int(ver, f)
-	payload.tag = read_str(ver, f)
+	payload.version = read_int(ctx)
+	payload.tag = read_str(ctx)
 	return payload
 
-def read_Card(ver, f):
+def read_Card(ctx):
 	payload = Card()
-	payload.id = read_int(ver, f)
-	payload.name = read_str(ver, f)
+	payload.id = read_int(ctx)
+	payload.name = read_str(ctx)
 	return payload
 
-def read_Deck(ver, f):
+def read_Deck(ctx):
 	payload = Deck()
 	payload.cards = []
-	count = read_int(ver, f)
+	count = read_int(ctx)
 	i = 0
 	while (i < count):
-		t = read_Card(ver, f)
+		t = read_Card(ctx)
 		payload.cards.append(t)
 		i = i + 1
 	return payload
