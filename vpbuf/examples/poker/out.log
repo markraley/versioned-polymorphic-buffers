@@ -53,7 +53,7 @@ cards left 3
 [vrange=1-2, python] DRAW 3 cards
 t.dat 20 bytes read
 read: t.dat, version=2, cards=3, bytes=20
-card pop: Four of Diamonds Three of Diamonds Two of Diamonds
+card pop: Three of Diamonds Two of Diamonds Ace of Diamonds
 write: t.dat, version=2, cards=0, bytes=14
 cards left 0
 
@@ -71,7 +71,7 @@ write: t.dat, version=2, cards=5, bytes=24
 [vrange=1-2, python] DRAW 3 cards
 t.dat 24 bytes read
 read: t.dat, version=2, cards=5, bytes=24
-card pop: Six of Diamonds Five of Diamonds Four of Diamonds
+card pop: Five of Diamonds Four of Diamonds Three of Diamonds
 write: t.dat, version=2, cards=2, bytes=18
 cards left 2
 [vrange=2-2, nodejs] DRAW 2 cards
