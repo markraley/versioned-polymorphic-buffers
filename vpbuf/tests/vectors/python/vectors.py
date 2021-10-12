@@ -25,22 +25,32 @@ def file_to_buffer(file_name):
 out_dir = "./out/"
 file_ext = ".dat"
 
+# ------------------------------------------------------------------------------
+
 class write_context:
-    def __init__(self):
+    def __init__(self, ver = 1):
         self.stream = amf3.util.BufferedByteStream()
         self.encoder = amf3.Encoder(self.stream)
         self.encoder.string_references = False # disables string caching
         self.reorder_map = {}
-        init_reorder_map(self.reorder_map, 1)
+        self.ver = ver
+        self.set_version(ver)
+
+    def set_version(self, ver):
+        init_reorder_map(self.reorder_map, ver)
 
 class read_context:
-    def __init__(self, test_name):
+    def __init__(self, test_name, ver = 1):
         self.istream = file_to_buffer(out_dir + test_name + file_ext)
         self.decoder = amf3.Decoder(self.istream)
         self.bytes_read = len(self.istream)
         print(test_name, len(self.istream), 'bytes read')
         self.reorder_map = {}
-        init_reorder_map(self.reorder_map, 1)
+        self.ver = ver
+        self.set_version(ver)
+
+    def set_version(self, ver):
+        init_reorder_map(self.reorder_map, ver)
 
 # ------------------------------------------------------------------------------
 # vectors_A - test vector of pointer to struct
