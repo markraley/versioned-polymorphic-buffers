@@ -30,7 +30,7 @@ vp_typedef_string::format_in_py(const std::string var_name)
 
    get_type_python(t);
 
-   return var_name + " = read_" + t + "(ver, f)\n";
+   return var_name + " = read_" + t + "(ctx)\n";
 }
 
 // -----------------------------------------------------------------------------

@@ -100,12 +100,12 @@ pod_vector::serialize_out_py(
    vp_typedefs[payload_index]->get_type_python(vec_type);
 
    ofs <<tab(in)<<"count = len(payload." << name <<")\n";
-   ofs <<tab(in)<<"write_int(ver, f, count)\n";
+   ofs <<tab(in)<<"write_int(ctx, count)\n";
 
    ofs <<tab(in)<<"i = 0\n";
    ofs <<tab(in)<<"while (i < count):\n";
    ofs <<tab(in+1)<<"write_" << vec_type
-            << "(ver, f, payload." << name << "[i])\n";
+            << "(ctx, payload." << name << "[i])\n";
    ofs <<tab(in+1)<<"i = i + 1\n";
 }
 
@@ -125,7 +125,7 @@ pod_vector::serialize_in_py(
    vp_typedefs[payload_index]->get_type_python(vec_type);
 
    ofs <<tab(in)<< "payload."<< name <<" = []\n";
-   ofs <<tab(in)<< "count = read_int(ver, f)\n";
+   ofs <<tab(in)<< "count = read_int(ctx)\n";
    ofs <<tab(in)<< "i = 0\n";
 
    ofs <<tab(in)<<"while (i < count):\n";

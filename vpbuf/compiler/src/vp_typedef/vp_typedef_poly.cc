@@ -136,7 +136,7 @@ vp_typedef_poly::serialize_out_py(
    if (!this->vrange.overlap(tar_lang.start, tar_lang.end))
       return;
 
-   ofs << "def write_" << type_name << "(ver, f, payload):\n";
+   ofs << "def write_" << type_name << "(ctx, payload):\n";
 
    if (parent_name.size() == 0) {
       Terminals terms;
@@ -150,11 +150,11 @@ vp_typedef_poly::serialize_out_py(
 
          size_t k = terms[i].layers.size() - 1;
          for (size_t j = 0;  j < terms[i].layers.size(); j++, k--)
-            ofs << "\t\twrite_int(ver, f,"
+            ofs << "\t\twrite_int(ctx,"
                      << terms[i].layers[k] << ")\n";
 
          ofs << "\t\twrite_" << terms[i].name
-                     << "(ver, f, payload)\n";
+                     << "(ctx, payload)\n";
       }
    }
 
@@ -178,14 +178,14 @@ vp_typedef_poly::serialize_in_py(
    if (!this->vrange.overlap(tar_lang.start, tar_lang.end))
       return;
 
-   ofs << "def read_" << type_name << "(ver, f):\n";
+   ofs << "def read_" << type_name << "(ctx):\n";
 
-   ofs << "\tt = read_int(ver, f)\n";
+   ofs << "\tt = read_int(ctx)\n";
 
    for (size_t i = 0; i < polys.size() ; i++)
    {
       ofs << "\tif (t == " << i << "):\n";
-      ofs << "\t\tpayload = read_" << polys[i] << "(ver, f)\n";
+      ofs << "\t\tpayload = read_" << polys[i] << "(ctx)\n";
    }
 
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj)
@@ -373,6 +373,6 @@ void vp_typedef_poly::get_type_js(std::string &result)
 
 std::string vp_typedef_poly::format_in_py(const std::string var_name)
 {
-   return var_name + " = read_" + type_name + "(ver, f)\n";
+   return var_name + " = read_" + type_name + "(ctx)\n";
 }
 

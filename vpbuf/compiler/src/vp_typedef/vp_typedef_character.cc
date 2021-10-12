@@ -26,7 +26,7 @@ vp_typedef_character::get_type_js(std::string &result)
 std::string
 vp_typedef_character::format_in_py(const std::string var_name)
 {
-   return var_name + " = read_" + type_name + "(ver, f)\n";
+   return var_name + " = read_" + type_name + "(ctx)\n";
 }
 
 void
@@ -42,10 +42,10 @@ void
 vp_typedef_character::serialize_out_py(
    std::ofstream &ofs, int in, TypeMap &type_map, TarLang &)
 {
-   ofs << "def write_str(ver, wc, payload):\n";
+   ofs << "def write_str(ctx, payload):\n";
    ofs <<
 "\
-    wc.encoder.writeString(payload) # amf3\n\
+    ctx.encoder.writeString(payload) # amf3\n\
 ";
    ofs << "\n";
 }
@@ -54,12 +54,12 @@ void
 vp_typedef_character::serialize_in_py(
    std::ofstream &ofs, int in, TypeMap &type_map, TarLang &)
 {
-   ofs << "def read_str(ver, rc):\n";
+   ofs << "def read_str(ctx):\n";
    ofs <<
 "\
-   t = rc.decoder.readInteger() # amf3\n\
+   t = ctx.decoder.readInteger() # amf3\n\
    assert(t == 6)\n\
-   return rc.decoder.readString()\n\
+   return ctx.decoder.readString()\n\
 ";
 
    ofs << "\n";

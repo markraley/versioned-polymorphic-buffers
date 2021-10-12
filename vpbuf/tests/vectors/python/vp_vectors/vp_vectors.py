@@ -38,215 +38,215 @@ def get_rlist_A(ver):
 			return [p[2], p[3](get_vlist_A(ver))]
 	return None
 
-def write_int(ver, wc, payload):
-    wc.encoder.writeInteger(payload) # amf3
+def write_int(ctx, payload):
+    ctx.encoder.writeInteger(payload) # amf3
 
-def write_str(ver, wc, payload):
-    wc.encoder.writeString(payload) # amf3
+def write_str(ctx, payload):
+    ctx.encoder.writeString(payload) # amf3
 
-def write_Header(ver, f, payload):
-	write_int(ver, f, payload.version)
-	write_str(ver, f, payload.test_name)
+def write_Header(ctx, payload):
+	write_int(ctx, payload.version)
+	write_str(ctx, payload.test_name)
 
-def write_A(ver, f, payload):
-	for i in f.reorder_map['A'][1]():
+def write_A(ctx, payload):
+	for i in ctx.reorder_map['A'][1]():
 		if i==0:
-			write_int(ver, f, payload.i1)
+			write_int(ctx, payload.i1)
 		elif i==1:
-			write_str(ver, f, payload.s1)
+			write_str(ctx, payload.s1)
 
-def write_OuterA(ver, f, payload):
+def write_OuterA(ctx, payload):
 	count = len(payload.v)
-	write_int(ver, f, count)
+	write_int(ctx, count)
 	i = 0
 	while (i < count):
-		write_A(ver, f, payload.v[i])
+		write_A(ctx, payload.v[i])
 		i = i + 1
 
-def write_OuterB(ver, f, payload):
+def write_OuterB(ctx, payload):
 	count = len(payload.v)
-	write_int(ver, f, count)
+	write_int(ctx, count)
 	i = 0
 	while (i < count):
-		write_A(ver, f, payload.v[i])
+		write_A(ctx, payload.v[i])
 		i = i + 1
 
-def write_OuterC(ver, f, payload):
+def write_OuterC(ctx, payload):
 	count = len(payload.v)
-	write_int(ver, f, count)
+	write_int(ctx, count)
 	i = 0
 	while (i < count):
-		write_str(ver, f, payload.v[i])
+		write_str(ctx, payload.v[i])
 		i = i + 1
 
-def write_OuterD(ver, f, payload):
+def write_OuterD(ctx, payload):
 	count = len(payload.v)
-	write_int(ver, f, count)
+	write_int(ctx, count)
 	i = 0
 	while (i < count):
-		write_str(ver, f, payload.v[i])
+		write_str(ctx, payload.v[i])
 		i = i + 1
 
-def write_OuterE(ver, f, payload):
+def write_OuterE(ctx, payload):
 	count = len(payload.v)
-	write_int(ver, f, count)
+	write_int(ctx, count)
 	i = 0
 	while (i < count):
-		write_int(ver, f, payload.v[i])
+		write_int(ctx, payload.v[i])
 		i = i + 1
 
-def write_OuterF(ver, f, payload):
+def write_OuterF(ctx, payload):
 	count = len(payload.v)
-	write_int(ver, f, count)
+	write_int(ctx, count)
 	i = 0
 	while (i < count):
-		write_int(ver, f, payload.v[i])
+		write_int(ctx, payload.v[i])
 		i = i + 1
 
-def write_Base(ver, f, payload):
+def write_Base(ctx, payload):
 	c = type(payload).__name__
 	if (c == "Derived1"):
-		write_int(ver, f,0)
-		write_Derived1(ver, f, payload)
+		write_int(ctx,0)
+		write_Derived1(ctx, payload)
 	if (c == "Derived2"):
-		write_int(ver, f,1)
-		write_Derived2(ver, f, payload)
+		write_int(ctx,1)
+		write_Derived2(ctx, payload)
 
 
-def write_Derived1(ver, f, payload):
-	write_int(ver, f, payload.i1)
-	write_str(ver, f, payload.s1)
+def write_Derived1(ctx, payload):
+	write_int(ctx, payload.i1)
+	write_str(ctx, payload.s1)
 
-def write_Derived2(ver, f, payload):
-	write_int(ver, f, payload.i1)
-	write_str(ver, f, payload.s1)
+def write_Derived2(ctx, payload):
+	write_int(ctx, payload.i1)
+	write_str(ctx, payload.s1)
 
-def write_OuterG(ver, f, payload):
+def write_OuterG(ctx, payload):
 	count = len(payload.v)
-	write_int(ver, f, count)
+	write_int(ctx, count)
 	i = 0
 	while (i < count):
-		write_Base(ver, f, payload.v[i])
+		write_Base(ctx, payload.v[i])
 		i = i + 1
 
-def read_int(ver, rc):
-   t = rc.decoder.readInteger() # amf3
+def read_int(ctx):
+   t = ctx.decoder.readInteger() # amf3
    assert(t == 4)
-   return rc.decoder.readInteger()
+   return ctx.decoder.readInteger()
 
-def read_str(ver, rc):
-   t = rc.decoder.readInteger() # amf3
+def read_str(ctx):
+   t = ctx.decoder.readInteger() # amf3
    assert(t == 6)
-   return rc.decoder.readString()
+   return ctx.decoder.readString()
 
-def read_Header(ver, f):
+def read_Header(ctx):
 	payload = Header()
-	payload.version = read_int(ver, f)
-	payload.test_name = read_str(ver, f)
+	payload.version = read_int(ctx)
+	payload.test_name = read_str(ctx)
 	return payload
 
-def read_A(ver, f):
+def read_A(ctx):
 	payload = A()
-	for i in f.reorder_map['A'][1]():
+	for i in ctx.reorder_map['A'][1]():
 		if i==0:
-			payload.i1 = read_int(ver, f)
+			payload.i1 = read_int(ctx)
 		elif i==1:
-			payload.s1 = read_str(ver, f)
+			payload.s1 = read_str(ctx)
 	return payload
 
-def read_OuterA(ver, f):
+def read_OuterA(ctx):
 	payload = OuterA()
 	payload.v = []
-	count = read_int(ver, f)
+	count = read_int(ctx)
 	i = 0
 	while (i < count):
-		t = read_A(ver, f)
+		t = read_A(ctx)
 		payload.v.append(t)
 		i = i + 1
 	return payload
 
-def read_OuterB(ver, f):
+def read_OuterB(ctx):
 	payload = OuterB()
 	payload.v = []
-	count = read_int(ver, f)
+	count = read_int(ctx)
 	i = 0
 	while (i < count):
-		t = read_A(ver, f)
+		t = read_A(ctx)
 		payload.v.append(t)
 		i = i + 1
 	return payload
 
-def read_OuterC(ver, f):
+def read_OuterC(ctx):
 	payload = OuterC()
 	payload.v = []
-	count = read_int(ver, f)
+	count = read_int(ctx)
 	i = 0
 	while (i < count):
-		t = read_str(ver, f)
+		t = read_str(ctx)
 		payload.v.append(t)
 		i = i + 1
 	return payload
 
-def read_OuterD(ver, f):
+def read_OuterD(ctx):
 	payload = OuterD()
 	payload.v = []
-	count = read_int(ver, f)
+	count = read_int(ctx)
 	i = 0
 	while (i < count):
-		t = read_str(ver, f)
+		t = read_str(ctx)
 		payload.v.append(t)
 		i = i + 1
 	return payload
 
-def read_OuterE(ver, f):
+def read_OuterE(ctx):
 	payload = OuterE()
 	payload.v = []
-	count = read_int(ver, f)
+	count = read_int(ctx)
 	i = 0
 	while (i < count):
-		t = read_int(ver, f)
+		t = read_int(ctx)
 		payload.v.append(t)
 		i = i + 1
 	return payload
 
-def read_OuterF(ver, f):
+def read_OuterF(ctx):
 	payload = OuterF()
 	payload.v = []
-	count = read_int(ver, f)
+	count = read_int(ctx)
 	i = 0
 	while (i < count):
-		t = read_int(ver, f)
+		t = read_int(ctx)
 		payload.v.append(t)
 		i = i + 1
 	return payload
 
-def read_Base(ver, f):
-	t = read_int(ver, f)
+def read_Base(ctx):
+	t = read_int(ctx)
 	if (t == 0):
-		payload = read_Derived1(ver, f)
+		payload = read_Derived1(ctx)
 	if (t == 1):
-		payload = read_Derived2(ver, f)
+		payload = read_Derived2(ctx)
 	return payload
 
-def read_Derived1(ver, f):
+def read_Derived1(ctx):
 	payload = Derived1()
-	payload.i1 = read_int(ver, f)
-	payload.s1 = read_str(ver, f)
+	payload.i1 = read_int(ctx)
+	payload.s1 = read_str(ctx)
 	return payload
 
-def read_Derived2(ver, f):
+def read_Derived2(ctx):
 	payload = Derived2()
-	payload.i1 = read_int(ver, f)
-	payload.s1 = read_str(ver, f)
+	payload.i1 = read_int(ctx)
+	payload.s1 = read_str(ctx)
 	return payload
 
-def read_OuterG(ver, f):
+def read_OuterG(ctx):
 	payload = OuterG()
 	payload.v = []
-	count = read_int(ver, f)
+	count = read_int(ctx)
 	i = 0
 	while (i < count):
-		t = read_Base(ver, f)
+		t = read_Base(ctx)
 		payload.v.append(t)
 		i = i + 1
 	return payload

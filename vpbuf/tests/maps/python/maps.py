@@ -25,18 +25,32 @@ def file_to_buffer(file_name):
 out_dir = "./out/"
 file_ext = ".dat"
 
+# ------------------------------------------------------------------------------
+
 class write_context:
-    def __init__(self):
+    def __init__(self, ver = 1):
         self.stream = amf3.util.BufferedByteStream()
         self.encoder = amf3.Encoder(self.stream)
         self.encoder.string_references = False # disables string caching
+        self.reorder_map = {}
+        self.ver = ver
+        self.set_version(ver)
+
+    def set_version(self, ver):
+        init_reorder_map(self.reorder_map, ver)
 
 class read_context:
-    def __init__(self, test_name):
+    def __init__(self, test_name, ver = 1):
         self.istream = file_to_buffer(out_dir + test_name + file_ext)
         self.decoder = amf3.Decoder(self.istream)
         self.bytes_read = len(self.istream)
         print(test_name, len(self.istream), 'bytes read')
+        self.reorder_map = {}
+        self.ver = ver
+        self.set_version(ver)
+
+    def set_version(self, ver):
+        init_reorder_map(self.reorder_map, ver)
 
 # ------------------------------------------------------------------------------
 # maps_A -
@@ -68,8 +82,8 @@ class Test_maps_A:
             j = self.base + i
             self.o1.lookup[j] = A(j, 'A-' + str(j))
 
-        write_Header(1, wc, self.h1)
-        write_OuterA(1, wc, self.o1)
+        write_Header(wc, self.h1)
+        write_OuterA(wc, self.o1)
 
         out_file = out_dir + self.test_name + file_ext
         self.bytes_written = buffer_to_file(out_file, wc.encoder)
@@ -81,8 +95,8 @@ class Test_maps_A:
     def load(self):
         rc = read_context(self.test_name)
 
-        self.h2 = read_Header(1, rc)
-        self.o2 = read_OuterA(1, rc)
+        self.h2 = read_Header(rc)
+        self.o2 = read_OuterA(rc)
 
         self.bytes_read = rc.bytes_read
 
@@ -134,8 +148,8 @@ class Test_maps_B:
             j = self.base + i
             self.o1.lookup[str(j)] = A(j, 'B-' + str(j))
 
-        write_Header(1, wc, self.h1)
-        write_OuterB(1, wc, self.o1)
+        write_Header(wc, self.h1)
+        write_OuterB(wc, self.o1)
 
         out_file = out_dir + self.test_name + file_ext
         self.bytes_written = buffer_to_file(out_file, wc.encoder)
@@ -147,8 +161,8 @@ class Test_maps_B:
     def load(self):
         rc = read_context(self.test_name)
 
-        self.h2 = read_Header(1, rc)
-        self.o2 = read_OuterB(1, rc)
+        self.h2 = read_Header(rc)
+        self.o2 = read_OuterB(rc)
 
         self.bytes_read = rc.bytes_read
 
@@ -200,8 +214,8 @@ class Test_maps_C:
             j = self.base + i
             self.o1.lookup[j] = 'C-' + str(j)
 
-        write_Header(1, wc, self.h1)
-        write_OuterC(1, wc, self.o1)
+        write_Header(wc, self.h1)
+        write_OuterC(wc, self.o1)
 
         out_file = out_dir + self.test_name + file_ext
         self.bytes_written = buffer_to_file(out_file, wc.encoder)
@@ -213,8 +227,8 @@ class Test_maps_C:
     def load(self):
         rc = read_context(self.test_name)
 
-        self.h2 = read_Header(1, rc)
-        self.o2 = read_OuterC(1, rc)
+        self.h2 = read_Header(rc)
+        self.o2 = read_OuterC(rc)
 
         self.bytes_read = rc.bytes_read
 
@@ -267,8 +281,8 @@ class Test_maps_D:
             j = self.base + i
             self.o1.lookup[str(j)] = D1(j, 'D1-' + str(j))
 
-        write_Header(1, wc, self.h1)
-        write_OuterD(1, wc, self.o1)
+        write_Header(wc, self.h1)
+        write_OuterD(wc, self.o1)
 
         out_file = out_dir + self.test_name + file_ext
         self.bytes_written = buffer_to_file(out_file, wc.encoder)
@@ -280,8 +294,8 @@ class Test_maps_D:
     def load(self):
         rc = read_context(self.test_name)
 
-        self.h2 = read_Header(1, rc)
-        self.o2 = read_OuterD(1, rc)
+        self.h2 = read_Header(rc)
+        self.o2 = read_OuterD(rc)
 
         self.bytes_read = rc.bytes_read
 

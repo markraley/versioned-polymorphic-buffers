@@ -82,8 +82,8 @@ class Test_vector_A:
             j = self.base + i
             self.o1.v.append(A(j, 'A-' + str(j)))
 
-        write_Header(1, wc, self.h1)
-        write_OuterA(1, wc, self.o1)
+        write_Header(wc, self.h1)
+        write_OuterA(wc, self.o1)
 
         out_file = out_dir + self.test_name + file_ext
         self.bytes_written = buffer_to_file(out_file, wc.encoder)
@@ -95,8 +95,8 @@ class Test_vector_A:
     def load(self):
         rc = read_context(self.test_name)
 
-        self.h2 = read_Header(1, rc)
-        self.o2 = read_OuterA(1, rc)
+        self.h2 = read_Header(rc)
+        self.o2 = read_OuterA(rc)
 
         self.bytes_read = rc.bytes_read
 
@@ -150,8 +150,8 @@ class Test_vector_B:
             j = self.base + i
             self.o1.v.append(A(j, 'A-' + str(j)))
 
-        write_Header(1, wc, self.h1)
-        write_OuterB(1, wc, self.o1)
+        write_Header(wc, self.h1)
+        write_OuterB(wc, self.o1)
 
         out_file = out_dir+self.test_name+file_ext
         self.bytes_written = buffer_to_file(out_file, wc.encoder)
@@ -163,8 +163,8 @@ class Test_vector_B:
     def load(self):
         rc = read_context(self.test_name)
 
-        self.h2 = read_Header(1, rc)
-        self.o2 = read_OuterB(1, rc)
+        self.h2 = read_Header(rc)
+        self.o2 = read_OuterB(rc)
 
         self.bytes_read = rc.bytes_read
 
@@ -218,8 +218,8 @@ class Test_vector_C:
             j = self.base + i
             self.o1.v.append('C-' + str(j))
 
-        write_Header(1, wc, self.h1)
-        write_OuterC(1, wc, self.o1)
+        write_Header(wc, self.h1)
+        write_OuterC(wc, self.o1)
 
         out_file = out_dir+self.test_name+file_ext
         self.bytes_written = buffer_to_file(out_file, wc.encoder)
@@ -231,8 +231,8 @@ class Test_vector_C:
     def load(self):
         rc = read_context(self.test_name)
 
-        self.h2 = read_Header(1, rc)
-        self.o2 = read_OuterC(1, rc)
+        self.h2 = read_Header(rc)
+        self.o2 = read_OuterC(rc)
 
         self.bytes_read = rc.bytes_read
 
@@ -285,8 +285,8 @@ class Test_vector_D:
             j = self.base + i
             self.o1.v.append('D-' + str(j))
 
-        write_Header(1, wc, self.h1)
-        write_OuterD(1, wc, self.o1)
+        write_Header(wc, self.h1)
+        write_OuterD(wc, self.o1)
 
         out_file = out_dir+self.test_name+file_ext
         self.bytes_written = buffer_to_file(out_file, wc.encoder)
@@ -298,8 +298,8 @@ class Test_vector_D:
     def load(self):
         rc = read_context(self.test_name)
 
-        self.h2 = read_Header(1, rc)
-        self.o2 = read_OuterD(1, rc)
+        self.h2 = read_Header(rc)
+        self.o2 = read_OuterD(rc)
 
         self.bytes_read = rc.bytes_read
 
@@ -352,8 +352,8 @@ class Test_vector_E:
             j = self.base + i
             self.o1.v.append(j)
 
-        write_Header(1, wc, self.h1)
-        write_OuterE(1, wc, self.o1)
+        write_Header(wc, self.h1)
+        write_OuterE(wc, self.o1)
 
         out_file = out_dir+self.test_name+file_ext
         self.bytes_written = buffer_to_file(out_file, wc.encoder)
@@ -365,8 +365,8 @@ class Test_vector_E:
     def load(self):
         rc = read_context(self.test_name)
 
-        self.h2 = read_Header(1, rc)
-        self.o2 = read_OuterE(1, rc)
+        self.h2 = read_Header(rc)
+        self.o2 = read_OuterE(rc)
 
         self.bytes_read = rc.bytes_read
 
@@ -419,8 +419,8 @@ class Test_vector_F:
             j = self.base + i
             self.o1.v.append(j)
 
-        write_Header(1, wc, self.h1)
-        write_OuterF(1, wc, self.o1)
+        write_Header(wc, self.h1)
+        write_OuterF(wc, self.o1)
 
         out_file = out_dir+self.test_name+file_ext
         self.bytes_written = buffer_to_file(out_file, wc.encoder)
@@ -432,8 +432,8 @@ class Test_vector_F:
     def load(self):
         rc = read_context(self.test_name)
 
-        self.h2 = read_Header(1, rc)
-        self.o2 = read_OuterF(1, rc)
+        self.h2 = read_Header(rc)
+        self.o2 = read_OuterF(rc)
 
         self.bytes_read = rc.bytes_read
 
@@ -488,8 +488,8 @@ class Test_vector_G:
             self.o1.v.append(Derived1(j, 'D1-' + str(j)))
             self.o1.v.append(Derived2(j, 'D2-' + str(j)))
 
-        write_Header(1, wc, self.h1)
-        write_OuterG(1, wc, self.o1)
+        write_Header(wc, self.h1)
+        write_OuterG(wc, self.o1)
 
         out_file = out_dir+self.test_name+file_ext
         self.bytes_written = buffer_to_file(out_file, wc.encoder)
@@ -501,8 +501,8 @@ class Test_vector_G:
     def load(self):
         rc = read_context(self.test_name)
 
-        self.h2 = read_Header(1, rc)
-        self.o2 = read_OuterG(1, rc)
+        self.h2 = read_Header(rc)
+        self.o2 = read_OuterG(rc)
 
         self.bytes_read = rc.bytes_read
 

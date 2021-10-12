@@ -57,7 +57,7 @@ pod_string::serialize_out_py(
    if (!present)
       return;
 
-   ofs <<tab(in)<< "write_str(ver, f, payload." << name << ")\n";
+   ofs <<tab(in)<< "write_str(ctx, payload." << name << ")\n";
 }
 
 void
@@ -72,7 +72,7 @@ pod_string::serialize_in_py(
    if (!present)
       return;
 
-   ofs <<tab(in)<< "payload." << name << " = read_str(ver, f)\n";
+   ofs <<tab(in)<< "payload." << name << " = read_str(ctx)\n";
 }
 
 // --- javascript --------------------------------------------------------------

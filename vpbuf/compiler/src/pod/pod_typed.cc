@@ -77,7 +77,7 @@ pod_typed::serialize_out_py(
    vp_typedefs[payload_index]->get_type_python(t);
 
    ofs <<tab(in)<< "write_" << t
-      <<"(ver, f, payload." << name << ")\n";
+      <<"(ctx, payload." << name << ")\n";
 }
 
 void

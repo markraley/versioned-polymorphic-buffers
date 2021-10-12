@@ -56,7 +56,7 @@ pod_varint::serialize_out_py(
    if (!present)
       return;
 
-   ofs <<tab(in)<<"write_int(ver, f, payload."<< name <<")\n";
+   ofs <<tab(in)<<"write_int(ctx, payload."<< name <<")\n";
 }
 
 void
@@ -71,7 +71,7 @@ pod_varint::serialize_in_py(
    if (!present)
       return;
 
-   ofs <<tab(in)<<"payload."<< name <<" = read_int(ver, f)\n";
+   ofs <<tab(in)<<"payload."<< name <<" = read_int(ctx)\n";
 }
 
 // --- javascript --------------------------------------------------------------

@@ -34,7 +34,7 @@ void vp_typedef_vector::get_type_js(std::string &result)
 
 std::string vp_typedef_vector::format_in_py(const std::string var_name)
 {
-   return var_name + " = read_" + type_name + "(ver, f)\n";
+   return var_name + " = read_" + type_name + "(ctx)\n";
 }
 
 // --- cpp ---------------------------------------------------------------------
@@ -64,8 +64,8 @@ vp_typedef_vector::serialize_in_py(
 
    if (t == "str")
    {
-      ofs << "def read_" << type_name << "(ver, f):\n";
-      ofs << "\treturn read_str(ver, f)\n";
+      ofs << "def read_" << type_name << "(ctx):\n";
+      ofs << "\treturn read_str(ctx)\n";
    }
 
    ofs << "\n\n";

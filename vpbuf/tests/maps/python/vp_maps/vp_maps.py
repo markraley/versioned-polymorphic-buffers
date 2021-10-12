@@ -15,135 +15,135 @@ def get_low_version():
 def init_reorder_map(map, ver):
 	pass
 
-def write_int(ver, wc, payload):
-    wc.encoder.writeInteger(payload) # amf3
+def write_int(ctx, payload):
+    ctx.encoder.writeInteger(payload) # amf3
 
-def write_str(ver, wc, payload):
-    wc.encoder.writeString(payload) # amf3
+def write_str(ctx, payload):
+    ctx.encoder.writeString(payload) # amf3
 
-def write_Header(ver, f, payload):
-	write_int(ver, f, payload.version)
-	write_str(ver, f, payload.test_name)
+def write_Header(ctx, payload):
+	write_int(ctx, payload.version)
+	write_str(ctx, payload.test_name)
 
-def write_A(ver, f, payload):
-	write_int(ver, f, payload.i1)
-	write_str(ver, f, payload.s1)
+def write_A(ctx, payload):
+	write_int(ctx, payload.i1)
+	write_str(ctx, payload.s1)
 
-def write_OuterA(ver, f, payload):
-	write_int(ver, f, len(payload.lookup))
+def write_OuterA(ctx, payload):
+	write_int(ctx, len(payload.lookup))
 	for k, v in iter(payload.lookup.items()):
-		write_int(ver, f, k)
-		write_A(ver, f, v)
+		write_int(ctx, k)
+		write_A(ctx, v)
 
-def write_OuterB(ver, f, payload):
-	write_int(ver, f, len(payload.lookup))
+def write_OuterB(ctx, payload):
+	write_int(ctx, len(payload.lookup))
 	for k, v in iter(payload.lookup.items()):
-		write_str(ver, f, k)
-		write_A(ver, f, v)
+		write_str(ctx, k)
+		write_A(ctx, v)
 
-def write_OuterC(ver, f, payload):
-	write_int(ver, f, len(payload.lookup))
+def write_OuterC(ctx, payload):
+	write_int(ctx, len(payload.lookup))
 	for k, v in iter(payload.lookup.items()):
-		write_int(ver, f, k)
-		write_str(ver, f, v)
+		write_int(ctx, k)
+		write_str(ctx, v)
 
-def write_D1(ver, f, payload):
-	write_A(ver, f, payload.apod)
-	write_int(ver, f, payload.i)
-	write_str(ver, f, payload.s)
-	write_A(ver, f, payload.aref)
+def write_D1(ctx, payload):
+	write_A(ctx, payload.apod)
+	write_int(ctx, payload.i)
+	write_str(ctx, payload.s)
+	write_A(ctx, payload.aref)
 
-def write_OuterD(ver, f, payload):
-	write_int(ver, f, len(payload.lookup))
+def write_OuterD(ctx, payload):
+	write_int(ctx, len(payload.lookup))
 	for k, v in iter(payload.lookup.items()):
-		write_str(ver, f, k)
-		write_D1(ver, f, v)
+		write_str(ctx, k)
+		write_D1(ctx, v)
 
-def read_int(ver, rc):
-   t = rc.decoder.readInteger() # amf3
+def read_int(ctx):
+   t = ctx.decoder.readInteger() # amf3
    assert(t == 4)
-   return rc.decoder.readInteger()
+   return ctx.decoder.readInteger()
 
-def read_str(ver, rc):
-   t = rc.decoder.readInteger() # amf3
+def read_str(ctx):
+   t = ctx.decoder.readInteger() # amf3
    assert(t == 6)
-   return rc.decoder.readString()
+   return ctx.decoder.readString()
 
-def read_Header(ver, f):
+def read_Header(ctx):
 	payload = Header()
-	payload.version = read_int(ver, f)
-	payload.test_name = read_str(ver, f)
+	payload.version = read_int(ctx)
+	payload.test_name = read_str(ctx)
 	return payload
 
-def read_A(ver, f):
+def read_A(ctx):
 	payload = A()
-	payload.i1 = read_int(ver, f)
-	payload.s1 = read_str(ver, f)
+	payload.i1 = read_int(ctx)
+	payload.s1 = read_str(ctx)
 	return payload
 
-def read_OuterA(ver, f):
+def read_OuterA(ctx):
 	payload = OuterA()
 	payload.lookup = {}
-	count = read_int(ver, f)
+	count = read_int(ctx)
 	i = 0
 	while (i < count):
 		k = int()
-		k = read_int(ver, f)
+		k = read_int(ctx)
 		t = A()
-		t = read_A(ver, f)
+		t = read_A(ctx)
 		payload.lookup[k] = t
 		i = i + 1
 
 	return payload
 
-def read_OuterB(ver, f):
+def read_OuterB(ctx):
 	payload = OuterB()
 	payload.lookup = {}
-	count = read_int(ver, f)
+	count = read_int(ctx)
 	i = 0
 	while (i < count):
 		k = str()
-		k = read_str(ver, f)
+		k = read_str(ctx)
 		t = A()
-		t = read_A(ver, f)
+		t = read_A(ctx)
 		payload.lookup[k] = t
 		i = i + 1
 
 	return payload
 
-def read_OuterC(ver, f):
+def read_OuterC(ctx):
 	payload = OuterC()
 	payload.lookup = {}
-	count = read_int(ver, f)
+	count = read_int(ctx)
 	i = 0
 	while (i < count):
 		k = int()
-		k = read_int(ver, f)
+		k = read_int(ctx)
 		t = str()
-		t = read_str(ver, f)
+		t = read_str(ctx)
 		payload.lookup[k] = t
 		i = i + 1
 
 	return payload
 
-def read_D1(ver, f):
+def read_D1(ctx):
 	payload = D1()
-	payload.apod = read_A(ver, f)
-	payload.i = read_int(ver, f)
-	payload.s = read_str(ver, f)
-	payload.aref = read_A(ver, f)
+	payload.apod = read_A(ctx)
+	payload.i = read_int(ctx)
+	payload.s = read_str(ctx)
+	payload.aref = read_A(ctx)
 	return payload
 
-def read_OuterD(ver, f):
+def read_OuterD(ctx):
 	payload = OuterD()
 	payload.lookup = {}
-	count = read_int(ver, f)
+	count = read_int(ctx)
 	i = 0
 	while (i < count):
 		k = str()
-		k = read_str(ver, f)
+		k = read_str(ctx)
 		t = D1()
-		t = read_D1(ver, f)
+		t = read_D1(ctx)
 		payload.lookup[k] = t
 		i = i + 1
 

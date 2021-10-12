@@ -238,15 +238,15 @@ code_version_test_py(
       if (nBegin > nLimit)
          is_present = false;
       else {
-         ofs << "\tif (ver >= " << nBegin << "):\n";
+         ofs << "\tif (ctx.ver >= " << nBegin << "):\n";
          in = 1;
       }
    } else if (nBegin > nBase || nEnd != 0) {
       if (nEnd < nBase || nBegin > nLimit)
          is_present = false;
       else {
-         ofs << "\tif (ver >= "
-            << nBegin << " and ver <= " << nEnd << "):\n";
+         ofs << "\tif (ctx.ver >= "
+            << nBegin << " and ctx.ver <= " << nEnd << "):\n";
          in = 1;
       }
    }

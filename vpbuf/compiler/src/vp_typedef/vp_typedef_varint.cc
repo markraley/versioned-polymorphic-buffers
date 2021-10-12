@@ -28,7 +28,7 @@ vp_typedef_varint::get_type_js(std::string &result)
 std::string
 vp_typedef_varint::format_in_py(const std::string var_name)
 {
-   return var_name + " = read_int(ver, f)\n";
+   return var_name + " = read_int(ctx)\n";
 }
 
 // --- cpp ---------------------------------------------------------------------
@@ -61,10 +61,10 @@ vp_typedef_varint::serialize_out_py(
    TarLang &tar_lang)
 {
 
-   ofs << "def write_int(ver, wc, payload):\n";
+   ofs << "def write_int(ctx, payload):\n";
    ofs <<
 "\
-    wc.encoder.writeInteger(payload) # amf3\n\
+    ctx.encoder.writeInteger(payload) # amf3\n\
 ";
    ofs << "\n";
 }
@@ -76,13 +76,13 @@ vp_typedef_varint::serialize_in_py(
    TypeMap &type_map,
    TarLang &tar_lang)
 {
-   ofs << "def read_int(ver, rc):\n";
+   ofs << "def read_int(ctx):\n";
 
    ofs <<
 "\
-   t = rc.decoder.readInteger() # amf3\n\
+   t = ctx.decoder.readInteger() # amf3\n\
    assert(t == 4)\n\
-   return rc.decoder.readInteger()\n\
+   return ctx.decoder.readInteger()\n\
 ";
 
    ofs << "\n";

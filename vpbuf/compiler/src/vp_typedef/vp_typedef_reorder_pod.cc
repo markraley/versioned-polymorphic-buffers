@@ -45,7 +45,7 @@ vp_typedef_reorder_pod::get_type_js(std::string &result)
 std::string
 vp_typedef_reorder_pod::format_in_py(const std::string var_name)
 {
-   return var_name + " = read_" + type_name + "(ver, f)\n";
+   return var_name + " = read_" + type_name + "(ctx)\n";
 }
 
 void vp_typedef_reorder_pod::gen_cpp_utils(
@@ -404,9 +404,9 @@ vp_typedef_reorder_pod::serialize_out_py(
    if (!this->vrange.overlap(tar_lang.start, tar_lang.end))
       return;
 
-   ofs <<tab(in)<< "def write_"<< type_name <<"(ver, f, payload):\n";
+   ofs <<tab(in)<< "def write_"<< type_name <<"(ctx, payload):\n";
 
-   ofs <<tab(in+1)<< "for i in f.reorder_map['"<< type_name <<"'][1]():\n";
+   ofs <<tab(in+1)<< "for i in ctx.reorder_map['"<< type_name <<"'][1]():\n";
    int k = 0;
    // TODO: replace this with match/case when available
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
@@ -419,7 +419,7 @@ vp_typedef_reorder_pod::serialize_out_py(
       vp_typedef *p = GetVPType(parent_name, type_map);
 
       if (p->parent_name.size() > 0)
-         ofs <<tab(in+1)<< "write_"<< parent_name <<"(ver, f, payload)\n";
+         ofs <<tab(in+1)<< "write_"<< parent_name <<"(ctx, payload)\n";
    }
 
    ofs << "\n";
@@ -438,11 +438,11 @@ vp_typedef_reorder_pod::serialize_in_py(
    if (!this->vrange.overlap(tar_lang.start, tar_lang.end))
       return;
 
-   ofs <<tab(in)<<"def read_"<< type_name <<"(ver, f):\n";
+   ofs <<tab(in)<<"def read_"<< type_name <<"(ctx):\n";
 
    ofs <<tab(in+1)<<"payload = "<< type_name <<"()\n";
 
-   ofs <<tab(in+1)<< "for i in f.reorder_map['"<< type_name <<"'][1]():\n";
+   ofs <<tab(in+1)<< "for i in ctx.reorder_map['"<< type_name <<"'][1]():\n";
    int k = 0;
    // TODO: replace this with match/case when available
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
