@@ -15,11 +15,11 @@ def get_low_version():
 def init_reorder_map(map, ver):
 	pass
 
-def write_int(ctx, payload):
-    ctx.encoder.writeInteger(payload) # amf3
-
 def write_str(ctx, payload):
     ctx.encoder.writeString(payload) # amf3
+
+def write_int(ctx, payload):
+    ctx.encoder.writeInteger(payload) # amf3
 
 def write_Header(ctx, payload):
 	write_int(ctx, payload.version)
@@ -59,15 +59,15 @@ def write_OuterD(ctx, payload):
 		write_str(ctx, k)
 		write_D1(ctx, v)
 
-def read_int(ctx):
-   t = ctx.decoder.readInteger() # amf3
-   assert(t == 4)
-   return ctx.decoder.readInteger()
-
 def read_str(ctx):
    t = ctx.decoder.readInteger() # amf3
    assert(t == 6)
    return ctx.decoder.readString()
+
+def read_int(ctx):
+   t = ctx.decoder.readInteger() # amf3
+   assert(t == 4)
+   return ctx.decoder.readInteger()
 
 def read_Header(ctx):
 	payload = Header()

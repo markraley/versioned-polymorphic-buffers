@@ -10,7 +10,6 @@
 #include "pod_string.h"
 #include "pod_varint.h"
 
-#include "vp_typedef_character.h"
 #include "vp_typedef_map.h"
 #include "vp_typedef_pod.h"
 #include "vp_typedef_reorder_pod.h"
@@ -858,27 +857,16 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
 
    vars.add("string", nvars++);
    vars.add("varint", nvars++);
-   vars.add("character", nvars++);
 
    // Section #2
 
-   {
-      vp_typedef_string *intrinsic_type = new vp_typedef_string();
-      intrinsic_type->type_name = "string";
-      vp_typedefs.push_back(intrinsic_type);
-   }
+   vp_typedefs.push_back(new vp_typedef_string());
+   (*vp_typedefs.rbegin())->type_name = "string";
 
-   {
-      vp_typedef_varint *intrinsic_type = new vp_typedef_varint();
-      intrinsic_type->type_name = "varint";
-      vp_typedefs.push_back(intrinsic_type);
-   }
+   vp_typedefs.push_back(new vp_typedef_varint());
+   (*vp_typedefs.rbegin())->type_name = "varint";
 
-   {
-      vp_typedef_character *intrinsic_type = new vp_typedef_character();
-      intrinsic_type->type_name = "character";
-      vp_typedefs.push_back(intrinsic_type);
-   }
+   // end Sections
 
    identifier = raw[lexeme[alpha >> *(alnum | '_')]];
    quoted_string = lit('"') >> raw[lexeme[+(char_ - '"')]] >> lit('"');

@@ -38,11 +38,11 @@ def get_rlist_A(ver):
 			return [p[2], p[3](get_vlist_A(ver))]
 	return None
 
-def write_int(ctx, payload):
-    ctx.encoder.writeInteger(payload) # amf3
-
 def write_str(ctx, payload):
     ctx.encoder.writeString(payload) # amf3
+
+def write_int(ctx, payload):
+    ctx.encoder.writeInteger(payload) # amf3
 
 def write_Header(ctx, payload):
 	write_int(ctx, payload.version)
@@ -129,15 +129,15 @@ def write_OuterG(ctx, payload):
 		write_Base(ctx, payload.v[i])
 		i = i + 1
 
-def read_int(ctx):
-   t = ctx.decoder.readInteger() # amf3
-   assert(t == 4)
-   return ctx.decoder.readInteger()
-
 def read_str(ctx):
    t = ctx.decoder.readInteger() # amf3
    assert(t == 6)
    return ctx.decoder.readString()
+
+def read_int(ctx):
+   t = ctx.decoder.readInteger() # amf3
+   assert(t == 4)
+   return ctx.decoder.readInteger()
 
 def read_Header(ctx):
 	payload = Header()

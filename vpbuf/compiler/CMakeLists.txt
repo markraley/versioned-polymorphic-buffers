@@ -20,7 +20,6 @@ set(sources
 		${vpbuf_src_dir}/compiler/src/vp_typedef/vp_typedef_vector.cc
 		${vpbuf_src_dir}/compiler/src/vp_typedef/vp_typedef_poly.cc
 		${vpbuf_src_dir}/compiler/src/vp_typedef/vp_typedef_string.cc
-		${vpbuf_src_dir}/compiler/src/vp_typedef/vp_typedef_character.cc
 	)
 
 add_executable(vpc ${sources})

@@ -44,11 +44,32 @@ void vp_typedef_string::serialize_in_cpp(
 
 // -----------------------------------------------------------------------------
 
-void vp_typedef_string::serialize_out_py(
-   std::ofstream &ofs, int in, TypeMap &type_map, TarLang &) {}
+void
+vp_typedef_string::serialize_out_py(
+   std::ofstream &ofs, int in, TypeMap &type_map, TarLang &)
+{
+   ofs << "def write_str(ctx, payload):\n";
+   ofs <<
+"\
+    ctx.encoder.writeString(payload) # amf3\n\
+";
+   ofs << "\n";
+}
 
-void vp_typedef_string::serialize_in_py(
-   std::ofstream &ofs, int in, TypeMap &type_map, TarLang &) {}
+void
+vp_typedef_string::serialize_in_py(
+   std::ofstream &ofs, int in, TypeMap &type_map, TarLang &)
+{
+   ofs << "def read_str(ctx):\n";
+   ofs <<
+"\
+   t = ctx.decoder.readInteger() # amf3\n\
+   assert(t == 6)\n\
+   return ctx.decoder.readString()\n\
+";
+
+   ofs << "\n";
+}
 
 // -----------------------------------------------------------------------------
 
