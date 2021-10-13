@@ -93,7 +93,7 @@ pod_string::serialize_out_js(
       in++;
 
    ofs <<tab(in)
-      << "wc.write_String(payload." << name << ");\n";
+      << "ctx.write_String(payload." << name << ");\n";
 }
 
 void
@@ -112,7 +112,7 @@ pod_string::serialize_in_js(
       in++;
 
    ofs <<tab(in)
-      << "payload." << name << " = rc.read_String();\n";
+      << "payload." << name << " = ctx.read_String();\n";
 }
 
 std::string

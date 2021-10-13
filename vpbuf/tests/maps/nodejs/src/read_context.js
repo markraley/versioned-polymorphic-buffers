@@ -5,6 +5,7 @@ const assert = require('chai').assert;
 
 (function() {
     var rc = {
+        ver: 1,
         cur_pos: 0,
         dv: new DataView(new ArrayBuffer()),
 

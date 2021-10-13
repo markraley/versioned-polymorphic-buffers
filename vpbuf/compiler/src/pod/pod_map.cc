@@ -171,13 +171,13 @@ pod_map::serialize_out_js(
    vp_key->get_type_js(local_key_type);
    vp_typedefs[payload_index]->get_type_js(payload_type);
 
-   ofs <<tab(in)<<"wc.write_Integer(Object.keys(payload."
+   ofs <<tab(in)<<"ctx.write_Integer(Object.keys(payload."
                   << name <<").length)\n";
 
    ofs <<tab(in)<<"for (const [k, v] of Object.entries(payload."
                   << name <<")) {\n";
-   ofs <<tab(in+1)<<"this.write_" << local_key_type << "(ver, wc, k)\n";
-   ofs <<tab(in+1)<<"this.write_" << payload_type << "(ver, wc, v)\n";
+   ofs <<tab(in+1)<<"this.write_" << local_key_type << "(ctx, k)\n";
+   ofs <<tab(in+1)<<"this.write_" << payload_type << "(ctx, v)\n";
    ofs <<tab(in)<<"}\n";
 }
 
@@ -203,7 +203,7 @@ pod_map::serialize_in_js(
    vp_typedefs[payload_index]->get_type_js(payload_type);
 
    ofs <<tab(in)<< "payload." << name << " = {}\n";
-   ofs <<tab(in)<< "var count = rc.read_Integer()\n";
+   ofs <<tab(in)<< "var count = ctx.read_Integer()\n";
    ofs <<tab(in)<< "for (var i = 0; i < count; i++) {\n";
    ofs <<tab(in+1)<< vp_key->format_in_js("k");
    ofs <<tab(in+1)<< vp_typedefs[payload_index]->format_in_js("t");

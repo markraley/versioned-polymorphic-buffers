@@ -116,7 +116,7 @@ pod_typed::serialize_out_js(
 
    vp_typedefs[payload_index]->get_type_js(t);
 
-   ofs <<tab(in)<<"this.write_"<< t <<"(ver, wc, payload."<< name <<")\n";
+   ofs <<tab(in)<<"this.write_"<< t <<"(ctx, payload."<< name <<")\n";
 }
 
 void
@@ -137,7 +137,7 @@ pod_typed::serialize_in_js(
 
    vp_typedefs[payload_index]->get_type_js(t);
 
-   ofs <<tab(in)<<"payload."<< name <<" = this.read_"<< t <<"(ver, rc)\n";
+   ofs <<tab(in)<<"payload."<< name <<" = this.read_"<< t <<"(ctx)\n";
 }
 
 std::string

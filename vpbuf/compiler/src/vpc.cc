@@ -275,7 +275,7 @@ code_version_test_js(
       if (nBegin > nLimit)
          present = false;
       else {
-         ofs << tab(in) << "if (ver >= " << nBegin << ")\n";
+         ofs << tab(in) << "if (ctx.ver >= " << nBegin << ")\n";
          code_emitted = true;
       }
    } else if (nBegin > nBase || nEnd != 0) {
@@ -284,8 +284,8 @@ code_version_test_js(
       else if (nEnd == nLimit && nBegin == nBase)
          present = true;
       else {
-         ofs << tab(in) << "if (ver >= "
-            << nBegin << " && ver <= " << nEnd << ")\n";
+         ofs << tab(in) << "if (ctx.ver >= "
+            << nBegin << " && ctx.ver <= " << nEnd << ")\n";
          code_emitted = true;
       }
    }

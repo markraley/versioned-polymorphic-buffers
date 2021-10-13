@@ -91,7 +91,7 @@ pod_varint::serialize_out_js(
    if (code_emitted)
       in++;
 
-   ofs <<tab(in)<<"wc.write_Integer(payload." << name <<");\n";
+   ofs <<tab(in)<<"ctx.write_Integer(payload." << name <<");\n";
 
 }
 
@@ -110,7 +110,7 @@ pod_varint::serialize_in_js(
    if (code_emitted)
       in++;
 
-   ofs <<tab(in)<<"payload."<< name <<" = rc.read_Integer();\n";
+   ofs <<tab(in)<<"payload."<< name <<" = ctx.read_Integer();\n";
 }
 
 std::string pod_varint::declare_js()

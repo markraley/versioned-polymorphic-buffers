@@ -97,8 +97,8 @@ vp_typedef_varint::serialize_out_js(
    TypeMap &type_map,
    TarLang &tar_lang)
 {
-   ofs <<tab(in)<< "write_Integer: function(ver, wc, payload) {\n";
-   ofs <<tab(in+1)<< "wc.write_Integer(payload);\n";
+   ofs <<tab(in)<< "write_Integer: function(ctx, payload) {\n";
+   ofs <<tab(in+1)<< "ctx.write_Integer(payload);\n";
    ofs <<tab(in)<< "},\n\n";
 }
 
@@ -109,14 +109,14 @@ vp_typedef_varint::serialize_in_js(
    TypeMap &type_map,
    TarLang &tar_lang)
 {
-   ofs <<tab(in)<< "read_Integer: function(ver, rc) {\n";
-   ofs <<tab(in+1)<< "return rc.read_Integer();\n";
+   ofs <<tab(in)<< "read_Integer: function(ctx) {\n";
+   ofs <<tab(in+1)<< "return ctx.read_Integer();\n";
    ofs <<tab(in)<< "},\n\n";
 }
 
 std::string vp_typedef_varint::format_in_js(const std::string var_name)
 {
-   return "var " + var_name + " = rc.read_Integer()\n";
+   return "var " + var_name + " = ctx.read_Integer()\n";
 }
 
 void vp_typedef_varint::add_pod_item(pod_item *) {};

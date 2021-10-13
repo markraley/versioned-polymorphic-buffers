@@ -39,8 +39,8 @@ const out_dir = './out/';
 
             write_context.init(1);
 
-            vp.write_Header(1, write_context, this.h);
-            vp.write_OuterA(1, write_context, this.g);
+            vp.write_Header(write_context, this.h);
+            vp.write_OuterA(write_context, this.g);
 
             bytes_out = write_context.write_File(out_dir
                                                     + this.test_name + '.dat');
@@ -51,8 +51,8 @@ const out_dir = './out/';
         on_read_complete: function(data) {
             read_context.init(1, data);
 
-            Test_vectors_A.hh = vp.read_Header(1, read_context);
-            Test_vectors_A.gg = vp.read_OuterA(1, read_context);
+            Test_vectors_A.hh = vp.read_Header(read_context);
+            Test_vectors_A.gg = vp.read_OuterA(read_context);
 
             console.log(Test_vectors_A.test_name, data.length, 'bytes read');
 
@@ -99,8 +99,8 @@ const out_dir = './out/';
 
             write_context.init(1);
 
-            vp.write_Header(1, write_context, this.h);
-            vp.write_OuterB(1, write_context, this.g);
+            vp.write_Header(write_context, this.h);
+            vp.write_OuterB(write_context, this.g);
 
             bytes_out = write_context.write_File(out_dir
                                                     + this.test_name + '.dat');
@@ -111,8 +111,8 @@ const out_dir = './out/';
         on_read_complete: function(data) {
             read_context.init(1, data);
 
-            Test_vectors_B.hh = vp.read_Header(1, read_context);
-            Test_vectors_B.gg = vp.read_OuterB(1, read_context);
+            Test_vectors_B.hh = vp.read_Header(read_context);
+            Test_vectors_B.gg = vp.read_OuterB(read_context);
 
             console.log(Test_vectors_B.test_name, data.length, 'bytes read');
 
@@ -157,8 +157,8 @@ const out_dir = './out/';
 
             write_context.init(1);
 
-            vp.write_Header(1, write_context, this.h);
-            vp.write_OuterC(1, write_context, this.g);
+            vp.write_Header(write_context, this.h);
+            vp.write_OuterC(write_context, this.g);
 
             bytes_out = write_context.write_File(out_dir
                                                     + this.test_name + '.dat');
@@ -169,8 +169,8 @@ const out_dir = './out/';
         on_read_complete: function(data) {
             read_context.init(1, data);
 
-            Test_vectors_C.hh = vp.read_Header(1, read_context);
-            Test_vectors_C.gg = vp.read_OuterC(1, read_context);
+            Test_vectors_C.hh = vp.read_Header(read_context);
+            Test_vectors_C.gg = vp.read_OuterC(read_context);
 
             console.log(Test_vectors_C.test_name, data.length, 'bytes read');
 
@@ -215,8 +215,8 @@ const out_dir = './out/';
 
             write_context.init(1);
 
-            vp.write_Header(1, write_context, this.h);
-            vp.write_OuterD(1, write_context, this.g);
+            vp.write_Header(write_context, this.h);
+            vp.write_OuterD(write_context, this.g);
 
             bytes_out = write_context.write_File(out_dir
                                                     + this.test_name + '.dat');
@@ -227,8 +227,8 @@ const out_dir = './out/';
         on_read_complete: function(data) {
             read_context.init(1, data);
 
-            Test_vectors_D.hh = vp.read_Header(1, read_context);
-            Test_vectors_D.gg = vp.read_OuterD(1, read_context);
+            Test_vectors_D.hh = vp.read_Header(read_context);
+            Test_vectors_D.gg = vp.read_OuterD(read_context);
 
             console.log(Test_vectors_D.test_name, data.length, 'bytes read');
 
@@ -273,8 +273,8 @@ const out_dir = './out/';
 
             write_context.init(1);
 
-            vp.write_Header(1, write_context, this.h);
-            vp.write_OuterE(1, write_context, this.g);
+            vp.write_Header(write_context, this.h);
+            vp.write_OuterE(write_context, this.g);
 
             bytes_out = write_context.write_File(out_dir
                                                     + this.test_name + '.dat');
@@ -285,8 +285,8 @@ const out_dir = './out/';
         on_read_complete: function(data) {
             read_context.init(1, data);
 
-            Test_vectors_E.hh = vp.read_Header(1, read_context);
-            Test_vectors_E.gg = vp.read_OuterE(1, read_context);
+            Test_vectors_E.hh = vp.read_Header(read_context);
+            Test_vectors_E.gg = vp.read_OuterE(read_context);
 
             console.log(Test_vectors_E.test_name, data.length, 'bytes read');
 
@@ -331,8 +331,8 @@ const out_dir = './out/';
 
             write_context.init(1);
 
-            vp.write_Header(1, write_context, this.h);
-            vp.write_OuterF(1, write_context, this.g);
+            vp.write_Header(write_context, this.h);
+            vp.write_OuterF(write_context, this.g);
 
             bytes_out = write_context.write_File(out_dir
                                                     + this.test_name + '.dat');
@@ -343,8 +343,8 @@ const out_dir = './out/';
         on_read_complete: function(data) {
             read_context.init(1, data);
 
-            Test_vectors_F.hh = vp.read_Header(1, read_context);
-            Test_vectors_F.gg = vp.read_OuterF(1, read_context);
+            Test_vectors_F.hh = vp.read_Header(read_context);
+            Test_vectors_F.gg = vp.read_OuterF(read_context);
 
             console.log(Test_vectors_F.test_name, data.length, 'bytes read');
 
@@ -390,8 +390,8 @@ const out_dir = './out/';
 
             write_context.init(1);
 
-            vp.write_Header(1, write_context, this.h);
-            vp.write_OuterG(1, write_context, this.g);
+            vp.write_Header(write_context, this.h);
+            vp.write_OuterG(write_context, this.g);
 
             bytes_out = write_context.write_File(out_dir
                                                     + this.test_name + '.dat');
@@ -402,8 +402,8 @@ const out_dir = './out/';
         on_read_complete: function(data) {
             read_context.init(1, data);
 
-            Test_vectors_G.hh = vp.read_Header(1, read_context);
-            Test_vectors_G.gg = vp.read_OuterG(1, read_context);
+            Test_vectors_G.hh = vp.read_Header(read_context);
+            Test_vectors_G.gg = vp.read_OuterG(read_context);
 
             console.log(Test_vectors_G.test_name, data.length, 'bytes read');
 

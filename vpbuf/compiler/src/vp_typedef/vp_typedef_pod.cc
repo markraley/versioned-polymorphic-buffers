@@ -190,7 +190,7 @@ vp_typedef_pod::serialize_out_js(
    if (!this->vrange.overlap(tar_lang.start, tar_lang.end))
       return;
 
-   ofs <<tab(in)<<"write_"<< type_name <<": function(ver, wc, payload) {\n";
+   ofs <<tab(in)<<"write_"<< type_name <<": function(ctx, payload) {\n";
 
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
       (*jj)->serialize_out_js(ofs, in + 1, type_map, tar_lang);
@@ -200,7 +200,7 @@ vp_typedef_pod::serialize_out_js(
       vp_typedef *p = GetVPType(parent_name, type_map);
 
       if (p->parent_name.size() > 0)
-         ofs <<tab(in+1)<< "this.write_" << parent_name << "(ver, wc, payload)\n";
+         ofs <<tab(in+1)<< "this.write_" << parent_name << "(ctx, payload)\n";
    }
 
    ofs << tab(in) << "},\n\n";
@@ -219,7 +219,7 @@ vp_typedef_pod::serialize_in_js(
    if (!this->vrange.overlap(tar_lang.start, tar_lang.end))
       return;
 
-   ofs <<tab(in)<< "read_"<< type_name <<": function(ver, rc) {\n";
+   ofs <<tab(in)<< "read_"<< type_name <<": function(ctx) {\n";
 
    ofs <<tab(in+1) <<"var payload = new this.factory." << type_name << "();\n";
 
@@ -234,7 +234,7 @@ vp_typedef_pod::serialize_in_js(
 string
 vp_typedef_pod::format_in_js(const string var_name)
 {
-   return "var " + var_name + " = this.read_" + type_name + "(ver, rc)\n";
+   return "var " + var_name + " = this.read_" + type_name + "(ctx)\n";
 }
 
 // ----------------------------------------------------------------------------

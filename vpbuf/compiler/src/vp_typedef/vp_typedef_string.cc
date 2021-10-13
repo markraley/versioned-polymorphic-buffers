@@ -78,8 +78,8 @@ vp_typedef_string::serialize_out_js(
    std::ofstream &ofs, int in, TypeMap &type_map, TarLang &)
 {
 
-   ofs <<tab(in)<< "write_String: function(ver, wc, payload) {\n";
-   ofs <<tab(in+1)<< "wc.write_String(payload);\n";
+   ofs <<tab(in)<< "write_String: function(ctx, payload) {\n";
+   ofs <<tab(in+1)<< "ctx.write_String(payload);\n";
    ofs <<tab(in)<< "},\n\n";
 }
 
@@ -87,8 +87,8 @@ void
 vp_typedef_string::serialize_in_js(
    std::ofstream &ofs, int in, TypeMap &type_map, TarLang &)
 {
-   ofs <<tab(in)<< "read_String: function(ver, rc) {\n";
-   ofs <<tab(in+1)<< "return rc.read_String();\n";
+   ofs <<tab(in)<< "read_String: function(ctx) {\n";
+   ofs <<tab(in+1)<< "return ctx.read_String();\n";
    ofs <<tab(in)<< "},\n\n";
 }
 
@@ -97,7 +97,7 @@ vp_typedef_string::serialize_in_js(
 std::string
 vp_typedef_string::format_in_js(const std::string var_name)
 {
-   return "var " + var_name + " = this.read_String(ver, rc)\n";
+   return "var " + var_name + " = this.read_String(ctx)\n";
 }
 
 void vp_typedef_string::add_pod_item(pod_item *) {};

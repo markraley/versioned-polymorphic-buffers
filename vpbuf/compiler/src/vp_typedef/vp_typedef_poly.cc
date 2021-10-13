@@ -211,7 +211,7 @@ vp_typedef_poly::serialize_out_js(
    if (!this->vrange.overlap(tar_lang.start, tar_lang.end))
       return;
 
-   ofs <<tab(in)<<"write_"<< type_name <<": function(ver, wc, payload) {\n";
+   ofs <<tab(in)<<"write_"<< type_name <<": function(ctx, payload) {\n";
 
    if (parent_name.size() == 0) {
       Terminals terms;
@@ -225,10 +225,10 @@ vp_typedef_poly::serialize_out_js(
 
          size_t k = terms[i].layers.size() - 1;
          for (size_t j = 0;  j < terms[i].layers.size(); j++, k--)
-            ofs << tab(in+2) <<"wc.write_Integer("<< terms[i].layers[k] <<")\n";
+            ofs << tab(in+2) <<"ctx.write_Integer("<< terms[i].layers[k] <<")\n";
 
          ofs << tab(in+2) << "this.write_" << terms[i].name
-                  << "(ver, wc, payload)\n";
+                  << "(ctx, payload)\n";
          ofs << tab(in+1) << "}\n";
 
       }
@@ -254,15 +254,15 @@ vp_typedef_poly::serialize_in_js(
    if (!this->vrange.overlap(tar_lang.start, tar_lang.end))
       return;
 
-   ofs <<tab(in)<< "read_"<< type_name <<": function(ver, rc) {\n";
+   ofs <<tab(in)<< "read_"<< type_name <<": function(ctx) {\n";
 
-   ofs <<tab(in+1)<< "var t = rc.read_Integer(ver, rc)\n";
+   ofs <<tab(in+1)<< "var t = ctx.read_Integer(ctx)\n";
    ofs << tab(in+1) << "var payload;\n";
 
    for (size_t i = 0; i < polys.size() ; i++) {
       ofs <<tab(in+1)<< "if (t == " << i << ") {\n";
       ofs <<tab(in+2) << "payload = this.read_" << polys[i]
-         << "(ver, rc)\n";
+         << "(ctx)\n";
       ofs <<tab(in+1)<< "}\n";
    }
 

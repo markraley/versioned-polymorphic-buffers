@@ -39,8 +39,8 @@ const out_dir = './out/';
             }
 
             write_context.buf_arr = [];
-            vp.write_Header(1, write_context, this.h);
-            vp.write_OuterA(1, write_context, this.a);
+            vp.write_Header(write_context, this.h);
+            vp.write_OuterA(write_context, this.a);
 
             bytes_out = write_context.write_File(out_dir
                                                     + this.test_name + '.dat');
@@ -52,8 +52,8 @@ const out_dir = './out/';
             read_context.dv = new DataView(tools.toArrayBuffer(data));
             read_context.cur_pos = 0;
 
-            Test_maps_A.hh = vp.read_Header(1, read_context);
-            Test_maps_A.aa = vp.read_OuterA(1, read_context);
+            Test_maps_A.hh = vp.read_Header(read_context);
+            Test_maps_A.aa = vp.read_OuterA(read_context);
 
             console.log(Test_maps_A.test_name, data.length, 'bytes read');
 
@@ -97,8 +97,8 @@ const out_dir = './out/';
             }
 
             write_context.buf_arr = [];
-            vp.write_Header(1, write_context, this.h);
-            vp.write_OuterB(1, write_context, this.b);
+            vp.write_Header(write_context, this.h);
+            vp.write_OuterB(write_context, this.b);
 
             bytes_out = write_context.write_File(out_dir
                                                     + this.test_name + '.dat');
@@ -110,8 +110,8 @@ const out_dir = './out/';
             read_context.dv = new DataView(tools.toArrayBuffer(data));
             read_context.cur_pos = 0;
 
-            Test_maps_B.hh = vp.read_Header(1, read_context);
-            Test_maps_B.bb = vp.read_OuterB(1, read_context);
+            Test_maps_B.hh = vp.read_Header(read_context);
+            Test_maps_B.bb = vp.read_OuterB(read_context);
 
             console.log(Test_maps_B.test_name, data.length, 'bytes read');
 
@@ -155,8 +155,8 @@ const out_dir = './out/';
             }
 
             write_context.buf_arr = [];
-            vp.write_Header(1, write_context, this.h);
-            vp.write_OuterC(1, write_context, this.c);
+            vp.write_Header(write_context, this.h);
+            vp.write_OuterC(write_context, this.c);
 
             bytes_out = write_context.write_File(out_dir
                                                     + this.test_name + '.dat');
@@ -168,8 +168,8 @@ const out_dir = './out/';
             read_context.dv = new DataView(tools.toArrayBuffer(data));
             read_context.cur_pos = 0;
 
-            Test_map_C.hh = vp.read_Header(1, read_context);
-            Test_map_C.cc = vp.read_OuterC(1, read_context);
+            Test_map_C.hh = vp.read_Header(read_context);
+            Test_map_C.cc = vp.read_OuterC(read_context);
 
             console.log(Test_map_C.test_name, data.length, 'bytes read');
 
@@ -213,8 +213,8 @@ const out_dir = './out/';
             }
 
             write_context.buf_arr = [];
-            vp.write_Header(1, write_context, this.h);
-            vp.write_OuterD(1, write_context, this.b);
+            vp.write_Header(write_context, this.h);
+            vp.write_OuterD(write_context, this.b);
 
             bytes_out = write_context.write_File(out_dir
                                                     + this.test_name + '.dat');
@@ -226,8 +226,8 @@ const out_dir = './out/';
             read_context.dv = new DataView(tools.toArrayBuffer(data));
             read_context.cur_pos = 0;
 
-            Test_maps_D.hh = vp.read_Header(1, read_context);
-            Test_maps_D.bb = vp.read_OuterD(1, read_context);
+            Test_maps_D.hh = vp.read_Header(read_context);
+            Test_maps_D.bb = vp.read_OuterD(read_context);
 
             console.log(Test_maps_D.test_name, data.length, 'bytes read');
 

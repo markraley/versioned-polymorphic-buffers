@@ -8,6 +8,7 @@ const tools = require('./tools');
 
 (function() {
     var wc = {
+        ver: 1,
         buf_arr: [],
         _write_Integer: function(i) {
 //          console.log('writing i', i);

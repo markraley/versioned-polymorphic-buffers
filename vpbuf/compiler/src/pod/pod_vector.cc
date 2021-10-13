@@ -156,10 +156,10 @@ pod_vector::serialize_out_js(
    std::string vec_type, type_payload;
    vp_typedefs[payload_index]->get_type_js(vec_type);
 
-   ofs <<tab(in)<<"wc.write_Integer(payload."<< name <<".length);\n"
+   ofs <<tab(in)<<"ctx.write_Integer(payload."<< name <<".length);\n"
       <<tab(in)<<"for (var i = 0; i < payload."<< name <<".length; i++)\n"
       <<tab(in+1)<<"this.write_"<< vec_type
-                        <<"(ver, wc, payload."<< name <<"[i]);\n";
+                        <<"(ctx, payload."<< name <<"[i]);\n";
 }
 
 void
@@ -182,9 +182,9 @@ pod_vector::serialize_in_js(
    std::string t;
 
    ofs <<
-      tab(in)<< "var count = rc.read_Integer();\n"
+      tab(in)<< "var count = ctx.read_Integer();\n"
       <<tab(in)<< "for (var i = 0; i < count; i++) {\n"
-      <<tab(in+1)<< "var c = this.read_" << vec_type << "(ver, rc);\n"
+      <<tab(in+1)<< "var c = this.read_" << vec_type << "(ctx);\n"
       <<tab(in+1)<< "payload." << name << ".push(c);\n"
       <<tab(in)<< "}\n";
 }

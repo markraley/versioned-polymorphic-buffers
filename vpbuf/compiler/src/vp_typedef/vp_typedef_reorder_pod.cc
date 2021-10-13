@@ -470,9 +470,9 @@ vp_typedef_reorder_pod::serialize_out_js(
    if (!this->vrange.overlap(tar_lang.start, tar_lang.end))
       return;
 
-   ofs <<tab(in)<<"write_"<< type_name <<": function(ver, wc, payload) {\n";
+   ofs <<tab(in)<<"write_"<< type_name <<": function(ctx, payload) {\n";
 
-   ofs <<tab(in+1)<< "var v = wc.reorder_map['"<< type_name <<"'][1]();\n";
+   ofs <<tab(in+1)<< "var v = ctx.reorder_map['"<< type_name <<"'][1]();\n";
    ofs <<tab(in+1)<< "for (var i = 0; i < v.length; i++)\n";
    ofs <<tab(in+2)<< "switch(v[i]) {\n";
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
@@ -488,7 +488,7 @@ vp_typedef_reorder_pod::serialize_out_js(
 
       if (p->parent_name.size() > 0)
          ofs <<tab(in+1)<< "this.write_"
-                           << parent_name << "(ver, wc, payload)\n";
+                           << parent_name << "(ctx, payload)\n";
    }
 
    ofs << tab(in) << "},\n\n";
@@ -508,11 +508,11 @@ vp_typedef_reorder_pod::serialize_in_js(
    if (!this->vrange.overlap(tar_lang.start, tar_lang.end))
       return;
 
-   ofs <<tab(in)<< "read_"<< type_name <<": function(ver, rc) {\n";
+   ofs <<tab(in)<< "read_"<< type_name <<": function(ctx) {\n";
 
    ofs <<tab(in+1) <<"var payload = new this.factory." << type_name << "();\n";
 
-   ofs <<tab(in+1)<< "var v = rc.reorder_map['"<< type_name <<"'][1]();\n";
+   ofs <<tab(in+1)<< "var v = ctx.reorder_map['"<< type_name <<"'][1]();\n";
    ofs <<tab(in+1)<< "for (var i = 0; i < v.length; i++)\n";
    ofs <<tab(in+2)<< "switch(v[i]) {\n";
 
@@ -531,7 +531,7 @@ vp_typedef_reorder_pod::serialize_in_js(
 string
 vp_typedef_reorder_pod::format_in_js(const string var_name)
 {
-   return "var " + var_name + " = this.read_" + type_name + "(ver, rc)\n";
+   return "var " + var_name + " = this.read_" + type_name + "(ctx)\n";
 }
 
 // ----------------------------------------------------------------------------

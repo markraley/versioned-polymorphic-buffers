@@ -12,8 +12,10 @@ const tools = require('./tools');
     var wc = {
         buf_arr: [],
         reorder_map: {},
+        ver: 1,
 
         init: function(ver) {
+            this.ver = ver;
             this.buf_arr = [];
             vp.init_reorder_map(this.reorder_map, ver);
         },

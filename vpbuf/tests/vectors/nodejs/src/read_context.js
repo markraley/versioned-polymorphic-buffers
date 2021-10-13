@@ -9,11 +9,13 @@ var tools = require('./tools');
 
 (function() {
     var rc = {
+        ver: 1,
         cur_pos: 0,
         dv: new DataView(new ArrayBuffer()),
         reorder_map: {},
 
         init: function(ver, data) {
+            this.ver = ver;
             this.dv = new DataView(tools.toArrayBuffer(data));
             this.cur_pos = 0;
             vp.init_reorder_map(this.reorder_map, ver);
