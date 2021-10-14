@@ -49,7 +49,7 @@ const out_dir = './out/';
         },
 
         on_read_complete: function(data) {
-            read_context.init(1, data);
+            read_context.init(data, 1);
 
             Test_vectors_A.hh = vp.read_Header(read_context);
             Test_vectors_A.gg = vp.read_OuterA(read_context);
@@ -109,7 +109,7 @@ const out_dir = './out/';
         },
 
         on_read_complete: function(data) {
-            read_context.init(1, data);
+            read_context.init(data, 1);
 
             Test_vectors_B.hh = vp.read_Header(read_context);
             Test_vectors_B.gg = vp.read_OuterB(read_context);
@@ -167,7 +167,7 @@ const out_dir = './out/';
         },
 
         on_read_complete: function(data) {
-            read_context.init(1, data);
+            read_context.init(data, 1);
 
             Test_vectors_C.hh = vp.read_Header(read_context);
             Test_vectors_C.gg = vp.read_OuterC(read_context);
@@ -225,7 +225,7 @@ const out_dir = './out/';
         },
 
         on_read_complete: function(data) {
-            read_context.init(1, data);
+            read_context.init(data, 1);
 
             Test_vectors_D.hh = vp.read_Header(read_context);
             Test_vectors_D.gg = vp.read_OuterD(read_context);
@@ -283,7 +283,7 @@ const out_dir = './out/';
         },
 
         on_read_complete: function(data) {
-            read_context.init(1, data);
+            read_context.init(data, 1);
 
             Test_vectors_E.hh = vp.read_Header(read_context);
             Test_vectors_E.gg = vp.read_OuterE(read_context);
@@ -341,7 +341,7 @@ const out_dir = './out/';
         },
 
         on_read_complete: function(data) {
-            read_context.init(1, data);
+            read_context.init(data, 1);
 
             Test_vectors_F.hh = vp.read_Header(read_context);
             Test_vectors_F.gg = vp.read_OuterF(read_context);
@@ -400,7 +400,7 @@ const out_dir = './out/';
         },
 
         on_read_complete: function(data) {
-            read_context.init(1, data);
+            read_context.init(data, 1);
 
             Test_vectors_G.hh = vp.read_Header(read_context);
             Test_vectors_G.gg = vp.read_OuterG(read_context);

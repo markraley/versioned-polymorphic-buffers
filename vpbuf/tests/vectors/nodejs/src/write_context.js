@@ -15,13 +15,16 @@ const tools = require('./tools');
         ver: 1,
 
         init: function(ver) {
-            this.ver = ver;
             this.buf_arr = [];
+            this.set_version(ver);
+        },
+
+        set_version: function(ver) {
+            this.ver = ver;
             vp.init_reorder_map(this.reorder_map, ver);
         },
 
         _write_Integer: function(i) {
-//          console.log('writing i', i);
             if (i >= 0 && i <= 0x7F) {
                 this.buf_arr.push(new Uint8Array([i]));
             } else if (i > 0x7F && i <= 0x3FFF) {

@@ -14,10 +14,14 @@ var tools = require('./tools');
         dv: new DataView(new ArrayBuffer()),
         reorder_map: {},
 
-        init: function(ver, data) {
-            this.ver = ver;
+        init: function(data, ver = 1) {
             this.dv = new DataView(tools.toArrayBuffer(data));
             this.cur_pos = 0;
+            this.set_version(ver);
+        },
+
+        set_version: function(ver) {
+            this.ver = ver;
             vp.init_reorder_map(this.reorder_map, ver);
         },
 
