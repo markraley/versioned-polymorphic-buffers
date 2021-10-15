@@ -101,7 +101,3 @@ vp_typedef_string::format_in_js(const std::string var_name)
 }
 
 void vp_typedef_string::add_pod_item(pod_item *) {};
-void vp_typedef_string::add_pod_item_range(
-   unsigned int nBegin, unsigned int nEnd) {};
-
-

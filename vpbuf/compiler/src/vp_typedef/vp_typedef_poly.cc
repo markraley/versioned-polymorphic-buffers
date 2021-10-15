@@ -335,7 +335,6 @@ void vp_typedef_poly::add_pod_item(pod_item *new_item)
    pod_items.push_back(new_item);
 }
 
-// ## add_pod_item_range
 void vp_typedef_poly::add_pod_item_range(unsigned int nBegin, unsigned int nEnd)
 {
    PodItems::reverse_iterator jj;

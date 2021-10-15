@@ -24,7 +24,7 @@ struct vp_typedef_poly : public vp_typedef
    virtual void get_type_js(std::string &result);
 
    virtual void add_pod_item(pod_item *);
-   virtual void add_pod_item_range(unsigned int nBegin, unsigned int nEnd);
+   void add_pod_item_range(unsigned int nBegin, unsigned int nEnd);
 
    void add_subclass(const std::string &t);
    bool is_terminal();
