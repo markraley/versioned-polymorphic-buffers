@@ -72,8 +72,10 @@ module.exports = {
         var v = vp.get_high_version()
         var h = new this.Header(v, 'VP_UNO')
 
-        vp.write_Header(1, write_context, h) // always version 1
-        vp.write_Deck(v, write_context, deck)
+        vp.write_Header(write_context, h) // always version 1
+
+        write_context.set_version(v)
+        vp.write_Deck(write_context, deck)
 
         var bytes_out = write_context.write_File(file_name)
         console.log('write: ' + file_name + ', version=' + v
@@ -108,14 +110,16 @@ module.exports = {
         read_context.dv = new DataView(this.context.toArrayBuffer(data));
         read_context.cur_pos = 0;
 
-        this.hh = vp.read_Header(1, read_context) // always version 1
+        this.hh = vp.read_Header(read_context) // always version 1
 
         if (!vp.version_check(this.hh.version)) {
             console.log('version mismatch')
             return
         } else {
             var v = this.hh.version
-            this.deck = vp.read_Deck(v, read_context)
+
+            read_context.set_version(v)
+            this.deck = vp.read_Deck(read_context)
 
             console.log('read: ' + this.file_name + ', version=' + v
                         + ', cards=' + this.deck.cards.length
