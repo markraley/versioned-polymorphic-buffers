@@ -7,19 +7,19 @@ struct vp_typedef_vector : public vp_typedef
    int payload_index;
    bool is_ptr;
 
-   virtual void serialize_out_cpp(ofstream &, int, TypeMap &, TarLang &);
-   virtual void serialize_in_cpp(ofstream &, int, TypeMap &, TarLang &);
+   void serialize_out_cpp(ofstream &, int, TypeMap &, TarLang &);
+   void serialize_in_cpp(ofstream &, int, TypeMap &, TarLang &);
 
-   virtual void serialize_out_py(ofstream &, int, TypeMap &, TarLang &);
-   virtual void serialize_in_py(ofstream &, int, TypeMap &, TarLang &);
+   void serialize_out_py(ofstream &, int, TypeMap &, TarLang &);
+   void serialize_in_py(ofstream &, int, TypeMap &, TarLang &);
 
-   virtual void serialize_out_js(ofstream &, int, TypeMap &, TarLang &);
-   virtual void serialize_in_js(ofstream &, int, TypeMap &, TarLang &);
+   void serialize_out_js(ofstream &, int, TypeMap &, TarLang &);
+   void serialize_in_js(ofstream &, int, TypeMap &, TarLang &);
 
-   virtual std::string format_in_py(const std::string var_name);
-   virtual std::string format_in_js(const std::string var_name);
+   std::string format_in_py(const std::string var_name);
+   std::string format_in_js(const std::string var_name);
 
-   virtual void get_type_python(std::string &result);
-   virtual void get_type_cpp(std::string &result);
-   virtual void get_type_js(std::string &result);
+   void get_type_python(std::string &result);
+   void get_type_cpp(std::string &result);
+   void get_type_js(std::string &result);
 };
