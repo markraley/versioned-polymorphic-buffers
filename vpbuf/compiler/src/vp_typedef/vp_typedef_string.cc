@@ -104,6 +104,4 @@ void vp_typedef_string::add_pod_item(pod_item *) {};
 void vp_typedef_string::add_pod_item_range(
    unsigned int nBegin, unsigned int nEnd) {};
 
-void vp_typedef_string::add_subclass(const std::string &t) {};
-
 

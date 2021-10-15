@@ -29,8 +29,6 @@ struct vp_typedef_reorder_pod : public vp_typedef
    virtual void add_pod_item(pod_item *);
    virtual void add_pod_item_range(unsigned int nBegin, unsigned int nEnd);
 
-   virtual void add_subclass(const std::string &t);
-
    bool is_pod();
    bool can_reorder();
 };

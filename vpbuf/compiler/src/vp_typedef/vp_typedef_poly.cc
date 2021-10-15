@@ -323,12 +323,9 @@ vp_typedef_poly::get_terminals(Terminals &terminals, const TypeMap &type_map)
    }
 }
 
-// ## add_subclass
-
 void vp_typedef_poly::add_subclass(const std::string &t)
 {
    polys.push_back(t);
-
 };
 
 // ## add_pod_item
