@@ -107,7 +107,7 @@ struct vp_typedef
    virtual void add_pod_item(pod_item *) = 0;
    virtual void add_pod_item_range(unsigned int nBegin, unsigned int nEnd) = 0;
    virtual void add_subclass(const string &) = 0;
-   virtual bool is_terminal() = 0;
+   virtual bool is_terminal();
    virtual bool is_poly() = 0;
    virtual bool is_pod() = 0;
    virtual bool is_reorder_pod();

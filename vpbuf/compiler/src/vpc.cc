@@ -318,6 +318,8 @@ void vp_typedef::gen_js_utils(
    // empty stub
 }
 
+bool vp_typedef::is_terminal() { return true; }
+
 void vp_typedef::add_range(unsigned int nBegin, unsigned int nEnd)
 {
    this->vrange.nBegin = nBegin;

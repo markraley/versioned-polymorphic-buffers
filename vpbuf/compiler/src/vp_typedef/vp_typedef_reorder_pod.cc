@@ -536,7 +536,6 @@ vp_typedef_reorder_pod::format_in_js(const string var_name)
 
 // ----------------------------------------------------------------------------
 
-bool vp_typedef_reorder_pod::is_terminal() { return true; }
 bool vp_typedef_reorder_pod::is_poly() { return false; }
 bool vp_typedef_reorder_pod::is_pod() { return true; }
 bool vp_typedef_reorder_pod::is_reorder_pod() { return true; }
