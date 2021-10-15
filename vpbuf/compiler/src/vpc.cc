@@ -291,38 +291,23 @@ code_version_test_js(
    }
 }
 
+// --- default implementations -------------------------------------------------
+
 void vp_typedef::gen_cpp_utils(
-   ofstream &ofs,
-   int in,
-   TypeMap &type_map,
-   TarLang &tar_lang)
-{
-   // empty stub
-}
-
+   ofstream &ofs, int in, TypeMap &type_map, TarLang &tar_lang) {}
 void vp_typedef::gen_py_utils(
-   ofstream &ofs,
-   int in,
-   TypeMap &type_map,
-   TarLang &tar_lang)
-{
-   // empty stub
-}
-
+   ofstream &ofs, int in, TypeMap &type_map, TarLang &tar_lang) {}
 void vp_typedef::gen_js_utils(
-   ofstream &ofs,
-   int in,
-   TypeMap &type_map,
-   TarLang &tar_lang)
-{
-   // empty stub
-}
+   ofstream &ofs, int in, TypeMap &type_map, TarLang &tar_lang) {}
 
 bool vp_typedef::is_terminal() { return true; }
 bool vp_typedef::is_pod() { return false; }
+bool vp_typedef::can_reorder() { return false;}
+
 void vp_typedef::add_subclass(const std::string &t) {}
 void vp_typedef::add_pod_item_range
-      (unsigned int nBegin, unsigned int nEnd) {};
+      (unsigned int nBegin, unsigned int nEnd) {}
+void vp_typedef::add_pod_item(pod_item *) {}
 
 void vp_typedef::add_range(unsigned int nBegin, unsigned int nEnd)
 {
@@ -345,7 +330,6 @@ bool VRange::overlap(unsigned int nBase, unsigned int nLimit)
    return present;
 }
 
-bool vp_typedef::can_reorder() { return false;}
 void vp_typedef::get_terminals
    (Terminals &terminals, const TypeMap &type_map) {}
 

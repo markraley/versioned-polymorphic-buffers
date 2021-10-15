@@ -19,6 +19,4 @@ struct vp_typedef_varint : public vp_typedef
    virtual void get_type_python(std::string &result);
    virtual void get_type_cpp(std::string &result);
    virtual void get_type_js(std::string &result);
-
-   virtual void add_pod_item(pod_item *);
 };

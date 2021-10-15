@@ -328,8 +328,6 @@ void vp_typedef_poly::add_subclass(const std::string &t)
    polys.push_back(t);
 };
 
-// ## add_pod_item
-
 void vp_typedef_poly::add_pod_item(pod_item *new_item)
 {
    pod_items.push_back(new_item);

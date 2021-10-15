@@ -99,5 +99,3 @@ vp_typedef_string::format_in_js(const std::string var_name)
 {
    return "var " + var_name + " = this.read_String(ctx)\n";
 }
-
-void vp_typedef_string::add_pod_item(pod_item *) {};
