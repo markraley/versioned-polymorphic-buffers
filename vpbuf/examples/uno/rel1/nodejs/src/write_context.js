@@ -1,14 +1,30 @@
 // Software released under the MIT license (see project root for license file)
 
+var persist = require("./persist");
+var vp = require('./vp_uno');
 const fs = require('fs');
 const assert = require('chai').assert;
 "use strict";
+const tools = require('./tools');
+
 
 (function() {
     var wc = {
         buf_arr: [],
+        reorder_map: {},
+        ver: 1,
+
+        init: function(ver) {
+            this.buf_arr = [];
+            this.set_version(ver);
+        },
+
+        set_version: function(ver) {
+            this.ver = ver;
+            vp.init_reorder_map(this.reorder_map, ver);
+        },
+
         _write_Integer: function(i) {
-//          console.log('writing i', i);
             if (i >= 0 && i <= 0x7F) {
                 this.buf_arr.push(new Uint8Array([i]));
             } else if (i > 0x7F && i <= 0x3FFF) {
@@ -83,5 +99,3 @@ const assert = require('chai').assert;
     };
     return module.exports = wc;
 })();
-
-// -----------------------------------------------------------------------------
