@@ -319,6 +319,7 @@ void vp_typedef::gen_js_utils(
 }
 
 bool vp_typedef::is_terminal() { return true; }
+bool vp_typedef::is_pod() { return false; }
 
 void vp_typedef::add_range(unsigned int nBegin, unsigned int nEnd)
 {

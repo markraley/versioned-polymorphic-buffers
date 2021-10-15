@@ -108,7 +108,7 @@ struct vp_typedef
    virtual void add_pod_item_range(unsigned int nBegin, unsigned int nEnd) = 0;
    virtual void add_subclass(const string &) = 0;
    virtual bool is_terminal();
-   virtual bool is_pod() = 0;
+   virtual bool is_pod();
    virtual bool is_reorder_pod();
    virtual void get_terminals(Terminals &, const TypeMap &) = 0;
    void add_range(unsigned int nBegin, unsigned int nEnd);

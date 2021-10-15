@@ -31,7 +31,7 @@ struct vp_typedef_reorder_pod : public vp_typedef
 
    virtual void add_subclass(const std::string &t);
 
-   virtual bool is_pod();
+   bool is_pod();
    virtual bool is_reorder_pod();
 
    virtual void get_terminals(Terminals &terminals, const TypeMap &type_map);
