@@ -110,7 +110,7 @@ struct vp_typedef
    virtual bool is_terminal();
    virtual bool is_pod();
    virtual bool can_reorder();
-   virtual void get_terminals(Terminals &, const TypeMap &) = 0;
+   virtual void get_terminals(Terminals &, const TypeMap &);
    void add_range(unsigned int nBegin, unsigned int nEnd);
 };
 

@@ -539,8 +539,7 @@ vp_typedef_reorder_pod::format_in_js(const string var_name)
 bool vp_typedef_reorder_pod::is_pod() { return true; }
 bool vp_typedef_reorder_pod::can_reorder() { return true; }
 void vp_typedef_reorder_pod::add_subclass(const std::string &t) {}
-void vp_typedef_reorder_pod::get_terminals
-   (Terminals &terminals, const TypeMap &type_map) {}
+
 
 
 

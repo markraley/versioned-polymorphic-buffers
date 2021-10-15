@@ -343,6 +343,8 @@ bool VRange::overlap(unsigned int nBase, unsigned int nLimit)
 }
 
 bool vp_typedef::can_reorder() { return false;}
+void vp_typedef::get_terminals
+   (Terminals &terminals, const TypeMap &type_map) {}
 
 // -----------------------------------------------------------------------------
 

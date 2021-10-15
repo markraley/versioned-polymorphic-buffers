@@ -27,5 +27,4 @@ struct vp_typedef_vector : public vp_typedef
    virtual void add_pod_item_range(unsigned int nBegin, unsigned int nEnd);
 
    virtual void add_subclass(const std::string &t);
-   virtual void get_terminals(Terminals &terminals, const TypeMap &type_map);
 };

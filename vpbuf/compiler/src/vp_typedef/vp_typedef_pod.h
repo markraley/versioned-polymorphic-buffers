@@ -27,5 +27,4 @@ struct vp_typedef_pod : public vp_typedef
 
    virtual void add_subclass(const std::string &t);
    bool is_pod();
-   virtual void get_terminals(Terminals &terminals, const TypeMap &type_map);
 };

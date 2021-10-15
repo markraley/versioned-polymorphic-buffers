@@ -33,6 +33,4 @@ struct vp_typedef_reorder_pod : public vp_typedef
 
    bool is_pod();
    bool can_reorder();
-
-   virtual void get_terminals(Terminals &terminals, const TypeMap &type_map);
 };

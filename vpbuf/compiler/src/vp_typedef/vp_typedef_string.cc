@@ -106,6 +106,4 @@ void vp_typedef_string::add_pod_item_range(
 
 void vp_typedef_string::add_subclass(const std::string &t) {};
 
-void vp_typedef_string::get_terminals(
-   Terminals &terminals, const TypeMap &type_map) {};
 
