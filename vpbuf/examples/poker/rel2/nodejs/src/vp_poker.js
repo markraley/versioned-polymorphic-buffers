@@ -8,55 +8,55 @@ module.exports = {
 	init_reorder_map: function(map, ver) {
 	},
 
-	write_String: function(ver, wc, payload) {
-		wc.write_String(payload);
+	write_String: function(ctx, payload) {
+		ctx.write_String(payload);
 	},
 
-	write_Integer: function(ver, wc, payload) {
-		wc.write_Integer(payload);
+	write_Integer: function(ctx, payload) {
+		ctx.write_Integer(payload);
 	},
 
-	write_Header: function(ver, wc, payload) {
-		wc.write_Integer(payload.version);
-		wc.write_String(payload.tag);
+	write_Header: function(ctx, payload) {
+		ctx.write_Integer(payload.version);
+		ctx.write_String(payload.tag);
 	},
 
-	write_Card: function(ver, wc, payload) {
-		wc.write_Integer(payload.id);
+	write_Card: function(ctx, payload) {
+		ctx.write_Integer(payload.id);
 	},
 
-	write_Deck: function(ver, wc, payload) {
-		wc.write_Integer(payload.cards.length);
+	write_Deck: function(ctx, payload) {
+		ctx.write_Integer(payload.cards.length);
 		for (var i = 0; i < payload.cards.length; i++)
-			this.write_Card(ver, wc, payload.cards[i]);
+			this.write_Card(ctx, payload.cards[i]);
 	},
 
-	read_String: function(ver, rc) {
-		return rc.read_String();
+	read_String: function(ctx) {
+		return ctx.read_String();
 	},
 
-	read_Integer: function(ver, rc) {
-		return rc.read_Integer();
+	read_Integer: function(ctx) {
+		return ctx.read_Integer();
 	},
 
-	read_Header: function(ver, rc) {
+	read_Header: function(ctx) {
 		var payload = new this.factory.Header();
-		payload.version = rc.read_Integer();
-		payload.tag = rc.read_String();
+		payload.version = ctx.read_Integer();
+		payload.tag = ctx.read_String();
 		return payload;
 	},
 
-	read_Card: function(ver, rc) {
+	read_Card: function(ctx) {
 		var payload = new this.factory.Card();
-		payload.id = rc.read_Integer();
+		payload.id = ctx.read_Integer();
 		return payload;
 	},
 
-	read_Deck: function(ver, rc) {
+	read_Deck: function(ctx) {
 		var payload = new this.factory.Deck();
-		var count = rc.read_Integer();
+		var count = ctx.read_Integer();
 		for (var i = 0; i < count; i++) {
-			var c = this.read_Card(ver, rc);
+			var c = this.read_Card(ctx);
 			payload.cards.push(c);
 		}
 		return payload;

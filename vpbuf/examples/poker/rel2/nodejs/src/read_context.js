@@ -3,10 +3,27 @@
 const assert = require('chai').assert;
 "use strict";
 
+var persist = require("./persist");
+var vp = require('./vp_poker');
+var tools = require('./tools');
+
 (function() {
     var rc = {
+        ver: 1,
         cur_pos: 0,
         dv: new DataView(new ArrayBuffer()),
+        reorder_map: {},
+
+        init: function(data, ver = 1) {
+            this.dv = new DataView(tools.toArrayBuffer(data));
+            this.cur_pos = 0;
+            this.set_version(ver);
+        },
+
+        set_version: function(ver) {
+            this.ver = ver;
+            vp.init_reorder_map(this.reorder_map, ver);
+        },
 
         _read_Integer: function() {
             var result = 0, varLen = 0;
