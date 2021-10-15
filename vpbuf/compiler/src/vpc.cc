@@ -77,7 +77,7 @@ code_footer_cpp(
    ofs <<tab(in)<< "void init_reorder_map(map<string, ReorderCog *> &rmap, int ver) {\n";
 
    for (auto ii = vp_typedefs.begin(); ii != vp_typedefs.end(); ++ii) {
-      if ((*ii)->is_reorder_pod()) {
+      if ((*ii)->can_reorder()) {
          ofs <<tab(in+1)<<"rmap[\""
                      << (*ii)->type_name <<"\"] = get_rcog_"
                      << (*ii)->type_name <<"(ver);\n";
@@ -111,7 +111,7 @@ code_header_js(
    ofs <<tab(in)<< "init_reorder_map: function(map, ver) {\n";
 
    for (auto ii = vp_typedefs.begin(); ii != vp_typedefs.end(); ++ii) {
-      if ((*ii)->is_reorder_pod()) {
+      if ((*ii)->can_reorder()) {
          ofs <<tab(in+1)<<"map['"
                      << (*ii)->type_name <<"'] = this.get_rlist_"
                      << (*ii)->type_name <<"(ver)\n";
@@ -171,7 +171,7 @@ code_header_python(
    ofs <<tab(in)<< "def init_reorder_map(map, ver):\n";
    bool any_found = false;
    for (auto ii = vp_typedefs.begin(); ii != vp_typedefs.end(); ++ii) {
-      if ((*ii)->is_reorder_pod()) {
+      if ((*ii)->can_reorder()) {
          ofs <<tab(in+1)<<"map['"
                      << (*ii)->type_name <<"'] = get_rlist_"
                      << (*ii)->type_name <<"(ver)\n";
@@ -342,7 +342,7 @@ bool VRange::overlap(unsigned int nBase, unsigned int nLimit)
    return present;
 }
 
-bool vp_typedef::is_reorder_pod() { return false;}
+bool vp_typedef::can_reorder() { return false;}
 
 // -----------------------------------------------------------------------------
 

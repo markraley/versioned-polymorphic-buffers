@@ -109,7 +109,7 @@ struct vp_typedef
    virtual void add_subclass(const string &) = 0;
    virtual bool is_terminal();
    virtual bool is_pod();
-   virtual bool is_reorder_pod();
+   virtual bool can_reorder();
    virtual void get_terminals(Terminals &, const TypeMap &) = 0;
    void add_range(unsigned int nBegin, unsigned int nEnd);
 };
