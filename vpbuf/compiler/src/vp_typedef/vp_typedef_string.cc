@@ -106,7 +106,6 @@ void vp_typedef_string::add_pod_item_range(
 
 void vp_typedef_string::add_subclass(const std::string &t) {};
 
-bool vp_typedef_string::is_poly() { return false; };
 bool vp_typedef_string::is_pod() { return false; };
 void vp_typedef_string::get_terminals(
    Terminals &terminals, const TypeMap &type_map) {};

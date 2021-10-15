@@ -64,7 +64,7 @@ pod_vector::serialize_in_cpp(
    ofs <<tab(in)<<"read_int(ctx, count_"<< name <<");\n";
    ofs <<tab(in)<<"for (auto i = 0; i < count_"<< name <<"; i++) {\n";
 
-   if (vp_typedefs[payload_index]->is_poly())
+   if (!vp_typedefs[payload_index]->is_terminal())
       ofs <<tab(in+1)<<"auto *pod = read_"<< vec_type <<"(ctx);\n";
    else if (is_ptr) {
       ofs <<tab(in+1)<<"auto pod = new "<< vec_type <<";\n";

@@ -95,7 +95,6 @@ void vp_typedef_vector::add_pod_item_range
       (unsigned int nBegin, unsigned int nEnd) {};
 void vp_typedef_vector::add_subclass(const std::string &t) {};
 
-bool vp_typedef_vector::is_poly() { return false; };
 bool vp_typedef_vector::is_pod() { return false; };
 void vp_typedef_vector::get_terminals(
    Terminals &terminals, const TypeMap &type_map) {};

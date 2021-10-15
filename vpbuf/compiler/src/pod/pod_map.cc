@@ -25,7 +25,7 @@ pod_map::serialize_out_cpp(
    std::string payload_type, local_key_type, payload_prefix;
 
    if (vp_typedefs[payload_index]->is_pod()
-         || vp_typedefs[payload_index]->is_poly())
+         || !vp_typedefs[payload_index]->is_terminal())
       payload_prefix = "*";
 
    vp_typedef *tdi = vp_typedefs[payload_index];
@@ -72,7 +72,7 @@ pod_map::serialize_in_cpp(
    ofs <<tab(in+1)<<"read_"<< local_key_type <<"(ctx, k);\n";
 
    if (vp_typedefs[payload_index]->is_pod()
-         || vp_typedefs[payload_index]->is_poly()) {
+         || !vp_typedefs[payload_index]->is_terminal()) {
       ofs <<tab(in+1)<< "auto *v = new "<< payload_type <<";\n";
       ofs <<tab(in+1)<<"read_"<< payload_type <<"(ctx, *v);\n";
    } else {
