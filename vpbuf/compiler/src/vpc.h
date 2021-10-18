@@ -15,14 +15,6 @@ namespace ascii = boost::spirit::ascii;
 typedef std::ofstream ofstream;
 typedef std::string string;
 
-enum {
-   VPTypePod = 0,
-   VPTypePoly,
-   VPTypeVector,
-   VPTypeIntrinsic,
-   VPTypeReorderPod
-} vp_typedef_types;
-
 struct target_language // just this way for boost interface
 {
    string name;
@@ -145,3 +137,11 @@ void code_version_test_js(ofstream&, bool&, bool&, int, int, int, int, int);
 
 string tab(int n);
 vp_typedef *GetVPType(string &type_name, const TypeMap &);
+
+enum { // used during type creation while parsing
+   VPTypePod = 0,
+   VPTypePoly,
+   VPTypeVector,
+   VPTypeIntrinsic,
+   VPTypeReorderPod
+} vp_typedef_types;

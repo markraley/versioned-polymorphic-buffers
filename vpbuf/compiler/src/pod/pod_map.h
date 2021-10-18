@@ -12,14 +12,14 @@ struct pod_map : public pod_item
    pod_map(TypeVector &vp_typedefs, bool is_ptr)
       : vp_typedefs(vp_typedefs), is_ptr(is_ptr) {}
 
-   virtual void serialize_out_cpp(ofstream &, int, TypeMap &, TarLang &);
-   virtual void serialize_in_cpp(ofstream &, int, TypeMap &, TarLang &);
+   void serialize_out_cpp(ofstream &, int, TypeMap &, TarLang &);
+   void serialize_in_cpp(ofstream &, int, TypeMap &, TarLang &);
 
-   virtual void serialize_out_py(ofstream &, int, TypeMap &, TarLang &);
-   virtual void serialize_in_py(ofstream &, int, TypeMap &, TarLang &);
+   void serialize_out_py(ofstream &, int, TypeMap &, TarLang &);
+   void serialize_in_py(ofstream &, int, TypeMap &, TarLang &);
 
-   virtual void serialize_out_js(ofstream &, int, TypeMap &, TarLang &);
-   virtual void serialize_in_js(ofstream &, int, TypeMap &, TarLang &);
+   void serialize_out_js(ofstream &, int, TypeMap &, TarLang &);
+   void serialize_in_js(ofstream &, int, TypeMap &, TarLang &);
 
-   virtual std::string declare_js();
+   std::string declare_js();
 };
