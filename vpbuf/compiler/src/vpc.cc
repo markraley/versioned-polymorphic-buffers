@@ -9,6 +9,7 @@
 #include "pod_typed.h"
 #include "pod_string.h"
 #include "pod_varint.h"
+#include "pod_salt.h"
 
 #include "vp_typedef_map.h"
 #include "vp_typedef_pod.h"
@@ -772,7 +773,7 @@ struct vp_compiler : qi::grammar<Iterator, ascii::space_type>
    vp_compiler(std::string vpc_path);
 
    qi::rule<Iterator, ascii::space_type>
-            type_list, item_varint, item_string, item_typed;
+            type_list, item_varint, item_string, item_typed, item_salt;
    qi::rule<Iterator, ascii::space_type> pod_def, reorder_pod_def;
    qi::rule<Iterator, ascii::space_type> poly_def;
    qi::rule<Iterator, qi::locals<int, int>, ascii::space_type> format_set;
@@ -886,6 +887,8 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
                         >> version_sequence;
    item_string = lit("string") >> identifier[pod_item_string_add(_1)]
                         >> version_sequence;
+   item_salt = "salt" >> identifier >> "(" >> var_ref >> ","
+                        >> identifier >> ")" >> version_sequence;
 
    item_map = lit("map") >> (identifier >> var_ref >> identifier)
                                  [pod_item_map_add(_1, _2, _3)]
@@ -913,7 +916,7 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
             ;
 
    type_list = *(item_varint | item_string | item_map
-               | item_vector  | item_typed);
+               | item_vector  | item_typed | item_salt);
 
    pod_parent = (lit("is") >> var_ref)[subclass_to_parent_add(_1)]
                   | qi::attr(("unspecified"));
