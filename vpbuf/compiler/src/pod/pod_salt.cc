@@ -25,11 +25,7 @@ pod_salt::serialize_out_cpp(
    string t;
    vp_typedefs[payload_index]->get_type_cpp(t);
 
-   if (is_ptr)
-      ofs <<tab(in)
-         <<"write_" << t <<"(ctx, *(payload."<< name <<"));\n";
-   else
-      ofs <<tab(in)<<"write_" << t <<"(ctx, payload."<< name <<");\n";
+   ofs <<tab(in)<<"write_" << t <<"(ctx, payload."<< name <<");\n";
 }
 
 void
@@ -50,12 +46,7 @@ pod_salt::serialize_in_cpp(
    string t;
    vp_typedefs[payload_index]->get_type_cpp(t);
 
-   if (is_ptr) {
-      ofs <<tab(in)<< "payload."<< name <<" = new "<< t <<";\n";
-      ofs <<tab(in)
-         <<"read_"<< t <<"(ctx, *(payload."<< name <<"));\n";
-   } else
-      ofs <<tab(in)
+   ofs <<tab(in)
          <<"read_" << t << "(ctx, payload."<< name <<");\n";
 }
 

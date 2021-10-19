@@ -13,6 +13,7 @@ set(sources
 		${vpbuf_src_dir}/compiler/src/pod/pod_map.cc
 		${vpbuf_src_dir}/compiler/src/pod/pod_typed.cc
 		${vpbuf_src_dir}/compiler/src/pod/pod_string.cc
+		${vpbuf_src_dir}/compiler/src/pod/pod_salt.cc
 
 		${vpbuf_src_dir}/compiler/src/vp_typedef/vp_typedef_varint.cc
 		${vpbuf_src_dir}/compiler/src/vp_typedef/vp_typedef_pod.cc

@@ -561,6 +561,36 @@ struct pod_item_type_adder
    TypeVector &vp_typedefs;
 };
 
+struct pod_item_salt_adder
+{
+   template <typename, typename, typename, typename>
+   struct result { typedef void type; };
+
+   pod_item_salt_adder(TypeVector &vp_typedefs)
+      : vp_typedefs(vp_typedefs) {}
+
+   void
+   operator()(
+         std::string const& item_name,
+         int count,
+         int const& var_index,
+         std::string const& salter_name) const
+   {
+      TypeVector::reverse_iterator ii;
+
+      ii = vp_typedefs.rbegin();
+
+      auto *new_item = new pod_salt(vp_typedefs);
+
+      new_item->name = item_name;
+      new_item->payload_index = var_index;
+
+      (*ii)->add_pod_item(new_item);
+   };
+
+   TypeVector &vp_typedefs;
+};
+
 struct type_payload_adder
 {
    template <typename, typename, typename>
@@ -799,6 +829,7 @@ struct vp_compiler : qi::grammar<Iterator, ascii::space_type>
    function<pod_item_varint_adder> pod_item_varint_add;
    function<pod_item_string_adder> pod_item_string_add;
    function<pod_item_type_adder> pod_item_type_add;
+   function<pod_item_salt_adder> pod_item_salt_add;
    function<type_payload_adder> type_payload_add;
    function<pod_item_map_adder> pod_item_map_add;
    function<pod_item_vector_adder> pod_item_vector_add;
@@ -820,6 +851,7 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
    , pod_item_varint_add(vp_typedefs)
    , pod_item_string_add(vp_typedefs)
    , pod_item_type_add(vp_typedefs)
+   , pod_item_salt_add(vp_typedefs)
    , pod_item_map_add(vp_typedefs)
    , type_payload_add(vp_typedefs)
    , pod_item_vector_add(vp_typedefs)
@@ -887,8 +919,10 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
                         >> version_sequence;
    item_string = lit("string") >> identifier[pod_item_string_add(_1)]
                         >> version_sequence;
-   item_salt = "salt" >> identifier >> "(" >> var_ref >> ","
-                        >> identifier >> ")" >> version_sequence;
+   item_salt = "salt">> (identifier >>"(">> uint_
+                        >>",">> var_ref
+                        >>",">> identifier) [pod_item_salt_add(_1, _2, _3, _4)]
+                        >>")">> -version_sequence;
 
    item_map = lit("map") >> (identifier >> var_ref >> identifier)
                                  [pod_item_map_add(_1, _2, _3)]

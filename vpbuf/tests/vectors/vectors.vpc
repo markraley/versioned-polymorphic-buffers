@@ -9,7 +9,6 @@ pod Header
 rpod A  : h1(flip)
     varint i1 1
     string s1 1
-    salt s1(string, do_salt) 1
 
 pod OuterA
     vector *A v 1
