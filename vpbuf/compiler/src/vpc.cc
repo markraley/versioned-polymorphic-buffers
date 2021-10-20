@@ -563,7 +563,7 @@ struct pod_item_type_adder
 
 struct pod_item_salt_adder
 {
-   template <typename, typename, typename, typename>
+   template <typename, typename, typename>
    struct result { typedef void type; };
 
    pod_item_salt_adder(TypeVector &vp_typedefs)
@@ -573,8 +573,7 @@ struct pod_item_salt_adder
    operator()(
          std::string const& item_name,
          int count,
-         int const& var_index,
-         std::string const& salter_name) const
+         int const& var_index) const
    {
       TypeVector::reverse_iterator ii;
 
@@ -920,8 +919,7 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
    item_string = lit("string") >> identifier[pod_item_string_add(_1)]
                         >> version_sequence;
    item_salt = "salt">> (identifier >>"(">> uint_
-                        >>",">> var_ref
-                        >>",">> identifier) [pod_item_salt_add(_1, _2, _3, _4)]
+                        >>",">> var_ref) [pod_item_salt_add(_1, _2, _3)]
                         >>")">> -version_sequence;
 
    item_map = lit("map") >> (identifier >> var_ref >> identifier)
