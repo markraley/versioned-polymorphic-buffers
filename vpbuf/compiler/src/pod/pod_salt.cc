@@ -68,7 +68,7 @@ pod_salt::serialize_out_py(
    vp_typedefs[payload_index]->get_type_python(t);
 
    ofs <<tab(in)<< "write_" << t
-      <<"(ctx, payload." << name << ")\n";
+      <<"(ctx, ctx.salt_map['" << name << "']())\n";
 }
 
 void
@@ -84,7 +84,7 @@ pod_salt::serialize_in_py(
       return;
 
    ofs <<tab(in)
-      <<vp_typedefs[payload_index]->format_in_py("payload." + name);
+      <<vp_typedefs[payload_index]->format_in_py("v");
 }
 
 // --- javascript --------------------------------------------------------------

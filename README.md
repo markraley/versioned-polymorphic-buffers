@@ -2,9 +2,9 @@
 
 Versioned Polymorphic Buffers (vpbuf) - data interchange format
 
-Versioned Polymorphic Buffers (vpbuf) is a language, platform, and wire protocol neutral way of serializing structured data, either as flatten messages or to file. All data elements have a version range assiged to them and may come in and out of scope as the version numbers are advanced between releases as demonstrated in the example that follows.
+Versioned Polymorphic Buffers (vpbuf) is a language and platform neutral way of serializing structured data, either as flatten messages or to file. All data elements have a version range assiged to them and may come in and out of scope as the version numbers are advanced between releases as demonstrated in the example that follows.
 
-Currently cplusplus, python, and javascript are supported using a binary wire format based on AMF3.
+Currently cplusplus, python, and javascript are supported using a binary wire format based on a subset of AMF3.
 
 ## Basics - Language Interoperability - vpbuf/examples/poker/rel1
 

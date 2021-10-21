@@ -6,7 +6,6 @@ struct pod_salt : public pod_item
 {
    int payload_index;
    TypeVector &vp_typedefs;
-   string salt_func;
 
    pod_salt(TypeVector &vp_typedefs)
       : vp_typedefs(vp_typedefs) {}

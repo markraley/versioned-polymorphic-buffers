@@ -66,3 +66,11 @@ class flip:
         tmp = self.base_arr
         self.base_arr = list(reversed(tmp))
         return tmp
+
+
+class SaltShaker:
+    def __init__(self, seed = 0):
+        self.seed = seed
+
+    def __call__(self):
+        return "hi"
