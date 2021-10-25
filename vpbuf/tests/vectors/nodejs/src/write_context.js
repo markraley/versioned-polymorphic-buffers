@@ -12,6 +12,7 @@ const tools = require('./tools');
     var wc = {
         buf_arr: [],
         reorder_map: {},
+        salt_map: {},
         ver: 1,
 
         init: function(ver) {
@@ -22,6 +23,7 @@ const tools = require('./tools');
         set_version: function(ver) {
             this.ver = ver;
             vp.init_reorder_map(this.reorder_map, ver);
+            this.salt_map = {'SaltShaker': persist.SaltShaker(ver)};
         },
 
         _write_Integer: function(i) {

@@ -107,7 +107,7 @@ pod_salt::serialize_out_js(
 
    vp_typedefs[payload_index]->get_type_js(t);
 
-   ofs <<tab(in)<<"this.write_"<< t <<"(ctx, payload."<< name <<")\n";
+   ofs <<tab(in)<<"ctx.write_"<< t <<"(ctx.salt_map['"<< name <<"']());\n";
 }
 
 void
@@ -128,7 +128,7 @@ pod_salt::serialize_in_js(
 
    vp_typedefs[payload_index]->get_type_js(t);
 
-   ofs <<tab(in)<<"payload."<< name <<" = this.read_"<< t <<"(ctx)\n";
+   ofs <<tab(in)<<"this.read_"<< t <<"(ctx);\n";
 }
 
 std::string

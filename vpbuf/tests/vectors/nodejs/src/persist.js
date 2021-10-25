@@ -61,6 +61,13 @@ module.exports = {
             base_arr.reverse()
             return tmp
         }
+    },
+
+    SaltShaker: function(seed = 0) {
+        this.seed = seed
+        return function() {
+            return "hi"
+        }
     }
 };
 
