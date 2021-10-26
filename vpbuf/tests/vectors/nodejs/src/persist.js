@@ -64,9 +64,8 @@ module.exports = {
     },
 
     SaltShaker: function(seed = 0) {
-        this.seed = seed
         return function() {
-            return "hi"
+            return "SALT-" + (seed++);
         }
     }
 };

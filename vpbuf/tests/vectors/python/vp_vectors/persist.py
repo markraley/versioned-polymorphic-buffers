@@ -73,4 +73,5 @@ class SaltShaker:
         self.seed = seed
 
     def __call__(self):
-        return "hi"
+        self.seed += 1
+        return "SALT-" + str(self.seed - 1)

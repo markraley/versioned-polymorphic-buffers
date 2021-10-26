@@ -121,7 +121,7 @@ class SaltShaker : public Salt {
       int seed;
       SaltShaker(int seed = 0) : seed(seed) {};
 
-      virtual string operator () () { return "hi"; };
+      virtual string operator () () { return "SALT-" + to_string(seed++); };
 };
 
 // -----------------------------------------------------------------------------
