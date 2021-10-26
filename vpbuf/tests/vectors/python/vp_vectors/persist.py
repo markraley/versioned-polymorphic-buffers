@@ -69,9 +69,9 @@ class flip:
 
 
 class SaltShaker:
-    def __init__(self, seed = 0):
+    def __init__(self, seed = 1):
         self.seed = seed
 
     def __call__(self):
-        self.seed += 1
-        return "SALT-" + str(self.seed - 1)
+        self.seed = (self.seed * 53) % 113
+        return "SALT-" + str(self.seed)

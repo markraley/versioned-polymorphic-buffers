@@ -119,9 +119,14 @@ Salt::~Salt() {}
 class SaltShaker : public Salt {
    public:
       int seed;
-      SaltShaker(int seed = 0) : seed(seed) {};
+      SaltShaker(int seed = 1) : seed(seed) {};
 
-      virtual string operator () () { return "SALT-" + to_string(seed++); };
+      virtual string operator () ()
+      {
+         seed = (seed * 53) % 113;
+         return "SALT-" + to_string(seed);
+      };
+
 };
 
 // -----------------------------------------------------------------------------

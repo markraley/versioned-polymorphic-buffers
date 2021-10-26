@@ -63,9 +63,10 @@ module.exports = {
         }
     },
 
-    SaltShaker: function(seed = 0) {
+    SaltShaker: function(seed = 1) {
         return function() {
-            return "SALT-" + (seed++);
+            seed = (seed * 53) % 113
+            return "SALT-" + seed;
         }
     }
 };
