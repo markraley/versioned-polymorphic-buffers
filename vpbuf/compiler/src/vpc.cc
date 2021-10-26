@@ -579,12 +579,14 @@ struct pod_item_salt_adder
 
       ii = vp_typedefs.rbegin();
 
-      auto *new_item = new pod_salt(vp_typedefs);
+      for (auto i = 0; i < count; i++) {
+         auto *new_item = new pod_salt(vp_typedefs);
 
-      new_item->name = item_name;
-      new_item->payload_index = var_index;
+         new_item->name = item_name;
+         new_item->payload_index = var_index;
 
-      (*ii)->add_pod_item(new_item);
+         (*ii)->add_pod_item(new_item);
+      }
    };
 
    TypeVector &vp_typedefs;
