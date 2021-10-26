@@ -58,15 +58,26 @@ class OuterF:
 
 # ------------------------------------------------------------------------------
 
-class flip:
-    def __init__(self, base_arr = []):
+class ScrambledEgg:
+    def __init__(self, base_arr = [], seed = 1):
         self.base_arr = base_arr
+        self.seed = seed
 
     def __call__(self):
         tmp = self.base_arr
-        self.base_arr = list(reversed(tmp))
+
+        j = len(tmp) - 1
+
+        while (j > 0):
+            self.seed = (self.seed * 61) % 233
+
+            i = self.seed % j
+            tmp[i], tmp[j] = tmp[j], tmp[i]
+            j-=1
+        print (tmp)
         return tmp
 
+# ------------------------------------------------------------------------------
 
 class SaltShaker:
     def __init__(self, seed = 1):
@@ -75,3 +86,13 @@ class SaltShaker:
     def __call__(self):
         self.seed = (self.seed * 53) % 113
         return "SALT-" + str(self.seed)
+
+class PepperShaker:
+    def __init__(self, seed = 1):
+        self.seed = seed
+
+    def __call__(self):
+        self.seed = (self.seed * 47) % 199
+        return "PEPPER-" + str(self.seed)
+
+# ------------------------------------------------------------------------------

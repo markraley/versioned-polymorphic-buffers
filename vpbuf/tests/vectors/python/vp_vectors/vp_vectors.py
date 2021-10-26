@@ -13,31 +13,7 @@ def get_low_version():
 	return 1
 
 def init_reorder_map(map, ver):
-	map['A'] = get_rlist_A(ver)
-
-vlist_A = [
-	( 1, 0 ),
-	( 1, 0 ),
-	( 1, 0 )
-]
-
-def get_vlist_A(ver):
-	c, v = 0, []
-	for p in vlist_A:
-		if (p[1] == 0 and ver >= p[0]) or (ver >= p[0] and ver <= p[1]):
-			v.append(c)
-			c += 1
-	return v
-
-rlist_A = [
-	( 1, 0, 'h1', flip )
-]
-
-def get_rlist_A(ver):
-	for p in rlist_A:
-		if (p[1] == 0 and ver >= p[0]) or (ver >= p[0] and ver <= p[1]):
-			return [p[2], p[3](get_vlist_A(ver))]
-	return None
+	pass
 
 def write_str(ctx, payload):
     ctx.encoder.writeString(payload) # amf3
@@ -50,13 +26,8 @@ def write_Header(ctx, payload):
 	write_str(ctx, payload.test_name)
 
 def write_A(ctx, payload):
-	for i in ctx.reorder_map['A'][1]():
-		if i==0:
-			write_int(ctx, payload.i1)
-		elif i==1:
-			write_str(ctx, payload.s1)
-		elif i==2:
-			write_str(ctx, ctx.salt_map['SaltShaker']())
+	write_int(ctx, payload.i1)
+	write_str(ctx, payload.s1)
 
 def write_OuterA(ctx, payload):
 	count = len(payload.v)
@@ -150,13 +121,8 @@ def read_Header(ctx):
 
 def read_A(ctx):
 	payload = A()
-	for i in ctx.reorder_map['A'][1]():
-		if i==0:
-			payload.i1 = read_int(ctx)
-		elif i==1:
-			payload.s1 = read_str(ctx)
-		elif i==2:
-			v = read_str(ctx)
+	payload.i1 = read_int(ctx)
+	payload.s1 = read_str(ctx)
 	return payload
 
 def read_OuterA(ctx):

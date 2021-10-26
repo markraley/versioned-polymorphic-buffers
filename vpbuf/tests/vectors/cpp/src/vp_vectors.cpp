@@ -12,43 +12,6 @@ namespace vp_vectors {
 		return 1;
 	}
 
-	vector<tuple<int, int>> vlist_A = {
-		{ 1, 0 },
-		{ 1, 0 },
-		{ 1, 0 }
-	};
-
-	vector<tuple<int, int, string>> rlist_A = {
-		{ 1, 0, "h1"}
-	};
-
-	ReorderCog *rcog_factory_A(string &n, vector<int> v) {
-		if (n == "h1")
-			return new flip(v);
-		return(NULL);
-	}
-
-	vector<int> get_vlist_A(int ver) {
-		vector<int> v; int i = 0;
-		for (auto tt = vlist_A.begin(); tt != vlist_A.end(); tt++, i++) {
-			if ((get<1>(*tt) == 0 && ver >= get<0>(*tt)) || (ver >= get<0>(*tt) && ver <= get<1>(*tt))) {
-				v.push_back(i);
-			}
-		};
-
-		return v;
-	}
-
-	ReorderCog *get_rcog_A(int ver) {
-		for (auto tt = rlist_A.begin(); tt != rlist_A.end(); tt++) {
-			if ((get<1>(*tt) == 0 && ver >= get<0>(*tt)) || (ver >= get<0>(*tt) && ver <= get<1>(*tt))) {
-				return rcog_factory_A(get<2>(*tt), get_vlist_A(ver));
-			}
-		};
-
-		return NULL;
-	}
-
 	void write_Header(write_context &ctx, Header &payload)
 	{
 		write_int(ctx, payload.version);
@@ -57,20 +20,8 @@ namespace vp_vectors {
 
 	void write_A(write_context &ctx, A &payload)
 	{
-		vector<int> v((*ctx.reorder_map["A"])());
-
-		for (auto i : v) 
-			switch(i) {
-				case 0:
-				write_int(ctx, payload.i1);
-				break;
-				case 1:
-				write_string(ctx, payload.s1);
-				break;
-				case 2:
-				write_string(ctx, (*ctx.salt_map["SaltShaker"])());
-				break;
-			}
+		write_int(ctx, payload.i1);
+		write_string(ctx, payload.s1);
 	}
 
 	void write_OuterA(write_context &ctx, OuterA &payload)
@@ -158,20 +109,8 @@ namespace vp_vectors {
 
 	void read_A(read_context &ctx, A &payload)
 	{
-		vector<int> v((*ctx.reorder_map["A"])());
-
-		for (auto i : v) 
-			switch(i) {
-				case 0:
-					read_int(ctx, payload.i1);
-					break;
-				case 1:
-					read_string(ctx, payload.s1);
-					break;
-				case 2:
-					read_string(ctx);
-					break;
-			}
+		read_int(ctx, payload.i1);
+		read_string(ctx, payload.s1);
 	}
 
 	void read_OuterA(read_context &ctx, OuterA &payload)
@@ -295,7 +234,6 @@ namespace vp_vectors {
 	}
 
 	void init_reorder_map(map<string, ReorderCog *> &rmap, int ver) {
-		rmap["A"] = get_rcog_A(ver);
 	}
 
 }
