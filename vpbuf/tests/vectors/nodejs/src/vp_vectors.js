@@ -11,6 +11,7 @@ module.exports = {
 
 	vlist_A: [
 		[ 1, 0 ],
+		[ 1, 0 ],
 		[ 1, 0 ]
 	],
 
@@ -59,6 +60,9 @@ module.exports = {
 				break;
 				case 1:
 				ctx.write_String(payload.s1);
+				break;
+				case 2:
+				ctx.write_String(ctx.salt_map['SaltShaker']());
 				break;
 			};
 	},
@@ -152,6 +156,9 @@ module.exports = {
 				break;
 				case 1:
 				payload.s1 = ctx.read_String();
+				break;
+				case 2:
+				this.read_String(ctx);
 				break;
 			};
 		return payload;

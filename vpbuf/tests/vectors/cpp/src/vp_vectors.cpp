@@ -14,6 +14,7 @@ namespace vp_vectors {
 
 	vector<tuple<int, int>> vlist_A = {
 		{ 1, 0 },
+		{ 1, 0 },
 		{ 1, 0 }
 	};
 
@@ -65,6 +66,9 @@ namespace vp_vectors {
 				break;
 				case 1:
 				write_string(ctx, payload.s1);
+				break;
+				case 2:
+				write_string(ctx, (*ctx.salt_map["SaltShaker"])());
 				break;
 			}
 	}
@@ -163,6 +167,9 @@ namespace vp_vectors {
 					break;
 				case 1:
 					read_string(ctx, payload.s1);
+					break;
+				case 2:
+					read_string(ctx);
 					break;
 			}
 	}

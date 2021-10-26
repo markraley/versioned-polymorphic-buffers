@@ -87,7 +87,6 @@ class OuterG {
 class ReorderCog {
    public:
       virtual vector<int> operator ()() = 0;
-      virtual string step() = 0;
       virtual ~ReorderCog();
 };
 
@@ -100,15 +99,30 @@ class flip : public ReorderCog {
    public:
       flip(vector <int> &v) : base_list(v) { };
 
-      string step() {return "hello world"; }
-
       vector<int> operator ()() {
          auto tmp(base_list);
          reverse(base_list.begin(), base_list.end());
          return tmp;
       }
-
-      ~flip() {}
 };
 
+// -----------------------------------------------------------------------------
+
+class Salt {
+   public:
+      virtual string operator ()() = 0;
+      virtual ~Salt();
+};
+
+Salt::~Salt() {}
+
+class SaltShaker : public Salt {
+   public:
+      int seed;
+      SaltShaker(int seed = 0) : seed(seed) {};
+
+      virtual string operator () () { return "hi"; };
+};
+
+// -----------------------------------------------------------------------------
 

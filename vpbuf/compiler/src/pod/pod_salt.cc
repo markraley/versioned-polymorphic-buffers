@@ -25,7 +25,7 @@ pod_salt::serialize_out_cpp(
    string t;
    vp_typedefs[payload_index]->get_type_cpp(t);
 
-   ofs <<tab(in)<<"write_" << t <<"(ctx, payload."<< name <<");\n";
+   ofs <<tab(in)<<"write_" << t <<"(ctx, (*ctx.salt_map[\""<< name <<"\"])());\n";
 }
 
 void
@@ -46,8 +46,7 @@ pod_salt::serialize_in_cpp(
    string t;
    vp_typedefs[payload_index]->get_type_cpp(t);
 
-   ofs <<tab(in)
-         <<"read_" << t << "(ctx, payload."<< name <<");\n";
+   ofs <<tab(in) <<"read_" << t << "(ctx);\n";
 }
 
 // --- python ------------------------------------------------------------------
