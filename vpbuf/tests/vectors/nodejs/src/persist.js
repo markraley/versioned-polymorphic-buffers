@@ -55,6 +55,8 @@ module.exports = {
         this.v = [];
     },
 
+// -----------------------------------------------------------------------------
+
     flip: function(base_arr) {
         return function() {
             var tmp = base_arr.slice()
@@ -63,12 +65,44 @@ module.exports = {
         }
     },
 
+    EggScrambler: function(base_arr, seed = 1) {
+        return function() {
+            var tmp = base_arr.slice()
+
+            var j = tmp.length
+            while (j > 0) {
+                seed = (seed * 61) % 223
+                var i = seed % j
+
+                var xchg = base_arr[j]
+                base_arr[j] = base_arr[i]
+                base_arr[i] = xchg
+
+                j -= 1
+            }
+
+            return tmp
+        }
+    },
+
+// -----------------------------------------------------------------------------
+
     SaltShaker: function(seed = 1) {
         return function() {
             seed = (seed * 53) % 113
             return "SALT-" + seed;
         }
+    },
+
+    PepperShaker: function(seed = 1) {
+        return function() {
+            seed = (seed * 47) % 199
+            return "PEPPER-" + seed;
+        }
     }
+
+// -----------------------------------------------------------------------------
+
 };
 
 
@@ -77,3 +111,5 @@ module.exports.Derived1.prototype.constructor = module.exports.Derived1;
 
 module.exports.Derived2.prototype = Object.create(module.exports.Base.prototype);
 module.exports.Derived2.prototype.constructor = module.exports.Derived2;
+
+// -----------------------------------------------------------------------------

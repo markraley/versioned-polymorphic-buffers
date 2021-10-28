@@ -58,23 +58,22 @@ class OuterF:
 
 # ------------------------------------------------------------------------------
 
-class ScrambledEgg:
+class EggScrambler:
     def __init__(self, base_arr = [], seed = 1):
         self.base_arr = base_arr
         self.seed = seed
 
     def __call__(self):
+        # simple shuffle via two primes
         tmp = self.base_arr
-
         j = len(tmp) - 1
 
         while (j > 0):
             self.seed = (self.seed * 61) % 233
-
             i = self.seed % j
             tmp[i], tmp[j] = tmp[j], tmp[i]
             j-=1
-        print (tmp)
+
         return tmp
 
 # ------------------------------------------------------------------------------
