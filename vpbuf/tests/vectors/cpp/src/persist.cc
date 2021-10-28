@@ -92,6 +92,16 @@ class ReorderCog {
 
 ReorderCog::~ReorderCog() {}
 
+class Salt {
+   public:
+      virtual string operator ()() = 0;
+      virtual ~Salt();
+};
+
+Salt::~Salt() {}
+
+// -----------------------------------------------------------------------------
+
 class flip : public ReorderCog {
    public:
       vector <int> base_list;
@@ -106,15 +116,41 @@ class flip : public ReorderCog {
       }
 };
 
-// -----------------------------------------------------------------------------
-
-class Salt {
+class EggScrambler : public ReorderCog {
    public:
-      virtual string operator ()() = 0;
-      virtual ~Salt();
+      vector <int> base_arr;
+      uint seed;
+
+   public:
+      EggScrambler(vector <int> &v, uint seed = 1) : base_arr(v), seed(seed) { };
+
+      vector<int> operator ()() {
+         auto tmp(base_arr);
+         auto j = tmp.size();
+         uint i = 0;
+
+#if 0
+         while (false && j > 0) {
+            seed = (seed * 61) % 223;
+            i = seed % j;
+
+            printf("%d", seed);
+
+            auto xchg = tmp[j];
+            tmp[j] = tmp[i];
+            tmp[i] = xchg;
+
+            j--;
+         }
+#endif
+         reverse(base_arr.begin(), base_arr.end());
+
+         return tmp;
+      }
 };
 
-Salt::~Salt() {}
+// -----------------------------------------------------------------------------
+
 
 class SaltShaker : public Salt {
    public:
@@ -125,6 +161,19 @@ class SaltShaker : public Salt {
       {
          seed = (seed * 53) % 113;
          return "SALT-" + to_string(seed);
+      };
+
+};
+
+class PepperShaker : public Salt {
+   public:
+      int seed;
+      PepperShaker(int seed = 1) : seed(seed) {};
+
+      virtual string operator () ()
+      {
+         seed = (seed * 47) % 199;
+         return "PEPPER-" + to_string(seed);
       };
 
 };

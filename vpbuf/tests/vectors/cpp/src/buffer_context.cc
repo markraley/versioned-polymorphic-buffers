@@ -114,6 +114,7 @@ class write_context {
             init_reorder_map(reorder_map, version);
 
             salt_map["SaltShaker"] = new SaltShaker(version);
+            salt_map["PepperShaker"] = new PepperShaker(version);
 
             return true;
          }

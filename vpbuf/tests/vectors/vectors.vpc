@@ -10,8 +10,6 @@ pod A
     varint i1 1
     string s1 1
 
-
-
 pod OuterA
     vector *A v 1
 
