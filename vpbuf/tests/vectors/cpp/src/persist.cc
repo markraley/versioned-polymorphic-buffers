@@ -126,24 +126,26 @@ class EggScrambler : public ReorderCog {
 
       vector<int> operator ()() {
          auto tmp(base_arr);
-         auto j = tmp.size();
+         auto j = tmp.size() - 1;
          uint i = 0;
 
-#if 0
-         while (false && j > 0) {
-            seed = (seed * 61) % 223;
+         while (j > 0) {
+            seed = (seed * 61) % 233;
             i = seed % j;
 
-            printf("%d", seed);
+//            cout << seed <<" "<< i <<" "<< j << endl;
 
             auto xchg = tmp[j];
             tmp[j] = tmp[i];
             tmp[i] = xchg;
 
             j--;
+
          }
-#endif
-         reverse(base_arr.begin(), base_arr.end());
+
+//         for (auto const& ii : tmp)
+//            cout << tmp[ii] << " ";
+//         cout << endl;
 
          return tmp;
       }

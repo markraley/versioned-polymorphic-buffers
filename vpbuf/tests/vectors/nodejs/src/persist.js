@@ -68,15 +68,15 @@ module.exports = {
     EggScrambler: function(base_arr, seed = 1) {
         return function() {
             var tmp = base_arr.slice()
+            var j = tmp.length - 1
 
-            var j = tmp.length
             while (j > 0) {
-                seed = (seed * 61) % 223
+                seed = (seed * 61) % 233
                 var i = seed % j
 
-                var xchg = base_arr[j]
-                base_arr[j] = base_arr[i]
-                base_arr[i] = xchg
+                var xchg = tmp[j]
+                tmp[j] = tmp[i]
+                tmp[i] = xchg
 
                 j -= 1
             }

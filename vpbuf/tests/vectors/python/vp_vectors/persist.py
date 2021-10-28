@@ -65,14 +65,19 @@ class EggScrambler:
 
     def __call__(self):
         # simple shuffle via two primes
-        tmp = self.base_arr
+        tmp = list(self.base_arr)
         j = len(tmp) - 1
 
         while (j > 0):
             self.seed = (self.seed * 61) % 233
             i = self.seed % j
+
+#            print(self.seed, i, j)
+
             tmp[i], tmp[j] = tmp[j], tmp[i]
             j-=1
+
+#        print(tmp)
 
         return tmp
 
