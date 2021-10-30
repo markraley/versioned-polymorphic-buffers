@@ -757,6 +757,23 @@ struct typedef_vrange_adder
    TypeVector &vp_typedefs;
 };
 
+struct vpopt_vrange_adder
+{
+   template <typename, typename> struct result {typedef void type;};
+   vpopt_vrange_adder(TypeVector &vpt) : vp_typedefs(vpt) {}
+
+   void operator()(unsigned int nBegin, unsigned int nEnd) const
+   {
+      TypeVector::reverse_iterator ii;
+
+      ii = vp_typedefs.rbegin();
+
+//      (*ii)->add_range(nBegin, nEnd);
+   };
+
+   TypeVector &vp_typedefs;
+};
+
 struct vptype_option_adder
 {
    template <typename> struct result {typedef void type;};
@@ -839,6 +856,7 @@ struct vp_compiler : qi::grammar<Iterator, ascii::space_type>
    function<version_sequence_adder> version_sequence_add;
    function<typedef_vrange_adder> typedef_vrange_add;
    function<vptype_option_adder> vptype_option_add;
+   function<vpopt_vrange_adder> vpopt_vrange_add;
    function<vptype_opt_class_adder> vptype_opt_class_add;
 };
 
@@ -861,6 +879,7 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
    , version_sequence_add(vp_typedefs)
    , typedef_vrange_add(vp_typedefs)
    , vptype_option_add(vp_typedefs)
+   , vpopt_vrange_add(vp_typedefs)
    , vptype_opt_class_add(vptype_opt_class_adder(vp_typedefs))
    , vpc_path(vpc_path)
 {
@@ -914,7 +933,8 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
                | qi::attr(("unspecified"))
             ;
 
-   vptype_option_vrange = (uint_ >> lit("-") >> uint_) | uint_ ;
+   vptype_option_vrange = (uint_ >>"-">> uint_)[vpopt_vrange_add(_1, _2)]
+                           | uint_[vpopt_vrange_add(_1, 0)] ;
 
    item_varint = lit("varint") >> identifier[pod_item_varint_add(_1)]
                         >> version_sequence;
@@ -955,10 +975,8 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
    pod_parent = (lit("is") >> var_ref)[subclass_to_parent_add(_1)]
                   | qi::attr(("unspecified"));
 
-   // TODO: implement vptype_option_vrange support
-
-   vptype_options_item_params = "(" >> identifier[vptype_opt_class_add(_1)]
-                              >> -vptype_option_vrange >> lit(")") ;
+   vptype_options_item_params = "(">> identifier[vptype_opt_class_add(_1)]
+                              >> -vptype_option_vrange >>")" ;
    vptype_options_item = identifier [vptype_option_add(_1)]
                            >> vptype_options_item_params;
    vptype_options_list = vptype_options_item
