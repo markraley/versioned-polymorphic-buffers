@@ -764,11 +764,10 @@ struct vpopt_vrange_adder
 
    void operator()(unsigned int nBegin, unsigned int nEnd) const
    {
-      TypeVector::reverse_iterator ii;
-
-      ii = vp_typedefs.rbegin();
-
-//      (*ii)->add_range(nBegin, nEnd);
+      auto ii = vp_typedefs.rbegin();
+      auto jj = (*ii)->vptype_options.rbegin();
+      (*jj).vrange.nBegin = nBegin;
+      (*jj).vrange.nEnd = nEnd;
    };
 
    TypeVector &vp_typedefs;
