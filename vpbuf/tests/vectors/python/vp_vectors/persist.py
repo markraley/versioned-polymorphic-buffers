@@ -58,6 +58,13 @@ class OuterF:
 
 # ------------------------------------------------------------------------------
 
+class IdentityScrambler:
+    def __init__(self, base_arr = [], seed = 1):
+        self.base_arr = base_arr
+
+    def __call__(self):
+        return self.base_arr
+
 class EggScrambler:
     def __init__(self, base_arr = [], seed = 1):
         self.base_arr = base_arr

@@ -107,7 +107,7 @@ class IdentityReorderCog : public ReorderCog {
       vector <int> base_list;
 
    public:
-      IdentityReorderCog(vector <int> &v) : base_list(v) { };
+      IdentityReorderCog(vector <int> const &v) : base_list(v) { };
 
       vector<int> operator ()() {
          return base_list;
@@ -120,7 +120,9 @@ class EggScrambler : public ReorderCog {
       uint seed;
 
    public:
-      EggScrambler(vector <int> &v, uint seed = 1) : base_arr(v), seed(seed) { };
+      EggScrambler(
+         vector <int> const &v,
+         uint seed = 1) : base_arr(v), seed(seed) { };
 
       vector<int> operator ()() {
          auto tmp(base_arr);

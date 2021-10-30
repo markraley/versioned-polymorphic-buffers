@@ -47,7 +47,7 @@ namespace vp_vectors {
 			}
 		};
 
-		return NULL;
+		return(new IdentityReorderCog(get_vlist_A(ver)));
 	}
 
 	void write_Header(write_context &ctx, Header &payload)

@@ -36,7 +36,7 @@ module.exports = {
 			if ((p[1] == 0 && ver >= p[0]) || (ver >= p[0] && ver <= p[1]))
 				return [p[2], p[3](this.get_vlist_A(ver))]
 		}
-		return []
+		return ['ident', persist.IdentityScrambler(this.get_vlist_A(ver))]
 	},
 
 	write_String: function(ctx, payload) {

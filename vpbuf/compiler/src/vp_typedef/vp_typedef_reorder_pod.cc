@@ -134,7 +134,8 @@ void vp_typedef_reorder_pod::gen_cpp_utils(
    ofs <<tab(in+1)<< "};\n\n";
 
 
-   ofs <<tab(in+1)<< "return NULL;\n";
+   ofs <<tab(in+1)<< "return(new IdentityReorderCog(get_vlist_"
+                           << type_name <<"(ver)));\n";
    ofs <<tab(in)<< "}\n\n";
 
 }
@@ -209,7 +210,8 @@ void vp_typedef_reorder_pod::gen_js_utils(
                      << type_name <<"(ver))]\n";
    ofs <<tab(in+1)<< "}\n";
 
-   ofs <<tab(in+1)<< "return []\n";
+   ofs <<tab(in+1)<<"return ['ident', persist.IdentityScrambler(this.get_vlist_"
+                     << type_name <<"(ver))]\n";
 
    ofs <<tab(in)<< "},\n\n";
 
@@ -386,10 +388,13 @@ void vp_typedef_reorder_pod::gen_py_utils(
    ofs <<tab(in+3)<< "return [p[2], p[3](get_vlist_"
                            << type_name <<"(ver))]\n";
 
-   ofs <<tab(in+1)<< "return None\n";
+   ofs <<tab(in+1)<< "return ['ident', IdentityScrambler(get_vlist_"
+                           << type_name <<"(ver))]\n";
 
    ofs << "\n";
 }
+
+// --- python ------------------------------------------------------------------
 
 void
 vp_typedef_reorder_pod::serialize_out_py(

@@ -57,10 +57,9 @@ module.exports = {
 
 // -----------------------------------------------------------------------------
 
-    flip: function(base_arr) {
+    IdentityScrambler: function(base_arr) {
         return function() {
             var tmp = base_arr.slice()
-            base_arr.reverse()
             return tmp
         }
     },

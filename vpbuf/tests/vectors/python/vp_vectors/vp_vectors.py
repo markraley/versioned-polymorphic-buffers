@@ -38,7 +38,7 @@ def get_rlist_A(ver):
 	for p in rlist_A:
 		if (p[1] == 0 and ver >= p[0]) or (ver >= p[0] and ver <= p[1]):
 			return [p[2], p[3](get_vlist_A(ver))]
-	return None
+	return ['ident', IdentityScrambler(get_vlist_A(ver))]
 
 def write_str(ctx, payload):
     ctx.encoder.writeString(payload) # amf3
