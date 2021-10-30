@@ -102,7 +102,7 @@ class read_context {
 class write_context {
    public:
       map<string, ReorderCog *> reorder_map;
-      map<string, Salt *> salt_map;
+      map<string, Shaker *> salt_map;
       long m_ver;
       std::vector<byte> buf_arr;
 

@@ -92,27 +92,25 @@ class ReorderCog {
 
 ReorderCog::~ReorderCog() {}
 
-class Salt {
+class Shaker {
    public:
       virtual string operator ()() = 0;
-      virtual ~Salt();
+      virtual ~Shaker();
 };
 
-Salt::~Salt() {}
+Shaker::~Shaker() {}
 
 // -----------------------------------------------------------------------------
 
-class flip : public ReorderCog {
+class IdentityReorderCog : public ReorderCog {
    public:
       vector <int> base_list;
 
    public:
-      flip(vector <int> &v) : base_list(v) { };
+      IdentityReorderCog(vector <int> &v) : base_list(v) { };
 
       vector<int> operator ()() {
-         auto tmp(base_list);
-         reverse(base_list.begin(), base_list.end());
-         return tmp;
+         return base_list;
       }
 };
 
@@ -154,7 +152,7 @@ class EggScrambler : public ReorderCog {
 // -----------------------------------------------------------------------------
 
 
-class SaltShaker : public Salt {
+class SaltShaker : public Shaker {
    public:
       int seed;
       SaltShaker(int seed = 1) : seed(seed) {};
@@ -167,7 +165,7 @@ class SaltShaker : public Salt {
 
 };
 
-class PepperShaker : public Salt {
+class PepperShaker : public Shaker {
    public:
       int seed;
       PepperShaker(int seed = 1) : seed(seed) {};
