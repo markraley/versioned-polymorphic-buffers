@@ -894,23 +894,17 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
    using boost::phoenix::push_back;
    using boost::phoenix::ref;
 
-   // When adding an intrinsic type
-   //    be sure to modify both sections of code below.
-
-   // Section #1
+   // add intrinsics
 
    vars.add("string", nvars++);
-   vars.add("varint", nvars++);
-
-   // Section #2
-
    vp_typedefs.push_back(new vp_typedef_string());
    (*vp_typedefs.rbegin())->type_name = "string";
 
+   vars.add("varint", nvars++);
    vp_typedefs.push_back(new vp_typedef_varint());
    (*vp_typedefs.rbegin())->type_name = "varint";
 
-   // end Sections
+   // grammar
 
    identifier = raw[lexeme[alpha >> *(alnum | '_')]];
    quoted_string = lit('"') >> raw[lexeme[+(char_ - '"')]] >> lit('"');
@@ -940,7 +934,7 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
    item_string = lit("string") >> identifier[pod_item_string_add(_1)]
                         >> version_sequence;
    item_salt = "salt">> (identifier >>"(">> uint_
-                        >>",">> var_ref) [pod_item_salt_add(_1, _2, _3)]
+                        >> var_ref) [pod_item_salt_add(_1, _2, _3)]
                         >>")">> -version_sequence;
 
    item_map = lit("map") >> (identifier >> var_ref >> identifier)

@@ -9,9 +9,8 @@ pod Header
 rpod A  : h1 (EggScrambler)
     varint i1 1
     string s1 1
-    salt SaltShaker (1, string)
-    salt PepperShaker (1, string)
-
+    salt SaltShaker (1 string)
+    salt PepperShaker (1 string)
 
 pod OuterA
     vector *A v 1
