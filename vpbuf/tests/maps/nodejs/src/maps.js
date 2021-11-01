@@ -38,7 +38,8 @@ const out_dir = './out/';
                 this.a.lookup[j] = new persist.A(j, 'A-' + j);
             }
 
-            write_context.buf_arr = [];
+            write_context.init(1);
+
             vp.write_Header(write_context, this.h);
             vp.write_OuterA(write_context, this.a);
 
@@ -49,8 +50,7 @@ const out_dir = './out/';
         },
 
         on_read_complete: function(data) {
-            read_context.dv = new DataView(tools.toArrayBuffer(data));
-            read_context.cur_pos = 0;
+            read_context.init(data, 1);
 
             Test_maps_A.hh = vp.read_Header(read_context);
             Test_maps_A.aa = vp.read_OuterA(read_context);
@@ -96,7 +96,8 @@ const out_dir = './out/';
                 this.b.lookup['' + j] = new persist.A(j, 'B-' + j)
             }
 
-            write_context.buf_arr = [];
+            write_context.init(1);
+
             vp.write_Header(write_context, this.h);
             vp.write_OuterB(write_context, this.b);
 
@@ -107,8 +108,7 @@ const out_dir = './out/';
         },
 
         on_read_complete: function(data) {
-            read_context.dv = new DataView(tools.toArrayBuffer(data));
-            read_context.cur_pos = 0;
+            read_context.init(data, 1);
 
             Test_maps_B.hh = vp.read_Header(read_context);
             Test_maps_B.bb = vp.read_OuterB(read_context);
@@ -154,7 +154,8 @@ const out_dir = './out/';
                 this.c.lookup[j] = 'C-' + j;
             }
 
-            write_context.buf_arr = [];
+            write_context.init(1);
+
             vp.write_Header(write_context, this.h);
             vp.write_OuterC(write_context, this.c);
 
@@ -165,8 +166,7 @@ const out_dir = './out/';
         },
 
         on_read_complete: function(data) {
-            read_context.dv = new DataView(tools.toArrayBuffer(data));
-            read_context.cur_pos = 0;
+            read_context.init(data, 1);
 
             Test_map_C.hh = vp.read_Header(read_context);
             Test_map_C.cc = vp.read_OuterC(read_context);
@@ -212,7 +212,8 @@ const out_dir = './out/';
                 this.b.lookup['' + j] = new persist.D1(j, 'D1-' + j)
             }
 
-            write_context.buf_arr = [];
+            write_context.init(1);
+
             vp.write_Header(write_context, this.h);
             vp.write_OuterD(write_context, this.b);
 
@@ -223,8 +224,7 @@ const out_dir = './out/';
         },
 
         on_read_complete: function(data) {
-            read_context.dv = new DataView(tools.toArrayBuffer(data));
-            read_context.cur_pos = 0;
+            read_context.init(data, 1);
 
             Test_maps_D.hh = vp.read_Header(read_context);
             Test_maps_D.bb = vp.read_OuterD(read_context);
