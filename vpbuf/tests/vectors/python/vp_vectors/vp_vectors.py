@@ -17,8 +17,6 @@ def init_reorder_map(map, ver):
 
 vlist_A = [
 	( 1, 0 ),
-	( 1, 0 ),
-	( 1, 0 ),
 	( 1, 0 )
 ]
 
@@ -31,7 +29,6 @@ def get_vlist_A(ver):
 	return v
 
 rlist_A = [
-	( 1, 0, 'h1', EggScrambler )
 ]
 
 def get_rlist_A(ver):
@@ -56,10 +53,6 @@ def write_A(ctx, payload):
 			write_int(ctx, payload.i1)
 		elif i==1:
 			write_str(ctx, payload.s1)
-		elif i==2:
-			write_str(ctx, ctx.salt_map['SaltShaker']())
-		elif i==3:
-			write_str(ctx, ctx.salt_map['PepperShaker']())
 
 def write_OuterA(ctx, payload):
 	count = len(payload.v)
@@ -158,10 +151,6 @@ def read_A(ctx):
 			payload.i1 = read_int(ctx)
 		elif i==1:
 			payload.s1 = read_str(ctx)
-		elif i==2:
-			v = read_str(ctx)
-		elif i==3:
-			v = read_str(ctx)
 	return payload
 
 def read_OuterA(ctx):

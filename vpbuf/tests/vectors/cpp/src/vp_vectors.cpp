@@ -14,18 +14,13 @@ namespace vp_vectors {
 
 	vector<tuple<int, int>> vlist_A = {
 		{ 1, 0 },
-		{ 1, 0 },
-		{ 1, 0 },
 		{ 1, 0 }
 	};
 
 	vector<tuple<int, int, string>> rlist_A = {
-		{ 1, 0, "h1"}
 	};
 
 	ReorderCog *rcog_factory_A(string &n, vector<int> v) {
-		if (n == "h1")
-			return new EggScrambler(v);
 		return(NULL);
 	}
 
@@ -67,12 +62,6 @@ namespace vp_vectors {
 				break;
 				case 1:
 				write_string(ctx, payload.s1);
-				break;
-				case 2:
-				write_string(ctx, (*ctx.salt_map["SaltShaker"])());
-				break;
-				case 3:
-				write_string(ctx, (*ctx.salt_map["PepperShaker"])());
 				break;
 			}
 	}
@@ -171,12 +160,6 @@ namespace vp_vectors {
 					break;
 				case 1:
 					read_string(ctx, payload.s1);
-					break;
-				case 2:
-					read_string(ctx);
-					break;
-				case 3:
-					read_string(ctx);
 					break;
 			}
 	}

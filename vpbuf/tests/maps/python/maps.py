@@ -32,9 +32,14 @@ class write_context:
         self.stream = amf3.util.BufferedByteStream()
         self.encoder = amf3.Encoder(self.stream)
         self.encoder.string_references = False # disables string caching
+
         self.reorder_map = {}
         self.ver = ver
         self.set_version(ver)
+
+        self.salt_map = {}
+        self.salt_map["SaltShaker"] = SaltShaker(ver)
+        self.salt_map["PepperShaker"] = PepperShaker(ver)
 
     def set_version(self, ver):
         self.ver = ver

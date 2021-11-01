@@ -6,6 +6,37 @@ module.exports = {
 	factory: null, // must be set to class factory object
 
 	init_reorder_map: function(map, ver) {
+		map['A'] = this.get_rlist_A(ver)
+	},
+
+	vlist_A: [
+		[ 1, 0 ],
+		[ 1, 0 ],
+		[ 1, 0 ],
+		[ 1, 0 ]
+	],
+
+	get_vlist_A: function(ver) {
+		var v = [];
+		this.vlist_A.forEach(function(p, i) {
+			if ((p[1] == 0 && ver >= p[0]) || (ver >= p[0] && ver <= p[1])) {
+				v.push(i);
+			}
+		});
+		return v;
+	},
+
+	rlist_A: [
+		[ 1, 0, 'h1', persist.EggScrambler ]
+	],
+
+	get_rlist_A: function (ver) {
+		for (var i = 0; i < this.rlist_A.length; i++) {
+			var p = this.rlist_A[i]
+			if ((p[1] == 0 && ver >= p[0]) || (ver >= p[0] && ver <= p[1]))
+				return [p[2], p[3](this.get_vlist_A(ver))]
+		}
+		return ['ident', persist.IdentityScrambler(this.get_vlist_A(ver))]
 	},
 
 	write_String: function(ctx, payload) {
@@ -22,8 +53,22 @@ module.exports = {
 	},
 
 	write_A: function(ctx, payload) {
-		ctx.write_Integer(payload.i1);
-		ctx.write_String(payload.s1);
+		var v = ctx.reorder_map['A'][1]();
+		for (var i = 0; i < v.length; i++)
+			switch(v[i]) {
+				case 0:
+				ctx.write_Integer(payload.i1);
+				break;
+				case 1:
+				ctx.write_String(payload.s1);
+				break;
+				case 2:
+				ctx.write_String(ctx.salt_map['SaltShaker']());
+				break;
+				case 3:
+				ctx.write_String(ctx.salt_map['PepperShaker']());
+				break;
+			};
 	},
 
 	write_OuterA: function(ctx, payload) {
@@ -82,8 +127,22 @@ module.exports = {
 
 	read_A: function(ctx) {
 		var payload = new this.factory.A();
-		payload.i1 = ctx.read_Integer();
-		payload.s1 = ctx.read_String();
+		var v = ctx.reorder_map['A'][1]();
+		for (var i = 0; i < v.length; i++)
+			switch(v[i]) {
+				case 0:
+				payload.i1 = ctx.read_Integer();
+				break;
+				case 1:
+				payload.s1 = ctx.read_String();
+				break;
+				case 2:
+				this.read_String(ctx);
+				break;
+				case 3:
+				this.read_String(ctx);
+				break;
+			};
 		return payload;
 	},
 

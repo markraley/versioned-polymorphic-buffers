@@ -102,6 +102,7 @@ class read_context {
 class write_context {
    public:
       map<string, ReorderCog *> reorder_map;
+      map<string, Shaker *> salt_map;
       long m_ver;
       std::vector<byte> buf_arr;
 
@@ -111,6 +112,10 @@ class write_context {
          else {
             m_ver = version;
             init_reorder_map(reorder_map, version);
+
+            salt_map["SaltShaker"] = new SaltShaker(version);
+            salt_map["PepperShaker"] = new PepperShaker(version);
+
             return true;
          }
       }
@@ -164,7 +169,7 @@ void read_int(long nVersion, read_context &rc, int &i)
 
 // -----------------------------------------------------------------------------
 
-void write_string(write_context &wc, const std::string &s)
+void write_string(write_context &wc, std::string const &s)
 {
    pushInteger(wc.buf_arr, (int) 6);  // tag
    pushInteger(wc.buf_arr, (s.length() << 1) | 0x1);
@@ -172,7 +177,7 @@ void write_string(write_context &wc, const std::string &s)
       wc.buf_arr.push_back(s[j]);
 }
 
-void write_string(long nVersion, write_context &wc, const std::string &s)
+void write_string(long nVersion, write_context &wc, std::string const &s)
 {
    pushInteger(wc.buf_arr, (int) 6);  // tag
    pushInteger(wc.buf_arr, (s.length() << 1) | 0x1);
@@ -196,6 +201,27 @@ void read_string(read_context &rc, std::string &s)
       c = (char) (*rc.ii++);
       s.push_back(c);
    }
+}
+
+std::string read_string(read_context &rc)
+{
+   int tag = 0;
+   int str_len = 0;
+   std::string s;
+
+   pullInteger(rc.ii, rc.buf_arr.cend(), tag, 1);
+   pullInteger(rc.ii, rc.buf_arr.cend(), str_len);
+
+   s = "";
+   str_len = str_len >> 1;
+
+   for (int k = 0; k < str_len; k++) {
+      char c;
+      c = (char) (*rc.ii++);
+      s.push_back(c);
+   }
+
+   return s;
 }
 
 void read_string(long nVersion, read_context &rc, std::string &s)

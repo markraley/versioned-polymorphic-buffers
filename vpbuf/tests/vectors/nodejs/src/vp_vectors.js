@@ -11,8 +11,6 @@ module.exports = {
 
 	vlist_A: [
 		[ 1, 0 ],
-		[ 1, 0 ],
-		[ 1, 0 ],
 		[ 1, 0 ]
 	],
 
@@ -27,7 +25,6 @@ module.exports = {
 	},
 
 	rlist_A: [
-		[ 1, 0, 'h1', persist.EggScrambler ]
 	],
 
 	get_rlist_A: function (ver) {
@@ -61,12 +58,6 @@ module.exports = {
 				break;
 				case 1:
 				ctx.write_String(payload.s1);
-				break;
-				case 2:
-				ctx.write_String(ctx.salt_map['SaltShaker']());
-				break;
-				case 3:
-				ctx.write_String(ctx.salt_map['PepperShaker']());
 				break;
 			};
 	},
@@ -160,12 +151,6 @@ module.exports = {
 				break;
 				case 1:
 				payload.s1 = ctx.read_String();
-				break;
-				case 2:
-				this.read_String(ctx);
-				break;
-				case 3:
-				this.read_String(ctx);
 				break;
 			};
 		return payload;
