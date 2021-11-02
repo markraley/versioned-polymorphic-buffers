@@ -7,11 +7,10 @@ module.exports = {
 
 	init_reorder_map: function(map, ver) {
 		map['A'] = this.get_rlist_A(ver)
+		map['Egg'] = this.get_rlist_Egg(ver)
 	},
 
 	vlist_A: [
-		[ 1, 0 ],
-		[ 1, 0 ],
 		[ 1, 0 ],
 		[ 1, 0 ]
 	],
@@ -27,7 +26,6 @@ module.exports = {
 	},
 
 	rlist_A: [
-		[ 1, 0, 'h1', persist.EggScrambler ]
 	],
 
 	get_rlist_A: function (ver) {
@@ -37,6 +35,36 @@ module.exports = {
 				return [p[2], p[3](this.get_vlist_A(ver))]
 		}
 		return ['ident', persist.IdentityScrambler(this.get_vlist_A(ver))]
+	},
+
+	vlist_Egg: [
+		[ 1, 0 ],
+		[ 1, 0 ],
+		[ 1, 0 ],
+		[ 1, 0 ]
+	],
+
+	get_vlist_Egg: function(ver) {
+		var v = [];
+		this.vlist_Egg.forEach(function(p, i) {
+			if ((p[1] == 0 && ver >= p[0]) || (ver >= p[0] && ver <= p[1])) {
+				v.push(i);
+			}
+		});
+		return v;
+	},
+
+	rlist_Egg: [
+		[ 1, 0, 'h1', persist.EggScrambler ]
+	],
+
+	get_rlist_Egg: function (ver) {
+		for (var i = 0; i < this.rlist_Egg.length; i++) {
+			var p = this.rlist_Egg[i]
+			if ((p[1] == 0 && ver >= p[0]) || (ver >= p[0] && ver <= p[1]))
+				return [p[2], p[3](this.get_vlist_Egg(ver))]
+		}
+		return ['ident', persist.IdentityScrambler(this.get_vlist_Egg(ver))]
 	},
 
 	write_String: function(ctx, payload) {
@@ -61,12 +89,6 @@ module.exports = {
 				break;
 				case 1:
 				ctx.write_String(payload.s1);
-				break;
-				case 2:
-				ctx.write_String(ctx.salt_map['SaltShaker']());
-				break;
-				case 3:
-				ctx.write_String(ctx.salt_map['PepperShaker']());
 				break;
 			};
 	},
@@ -110,6 +132,33 @@ module.exports = {
 		}
 	},
 
+	write_Egg: function(ctx, payload) {
+		var v = ctx.reorder_map['Egg'][1]();
+		for (var i = 0; i < v.length; i++)
+			switch(v[i]) {
+				case 0:
+				ctx.write_Integer(payload.i1);
+				break;
+				case 1:
+				ctx.write_String(payload.s1);
+				break;
+				case 2:
+				ctx.write_String(ctx.salt_map['SaltShaker']());
+				break;
+				case 3:
+				ctx.write_String(ctx.salt_map['PepperShaker']());
+				break;
+			};
+	},
+
+	write_Omlette: function(ctx, payload) {
+		ctx.write_Integer(Object.keys(payload.lookup).length)
+		for (const [k, v] of Object.entries(payload.lookup)) {
+			this.write_Integer(ctx, k)
+			this.write_Egg(ctx, v)
+		}
+	},
+
 	read_String: function(ctx) {
 		return ctx.read_String();
 	},
@@ -135,12 +184,6 @@ module.exports = {
 				break;
 				case 1:
 				payload.s1 = ctx.read_String();
-				break;
-				case 2:
-				this.read_String(ctx);
-				break;
-				case 3:
-				this.read_String(ctx);
 				break;
 			};
 		return payload;
@@ -201,6 +244,40 @@ module.exports = {
 		for (var i = 0; i < count; i++) {
 			var k = this.read_String(ctx)
 			var t = this.read_D1(ctx)
+			payload.lookup[k] = t
+		}
+
+		return payload;
+	},
+
+	read_Egg: function(ctx) {
+		var payload = new this.factory.Egg();
+		var v = ctx.reorder_map['Egg'][1]();
+		for (var i = 0; i < v.length; i++)
+			switch(v[i]) {
+				case 0:
+				payload.i1 = ctx.read_Integer();
+				break;
+				case 1:
+				payload.s1 = ctx.read_String();
+				break;
+				case 2:
+				this.read_String(ctx);
+				break;
+				case 3:
+				this.read_String(ctx);
+				break;
+			};
+		return payload;
+	},
+
+	read_Omlette: function(ctx) {
+		var payload = new this.factory.Omlette();
+		payload.lookup = {}
+		var count = ctx.read_Integer()
+		for (var i = 0; i < count; i++) {
+			var k = ctx.read_Integer()
+			var t = this.read_Egg(ctx)
 			payload.lookup[k] = t
 		}
 

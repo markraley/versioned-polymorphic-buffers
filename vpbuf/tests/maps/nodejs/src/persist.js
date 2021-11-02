@@ -50,6 +50,15 @@ module.exports = {
         this.s1 = s2;
     },
 
+    Egg: function (i1 = 1, s1 = "not set") {
+        this.i1 = i1;
+        this.s1 = s1;
+    },
+
+    Omlette: function() {
+        this.lookup = {}
+    },
+
 // -----------------------------------------------------------------------------
 
     IdentityScrambler: function(base_arr) {

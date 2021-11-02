@@ -14,18 +14,13 @@ namespace vp_maps {
 
 	vector<tuple<int, int>> vlist_A = {
 		{ 1, 0 },
-		{ 1, 0 },
-		{ 1, 0 },
 		{ 1, 0 }
 	};
 
 	vector<tuple<int, int, string>> rlist_A = {
-		{ 1, 0, "h1"}
 	};
 
 	ReorderCog *rcog_factory_A(string &n, vector<int> v) {
-		if (n == "h1")
-			return new EggScrambler(v);
 		return(NULL);
 	}
 
@@ -50,6 +45,44 @@ namespace vp_maps {
 		return(new IdentityReorderCog(get_vlist_A(ver)));
 	}
 
+	vector<tuple<int, int>> vlist_Egg = {
+		{ 1, 0 },
+		{ 1, 0 },
+		{ 1, 0 },
+		{ 1, 0 }
+	};
+
+	vector<tuple<int, int, string>> rlist_Egg = {
+		{ 1, 0, "h1"}
+	};
+
+	ReorderCog *rcog_factory_Egg(string &n, vector<int> v) {
+		if (n == "h1")
+			return new EggScrambler(v);
+		return(NULL);
+	}
+
+	vector<int> get_vlist_Egg(int ver) {
+		vector<int> v; int i = 0;
+		for (auto tt = vlist_Egg.begin(); tt != vlist_Egg.end(); tt++, i++) {
+			if ((get<1>(*tt) == 0 && ver >= get<0>(*tt)) || (ver >= get<0>(*tt) && ver <= get<1>(*tt))) {
+				v.push_back(i);
+			}
+		};
+
+		return v;
+	}
+
+	ReorderCog *get_rcog_Egg(int ver) {
+		for (auto tt = rlist_Egg.begin(); tt != rlist_Egg.end(); tt++) {
+			if ((get<1>(*tt) == 0 && ver >= get<0>(*tt)) || (ver >= get<0>(*tt) && ver <= get<1>(*tt))) {
+				return rcog_factory_Egg(get<2>(*tt), get_vlist_Egg(ver));
+			}
+		};
+
+		return(new IdentityReorderCog(get_vlist_Egg(ver)));
+	}
+
 	void write_Header(write_context &ctx, Header &payload)
 	{
 		write_int(ctx, payload.version);
@@ -67,12 +100,6 @@ namespace vp_maps {
 				break;
 				case 1:
 				write_string(ctx, payload.s1);
-				break;
-				case 2:
-				write_string(ctx, (*ctx.salt_map["SaltShaker"])());
-				break;
-				case 3:
-				write_string(ctx, (*ctx.salt_map["PepperShaker"])());
 				break;
 			}
 	}
@@ -121,6 +148,36 @@ namespace vp_maps {
 		}
 	}
 
+	void write_Egg(write_context &ctx, Egg &payload)
+	{
+		vector<int> v((*ctx.reorder_map["Egg"])());
+
+		for (auto i : v) 
+			switch(i) {
+				case 0:
+				write_int(ctx, payload.i1);
+				break;
+				case 1:
+				write_string(ctx, payload.s1);
+				break;
+				case 2:
+				write_string(ctx, (*ctx.salt_map["SaltShaker"])());
+				break;
+				case 3:
+				write_string(ctx, (*ctx.salt_map["PepperShaker"])());
+				break;
+			}
+	}
+
+	void write_Omlette(write_context &ctx, Omlette &payload)
+	{
+		write_int(ctx, payload.lookup.size());
+		for (auto ii = payload.lookup.begin();ii != payload.lookup.end(); ii++) {
+			write_int(ctx, ii->first);
+			write_Egg(ctx, *(ii->second));
+		}
+	}
+
 	void read_Header(read_context &ctx, Header &payload)
 	{
 		read_int(ctx, payload.version);
@@ -138,12 +195,6 @@ namespace vp_maps {
 					break;
 				case 1:
 					read_string(ctx, payload.s1);
-					break;
-				case 2:
-					read_string(ctx);
-					break;
-				case 3:
-					read_string(ctx);
 					break;
 			}
 	}
@@ -213,8 +264,44 @@ namespace vp_maps {
 
 	}
 
+	void read_Egg(read_context &ctx, Egg &payload)
+	{
+		vector<int> v((*ctx.reorder_map["Egg"])());
+
+		for (auto i : v) 
+			switch(i) {
+				case 0:
+					read_int(ctx, payload.i1);
+					break;
+				case 1:
+					read_string(ctx, payload.s1);
+					break;
+				case 2:
+					read_string(ctx);
+					break;
+				case 3:
+					read_string(ctx);
+					break;
+			}
+	}
+
+	void read_Omlette(read_context &ctx, Omlette &payload)
+	{
+		int count_lookup;
+		read_int(ctx, count_lookup);
+		for (auto i = 0; i < count_lookup; i++) {
+			int k;
+			read_int(ctx, k);
+			auto *v = new Egg;
+			read_Egg(ctx, *v);
+			payload.lookup[k] = v;
+		}
+
+	}
+
 	void init_reorder_map(map<string, ReorderCog *> &rmap, int ver) {
 		rmap["A"] = get_rcog_A(ver);
+		rmap["Egg"] = get_rcog_Egg(ver);
 	}
 
 }

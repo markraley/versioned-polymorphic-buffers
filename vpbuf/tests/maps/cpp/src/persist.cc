@@ -85,6 +85,18 @@ class OuterG {
       std::vector<Base *> v;
 };
 
+class Egg {
+   public:
+      Egg(int i = -1, string s = "not set") : i1(i), s1(s) {}
+      int i1;
+      string s1;
+};
+
+class Omlette {
+   public:
+      map<int, Egg *> lookup;
+};
+
 // -----------------------------------------------------------------------------
 
 class ReorderCog {

@@ -261,6 +261,62 @@ int main(int argc, char* argv[])
    }
 
    // ------------------------------------------------------------------
+   // maps_E -
+
+   {
+      string test_id_str = "maps_E";
+      int count = 10;
+      int base = 50000;
+
+      Header h1;
+      Omlette o1;
+
+      {
+         // initialize test data structures and write to file
+         write_context wc(1);
+
+         h1.version = -99;
+         h1.test_name = test_id_str;
+
+
+         for (auto i = 0; i < count; i++) {
+            o1.lookup[base + i] = new Egg(base + i,
+                                          "EGG-" + std::to_string(base + i));
+         }
+
+         write_Header(wc, h1);
+         write_Omlette(wc, o1);
+
+         size_t bytes_out = wc.write_file(out_dir + test_id_str + file_ext);
+         std::cout << test_id_str <<" "<< bytes_out <<" bytes written\n";
+      }
+
+      Header h2;
+      Omlette o2;
+
+      {
+         // read the file just written
+         read_context rc(out_dir + test_id_str + file_ext, 1);
+
+         read_Header(rc, h2);
+         read_Omlette(rc, o2);
+
+         std::cout << test_id_str <<" "<< rc.get_buffer_size() <<" bytes read\n";
+      }
+
+      // compare data written against data read in
+
+      assert(h1.version == h2.version);
+      assert(h1.test_name == h2.test_name);
+      assert(o1.lookup.size() == o2.lookup.size());
+      for (auto ii = o1.lookup.begin();ii != o1.lookup.end(); ii++) {
+         auto p = o2.lookup[ii->first];
+         assert((ii->second)->s1 == p->s1);
+         assert((ii->second)->i1 == p->i1);
+      }
+   }
+
+   // ------------------------------------------------------------------
 
 }
 

@@ -55,6 +55,15 @@ class OuterD:
     def __init__(self):
         self.lookup = {}
 
+class Egg:
+    def __init__(self, i = 0, s = "not set"):
+        self.i1 = i
+        self.s1 = s
+
+class Omlette:
+    def __init__(self):
+        self.lookup = {}
+
 # ------------------------------------------------------------------------------
 
 class IdentityScrambler:

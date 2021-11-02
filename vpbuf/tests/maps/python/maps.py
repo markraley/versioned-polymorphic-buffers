@@ -331,3 +331,68 @@ a.validate()
 
 # ------------------------------------------------------------------------------
 
+# ------------------------------------------------------------------------------
+# maps_E -
+
+class Test_maps_E:
+    def __init__(self):
+        self.test_name = "maps_E"
+        self.count = 10
+        self.base = 50000
+
+        self.h1 = Header()  # initialized and then serialized
+        self.o1 = Omlette()
+
+        self.h2 = Header()  # deserialized and validated
+        self.o2 = Omlette()
+
+        self.bytes_read = 0
+        self.bytes_written = 0
+
+    # initialize the data structures under test and serialize
+
+    def serialize(self):
+        wc = write_context()
+
+        self.h1.version = -99
+        self.h1.test_name = self.test_name
+
+        for i in range(0, self.count):
+            j = self.base + i
+            self.o1.lookup[j] = Egg(j, 'EGG-' + str(j))
+
+        write_Header(wc, self.h1)
+        write_Omlette(wc, self.o1)
+
+        out_file = out_dir + self.test_name + file_ext
+        self.bytes_written = buffer_to_file(out_file, wc.encoder)
+
+        print(self.test_name, self.bytes_written, 'bytes written')
+
+    # deserialize the data structures under test
+
+    def load(self):
+        rc = read_context(self.test_name)
+
+        self.h2 = read_Header(rc)
+        self.o2 = read_Omlette(rc)
+
+        self.bytes_read = rc.bytes_read
+
+    # compare the serialized and deserialized data structures against each other
+
+    def validate(self):
+        assert(self.h1.version == self.h2.version)
+        assert(self.h1.test_name == self.h2.test_name)
+        assert(self.bytes_read == self.bytes_written)
+
+        assert(len(self.o1.lookup) == len(self.o2.lookup))
+
+        for k in self.o1.lookup.keys():
+            assert(self.o1.lookup[k].i1 == self.o2.lookup[k].i1)
+            assert(self.o1.lookup[k].s1 == self.o2.lookup[k].s1)
+
+e = Test_maps_E()
+e.serialize()
+e.load()
+e.validate()

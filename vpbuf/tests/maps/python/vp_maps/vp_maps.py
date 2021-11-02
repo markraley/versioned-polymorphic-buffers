@@ -14,10 +14,9 @@ def get_low_version():
 
 def init_reorder_map(map, ver):
 	map['A'] = get_rlist_A(ver)
+	map['Egg'] = get_rlist_Egg(ver)
 
 vlist_A = [
-	( 1, 0 ),
-	( 1, 0 ),
 	( 1, 0 ),
 	( 1, 0 )
 ]
@@ -31,7 +30,6 @@ def get_vlist_A(ver):
 	return v
 
 rlist_A = [
-	( 1, 0, 'h1', EggScrambler )
 ]
 
 def get_rlist_A(ver):
@@ -39,6 +37,31 @@ def get_rlist_A(ver):
 		if (p[1] == 0 and ver >= p[0]) or (ver >= p[0] and ver <= p[1]):
 			return [p[2], p[3](get_vlist_A(ver))]
 	return ['ident', IdentityScrambler(get_vlist_A(ver))]
+
+vlist_Egg = [
+	( 1, 0 ),
+	( 1, 0 ),
+	( 1, 0 ),
+	( 1, 0 )
+]
+
+def get_vlist_Egg(ver):
+	c, v = 0, []
+	for p in vlist_Egg:
+		if (p[1] == 0 and ver >= p[0]) or (ver >= p[0] and ver <= p[1]):
+			v.append(c)
+			c += 1
+	return v
+
+rlist_Egg = [
+	( 1, 0, 'h1', EggScrambler )
+]
+
+def get_rlist_Egg(ver):
+	for p in rlist_Egg:
+		if (p[1] == 0 and ver >= p[0]) or (ver >= p[0] and ver <= p[1]):
+			return [p[2], p[3](get_vlist_Egg(ver))]
+	return ['ident', IdentityScrambler(get_vlist_Egg(ver))]
 
 def write_str(ctx, payload):
     ctx.encoder.writeString(payload) # amf3
@@ -56,10 +79,6 @@ def write_A(ctx, payload):
 			write_int(ctx, payload.i1)
 		elif i==1:
 			write_str(ctx, payload.s1)
-		elif i==2:
-			write_str(ctx, ctx.salt_map['SaltShaker']())
-		elif i==3:
-			write_str(ctx, ctx.salt_map['PepperShaker']())
 
 def write_OuterA(ctx, payload):
 	write_int(ctx, len(payload.lookup))
@@ -91,6 +110,23 @@ def write_OuterD(ctx, payload):
 		write_str(ctx, k)
 		write_D1(ctx, v)
 
+def write_Egg(ctx, payload):
+	for i in ctx.reorder_map['Egg'][1]():
+		if i==0:
+			write_int(ctx, payload.i1)
+		elif i==1:
+			write_str(ctx, payload.s1)
+		elif i==2:
+			write_str(ctx, ctx.salt_map['SaltShaker']())
+		elif i==3:
+			write_str(ctx, ctx.salt_map['PepperShaker']())
+
+def write_Omlette(ctx, payload):
+	write_int(ctx, len(payload.lookup))
+	for k, v in iter(payload.lookup.items()):
+		write_int(ctx, k)
+		write_Egg(ctx, v)
+
 def read_str(ctx):
    t = ctx.decoder.readInteger() # amf3
    assert(t == 6)
@@ -114,10 +150,6 @@ def read_A(ctx):
 			payload.i1 = read_int(ctx)
 		elif i==1:
 			payload.s1 = read_str(ctx)
-		elif i==2:
-			v = read_str(ctx)
-		elif i==3:
-			v = read_str(ctx)
 	return payload
 
 def read_OuterA(ctx):
@@ -183,6 +215,34 @@ def read_OuterD(ctx):
 		k = read_str(ctx)
 		t = D1()
 		t = read_D1(ctx)
+		payload.lookup[k] = t
+		i = i + 1
+
+	return payload
+
+def read_Egg(ctx):
+	payload = Egg()
+	for i in ctx.reorder_map['Egg'][1]():
+		if i==0:
+			payload.i1 = read_int(ctx)
+		elif i==1:
+			payload.s1 = read_str(ctx)
+		elif i==2:
+			v = read_str(ctx)
+		elif i==3:
+			v = read_str(ctx)
+	return payload
+
+def read_Omlette(ctx):
+	payload = Omlette()
+	payload.lookup = {}
+	count = read_int(ctx)
+	i = 0
+	while (i < count):
+		k = int()
+		k = read_int(ctx)
+		t = Egg()
+		t = read_Egg(ctx)
 		payload.lookup[k] = t
 		i = i + 1
 
