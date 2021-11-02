@@ -62,46 +62,7 @@ module.exports = {
             var tmp = base_arr.slice()
             return tmp
         }
-    },
-
-    EggScrambler: function(base_arr, seed = 1) {
-        return function() {
-            var tmp = base_arr.slice()
-            var j = tmp.length - 1
-
-            while (j > 0) {
-                seed = (seed * 61) % 233
-                var i = seed % j
-
-                var xchg = tmp[j]
-                tmp[j] = tmp[i]
-                tmp[i] = xchg
-
-                j -= 1
-            }
-
-            return tmp
-        }
-    },
-
-// -----------------------------------------------------------------------------
-
-    SaltShaker: function(seed = 1) {
-        return function() {
-            seed = (seed * 53) % 113
-            return "SALT-" + seed;
-        }
-    },
-
-    PepperShaker: function(seed = 1) {
-        return function() {
-            seed = (seed * 47) % 199
-            return "PEPPER-" + seed;
-        }
     }
-
-// -----------------------------------------------------------------------------
-
 };
 
 

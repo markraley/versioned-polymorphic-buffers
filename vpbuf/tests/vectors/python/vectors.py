@@ -34,10 +34,6 @@ class write_context:
         self.encoder.string_references = False # disables string caching
         self.reorder_map = {}
 
-        self.salt_map = {}
-        self.salt_map["SaltShaker"] = SaltShaker(ver)
-        self.salt_map["PepperShaker"] = PepperShaker(ver)
-
         self.ver = ver
         self.set_version(ver)
 
