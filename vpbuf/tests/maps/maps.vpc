@@ -6,7 +6,7 @@ pod Header
     varint version 1
     string test_name 1
 
-rpod A
+pod A
     varint i1 1
     string s1 1
 
