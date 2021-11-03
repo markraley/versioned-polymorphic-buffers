@@ -12,8 +12,8 @@ def get_high_version():
 def get_low_version():
 	return 1
 
-def init_reorder_map(map, ver):
-	map['A'] = get_rlist_A(ver)
+def init_reorder_map(map, ver, seed):
+	map['A'] = get_rlist_A(ver, seed)
 
 vlist_A = [
 	( 1, 0 ),
@@ -31,10 +31,10 @@ def get_vlist_A(ver):
 rlist_A = [
 ]
 
-def get_rlist_A(ver):
+def get_rlist_A(ver, seed):
 	for p in rlist_A:
 		if (p[1] == 0 and ver >= p[0]) or (ver >= p[0] and ver <= p[1]):
-			return [p[2], p[3](get_vlist_A(ver))]
+			return [p[2], p[3](get_vlist_A(ver), seed)]
 	return ['ident', IdentityScrambler(get_vlist_A(ver))]
 
 def write_str(ctx, payload):

@@ -12,8 +12,8 @@ def get_high_version():
 def get_low_version():
 	return 1
 
-def init_reorder_map(map, ver):
-	map['Egg'] = get_rlist_Egg(ver)
+def init_reorder_map(map, ver, seed):
+	map['Egg'] = get_rlist_Egg(ver, seed)
 
 vlist_Egg = [
 	( 1, 0 ),
@@ -34,10 +34,10 @@ rlist_Egg = [
 	( 1, 0, 'h1', EggScrambler )
 ]
 
-def get_rlist_Egg(ver):
+def get_rlist_Egg(ver, seed):
 	for p in rlist_Egg:
 		if (p[1] == 0 and ver >= p[0]) or (ver >= p[0] and ver <= p[1]):
-			return [p[2], p[3](get_vlist_Egg(ver))]
+			return [p[2], p[3](get_vlist_Egg(ver), seed)]
 	return ['ident', IdentityScrambler(get_vlist_Egg(ver))]
 
 def write_str(ctx, payload):

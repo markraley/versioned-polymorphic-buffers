@@ -5,8 +5,8 @@ var persist = require("./persist");
 module.exports = {
 	factory: null, // must be set to class factory object
 
-	init_reorder_map: function(map, ver) {
-		map['Egg'] = this.get_rlist_Egg(ver)
+	init_reorder_map: function(map, ver, seed) {
+		map['Egg'] = this.get_rlist_Egg(ver, seed)
 	},
 
 	vlist_Egg: [
@@ -30,11 +30,11 @@ module.exports = {
 		[ 1, 0, 'h1', persist.EggScrambler ]
 	],
 
-	get_rlist_Egg: function (ver) {
+	get_rlist_Egg: function (ver, seed) {
 		for (var i = 0; i < this.rlist_Egg.length; i++) {
 			var p = this.rlist_Egg[i]
 			if ((p[1] == 0 && ver >= p[0]) || (ver >= p[0] && ver <= p[1]))
-				return [p[2], p[3](this.get_vlist_Egg(ver))]
+				return [p[2], p[3](this.get_vlist_Egg(ver), seed)]
 		}
 		return ['ident', persist.IdentityScrambler(this.get_vlist_Egg(ver))]
 	},

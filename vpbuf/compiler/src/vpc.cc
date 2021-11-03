@@ -110,13 +110,13 @@ code_header_js(
    in += 1;
    ofs <<tab(in)<< "factory: null, // must be set to class factory object\n\n";
 
-   ofs <<tab(in)<< "init_reorder_map: function(map, ver) {\n";
+   ofs <<tab(in)<< "init_reorder_map: function(map, ver, seed) {\n";
 
    for (auto ii = vp_typedefs.begin(); ii != vp_typedefs.end(); ++ii) {
       if ((*ii)->can_reorder()) {
          ofs <<tab(in+1)<<"map['"
                      << (*ii)->type_name <<"'] = this.get_rlist_"
-                     << (*ii)->type_name <<"(ver)\n";
+                     << (*ii)->type_name <<"(ver, seed)\n";
       }
    }
    ofs <<tab(in)<< "},\n\n";
@@ -170,13 +170,13 @@ code_header_python(
    ofs <<tab(in)<< "def get_low_version():\n";
    ofs <<tab(in+1)<< "return "<< tar_lang.start <<"\n\n";
 
-   ofs <<tab(in)<< "def init_reorder_map(map, ver):\n";
+   ofs <<tab(in)<< "def init_reorder_map(map, ver, seed):\n";
    bool any_found = false;
    for (auto ii = vp_typedefs.begin(); ii != vp_typedefs.end(); ++ii) {
       if ((*ii)->can_reorder()) {
          ofs <<tab(in+1)<<"map['"
                      << (*ii)->type_name <<"'] = get_rlist_"
-                     << (*ii)->type_name <<"(ver)\n";
+                     << (*ii)->type_name <<"(ver, seed)\n";
          any_found = true;
       }
    }

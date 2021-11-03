@@ -39,7 +39,7 @@ class write_context:
 
     def set_version(self, ver):
         self.ver = ver
-        init_reorder_map(self.reorder_map, ver)
+        init_reorder_map(self.reorder_map, ver, 1)
 
 class read_context:
     def __init__(self, test_name, ver = 1):
@@ -53,7 +53,7 @@ class read_context:
 
     def set_version(self, ver):
         self.ver = ver
-        init_reorder_map(self.reorder_map, ver)
+        init_reorder_map(self.reorder_map, ver, 1)
 
 # ------------------------------------------------------------------------------
 # vectors_A - test vector of pointer to struct

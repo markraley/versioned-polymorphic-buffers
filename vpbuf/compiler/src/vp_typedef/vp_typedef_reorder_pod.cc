@@ -200,7 +200,7 @@ void vp_typedef_reorder_pod::gen_js_utils(
 
    // ------ rlist wrapper function
 
-   ofs <<tab(in)<< "get_rlist_"<< type_name <<": function (ver) {\n";
+   ofs <<tab(in)<< "get_rlist_"<< type_name <<": function (ver, seed) {\n";
 
    ofs <<tab(in+1)<< "for (var i = 0; i < this.rlist_"
                      << type_name << ".length; i++) {\n";
@@ -208,7 +208,7 @@ void vp_typedef_reorder_pod::gen_js_utils(
    ofs <<tab(in+2)<< "if ((p[1] == 0 && ver >= p[0]) "<<
             "|| (ver >= p[0] && ver <= p[1]))\n";
    ofs <<tab(in+3)<< "return [p[2], p[3](this.get_vlist_"
-                     << type_name <<"(ver))]\n";
+                     << type_name <<"(ver), seed)]\n";
    ofs <<tab(in+1)<< "}\n";
 
    ofs <<tab(in+1)<<"return ['ident', persist.IdentityScrambler(this.get_vlist_"
@@ -381,13 +381,13 @@ void vp_typedef_reorder_pod::gen_py_utils(
 
    // ------ rlist wrapper function
 
-   ofs <<tab(in)<< "def get_rlist_"<< type_name <<"(ver):\n";
+   ofs <<tab(in)<< "def get_rlist_"<< type_name <<"(ver, seed):\n";
 
    ofs <<tab(in+1)<< "for p in rlist_"<< type_name<< ":\n";
    ofs <<tab(in+2)<< "if (p[1] == 0 and ver >= p[0]) "<<
             "or (ver >= p[0] and ver <= p[1]):\n";
    ofs <<tab(in+3)<< "return [p[2], p[3](get_vlist_"
-                           << type_name <<"(ver))]\n";
+                           << type_name <<"(ver), seed)]\n";
 
    ofs <<tab(in+1)<< "return ['ident', IdentityScrambler(get_vlist_"
                            << type_name <<"(ver))]\n";
