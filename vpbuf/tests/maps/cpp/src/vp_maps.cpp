@@ -23,9 +23,9 @@ namespace vp_maps {
 		{ 1, 0, "h1"}
 	};
 
-	ReorderCog *rcog_factory_Egg(string &n, vector<int> v) {
+	ReorderCog *rcog_factory_Egg(string &n, vector<int> v, uint seed) {
 		if (n == "h1")
-			return new EggScrambler(v);
+			return new EggScrambler(v, seed);
 		return(NULL);
 	}
 
@@ -40,10 +40,10 @@ namespace vp_maps {
 		return v;
 	}
 
-	ReorderCog *get_rcog_Egg(int ver) {
+	ReorderCog *get_rcog_Egg(int ver, uint seed) {
 		for (auto tt = rlist_Egg.begin(); tt != rlist_Egg.end(); tt++) {
 			if ((get<1>(*tt) == 0 && ver >= get<0>(*tt)) || (ver >= get<0>(*tt) && ver <= get<1>(*tt))) {
-				return rcog_factory_Egg(get<2>(*tt), get_vlist_Egg(ver));
+				return rcog_factory_Egg(get<2>(*tt), get_vlist_Egg(ver), seed);
 			}
 		};
 
@@ -248,8 +248,8 @@ namespace vp_maps {
 
 	}
 
-	void init_reorder_map(map<string, ReorderCog *> &rmap, int ver) {
-		rmap["Egg"] = get_rcog_Egg(ver);
+	void init_reorder_map(map<string, ReorderCog *> &rmap, int ver, uint seed) {
+		rmap["Egg"] = get_rcog_Egg(ver, seed);
 	}
 
 }

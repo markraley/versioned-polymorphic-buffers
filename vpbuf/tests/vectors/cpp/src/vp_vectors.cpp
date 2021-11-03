@@ -20,7 +20,7 @@ namespace vp_vectors {
 	vector<tuple<int, int, string>> rlist_A = {
 	};
 
-	ReorderCog *rcog_factory_A(string &n, vector<int> v) {
+	ReorderCog *rcog_factory_A(string &n, vector<int> v, uint seed) {
 		return(NULL);
 	}
 
@@ -35,10 +35,10 @@ namespace vp_vectors {
 		return v;
 	}
 
-	ReorderCog *get_rcog_A(int ver) {
+	ReorderCog *get_rcog_A(int ver, uint seed) {
 		for (auto tt = rlist_A.begin(); tt != rlist_A.end(); tt++) {
 			if ((get<1>(*tt) == 0 && ver >= get<0>(*tt)) || (ver >= get<0>(*tt) && ver <= get<1>(*tt))) {
-				return rcog_factory_A(get<2>(*tt), get_vlist_A(ver));
+				return rcog_factory_A(get<2>(*tt), get_vlist_A(ver), seed);
 			}
 		};
 
@@ -284,8 +284,8 @@ namespace vp_vectors {
 		}
 	}
 
-	void init_reorder_map(map<string, ReorderCog *> &rmap, int ver) {
-		rmap["A"] = get_rcog_A(ver);
+	void init_reorder_map(map<string, ReorderCog *> &rmap, int ver, uint seed) {
+		rmap["A"] = get_rcog_A(ver, seed);
 	}
 
 }

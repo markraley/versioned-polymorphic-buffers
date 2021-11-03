@@ -61,7 +61,7 @@ pullInteger(
 // -----------------------------------------------------------------------------
 
 namespace vp_maps {
-   void init_reorder_map(map<string, ReorderCog *> &rmap, int ver);
+   void init_reorder_map(map<string, ReorderCog *> &rmap, int ver, uint seed);
    bool version_check(long);
 }
 
@@ -79,7 +79,7 @@ class read_context {
             return false;
          else {
             m_ver = version;
-            init_reorder_map(reorder_map, version);
+            init_reorder_map(reorder_map, version, 1);
             return true;
          }
       }
@@ -111,7 +111,7 @@ class write_context {
             return false;
          else {
             m_ver = version;
-            init_reorder_map(reorder_map, version);
+            init_reorder_map(reorder_map, version, 1);
 
             salt_map["SaltShaker"] = new SaltShaker(version);
             salt_map["PepperShaker"] = new PepperShaker(version);
