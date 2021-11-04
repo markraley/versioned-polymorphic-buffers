@@ -28,36 +28,36 @@ file_ext = ".dat"
 # ------------------------------------------------------------------------------
 
 class write_context:
-    def __init__(self, ver = 1):
+    def __init__(self, ver, seed = 1):
         self.stream = amf3.util.BufferedByteStream()
         self.encoder = amf3.Encoder(self.stream)
         self.encoder.string_references = False # disables string caching
 
         self.reorder_map = {}
-        self.ver = ver
-        self.set_version(ver)
-
         self.salt_map = {}
-        self.salt_map["SaltShaker"] = SaltShaker(ver)
-        self.salt_map["PepperShaker"] = PepperShaker(ver)
 
-    def set_version(self, ver):
         self.ver = ver
-        init_reorder_map(self.reorder_map, ver, 1)
+        self.set_version(ver, seed)
+
+    def set_version(self, ver, seed = 1):
+        self.ver = ver
+        init_reorder_map(self.reorder_map, ver, seed)
 
 class read_context:
-    def __init__(self, test_name, ver = 1):
+    def __init__(self, test_name, ver, seed = 1):
         self.istream = file_to_buffer(out_dir + test_name + file_ext)
         self.decoder = amf3.Decoder(self.istream)
         self.bytes_read = len(self.istream)
         print(test_name, len(self.istream), 'bytes read')
-        self.reorder_map = {}
-        self.ver = ver
-        self.set_version(ver)
 
-    def set_version(self, ver):
+        self.reorder_map = {}
+
         self.ver = ver
-        init_reorder_map(self.reorder_map, ver, 1)
+        self.set_version(ver, seed)
+
+    def set_version(self, ver, seed = 1):
+        self.ver = ver
+        init_reorder_map(self.reorder_map, ver, seed)
 
 # ------------------------------------------------------------------------------
 # maps_A -
@@ -80,7 +80,7 @@ class Test_maps_A:
     # initialize the data structures under test and serialize
 
     def serialize(self):
-        wc = write_context()
+        wc = write_context(1)
 
         self.h1.version = -99
         self.h1.test_name = self.test_name
@@ -100,7 +100,7 @@ class Test_maps_A:
     # deserialize the data structures under test
 
     def load(self):
-        rc = read_context(self.test_name)
+        rc = read_context(self.test_name, 1)
 
         self.h2 = read_Header(rc)
         self.o2 = read_OuterA(rc)
@@ -146,7 +146,7 @@ class Test_maps_B:
     # initialize the data structures under test and serialize
 
     def serialize(self):
-        wc = write_context()
+        wc = write_context(1)
 
         self.h1.version = -99
         self.h1.test_name = self.test_name
@@ -166,7 +166,7 @@ class Test_maps_B:
     # deserialize the data structures under test
 
     def load(self):
-        rc = read_context(self.test_name)
+        rc = read_context(self.test_name, 1)
 
         self.h2 = read_Header(rc)
         self.o2 = read_OuterB(rc)
@@ -212,7 +212,7 @@ class Test_maps_C:
     # initialize the data structures under test and serialize
 
     def serialize(self):
-        wc = write_context()
+        wc = write_context(1)
 
         self.h1.version = -99
         self.h1.test_name = self.test_name
@@ -232,7 +232,7 @@ class Test_maps_C:
     # deserialize the data structures under test
 
     def load(self):
-        rc = read_context(self.test_name)
+        rc = read_context(self.test_name, 1)
 
         self.h2 = read_Header(rc)
         self.o2 = read_OuterC(rc)
@@ -279,7 +279,7 @@ class Test_maps_D:
     # initialize the data structures under test and serialize
 
     def serialize(self):
-        wc = write_context()
+        wc = write_context(1)
 
         self.h1.version = -99
         self.h1.test_name = self.test_name
@@ -299,7 +299,7 @@ class Test_maps_D:
     # deserialize the data structures under test
 
     def load(self):
-        rc = read_context(self.test_name)
+        rc = read_context(self.test_name, 1)
 
         self.h2 = read_Header(rc)
         self.o2 = read_OuterD(rc)
@@ -352,7 +352,10 @@ class Test_maps_E:
     # initialize the data structures under test and serialize
 
     def serialize(self):
-        wc = write_context()
+        wc = write_context(1, 1)
+
+        wc.salt_map["SaltShaker"] = SaltShaker(1)
+        wc.salt_map["PepperShaker"] = PepperShaker(1)
 
         self.h1.version = -99
         self.h1.test_name = self.test_name
@@ -372,7 +375,7 @@ class Test_maps_E:
     # deserialize the data structures under test
 
     def load(self):
-        rc = read_context(self.test_name)
+        rc = read_context(self.test_name, 1, 1)
 
         self.h2 = read_Header(rc)
         self.o2 = read_Omlette(rc)
