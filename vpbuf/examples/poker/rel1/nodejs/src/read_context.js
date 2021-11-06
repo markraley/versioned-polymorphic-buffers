@@ -22,7 +22,6 @@ var tools = require('./tools');
 
         set_version: function(ver) {
             this.ver = ver;
-            vp.init_reorder_map(this.reorder_map, ver);
         },
 
         _read_Integer: function() {

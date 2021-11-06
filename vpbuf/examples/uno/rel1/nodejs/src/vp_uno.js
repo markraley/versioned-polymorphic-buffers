@@ -1,11 +1,12 @@
 // vpbuf generated code - do not modify
 "use strict";
 var persist = require("./persist");
+const assert = require('chai').assert;
 
 module.exports = {
 	factory: null, // must be set to class factory object
 
-	init_reorder_map: function(map, ver) {
+	init_reorder_map: function(map, ver, seed) {
 	},
 
 	write_String: function(ctx, payload) {

@@ -56,7 +56,6 @@ class write_context:
 
     def set_version(self, ver):
         self.ver = ver
-        init_reorder_map(self.reorder_map, ver)
 
 class read_context:
     def __init__(self, file_name, ver = 1):
@@ -70,7 +69,6 @@ class read_context:
 
     def set_version(self, ver):
         self.ver = ver
-        init_reorder_map(self.reorder_map, ver)
 
 # ------------------------------------------------------------------------------
 

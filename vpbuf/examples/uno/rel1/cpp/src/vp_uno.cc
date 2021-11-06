@@ -178,7 +178,7 @@ namespace vp_uno {
 		}
 	}
 
-	void init_reorder_map(map<string, ReorderCog *> &rmap, int ver) {
+	void init_reorder_map(map<string, ReorderCog *> &rmap, int ver, uint seed) {
 	}
 
 }
