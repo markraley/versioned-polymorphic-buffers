@@ -70,6 +70,8 @@ using namespace vp_maps;
 class read_context {
    public:
       map<string, ReorderCog *> reorder_map;
+      map<string, Shaker *> salt_map;
+
       long m_ver;
       ByteVec buf_arr;
       ByteVec::const_iterator ii;
@@ -112,9 +114,6 @@ class write_context {
          else {
             m_ver = version;
             init_reorder_map(reorder_map, version, 1);
-
-            salt_map["SaltShaker"] = new SaltShaker(version);
-            salt_map["PepperShaker"] = new PepperShaker(version);
 
             return true;
          }

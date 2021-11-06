@@ -272,6 +272,9 @@ const out_dir = './out/';
 
             write_context.init(1);
 
+            write_context.salt_map['SaltShaker'] = persist.SaltShaker(1);
+            write_context.salt_map['PepperShaker'] = persist.PepperShaker(1);
+
             vp.write_Header(write_context, this.h);
             vp.write_Omlette(write_context, this.a);
 
@@ -283,6 +286,9 @@ const out_dir = './out/';
 
         on_read_complete: function(data) {
             read_context.init(data, 1);
+
+            read_context.salt_map['SaltShaker'] = persist.SaltShaker(1);
+            read_context.salt_map['PepperShaker'] = persist.PepperShaker(1);
 
             Test_maps_E.hh = vp.read_Header(read_context);
             Test_maps_E.aa = vp.read_Omlette(read_context);

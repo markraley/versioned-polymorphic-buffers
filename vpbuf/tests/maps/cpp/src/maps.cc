@@ -284,6 +284,9 @@ int main(int argc, char* argv[])
                                           "EGG-" + std::to_string(base + i));
          }
 
+         wc.salt_map["SaltShaker"] = new SaltShaker(1);
+         wc.salt_map["PepperShaker"] = new PepperShaker(1);
+
          write_Header(wc, h1);
          write_Omlette(wc, o1);
 
@@ -297,6 +300,9 @@ int main(int argc, char* argv[])
       {
          // read the file just written
          read_context rc(out_dir + test_id_str + file_ext, 1);
+
+         rc.salt_map["SaltShaker"] = new SaltShaker(1);
+         rc.salt_map["PepperShaker"] = new PepperShaker(1);
 
          read_Header(rc, h2);
          read_Omlette(rc, o2);

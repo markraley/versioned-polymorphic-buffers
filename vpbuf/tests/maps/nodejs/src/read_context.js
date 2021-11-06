@@ -13,6 +13,7 @@ var tools = require('./tools');
         cur_pos: 0,
         dv: new DataView(new ArrayBuffer()),
         reorder_map: {},
+        salt_map: {},
 
         init: function(data, ver = 1) {
             this.dv = new DataView(tools.toArrayBuffer(data));

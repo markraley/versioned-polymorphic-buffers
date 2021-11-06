@@ -104,7 +104,8 @@ code_header_js(
 {
    ofs <<tab(in)<< "// vpbuf generated code - do not modify\n";
    ofs <<tab(in)<< "\"use strict\";\n";
-   ofs <<tab(in)<< "var persist = require(\"./persist\");\n\n";
+   ofs <<tab(in)<< "var persist = require(\"./persist\");\n";
+   ofs <<tab(in)<< "const assert = require('chai').assert;\n\n";
    ofs <<tab(in)<< "module.exports = {\n";
 
    in += 1;

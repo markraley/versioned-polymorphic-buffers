@@ -1,6 +1,7 @@
 // vpbuf generated code - do not modify
 "use strict";
 var persist = require("./persist");
+const assert = require('chai').assert;
 
 module.exports = {
 	factory: null, // must be set to class factory object

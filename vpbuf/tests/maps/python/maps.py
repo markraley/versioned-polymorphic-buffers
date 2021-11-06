@@ -51,6 +51,7 @@ class read_context:
         print(test_name, len(self.istream), 'bytes read')
 
         self.reorder_map = {}
+        self.salt_map = {}
 
         self.ver = ver
         self.set_version(ver, seed)
@@ -376,6 +377,9 @@ class Test_maps_E:
 
     def load(self):
         rc = read_context(self.test_name, 1, 1)
+
+        rc.salt_map["SaltShaker"] = SaltShaker(1)
+        rc.salt_map["PepperShaker"] = PepperShaker(1)
 
         self.h2 = read_Header(rc)
         self.o2 = read_Omlette(rc)

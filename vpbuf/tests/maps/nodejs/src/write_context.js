@@ -23,8 +23,6 @@ const tools = require('./tools');
         set_version: function(ver) {
             this.ver = ver;
             vp.init_reorder_map(this.reorder_map, ver);
-            this.salt_map['SaltShaker'] = persist.SaltShaker(ver);
-            this.salt_map['PepperShaker'] = persist.PepperShaker(ver);
         },
 
         _write_Integer: function(i) {

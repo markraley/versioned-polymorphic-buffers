@@ -199,9 +199,9 @@ def read_Egg(ctx):
 		elif i==1:
 			payload.s1 = read_str(ctx)
 		elif i==2:
-			v = read_str(ctx)
+			assert(read_str(ctx) == ctx.salt_map['SaltShaker']())
 		elif i==3:
-			v = read_str(ctx)
+			assert(read_str(ctx) == ctx.salt_map['PepperShaker']())
 	return payload
 
 def read_Omlette(ctx):

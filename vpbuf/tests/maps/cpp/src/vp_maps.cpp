@@ -226,10 +226,10 @@ namespace vp_maps {
 					read_string(ctx, payload.s1);
 					break;
 				case 2:
-					read_string(ctx);
+					assert(read_string(ctx) == (*ctx.salt_map["SaltShaker"])());
 					break;
 				case 3:
-					read_string(ctx);
+					assert(read_string(ctx) == (*ctx.salt_map["PepperShaker"])());
 					break;
 			}
 	}
