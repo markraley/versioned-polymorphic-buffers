@@ -4,6 +4,8 @@ Versioned Polymorphic Buffers (vpbuf) - data interchange format
 
 Versioned Polymorphic Buffers (vpbuf) is a language and platform neutral way of serializing structured data, either as flatten messages or to file. All data elements have a version range assigned to them and therefore may come in and out of scope as the version numbers are advanced between releases.
 
+Advanced protocol design features such as continuous structure reordering and salting data creation/validation that are demonstrated.
+
 Currently cplusplus, python, and javascript are supported using a binary wire format based on a subset of AMF3.
 
 ## Basics - Language Interoperability - vpbuf/examples/poker/rel1
@@ -244,14 +246,14 @@ card pop: Blue 8 Blue 7
 write: t.dat, version=1, cards=0, bytes=12
 cards left 0
 ```
+## Reorder Pods and Salts
+    The unit test maps_E in vpbuf/tests/maps demonstrates seed based reorder pods and data salting options. Salts add algorithmically generated pseudo-random data and validation). Reorder pods algorithmically shuffle pop items (members) in pseudo-random fashion.
 
 ### active development
-    developing shuffle feature for classes (pod/poly)
+    new passcode example of reorder pods and salts
 
 ### TODO
 
-    complete uno polymorphism example
-    complete map implentation with coverage test
     build instructions/refinements
     refactor before adding additional languages
     upgrade boost version
