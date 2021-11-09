@@ -1,0 +1,10 @@
+target language python 1 1 vp_scram "./python/vp_scram" py
+
+pod Header
+    varint version 1
+    string test_name 1
+
+rpod Egg : h1 (EggScrambler 2)
+    string c1 1
+    salt SaltShaker (1 string)
+    salt PepperShaker (1 string)
