@@ -1,6 +1,6 @@
-target  language cplusplus 1 1 vp_vectors "./cpp/src" cpp
-        language python 1 1 vp_vectors "./python/vp_vectors" py
-        language javascript 1 1 vp_vectors "./nodejs/src" js
+target  language cplusplus 1-1 vp_vectors "./cpp/src" cpp
+        language python 1-1 vp_vectors "./python/vp_vectors" py
+        language javascript 1-1 vp_vectors "./nodejs/src" js
 
 pod Header
     varint version 1

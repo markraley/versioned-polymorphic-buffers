@@ -1,6 +1,6 @@
-target  language cplusplus 1 1 vp_uno "./cpp/src" cc
-        language python 1 1 vp_uno "./python/vp_uno" py
-        language javascript 1 1 vp_uno "./nodejs/src" js
+target  language cplusplus 1-1 vp_uno "./cpp/src" cc
+        language python 1-1 vp_uno "./python/vp_uno" py
+        language javascript 1-1 vp_uno "./nodejs/src" js
 
 pod Header
     varint version 1

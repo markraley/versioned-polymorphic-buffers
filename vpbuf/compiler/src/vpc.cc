@@ -990,7 +990,7 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
             >> pod_parent >> typedef_vrange >> -vptype_options >> type_list;
 
    // name, version start, version end, name space, path out, file extension
-   target = lit("language") >> lang_specifier >> uint_ >> uint_
+   target = lit("language") >> lang_specifier >> uint_ >>"-">> uint_
                                     >> identifier >> quoted_string >> identifier;
    target_ignore = lit("-language") >> lang_specifier >> uint_ >> uint_
                                     >> identifier >> quoted_string >> identifier;
