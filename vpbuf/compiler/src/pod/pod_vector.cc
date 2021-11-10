@@ -16,10 +16,15 @@ pod_vector::serialize_out_cpp(
    bool skip_test)
 {
    bool present, code_emitted;
-   code_version_test_cpp(ofs, present, code_emitted, in,
+
+   if (!skip_test) {
+      code_version_test_cpp(ofs, present, code_emitted, in,
                            nBegin, nEnd, tar_lang.start, tar_lang.end);
-   if (!present)
-      return;
+      if (!present)
+         return;
+      if (code_emitted)
+         in++;
+   }
 
    std::string vec_type, type_payload, ref_prefix;
    vp_typedefs[payload_index]->get_type_cpp(vec_type);
@@ -51,10 +56,14 @@ pod_vector::serialize_in_cpp(
    bool skip_test)
 {
    bool present, code_emitted;
-   code_version_test_cpp(ofs, present, code_emitted, in,
+   if (!skip_test) {
+      code_version_test_cpp(ofs, present, code_emitted, in,
                            nBegin, nEnd, tar_lang.start, tar_lang.end);
-   if (!present)
-      return;
+      if (!present)
+         return;
+      if (code_emitted)
+         in++;
+   }
 
    std::string vec_type;
    vp_typedefs[payload_index]->get_type_cpp(vec_type);
@@ -155,12 +164,15 @@ pod_vector::serialize_out_js(
    bool skip_test)
 {
    bool present, code_emitted;
-   code_version_test_js(ofs, present, code_emitted, in,
+
+   if (!skip_test) {
+      code_version_test_cpp(ofs, present, code_emitted, in,
                            nBegin, nEnd, tar_lang.start, tar_lang.end);
-   if (!present)
-      return;
-   if (code_emitted)
-      in++;
+      if (!present)
+         return;
+      if (code_emitted)
+         in++;
+   }
 
    std::string vec_type, type_payload;
    vp_typedefs[payload_index]->get_type_js(vec_type);
@@ -180,12 +192,15 @@ pod_vector::serialize_in_js(
    bool skip_test)
 {
    bool present, code_emitted;
-   code_version_test_js(ofs, present, code_emitted, in,
+
+   if (!skip_test) {
+      code_version_test_cpp(ofs, present, code_emitted, in,
                            nBegin, nEnd, tar_lang.start, tar_lang.end);
-   if (!present)
-      return;
-   if (code_emitted)
-      in++;
+      if (!present)
+         return;
+      if (code_emitted)
+         in++;
+   }
 
    std::string vec_type;
    vp_typedefs[payload_index]->get_type_js(vec_type);

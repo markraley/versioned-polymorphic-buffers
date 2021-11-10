@@ -245,7 +245,7 @@ vp_typedef_reorder_pod::serialize_out_cpp(
    ofs <<tab(in+2)<< "switch(i) {\n";;
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
       ofs <<tab(in+3)<< "case "<< j++ <<":\n";
-      (*jj)->serialize_out_cpp(ofs, in+3, type_map, tar_lang);
+      (*jj)->serialize_out_cpp(ofs, in+3, type_map, tar_lang, true);
       ofs <<tab(in+3)<< "break;\n";
    }
    ofs <<tab(in+2)<< "}\n";
@@ -290,7 +290,7 @@ vp_typedef_reorder_pod::serialize_in_cpp(
       ofs <<tab(in+2)<< "switch(i) {\n";;
       for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
          ofs <<tab(in+3)<< "case "<< j++ <<":\n";
-         (*jj)->serialize_in_cpp(ofs, in+4, type_map, tar_lang);
+         (*jj)->serialize_in_cpp(ofs, in+4, type_map, tar_lang, true);
          ofs <<tab(in+4)<< "break;\n";
       }
       ofs <<tab(in+2)<< "}\n";
@@ -313,7 +313,7 @@ vp_typedef_reorder_pod::serialize_in_cpp(
    ofs <<tab(in+2)<< "switch(i) {\n";;
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
       ofs <<tab(in+3)<< "case "<< j++ <<":\n";
-      (*jj)->serialize_in_cpp(ofs, in+4, type_map, tar_lang);
+      (*jj)->serialize_in_cpp(ofs, in+4, type_map, tar_lang, true);
       ofs <<tab(in+4)<< "break;\n";
    }
    ofs <<tab(in+2)<< "}\n";
@@ -483,7 +483,7 @@ vp_typedef_reorder_pod::serialize_out_js(
    ofs <<tab(in+2)<< "switch(v[i]) {\n";
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
       ofs <<tab(in+3)<< "case "<< j++ <<":\n";
-      (*jj)->serialize_out_js(ofs, in+3, type_map, tar_lang);
+      (*jj)->serialize_out_js(ofs, in+3, type_map, tar_lang, true);
       ofs <<tab(in+3)<< "break;\n";
    }
 
@@ -524,7 +524,7 @@ vp_typedef_reorder_pod::serialize_in_js(
 
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
       ofs <<tab(in+3)<< "case "<< j++ <<":\n";
-      (*jj)->serialize_in_js(ofs, in+3, type_map, tar_lang);
+      (*jj)->serialize_in_js(ofs, in+3, type_map, tar_lang, true);
       ofs <<tab(in+3)<< "break;\n";
    }
 

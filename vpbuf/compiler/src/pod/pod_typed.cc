@@ -16,12 +16,15 @@ pod_typed::serialize_out_cpp(
    bool skip_test)
 {
    bool present, code_emitted;
-   code_version_test_cpp(ofs, present, code_emitted, in,
+
+   if (!skip_test) {
+      code_version_test_cpp(ofs, present, code_emitted, in,
                            nBegin, nEnd, tar_lang.start, tar_lang.end);
-   if (!present)
-      return;
-   if (code_emitted)
-      in++;
+      if (!present)
+         return;
+      if (code_emitted)
+         in++;
+   }
 
    string t;
    vp_typedefs[payload_index]->get_type_cpp(t);
@@ -42,12 +45,15 @@ pod_typed::serialize_in_cpp(
    bool skip_test)
 {
    bool present, code_emitted;
-   code_version_test_cpp(ofs, present, code_emitted, in,
+
+   if (!skip_test) {
+      code_version_test_cpp(ofs, present, code_emitted, in,
                            nBegin, nEnd, tar_lang.start, tar_lang.end);
-   if (!present)
-      return;
-   if (code_emitted)
-      in++;
+      if (!present)
+         return;
+      if (code_emitted)
+         in++;
+   }
 
    string t;
    vp_typedefs[payload_index]->get_type_cpp(t);
@@ -116,12 +122,15 @@ pod_typed::serialize_out_js(
 {
    std::string t;
    bool present, code_emitted;
-   code_version_test_js(ofs, present, code_emitted, in,
+
+   if (!skip_test) {
+      code_version_test_js(ofs, present, code_emitted, in,
                            nBegin, nEnd, tar_lang.start, tar_lang.end);
-   if (!present)
-      return;
-   if (code_emitted)
-      in++;
+      if (!present)
+         return;
+      if (code_emitted)
+         in++;
+   }
 
    vp_typedefs[payload_index]->get_type_js(t);
 
@@ -138,12 +147,15 @@ pod_typed::serialize_in_js(
 {
    std::string t;
    bool present, code_emitted;
-   code_version_test_js(ofs, present, code_emitted, in,
+
+   if (!skip_test) {
+      code_version_test_js(ofs, present, code_emitted, in,
                            nBegin, nEnd, tar_lang.start, tar_lang.end);
-   if (!present)
-      return;
-   if (code_emitted)
-      in++;
+      if (!present)
+         return;
+      if (code_emitted)
+         in++;
+   }
 
    vp_typedefs[payload_index]->get_type_js(t);
 

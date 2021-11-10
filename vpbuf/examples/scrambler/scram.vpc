@@ -1,4 +1,7 @@
-target language python 1 5 vp_scram "./python/vp_scram" py
+target
+    language python 1 5 vp_scram "./python/vp_scram" py
+    language cplusplus 1 5 vp_scram "./cpp/src" cpp
+    language javascript 1 5 vp_scram "./nodejs/src" js
 
 pod Header
     varint version 1

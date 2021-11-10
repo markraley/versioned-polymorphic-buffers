@@ -17,13 +17,14 @@ pod_map::serialize_out_cpp(
 {
    bool present, code_emitted;
 
-
-   code_version_test_cpp(ofs, present, code_emitted, in,
+   if (!skip_test) {
+      code_version_test_cpp(ofs, present, code_emitted, in,
                            nBegin, nEnd, tar_lang.start, tar_lang.end);
-   if (!present)
-      return;
-   if (code_emitted)
-      in++;
+      if (!present)
+         return;
+      if (code_emitted)
+         in++;
+   }
 
    std::string payload_type, local_key_type, payload_prefix;
 
@@ -54,12 +55,15 @@ pod_map::serialize_in_cpp(
    bool skip_test)
 {
    bool present, code_emitted;
-   code_version_test_cpp(ofs, present, code_emitted, in,
+
+   if (!skip_test) {
+      code_version_test_cpp(ofs, present, code_emitted, in,
                            nBegin, nEnd, tar_lang.start, tar_lang.end);
-   if (!present)
-      return;
-   if (code_emitted)
-      in++;
+      if (!present)
+         return;
+      if (code_emitted)
+         in++;
+   }
 
    std::string payload_type, local_key_type;
 
@@ -168,12 +172,15 @@ pod_map::serialize_out_js(
    bool skip_test)
 {
    bool present, code_emitted;
-   code_version_test_js(ofs, present, code_emitted, in,
+
+   if (!skip_test) {
+      code_version_test_js(ofs, present, code_emitted, in,
                            nBegin, nEnd, tar_lang.start, tar_lang.end);
-   if (!present)
-      return;
-   if (code_emitted)
-      in++;
+      if (!present)
+         return;
+      if (code_emitted)
+         in++;
+   }
 
    std::string payload_type, local_key_type;
 
@@ -201,12 +208,16 @@ pod_map::serialize_in_js(
    bool skip_test)
 {
    bool present, code_emitted;
-   code_version_test_js(ofs, present, code_emitted, in,
+
+   if (!skip_test) {
+      code_version_test_js(ofs, present, code_emitted, in,
                            nBegin, nEnd, tar_lang.start, tar_lang.end);
-   if (!present)
-      return;
-   if (code_emitted)
-      in++;
+      if (!present)
+         return;
+      if (code_emitted)
+         in++;
+   }
+
    std::string payload_type, local_key_type;
 
    vp_typedef *tdi = vp_typedefs[payload_index];

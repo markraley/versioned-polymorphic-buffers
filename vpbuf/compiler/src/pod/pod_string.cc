@@ -16,12 +16,15 @@ pod_string::serialize_out_cpp(
    bool skip_test)
 {
    bool present, code_emitted;
-   code_version_test_cpp(ofs, present, code_emitted, in,
+
+   if (!skip_test) {
+      code_version_test_cpp(ofs, present, code_emitted, in,
                            nBegin, nEnd, tar_lang.start, tar_lang.end);
-   if (!present)
-      return;
-   if (code_emitted)
+      if (!present)
+         return;
+      if (code_emitted)
       in++;
+   }
 
    ofs <<tab(in)<< "write_string(ctx, payload." << name << ");\n";
 }
@@ -35,12 +38,15 @@ pod_string::serialize_in_cpp(
    bool skip_test)
 {
    bool present, code_emitted;
-   code_version_test_cpp(ofs, present, code_emitted, in,
+
+   if (!skip_test) {
+      code_version_test_cpp(ofs, present, code_emitted, in,
                            nBegin, nEnd, tar_lang.start, tar_lang.end);
-   if (!present)
-      return;
-   if (code_emitted)
-      in++;
+      if (!present)
+         return;
+      if (code_emitted)
+         in++;
+   }
 
    ofs <<tab(in)<< "read_string(ctx, payload." << name << ");\n";
 }
@@ -94,12 +100,15 @@ pod_string::serialize_out_js(
    bool skip_test)
 {
    bool present, code_emitted;
-   code_version_test_js(ofs, present, code_emitted, in,
+
+   if (!skip_test) {
+      code_version_test_js(ofs, present, code_emitted, in,
                            nBegin, nEnd, tar_lang.start, tar_lang.end);
-   if (!present)
-      return;
-   if (code_emitted)
-      in++;
+      if (!present)
+         return;
+      if (code_emitted)
+         in++;
+   }
 
    ofs <<tab(in)
       << "ctx.write_String(payload." << name << ");\n";
@@ -114,12 +123,15 @@ pod_string::serialize_in_js(
    bool skip_test)
 {
    bool present, code_emitted;
-   code_version_test_js(ofs, present, code_emitted, in,
+
+   if (!skip_test) {
+      code_version_test_js(ofs, present, code_emitted, in,
                            nBegin, nEnd, tar_lang.start, tar_lang.end);
-   if (!present)
-      return;
-   if (code_emitted)
-      in++;
+      if (!present)
+         return;
+      if (code_emitted)
+         in++;
+   }
 
    ofs <<tab(in)
       << "payload." << name << " = ctx.read_String();\n";
