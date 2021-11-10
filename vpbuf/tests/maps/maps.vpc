@@ -3,36 +3,36 @@ target  language cplusplus 1-1 vp_maps "./cpp/src" cpp
         language javascript 1-1 vp_maps "./nodejs/src" js
 
 pod Header
-    varint version 1
-    string test_name 1
+    varint version
+    string test_name
 
 pod A
-    varint i1 1
-    string s1 1
+    varint i1
+    string s1
 
 pod OuterA
-    map varint A lookup 1
+    map varint A lookup
 
 pod OuterB
-    map string A lookup 1
+    map string A lookup
 
 pod OuterC
-    map varint string lookup 1
+    map varint string lookup
 
 pod D1
-    A apod 1
-    varint i 1
-    string s 1
-    *A aref 1
+    A apod
+    varint i
+    string s
+    *A aref
 
 pod OuterD
-    map string D1 lookup 1
+    map string D1 lookup
 
 rpod Egg : h1 (EggScrambler)
-    varint i1 1
-    string s1 1
+    varint i1
+    string s1
     salt SaltShaker (string)
     salt PepperShaker (string)
 
 pod Omlette
-    map varint Egg lookup 1
+    map varint Egg lookup

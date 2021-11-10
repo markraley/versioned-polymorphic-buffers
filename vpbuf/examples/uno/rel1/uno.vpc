@@ -3,24 +3,24 @@ target  language cplusplus 1-1 vp_uno "./cpp/src" cc
         language javascript 1-1 vp_uno "./nodejs/src" js
 
 pod Header
-    varint version 1
-    string tag 1
+    varint version
+    string tag
 
 poly Card
-    varint id 1
+    varint id
 
 pod Value is Card
-    varint value 1
-    string color 1
+    varint value
+    string color
 
 poly Action is Card
-    string color 1
+    string color
 
 pod Reverse is Action
 pod Skip is Action
 pod DrawTwo is Action
 
 pod Deck
-    vector *Card cards 1
+    vector *Card cards
 
 

@@ -3,40 +3,40 @@ target  language cplusplus 1-1 vp_vectors "./cpp/src" cpp
         language javascript 1-1 vp_vectors "./nodejs/src" js
 
 pod Header
-    varint version 1
-    string test_name 1
+    varint version
+    string test_name
 
 rpod A
-    varint i1 1
-    string s1 1
+    varint i1
+    string s1
 
 pod OuterA
-    vector *A v 1
+    vector *A v
 
 pod OuterB
-    vector A v 1
+    vector A v
 
 pod OuterC
-    vector string v 1
+    vector string v
 
 pod OuterD
-    vector *string v 1
+    vector *string v
 
 pod OuterE
-    vector varint v 1
+    vector varint v
 
 pod OuterF
-    vector *varint v 1
+    vector *varint v
 
 poly Base
 
 pod Derived1 is Base
-    varint i1 1
-    string s1 1
+    varint i1
+    string s1
 
 pod Derived2 is Base
-    varint i1 1
-    string s1 1
+    varint i1
+    string s1
 
 pod OuterG
-    vector *Base v 1
+    vector *Base v

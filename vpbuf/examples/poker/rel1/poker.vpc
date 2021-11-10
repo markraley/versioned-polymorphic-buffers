@@ -4,13 +4,13 @@ target
     language cplusplus 1-1 vp_poker "./cpp/src" cc
 
 pod Header
-    varint version 1
-    string tag 1
+    varint version
+    string tag
 
 pod Card
-    varint id 1
-    string name 1
+    varint id
+    string name
 
 pod Deck
-    vector *Card cards 1
+    vector *Card cards
 

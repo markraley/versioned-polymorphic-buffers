@@ -929,16 +929,16 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
                            | uint_[vpopt_vrange_add(_1, 0)] ;
 
    item_varint = lit("varint") >> identifier[pod_item_varint_add(_1)]
-                        >> version_sequence;
+                        >> -version_sequence;
    item_string = lit("string") >> identifier[pod_item_string_add(_1)]
-                        >> version_sequence;
+                        >> -version_sequence;
    item_salt = "salt">> (identifier >>"("
                         >> var_ref) [pod_item_salt_add(_1, _2)]
                         >>")">> -version_sequence;
 
    item_map = lit("map") >> (identifier >> var_ref >> identifier)
                                  [pod_item_map_add(_1, _2, _3)]
-            >> version_sequence;
+            >> -version_sequence;
 
    sequence_type = lit("zero-terminated") | lit("string");
    lang_specifier = lit("cplusplus")
@@ -951,14 +951,14 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
             |
             (var_ref >> identifier)[pod_item_vector_add(_1, _2, false)]
          )
-            >> version_sequence;
+            >> -version_sequence;
 
    item_typed =
             (
                (var_ref >> identifier)[pod_item_type_add(_1, _2, false)]
                |
                (var_ref_ptr >> identifier)[pod_item_type_add(_1, _2, true)]
-            ) >> version_sequence
+            ) >> -version_sequence
             ;
 
    type_list = *(item_varint | item_string | item_map
