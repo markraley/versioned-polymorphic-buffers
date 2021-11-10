@@ -79,8 +79,10 @@ struct vp_typedef
    virtual void serialize_out_cpp(ofstream &, int, TypeMap &, TarLang &) = 0;
    virtual void serialize_in_cpp(ofstream &, int, TypeMap &, TarLang &) = 0;
 
-   virtual void serialize_out_py(ofstream &, int, TypeMap &, TarLang &) = 0;
-   virtual void serialize_in_py(ofstream &, int, TypeMap &, TarLang &) = 0;
+   virtual void
+      serialize_out_py(ofstream &, int, TypeMap &, TarLang &, bool = false) = 0;
+   virtual void
+      serialize_in_py(ofstream &, int, TypeMap &, TarLang &, bool = false) = 0;
 
    virtual void serialize_out_js(ofstream &, int, TypeMap &, TarLang &) = 0;
    virtual void serialize_in_js(ofstream &, int, TypeMap &, TarLang &) = 0;
@@ -118,8 +120,10 @@ struct pod_item
    virtual void serialize_out_cpp(ofstream &, int, TypeMap &, TarLang &) = 0;
    virtual void serialize_in_cpp(ofstream &, int, TypeMap &, TarLang &) = 0;
 
-   virtual void serialize_out_py(ofstream &, int, TypeMap &, TarLang &) = 0;
-   virtual void serialize_in_py(ofstream &, int, TypeMap &, TarLang &) = 0;
+   virtual void
+      serialize_out_py(ofstream &, int, TypeMap &, TarLang &, bool = false) = 0;
+   virtual void
+      serialize_in_py(ofstream &, int, TypeMap &, TarLang &, bool = false) = 0;
 
    virtual void serialize_out_js(ofstream &, int, TypeMap &, TarLang &) = 0;
    virtual void serialize_in_js(ofstream &, int, TypeMap &, TarLang &) = 0;

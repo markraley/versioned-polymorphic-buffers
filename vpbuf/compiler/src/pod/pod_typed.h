@@ -14,8 +14,8 @@ struct pod_typed : public pod_item
    void serialize_out_cpp(ofstream &, int, TypeMap &, TarLang &);
    void serialize_in_cpp(ofstream &, int, TypeMap &, TarLang &);
 
-   void serialize_out_py(ofstream &, int, TypeMap &, TarLang &);
-   void serialize_in_py(ofstream &, int, TypeMap &, TarLang &);
+   void serialize_out_py(ofstream &, int, TypeMap &, TarLang &, bool);
+   void serialize_in_py(ofstream &, int, TypeMap &, TarLang &, bool);
 
    void serialize_out_js(ofstream &, int, TypeMap &, TarLang &);
    void serialize_in_js(ofstream &, int, TypeMap &, TarLang &);

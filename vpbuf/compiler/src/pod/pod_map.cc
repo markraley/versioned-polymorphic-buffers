@@ -15,6 +15,8 @@ pod_map::serialize_out_cpp(
    TarLang &tar_lang)
 {
    bool present, code_emitted;
+
+
    code_version_test_cpp(ofs, present, code_emitted, in,
                            nBegin, nEnd, tar_lang.start, tar_lang.end);
    if (!present)
@@ -91,12 +93,15 @@ pod_map::serialize_out_py(
    ofstream &ofs,
    int in,
    TypeMap &type_map,
-   TarLang &tar_lang)
+   TarLang &tar_lang,
+   bool skip_test)
 {
-   bool present = code_version_test_py(ofs, in,
+   if (!skip_test) {
+      bool present = code_version_test_py(ofs, in,
                                     nBegin, nEnd, tar_lang.start, tar_lang.end);
-   if (!present)
-      return;
+      if (!present)
+         return;
+   }
 
    std::string payload_type, local_key_type;
 
@@ -118,12 +123,15 @@ pod_map::serialize_in_py(
    ofstream &ofs,
    int in,
    TypeMap &type_map,
-   TarLang &tar_lang)
+   TarLang &tar_lang,
+   bool skip_test)
 {
-   bool present = code_version_test_py(ofs, in,
+   if (!skip_test) {
+      bool present = code_version_test_py(ofs, in,
                                     nBegin, nEnd, tar_lang.start, tar_lang.end);
-   if (!present)
-      return;
+      if (!present)
+         return;
+   }
 
    std::string payload_type, local_key_type;
 

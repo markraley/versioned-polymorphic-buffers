@@ -58,7 +58,8 @@ vp_typedef_varint::serialize_out_py(
    ofstream &ofs,
    int in,
    TypeMap &type_map,
-   TarLang &tar_lang)
+   TarLang &tar_lang,
+   bool skip_test)
 {
 
    ofs << "def write_int(ctx, payload):\n";
@@ -74,7 +75,8 @@ vp_typedef_varint::serialize_in_py(
    ofstream &ofs,
    int in,
    TypeMap &type_map,
-   TarLang &tar_lang)
+   TarLang &tar_lang,
+   bool skip_test)
 {
    ofs << "def read_int(ctx):\n";
 

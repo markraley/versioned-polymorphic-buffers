@@ -127,7 +127,8 @@ vp_typedef_pod::serialize_out_py(
    ofstream &ofs,
    int in,
    TypeMap &type_map,
-   TarLang &tar_lang)
+   TarLang &tar_lang,
+   bool skip_test)
 {
    PodItems::iterator jj;
 
@@ -156,7 +157,8 @@ vp_typedef_pod::serialize_in_py(
    ofstream &ofs,
    int in,
    TypeMap &type_map,
-   TarLang &tar_lang)
+   TarLang &tar_lang,
+   bool skip_test)
 {
    PodItems::iterator jj;
 

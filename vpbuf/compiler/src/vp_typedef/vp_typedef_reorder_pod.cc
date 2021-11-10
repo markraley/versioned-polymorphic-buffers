@@ -402,7 +402,8 @@ vp_typedef_reorder_pod::serialize_out_py(
    ofstream &ofs,
    int in,
    TypeMap &type_map,
-   TarLang &tar_lang)
+   TarLang &tar_lang,
+   bool skip_test)
 {
    PodItems::iterator jj;
 
@@ -418,7 +419,7 @@ vp_typedef_reorder_pod::serialize_out_py(
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
       ofs <<tab(in+2)<< ((jj == pod_items.begin())?"if":"elif")
                                                 <<" i=="<< k++ <<":\n";
-      (*jj)->serialize_out_py(ofs, in+3, type_map, tar_lang);
+      (*jj)->serialize_out_py(ofs, in+3, type_map, tar_lang, true);
    }
 
    if (parent_name.size() > 0) {
@@ -436,7 +437,8 @@ vp_typedef_reorder_pod::serialize_in_py(
    ofstream &ofs,
    int in,
    TypeMap &type_map,
-   TarLang &tar_lang)
+   TarLang &tar_lang,
+   bool skip_test)
 {
    PodItems::iterator jj;
 
@@ -454,7 +456,7 @@ vp_typedef_reorder_pod::serialize_in_py(
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
       ofs <<tab(in+2)<< ((jj == pod_items.begin())?"if":"elif")
                                                 <<" i=="<< k++ <<":\n";
-      (*jj)->serialize_in_py(ofs, in+3, type_map, tar_lang);
+      (*jj)->serialize_in_py(ofs, in+3, type_map, tar_lang, true);
    }
 
    ofs <<tab(in+1)<< "return payload\n\n";

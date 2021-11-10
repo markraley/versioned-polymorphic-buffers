@@ -1,13 +1,13 @@
 from vp_scram.persist import *
 
 def version_check(ver):
-	if (ver < 1 or ver > 1):
+	if (ver < 1 or ver > 5):
 		return False
 	else:
 		return True
 
 def get_high_version():
-	return 1
+	return 5
 
 def get_low_version():
 	return 1
@@ -18,7 +18,11 @@ def init_reorder_map(map, ver, seed):
 vlist_Egg = [
 	( 1, 0 ),
 	( 1, 0 ),
-	( 1, 0 )
+	( 1, 0 ),
+	( 2, 0 ),
+	( 5, 0 ),
+	( 3, 0 ),
+	( 4, 0 )
 ]
 
 def get_vlist_Egg(ver):
@@ -54,8 +58,16 @@ def write_Egg(ctx, payload):
 		if i==0:
 			write_str(ctx, payload.c1)
 		elif i==1:
-			write_str(ctx, ctx.salt_map['SaltShaker']())
+			write_str(ctx, payload.c2)
 		elif i==2:
+			write_str(ctx, payload.c3)
+		elif i==3:
+			write_Header(ctx, payload.h1)
+		elif i==4:
+			write_str(ctx, payload.c4)
+		elif i==5:
+			write_str(ctx, ctx.salt_map['SaltShaker']())
+		elif i==6:
 			write_str(ctx, ctx.salt_map['PepperShaker']())
 
 def read_str(ctx):
@@ -80,8 +92,16 @@ def read_Egg(ctx):
 		if i==0:
 			payload.c1 = read_str(ctx)
 		elif i==1:
-			assert(read_str(ctx) == ctx.salt_map['SaltShaker']())
+			payload.c2 = read_str(ctx)
 		elif i==2:
+			payload.c3 = read_str(ctx)
+		elif i==3:
+			payload.h1 = read_Header(ctx)
+		elif i==4:
+			payload.c4 = read_str(ctx)
+		elif i==5:
+			assert(read_str(ctx) == ctx.salt_map['SaltShaker']())
+		elif i==6:
 			assert(read_str(ctx) == ctx.salt_map['PepperShaker']())
 	return payload
 

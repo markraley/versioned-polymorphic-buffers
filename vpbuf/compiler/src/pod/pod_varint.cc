@@ -49,12 +49,15 @@ pod_varint::serialize_out_py(
    ofstream &ofs,
    int in,
    TypeMap &type_map,
-   TarLang &tar_lang)
+   TarLang &tar_lang,
+   bool skip_test)
 {
-   bool present = code_version_test_py(ofs, in,
-                                 nBegin, nEnd, tar_lang.start, tar_lang.end);
-   if (!present)
-      return;
+   if (!skip_test) {
+      bool present = code_version_test_py(ofs, in,
+                                    nBegin, nEnd, tar_lang.start, tar_lang.end);
+      if (!present)
+         return;
+   }
 
    ofs <<tab(in)<<"write_int(ctx, payload."<< name <<")\n";
 }
@@ -64,12 +67,15 @@ pod_varint::serialize_in_py(
    ofstream &ofs,
    int in,
    TypeMap &type_map,
-   TarLang &tar_lang)
+   TarLang &tar_lang,
+   bool skip_test)
 {
-   bool present = code_version_test_py(ofs, in,
-                                 nBegin, nEnd, tar_lang.start, tar_lang.end);
-   if (!present)
-      return;
+   if (!skip_test) {
+      bool present = code_version_test_py(ofs, in,
+                                    nBegin, nEnd, tar_lang.start, tar_lang.end);
+      if (!present)
+         return;
+   }
 
    ofs <<tab(in)<<"payload."<< name <<" = read_int(ctx)\n";
 }
