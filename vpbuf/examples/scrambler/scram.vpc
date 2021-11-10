@@ -16,5 +16,5 @@ rpod Egg : h1 (EggScrambler 2)
 
     string c4 5
 
-    salt SaltShaker (1 string)   3
-    salt PepperShaker (1 string) 4
+    salt SaltShaker (string)   3
+    salt PepperShaker (string) 4
