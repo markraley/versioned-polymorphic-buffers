@@ -46,8 +46,7 @@ void vp_typedef_string::serialize_in_cpp(
 
 void
 vp_typedef_string::serialize_out_py(
-   std::ofstream &ofs, int in, TypeMap &type_map, TarLang &,
-   bool skip_test)
+   std::ofstream &ofs, int in, TypeMap &type_map, TarLang &)
 {
    ofs << "def write_str(ctx, payload):\n";
    ofs <<
@@ -59,7 +58,7 @@ vp_typedef_string::serialize_out_py(
 
 void
 vp_typedef_string::serialize_in_py(
-   std::ofstream &ofs, int in, TypeMap &type_map, TarLang &, bool skip_test)
+   std::ofstream &ofs, int in, TypeMap &type_map, TarLang &)
 {
    ofs << "def read_str(ctx):\n";
    ofs <<

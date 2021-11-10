@@ -402,8 +402,7 @@ vp_typedef_reorder_pod::serialize_out_py(
    ofstream &ofs,
    int in,
    TypeMap &type_map,
-   TarLang &tar_lang,
-   bool skip_test)
+   TarLang &tar_lang)
 {
    PodItems::iterator jj;
 
@@ -437,8 +436,7 @@ vp_typedef_reorder_pod::serialize_in_py(
    ofstream &ofs,
    int in,
    TypeMap &type_map,
-   TarLang &tar_lang,
-   bool skip_test)
+   TarLang &tar_lang)
 {
    PodItems::iterator jj;
 
