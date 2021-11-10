@@ -917,7 +917,7 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
 
    var_ref_ptr %= lit("*") >> var_ref;
 
-   version_sequence = (uint_ >> uint_)[version_sequence_add(_1, _2)]
+   version_sequence = (uint_ >>"-">> uint_)[version_sequence_add(_1, _2)]
                         | uint_[version_sequence_add(_1, 0)];
 
    typedef_vrange = (uint_ >> lit("-") >> uint_)[typedef_vrange_add(_1, _2)]

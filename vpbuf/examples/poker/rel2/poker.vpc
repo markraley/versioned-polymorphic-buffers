@@ -9,7 +9,7 @@ pod Header
 
 pod Card
     varint id 1
-    string name 1 1
+    string name 1-1
 
 pod Deck
     vector *Card cards 1
