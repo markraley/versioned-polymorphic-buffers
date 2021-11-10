@@ -14,14 +14,14 @@ struct pod_vector : public pod_item
    pod_vector(TypeVector &vp_typedefs_, bool is_ptr_)
          : vp_typedefs(vp_typedefs_), is_ptr(is_ptr_) {}
 
-   void serialize_out_cpp(ofstream &, int, TypeMap &, TarLang &);
-   void serialize_in_cpp(ofstream &, int, TypeMap &, TarLang &);
+   void serialize_out_cpp(ofstream &, int, TypeMap &, TarLang &, bool);
+   void serialize_in_cpp(ofstream &, int, TypeMap &, TarLang &, bool);
 
    void serialize_out_py(ofstream &, int, TypeMap &, TarLang &, bool);
    void serialize_in_py(ofstream &, int, TypeMap &, TarLang &, bool);
 
-   void serialize_out_js(ofstream &, int in, TypeMap &, TarLang &);
-   void serialize_in_js(ofstream &, int in, TypeMap &, TarLang &);
+   void serialize_out_js(ofstream &, int in, TypeMap &, TarLang &, bool);
+   void serialize_in_js(ofstream &, int in, TypeMap &, TarLang &, bool);
 
    std::string declare_js();
 };

@@ -12,7 +12,8 @@ pod_string::serialize_out_cpp(
    ofstream &ofs,
    int in,
    TypeMap &type_map,
-   TarLang &tar_lang)
+   TarLang &tar_lang,
+   bool skip_test)
 {
    bool present, code_emitted;
    code_version_test_cpp(ofs, present, code_emitted, in,
@@ -30,7 +31,8 @@ pod_string::serialize_in_cpp(
    ofstream &ofs,
    int in,
    TypeMap &type_map,
-   TarLang &tar_lang)
+   TarLang &tar_lang,
+   bool skip_test)
 {
    bool present, code_emitted;
    code_version_test_cpp(ofs, present, code_emitted, in,
@@ -88,7 +90,8 @@ pod_string::serialize_out_js(
    ofstream &ofs,
    int in,
    TypeMap &type_map,
-   TarLang &tar_lang)
+   TarLang &tar_lang,
+   bool skip_test)
 {
    bool present, code_emitted;
    code_version_test_js(ofs, present, code_emitted, in,
@@ -107,7 +110,8 @@ pod_string::serialize_in_js(
    ofstream &ofs,
    int in,
    TypeMap &type_map,
-   TarLang &tar_lang)
+   TarLang &tar_lang,
+   bool skip_test)
 {
    bool present, code_emitted;
    code_version_test_js(ofs, present, code_emitted, in,
