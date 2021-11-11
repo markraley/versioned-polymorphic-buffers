@@ -55,9 +55,11 @@ pod_salt::serialize_in_cpp(
    string t;
    vp_typedefs[payload_index]->get_type_cpp(t);
 
-   ofs <<tab(in) <<"assert(read_" << t << "(ctx) == "
+   if (assert_on_read)
+      ofs <<tab(in) <<"assert(read_" << t << "(ctx) == "
                      <<"(*ctx.salt_map[\""<< name <<"\"])());\n";
-
+   else
+      ofs <<tab(in) <<"read_" << t << "(ctx);\n";
 }
 
 // --- python ------------------------------------------------------------------
@@ -102,8 +104,12 @@ pod_salt::serialize_in_py(
    std::string t;
    vp_typedefs[payload_index]->get_type_python(t);
 
-   ofs <<tab(in)<<"assert(read_" << t << "(ctx) == "
+   if (assert_on_read)
+      ofs <<tab(in)<<"assert(read_" << t << "(ctx) == "
                         <<"ctx.salt_map['" << name << "']())\n";
+   else
+      ofs <<tab(in)<<"read_" << t <<"(ctx)\n";
+
 }
 
 // --- javascript --------------------------------------------------------------
@@ -155,8 +161,11 @@ pod_salt::serialize_in_js(
 
    vp_typedefs[payload_index]->get_type_js(t);
 
-   ofs <<tab(in)<<"assert.equal(this.read_"<< t <<"(ctx) , "
-                  <<"ctx.salt_map['"<< name <<"']())\n";
+   if (assert_on_read)
+      ofs <<tab(in)<<"assert.equal(this.read_"<< t <<"(ctx) , "
+                     <<"ctx.salt_map['"<< name <<"']())\n";
+   else
+      ofs <<tab(in)<<"this.read_"<< t <<"(ctx)\n";
 }
 
 std::string

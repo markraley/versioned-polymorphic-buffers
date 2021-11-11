@@ -565,7 +565,7 @@ struct pod_item_type_adder
 
 struct pod_item_salt_adder
 {
-   template <typename, typename>
+   template <typename, typename, typename>
    struct result { typedef void type; };
 
    pod_item_salt_adder(TypeVector &vp_typedefs)
@@ -574,13 +574,14 @@ struct pod_item_salt_adder
    void
    operator()(
          std::string const& item_name,
-         int const& var_index) const
+         int const& var_index,
+         bool test_on_read) const
    {
       TypeVector::reverse_iterator ii;
 
       ii = vp_typedefs.rbegin();
 
-      auto *new_item = new pod_salt(vp_typedefs);
+      auto *new_item = new pod_salt(vp_typedefs, test_on_read);
 
       new_item->name = item_name;
       new_item->payload_index = var_index;
@@ -819,7 +820,8 @@ struct vp_compiler : qi::grammar<Iterator, ascii::space_type>
    vp_compiler(std::string vpc_path);
 
    qi::rule<Iterator, ascii::space_type>
-            type_list, item_varint, item_string, item_typed, item_salt;
+            type_list, item_varint, item_string, item_typed,
+            item_sea_salt, item_salt;
    qi::rule<Iterator, ascii::space_type> pod_def, reorder_pod_def;
    qi::rule<Iterator, ascii::space_type> poly_def;
    qi::rule<Iterator, qi::locals<int, int>, ascii::space_type> format_set;
@@ -933,7 +935,10 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
    item_string = lit("string") >> identifier[pod_item_string_add(_1)]
                         >> -version_sequence;
    item_salt = "salt">> (identifier >>"("
-                        >> var_ref) [pod_item_salt_add(_1, _2)]
+                        >> var_ref) [pod_item_salt_add(_1, _2, false)]
+                        >>")">> -version_sequence;
+   item_sea_salt = "sea_salt">> (identifier >>"("
+                        >> var_ref) [pod_item_salt_add(_1, _2, true)]
                         >>")">> -version_sequence;
 
    item_map = lit("map") >> (identifier >> var_ref >> identifier)
@@ -962,7 +967,7 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
             ;
 
    type_list = *(item_varint | item_string | item_map
-               | item_vector  | item_typed | item_salt);
+               | item_vector  | item_typed | item_salt | item_sea_salt);
 
    pod_parent = (lit("is") >> var_ref)[subclass_to_parent_add(_1)]
                   | qi::attr(("unspecified"));

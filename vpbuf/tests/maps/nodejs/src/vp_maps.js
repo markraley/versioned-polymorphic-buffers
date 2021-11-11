@@ -219,10 +219,10 @@ module.exports = {
 				payload.s1 = ctx.read_String();
 				break;
 				case 2:
-				assert.equal(this.read_String(ctx) , ctx.salt_map['SaltShaker']())
+				this.read_String(ctx)
 				break;
 				case 3:
-				assert.equal(this.read_String(ctx) , ctx.salt_map['PepperShaker']())
+				this.read_String(ctx)
 				break;
 			};
 		return payload;

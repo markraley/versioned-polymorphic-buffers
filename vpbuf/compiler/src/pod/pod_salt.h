@@ -6,9 +6,10 @@ struct pod_salt : public pod_item
 {
    int payload_index;
    TypeVector &vp_typedefs;
+   bool assert_on_read;
 
-   pod_salt(TypeVector &vp_typedefs)
-      : vp_typedefs(vp_typedefs) {}
+   pod_salt(TypeVector &vp_typedefs, bool assert_on_read)
+      : vp_typedefs(vp_typedefs), assert_on_read(assert_on_read) {}
 
    void serialize_out_cpp(ofstream &, int, TypeMap &, TarLang &, bool);
    void serialize_in_cpp(ofstream &, int, TypeMap &, TarLang &, bool);
