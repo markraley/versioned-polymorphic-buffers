@@ -1,47 +1,73 @@
 from vp_scram.persist import *
 
 def version_check(ver):
-	if (ver < 1 or ver > 4):
+	if (ver < 1 or ver > 3):
 		return False
 	else:
 		return True
 
 def get_high_version():
-	return 4
+	return 3
 
 def get_low_version():
 	return 1
 
 def init_reorder_map(map, ver, seed):
-	map['Egg'] = get_rlist_Egg(ver, seed)
+	map['Word'] = get_rlist_Word(ver, seed)
+	map['Phrase'] = get_rlist_Phrase(ver, seed)
 
-vlist_Egg = [
+vlist_Word = [
 	( 1, 0 ),
 	( 1, 0 ),
 	( 1, 0 ),
+	( 1, 0 ),
+	( 3, 0 ),
 	( 3, 0 ),
 	( 4, 0 ),
 	( 4, 0 )
 ]
 
-def get_vlist_Egg(ver):
+def get_vlist_Word(ver):
 	c, v = 0, []
-	for p in vlist_Egg:
+	for p in vlist_Word:
 		if (p[1] == 0 and ver >= p[0]) or (ver >= p[0] and ver <= p[1]):
 			v.append(c)
 			c += 1
 	return v
 
-rlist_Egg = [
-	( 2, 3, 'h1', EggScrambler ),
+rlist_Word = [
+	( 2, 0, 'h1', EggScrambler )
+]
+
+def get_rlist_Word(ver, seed):
+	for p in rlist_Word:
+		if (p[1] == 0 and ver >= p[0]) or (ver >= p[0] and ver <= p[1]):
+			return [p[2], p[3](get_vlist_Word(ver), seed)]
+	return ['ident', IdentityScrambler(get_vlist_Word(ver))]
+
+vlist_Phrase = [
+	( 1, 0 ),
+	( 1, 0 ),
+	( 1, 0 )
+]
+
+def get_vlist_Phrase(ver):
+	c, v = 0, []
+	for p in vlist_Phrase:
+		if (p[1] == 0 and ver >= p[0]) or (ver >= p[0] and ver <= p[1]):
+			v.append(c)
+			c += 1
+	return v
+
+rlist_Phrase = [
 	( 4, 0, 'h2', HashBrowns )
 ]
 
-def get_rlist_Egg(ver, seed):
-	for p in rlist_Egg:
+def get_rlist_Phrase(ver, seed):
+	for p in rlist_Phrase:
 		if (p[1] == 0 and ver >= p[0]) or (ver >= p[0] and ver <= p[1]):
-			return [p[2], p[3](get_vlist_Egg(ver), seed)]
-	return ['ident', IdentityScrambler(get_vlist_Egg(ver))]
+			return [p[2], p[3](get_vlist_Phrase(ver), seed)]
+	return ['ident', IdentityScrambler(get_vlist_Phrase(ver))]
 
 def write_str(ctx, payload):
     ctx.encoder.writeString(payload) # amf3
@@ -53,28 +79,33 @@ def write_Header(ctx, payload):
 	write_int(ctx, payload.version)
 	write_str(ctx, payload.test_name)
 
-def write_Egg(ctx, payload):
-	for i in ctx.reorder_map['Egg'][1]():
+def write_Word(ctx, payload):
+	for i in ctx.reorder_map['Word'][1]():
 		if i==0:
-			write_str(ctx, payload.c1)
+			write_str(ctx, payload.fragment1)
 		elif i==1:
-			write_str(ctx, payload.c2)
+			write_str(ctx, payload.fragment2)
 		elif i==2:
-			write_str(ctx, payload.c3)
+			write_str(ctx, payload.fragment3)
 		elif i==3:
-			write_str(ctx, ctx.salt_map['SaltShaker']())
+			write_str(ctx, payload.fragment4)
 		elif i==4:
-			write_str(ctx, ctx.salt_map['PepperShaker']())
+			write_str(ctx, ctx.salt_map['SaltShaker']())
 		elif i==5:
-			write_str(ctx, ctx.salt_map['PepperShaker']())
+			write_str(ctx, ctx.salt_map['SaltShaker']())
+		elif i==6:
+			write_str(ctx, ctx.salt_map['SaltShaker']())
+		elif i==7:
+			write_str(ctx, ctx.salt_map['SaltShaker']())
 
-def write_Omelette(ctx, payload):
-	count = len(payload.eggs)
-	write_int(ctx, count)
-	i = 0
-	while (i < count):
-		write_Egg(ctx, payload.eggs[i])
-		i = i + 1
+def write_Phrase(ctx, payload):
+	for i in ctx.reorder_map['Phrase'][1]():
+		if i==0:
+			write_Word(ctx, payload.word1)
+		elif i==1:
+			write_Word(ctx, payload.word2)
+		elif i==2:
+			write_Word(ctx, payload.word3)
 
 def read_str(ctx):
    t = ctx.decoder.readInteger() # amf3
@@ -92,31 +123,35 @@ def read_Header(ctx):
 	payload.test_name = read_str(ctx)
 	return payload
 
-def read_Egg(ctx):
-	payload = Egg()
-	for i in ctx.reorder_map['Egg'][1]():
+def read_Word(ctx):
+	payload = Word()
+	for i in ctx.reorder_map['Word'][1]():
 		if i==0:
-			payload.c1 = read_str(ctx)
+			payload.fragment1 = read_str(ctx)
 		elif i==1:
-			payload.c2 = read_str(ctx)
+			payload.fragment2 = read_str(ctx)
 		elif i==2:
-			payload.c3 = read_str(ctx)
+			payload.fragment3 = read_str(ctx)
 		elif i==3:
-			assert(read_str(ctx) == ctx.salt_map['SaltShaker']())
+			payload.fragment4 = read_str(ctx)
 		elif i==4:
-			assert(read_str(ctx) == ctx.salt_map['PepperShaker']())
+			assert(read_str(ctx) == ctx.salt_map['SaltShaker']())
 		elif i==5:
-			assert(read_str(ctx) == ctx.salt_map['PepperShaker']())
+			assert(read_str(ctx) == ctx.salt_map['SaltShaker']())
+		elif i==6:
+			assert(read_str(ctx) == ctx.salt_map['SaltShaker']())
+		elif i==7:
+			assert(read_str(ctx) == ctx.salt_map['SaltShaker']())
 	return payload
 
-def read_Omelette(ctx):
-	payload = Omelette()
-	payload.eggs = []
-	count = read_int(ctx)
-	i = 0
-	while (i < count):
-		t = read_Egg(ctx)
-		payload.eggs.append(t)
-		i = i + 1
+def read_Phrase(ctx):
+	payload = Phrase()
+	for i in ctx.reorder_map['Phrase'][1]():
+		if i==0:
+			payload.word1 = read_Word(ctx)
+		elif i==1:
+			payload.word2 = read_Word(ctx)
+		elif i==2:
+			payload.word3 = read_Word(ctx)
 	return payload
 

@@ -7,21 +7,24 @@ module.exports = {
 	factory: null, // must be set to class factory object
 
 	init_reorder_map: function(map, ver, seed) {
-		map['Egg'] = this.get_rlist_Egg(ver, seed)
+		map['Word'] = this.get_rlist_Word(ver, seed)
+		map['Phrase'] = this.get_rlist_Phrase(ver, seed)
 	},
 
-	vlist_Egg: [
+	vlist_Word: [
 		[ 1, 0 ],
 		[ 1, 0 ],
 		[ 1, 0 ],
+		[ 1, 0 ],
+		[ 3, 0 ],
 		[ 3, 0 ],
 		[ 4, 0 ],
 		[ 4, 0 ]
 	],
 
-	get_vlist_Egg: function(ver) {
+	get_vlist_Word: function(ver) {
 		var v = [];
-		this.vlist_Egg.forEach(function(p, i) {
+		this.vlist_Word.forEach(function(p, i) {
 			if ((p[1] == 0 && ver >= p[0]) || (ver >= p[0] && ver <= p[1])) {
 				v.push(i);
 			}
@@ -29,18 +32,46 @@ module.exports = {
 		return v;
 	},
 
-	rlist_Egg: [
-		[ 2, 3, 'h1', persist.EggScrambler ],
+	rlist_Word: [
+		[ 2, 0, 'h1', persist.EggScrambler ]
+	],
+
+	get_rlist_Word: function (ver, seed) {
+		for (var i = 0; i < this.rlist_Word.length; i++) {
+			var p = this.rlist_Word[i]
+			if ((p[1] == 0 && ver >= p[0]) || (ver >= p[0] && ver <= p[1]))
+				return [p[2], p[3](this.get_vlist_Word(ver), seed)]
+		}
+		return ['ident', persist.IdentityScrambler(this.get_vlist_Word(ver))]
+	},
+
+	vlist_Phrase: [
+		[ 1, 0 ],
+		[ 1, 0 ],
+		[ 1, 0 ]
+	],
+
+	get_vlist_Phrase: function(ver) {
+		var v = [];
+		this.vlist_Phrase.forEach(function(p, i) {
+			if ((p[1] == 0 && ver >= p[0]) || (ver >= p[0] && ver <= p[1])) {
+				v.push(i);
+			}
+		});
+		return v;
+	},
+
+	rlist_Phrase: [
 		[ 4, 0, 'h2', persist.HashBrowns ]
 	],
 
-	get_rlist_Egg: function (ver, seed) {
-		for (var i = 0; i < this.rlist_Egg.length; i++) {
-			var p = this.rlist_Egg[i]
+	get_rlist_Phrase: function (ver, seed) {
+		for (var i = 0; i < this.rlist_Phrase.length; i++) {
+			var p = this.rlist_Phrase[i]
 			if ((p[1] == 0 && ver >= p[0]) || (ver >= p[0] && ver <= p[1]))
-				return [p[2], p[3](this.get_vlist_Egg(ver), seed)]
+				return [p[2], p[3](this.get_vlist_Phrase(ver), seed)]
 		}
-		return ['ident', persist.IdentityScrambler(this.get_vlist_Egg(ver))]
+		return ['ident', persist.IdentityScrambler(this.get_vlist_Phrase(ver))]
 	},
 
 	write_String: function(ctx, payload) {
@@ -56,35 +87,51 @@ module.exports = {
 		ctx.write_String(payload.test_name);
 	},
 
-	write_Egg: function(ctx, payload) {
-		var v = ctx.reorder_map['Egg'][1]();
+	write_Word: function(ctx, payload) {
+		var v = ctx.reorder_map['Word'][1]();
 		for (var i = 0; i < v.length; i++)
 			switch(v[i]) {
 				case 0:
-				ctx.write_String(payload.c1);
+				ctx.write_String(payload.fragment1);
 				break;
 				case 1:
-				ctx.write_String(payload.c2);
+				ctx.write_String(payload.fragment2);
 				break;
 				case 2:
-				ctx.write_String(payload.c3);
+				ctx.write_String(payload.fragment3);
 				break;
 				case 3:
-				ctx.write_String(ctx.salt_map['SaltShaker']());
+				ctx.write_String(payload.fragment4);
 				break;
 				case 4:
-				ctx.write_String(ctx.salt_map['PepperShaker']());
+				ctx.write_String(ctx.salt_map['SaltShaker']());
 				break;
 				case 5:
-				ctx.write_String(ctx.salt_map['PepperShaker']());
+				ctx.write_String(ctx.salt_map['SaltShaker']());
+				break;
+				case 6:
+				ctx.write_String(ctx.salt_map['SaltShaker']());
+				break;
+				case 7:
+				ctx.write_String(ctx.salt_map['SaltShaker']());
 				break;
 			};
 	},
 
-	write_Omelette: function(ctx, payload) {
-		ctx.write_Integer(payload.eggs.length);
-		for (var i = 0; i < payload.eggs.length; i++)
-			this.write_Egg(ctx, payload.eggs[i]);
+	write_Phrase: function(ctx, payload) {
+		var v = ctx.reorder_map['Phrase'][1]();
+		for (var i = 0; i < v.length; i++)
+			switch(v[i]) {
+				case 0:
+				this.write_Word(ctx, payload.word1)
+				break;
+				case 1:
+				this.write_Word(ctx, payload.word2)
+				break;
+				case 2:
+				this.write_Word(ctx, payload.word3)
+				break;
+			};
 	},
 
 	read_String: function(ctx) {
@@ -102,48 +149,62 @@ module.exports = {
 		return payload;
 	},
 
-	read_Egg: function(ctx) {
-		var payload = new this.factory.Egg();
-		var v = ctx.reorder_map['Egg'][1]();
+	read_Word: function(ctx) {
+		var payload = new this.factory.Word();
+		var v = ctx.reorder_map['Word'][1]();
 		for (var i = 0; i < v.length; i++)
 			switch(v[i]) {
 				case 0:
-				payload.c1 = ctx.read_String();
+				payload.fragment1 = ctx.read_String();
 				break;
 				case 1:
-				payload.c2 = ctx.read_String();
+				payload.fragment2 = ctx.read_String();
 				break;
 				case 2:
-				payload.c3 = ctx.read_String();
+				payload.fragment3 = ctx.read_String();
 				break;
 				case 3:
-				assert.equal(this.read_String(ctx) , ctx.salt_map['SaltShaker']())
+				payload.fragment4 = ctx.read_String();
 				break;
 				case 4:
-				assert.equal(this.read_String(ctx) , ctx.salt_map['PepperShaker']())
+				assert.equal(this.read_String(ctx) , ctx.salt_map['SaltShaker']())
 				break;
 				case 5:
-				assert.equal(this.read_String(ctx) , ctx.salt_map['PepperShaker']())
+				assert.equal(this.read_String(ctx) , ctx.salt_map['SaltShaker']())
+				break;
+				case 6:
+				assert.equal(this.read_String(ctx) , ctx.salt_map['SaltShaker']())
+				break;
+				case 7:
+				assert.equal(this.read_String(ctx) , ctx.salt_map['SaltShaker']())
 				break;
 			};
 		return payload;
 	},
 
-	read_Omelette: function(ctx) {
-		var payload = new this.factory.Omelette();
-		var count = ctx.read_Integer();
-		for (var i = 0; i < count; i++) {
-			var c = this.read_Egg(ctx);
-			payload.eggs.push(c);
-		}
+	read_Phrase: function(ctx) {
+		var payload = new this.factory.Phrase();
+		var v = ctx.reorder_map['Phrase'][1]();
+		for (var i = 0; i < v.length; i++)
+			switch(v[i]) {
+				case 0:
+				payload.word1 = this.read_Word(ctx)
+				break;
+				case 1:
+				payload.word2 = this.read_Word(ctx)
+				break;
+				case 2:
+				payload.word3 = this.read_Word(ctx)
+				break;
+			};
 		return payload;
 	},
 
 	version_check: function(ver) {
-		return (ver < 1 || ver > 4) ? false : true;
+		return (ver < 1 || ver > 3) ? false : true;
 	},
 	get_high_version: function(ver) {
-		return 4
+		return 3
 	},
 	get_low_version: function(ver) {
 		return 1
