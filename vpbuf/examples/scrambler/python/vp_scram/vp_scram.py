@@ -19,8 +19,6 @@ vlist_Egg = [
 	( 1, 0 ),
 	( 1, 0 ),
 	( 1, 0 ),
-	( 2, 0 ),
-	( 5, 0 ),
 	( 3, 0 ),
 	( 4, 0 )
 ]
@@ -62,12 +60,8 @@ def write_Egg(ctx, payload):
 		elif i==2:
 			write_str(ctx, payload.c3)
 		elif i==3:
-			write_Header(ctx, payload.h1)
-		elif i==4:
-			write_str(ctx, payload.c4)
-		elif i==5:
 			write_str(ctx, ctx.salt_map['SaltShaker']())
-		elif i==6:
+		elif i==4:
 			write_str(ctx, ctx.salt_map['PepperShaker']())
 
 def read_str(ctx):
@@ -96,12 +90,8 @@ def read_Egg(ctx):
 		elif i==2:
 			payload.c3 = read_str(ctx)
 		elif i==3:
-			payload.h1 = read_Header(ctx)
-		elif i==4:
-			payload.c4 = read_str(ctx)
-		elif i==5:
 			assert(read_str(ctx) == ctx.salt_map['SaltShaker']())
-		elif i==6:
+		elif i==4:
 			assert(read_str(ctx) == ctx.salt_map['PepperShaker']())
 	return payload
 

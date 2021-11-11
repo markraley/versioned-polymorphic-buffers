@@ -1,20 +1,16 @@
 target
-    language python 1 5 vp_scram "./python/vp_scram" py
-    language cplusplus 1 5 vp_scram "./cpp/src" cpp
-    language javascript 1 5 vp_scram "./nodejs/src" js
+    language python 1-5 vp_scram "./python/vp_scram" py
+    language cplusplus 1-5 vp_scram "./cpp/src" cpp
+    language javascript 1-5 vp_scram "./nodejs/src" js
 
 pod Header
-    varint version 1
-    string test_name 1
+    varint version
+    string test_name
 
 rpod Egg : h1 (EggScrambler 2)
-
-    string c1 1
-    string c2 1
-    string c3 1
-    Header h1 2
-
-    string c4 5
+    string c1
+    string c2
+    string c3
 
     salt SaltShaker (string)   3
     salt PepperShaker (string) 4

@@ -14,8 +14,6 @@ module.exports = {
 		[ 1, 0 ],
 		[ 1, 0 ],
 		[ 1, 0 ],
-		[ 2, 0 ],
-		[ 5, 0 ],
 		[ 3, 0 ],
 		[ 4, 0 ]
 	],
@@ -70,15 +68,9 @@ module.exports = {
 				ctx.write_String(payload.c3);
 				break;
 				case 3:
-				this.write_Header(ctx, payload.h1)
-				break;
-				case 4:
-				ctx.write_String(payload.c4);
-				break;
-				case 5:
 				ctx.write_String(ctx.salt_map['SaltShaker']());
 				break;
-				case 6:
+				case 4:
 				ctx.write_String(ctx.salt_map['PepperShaker']());
 				break;
 			};
@@ -114,15 +106,9 @@ module.exports = {
 				payload.c3 = ctx.read_String();
 				break;
 				case 3:
-				payload.h1 = this.read_Header(ctx)
-				break;
-				case 4:
-				payload.c4 = ctx.read_String();
-				break;
-				case 5:
 				assert.equal(this.read_String(ctx) , ctx.salt_map['SaltShaker']())
 				break;
-				case 6:
+				case 4:
 				assert.equal(this.read_String(ctx) , ctx.salt_map['PepperShaker']())
 				break;
 			};

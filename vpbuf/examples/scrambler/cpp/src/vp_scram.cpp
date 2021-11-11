@@ -16,8 +16,6 @@ namespace vp_scram {
 		{ 1, 0 },
 		{ 1, 0 },
 		{ 1, 0 },
-		{ 2, 0 },
-		{ 5, 0 },
 		{ 3, 0 },
 		{ 4, 0 }
 	};
@@ -75,15 +73,9 @@ namespace vp_scram {
 				write_string(ctx, payload.c3);
 				break;
 				case 3:
-				write_Header(ctx, payload.h1);
-				break;
-				case 4:
-				write_string(ctx, payload.c4);
-				break;
-				case 5:
 				write_string(ctx, (*ctx.salt_map["SaltShaker"])());
 				break;
-				case 6:
+				case 4:
 				write_string(ctx, (*ctx.salt_map["PepperShaker"])());
 				break;
 			}
@@ -111,15 +103,9 @@ namespace vp_scram {
 					read_string(ctx, payload.c3);
 					break;
 				case 3:
-					read_Header(ctx, payload.h1);
-					break;
-				case 4:
-					read_string(ctx, payload.c4);
-					break;
-				case 5:
 					assert(read_string(ctx) == (*ctx.salt_map["SaltShaker"])());
 					break;
-				case 6:
+				case 4:
 					assert(read_string(ctx) == (*ctx.salt_map["PepperShaker"])());
 					break;
 			}
