@@ -31,8 +31,8 @@ pod OuterD
 rpod Egg : h1 (EggScrambler)
     varint i1
     string s1
-    salt SaltShaker (string)
-    salt PepperShaker (string)
+    sea_salt SaltShaker (string)
+    sea_salt PepperShaker (string)
 
 pod Omlette
     map varint Egg lookup
