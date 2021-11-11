@@ -1,13 +1,13 @@
 from vp_scram.persist import *
 
 def version_check(ver):
-	if (ver < 1 or ver > 5):
+	if (ver < 1 or ver > 4):
 		return False
 	else:
 		return True
 
 def get_high_version():
-	return 5
+	return 4
 
 def get_low_version():
 	return 1
@@ -20,6 +20,7 @@ vlist_Egg = [
 	( 1, 0 ),
 	( 1, 0 ),
 	( 3, 0 ),
+	( 4, 0 ),
 	( 4, 0 )
 ]
 
@@ -32,7 +33,8 @@ def get_vlist_Egg(ver):
 	return v
 
 rlist_Egg = [
-	( 2, 0, 'h1', EggScrambler )
+	( 2, 3, 'h1', EggScrambler ),
+	( 4, 0, 'h2', HashBrowns )
 ]
 
 def get_rlist_Egg(ver, seed):
@@ -63,6 +65,16 @@ def write_Egg(ctx, payload):
 			write_str(ctx, ctx.salt_map['SaltShaker']())
 		elif i==4:
 			write_str(ctx, ctx.salt_map['PepperShaker']())
+		elif i==5:
+			write_str(ctx, ctx.salt_map['PepperShaker']())
+
+def write_Omelette(ctx, payload):
+	count = len(payload.eggs)
+	write_int(ctx, count)
+	i = 0
+	while (i < count):
+		write_Egg(ctx, payload.eggs[i])
+		i = i + 1
 
 def read_str(ctx):
    t = ctx.decoder.readInteger() # amf3
@@ -93,5 +105,18 @@ def read_Egg(ctx):
 			assert(read_str(ctx) == ctx.salt_map['SaltShaker']())
 		elif i==4:
 			assert(read_str(ctx) == ctx.salt_map['PepperShaker']())
+		elif i==5:
+			assert(read_str(ctx) == ctx.salt_map['PepperShaker']())
+	return payload
+
+def read_Omelette(ctx):
+	payload = Omelette()
+	payload.eggs = []
+	count = read_int(ctx)
+	i = 0
+	while (i < count):
+		t = read_Egg(ctx)
+		payload.eggs.append(t)
+		i = i + 1
 	return payload
 

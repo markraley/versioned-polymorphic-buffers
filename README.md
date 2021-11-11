@@ -246,11 +246,16 @@ card pop: Blue 8 Blue 7
 write: t.dat, version=1, cards=0, bytes=12
 cards left 0
 ```
-## Reorder Pods and Salts
-The unit test maps_E in vpbuf/tests/maps demonstrates seed based reorder pods and data salting options. Salts add algorithmically generated pseudo-random data and validation. Reorder pods algorithmically shuffle pod items (members) in seeded pseudo-random fashion.
+## Scrambler Structural Data Obfuscation Example
+##      or, an Omlette and a side of Hashbrowns
+
+# Motivation
+
+Encryption is a glass cannon, powerful but fragile. Any misconfiguration or implementation flaw can potentially expose private or secret data on the wire. When an attacker cannot succeeed by brute force, they will invariably nibble at its edges, mapping, studying, and ultimately exploiting any underlying structure known or identified. Structural data obfuscation may be a powerful aid to encryption by hiding structure systemmatically.
+
 
 ### active development
-    new passcode example of reorder pods and salts
+    new scrambler example of reorder pods and salts
 
 ### TODO
 

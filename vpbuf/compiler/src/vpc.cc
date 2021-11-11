@@ -991,9 +991,9 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
 
    // name, version start, version end, name space, path out, file extension
    target = lit("language") >> lang_specifier >> uint_ >>"-">> uint_
-                                    >> identifier >> quoted_string >> identifier;
+                                 >> identifier >> quoted_string >> identifier;
    target_ignore = lit("-language") >> lang_specifier >> uint_ >> uint_
-                                    >> identifier >> quoted_string >> identifier;
+                                 >> identifier >> quoted_string >> identifier;
 
    target_list = *(target[push_back(boost::phoenix::ref(tlist), _1)]
                      |
@@ -1006,13 +1006,6 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
 
    root %= format_set ;
 
-#if 0
-   debug(format_set);
-   debug(type_list);
-   debug(pod_def);
-   debug(item_varint);
-   debug(item_string);
-#endif
    format_set.name("format_set");
    type_list.name("type_list");
    pod_def.name("pod_def");

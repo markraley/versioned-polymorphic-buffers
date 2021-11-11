@@ -15,6 +15,7 @@ module.exports = {
 		[ 1, 0 ],
 		[ 1, 0 ],
 		[ 3, 0 ],
+		[ 4, 0 ],
 		[ 4, 0 ]
 	],
 
@@ -29,7 +30,8 @@ module.exports = {
 	},
 
 	rlist_Egg: [
-		[ 2, 0, 'h1', persist.EggScrambler ]
+		[ 2, 3, 'h1', persist.EggScrambler ],
+		[ 4, 0, 'h2', persist.HashBrowns ]
 	],
 
 	get_rlist_Egg: function (ver, seed) {
@@ -73,7 +75,16 @@ module.exports = {
 				case 4:
 				ctx.write_String(ctx.salt_map['PepperShaker']());
 				break;
+				case 5:
+				ctx.write_String(ctx.salt_map['PepperShaker']());
+				break;
 			};
+	},
+
+	write_Omelette: function(ctx, payload) {
+		ctx.write_Integer(payload.eggs.length);
+		for (var i = 0; i < payload.eggs.length; i++)
+			this.write_Egg(ctx, payload.eggs[i]);
 	},
 
 	read_String: function(ctx) {
@@ -111,15 +122,28 @@ module.exports = {
 				case 4:
 				assert.equal(this.read_String(ctx) , ctx.salt_map['PepperShaker']())
 				break;
+				case 5:
+				assert.equal(this.read_String(ctx) , ctx.salt_map['PepperShaker']())
+				break;
 			};
 		return payload;
 	},
 
+	read_Omelette: function(ctx) {
+		var payload = new this.factory.Omelette();
+		var count = ctx.read_Integer();
+		for (var i = 0; i < count; i++) {
+			var c = this.read_Egg(ctx);
+			payload.eggs.push(c);
+		}
+		return payload;
+	},
+
 	version_check: function(ver) {
-		return (ver < 1 || ver > 5) ? false : true;
+		return (ver < 1 || ver > 4) ? false : true;
 	},
 	get_high_version: function(ver) {
-		return 5
+		return 4
 	},
 	get_low_version: function(ver) {
 		return 1
