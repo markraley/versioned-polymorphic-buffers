@@ -246,16 +246,15 @@ card pop: Blue 8 Blue 7
 write: t.dat, version=1, cards=0, bytes=12
 cards left 0
 ```
-## Scrambler Structural Data Obfuscation Example
-##      or, an Omlette and a side of Hashbrowns
+## Scrambler Structural Data Obfuscation Example - scrambled eggs with a side of hashbrowns
 
-# Motivation
+### Motivation
 
-Encryption is a glass cannon, powerful but fragile. Any misconfiguration or implementation flaw can potentially expose private or secret data on the wire. When an attacker cannot succeeed by brute force, they will invariably nibble at its edges, mapping, studying, and ultimately exploiting any underlying structure known or identified. Structural data obfuscation may be a powerful aid to encryption by hiding structure systemmatically.
+Encryption is a glass cannon, extremely powerful but fragile, with any misconfiguration or implementation flaw potentially exposing precious data. It is axiomatic then that when an attacker cannot succeeed by brute force, they will nibble at its edges, mapping, studying, and ultimately exploiting any underlying structure known or discovered. Therefore, structural data obfuscation may be considered a powerful aid to encryption by obfuscating its these data structures systemmatically.
 
 
 ### active development
-    new scrambler example of reorder pods and salts
+    scrambler example of reorder pods and salts
 
 ### TODO
 
