@@ -821,7 +821,12 @@ struct vp_compiler : qi::grammar<Iterator, ascii::space_type>
 
    qi::rule<Iterator, ascii::space_type>
             type_list, item_varint, item_string, item_typed,
-            item_sea_salt, item_salt;
+            item_sea_salt, item_salt, item_reorder_string;
+   qi::rule<Iterator, ascii::space_type> reorder_pi_cog,
+                                         reorder_pi_salt,
+                                         reorder_pi_param,
+                                         reorder_pi_list,
+                                         reorder_pi_options;
    qi::rule<Iterator, ascii::space_type> pod_def, reorder_pod_def;
    qi::rule<Iterator, ascii::space_type> poly_def;
    qi::rule<Iterator, qi::locals<int, int>, ascii::space_type> format_set;
@@ -934,6 +939,8 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
                         >> -version_sequence;
    item_string = lit("string") >> identifier[pod_item_string_add(_1)]
                         >> -version_sequence;
+   item_reorder_string = lit("rstring") >> identifier[pod_item_string_add(_1)]
+                        >> -version_sequence >> -reorder_pi_options;
    item_salt = "salt">> (identifier >>"("
                         >> var_ref) [pod_item_salt_add(_1, _2, false)]
                         >>")">> -version_sequence;
@@ -966,19 +973,26 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
             ) >> -version_sequence
             ;
 
-   type_list = *(item_varint | item_string | item_map
+   type_list = *(item_varint | item_string | item_map | item_reorder_string
                | item_vector  | item_typed | item_salt | item_sea_salt);
 
    pod_parent = (lit("is") >> var_ref)[subclass_to_parent_add(_1)]
                   | qi::attr(("unspecified"));
 
+   // reorder_pi_options (pod item)
+   reorder_pi_cog = lit("cog")>>"(">> identifier >> -version_sequence >>")" ;
+   reorder_pi_salt = lit("salt")>>"(">> identifier >> -version_sequence >>")" ;
+   reorder_pi_param = reorder_pi_cog | reorder_pi_salt ;
+   reorder_pi_list = +reorder_pi_param;
+   reorder_pi_options = (lit(":") >> reorder_pi_list) ;
+
+   // vptype_options
    vptype_options_item_params = "(">> identifier[vptype_opt_class_add(_1)]
                               >> -vptype_option_vrange >>")" ;
    vptype_options_item = identifier [vptype_option_add(_1)]
                            >> vptype_options_item_params;
    vptype_options_list = vptype_options_item
                            >> *(lit(",") >> vptype_options_item);
-
    vptype_options = (lit(":") >> vptype_options_list) ;
 
    pod_def = lit("pod")

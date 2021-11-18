@@ -18,8 +18,8 @@ module.exports = {
 		[ 1, 0 ],
 		[ 3, 0 ],
 		[ 3, 0 ],
-		[ 4, 0 ],
-		[ 4, 0 ]
+		[ 3, 0 ],
+		[ 3, 0 ]
 	],
 
 	get_vlist_Word: function(ver) {
@@ -62,7 +62,7 @@ module.exports = {
 	},
 
 	rlist_Phrase: [
-		[ 4, 0, 'h2', persist.HashBrowns ]
+		[ 3, 0, 'h2', persist.HashBrowns ]
 	],
 
 	get_rlist_Phrase: function (ver, seed) {
@@ -123,13 +123,13 @@ module.exports = {
 		for (var i = 0; i < v.length; i++)
 			switch(v[i]) {
 				case 0:
-				this.write_Word(ctx, payload.word1)
+				ctx.write_String(payload.word1);
 				break;
 				case 1:
-				this.write_Word(ctx, payload.word2)
+				ctx.write_String(payload.word2);
 				break;
 				case 2:
-				this.write_Word(ctx, payload.word3)
+				ctx.write_String(payload.word3);
 				break;
 			};
 	},
@@ -167,16 +167,16 @@ module.exports = {
 				payload.fragment4 = ctx.read_String();
 				break;
 				case 4:
-				assert.equal(this.read_String(ctx) , ctx.salt_map['SaltShaker']())
+				this.read_String(ctx)
 				break;
 				case 5:
-				assert.equal(this.read_String(ctx) , ctx.salt_map['SaltShaker']())
+				this.read_String(ctx)
 				break;
 				case 6:
-				assert.equal(this.read_String(ctx) , ctx.salt_map['SaltShaker']())
+				this.read_String(ctx)
 				break;
 				case 7:
-				assert.equal(this.read_String(ctx) , ctx.salt_map['SaltShaker']())
+				this.read_String(ctx)
 				break;
 			};
 		return payload;
@@ -188,13 +188,13 @@ module.exports = {
 		for (var i = 0; i < v.length; i++)
 			switch(v[i]) {
 				case 0:
-				payload.word1 = this.read_Word(ctx)
+				payload.word1 = ctx.read_String();
 				break;
 				case 1:
-				payload.word2 = this.read_Word(ctx)
+				payload.word2 = ctx.read_String();
 				break;
 				case 2:
-				payload.word3 = this.read_Word(ctx)
+				payload.word3 = ctx.read_String();
 				break;
 			};
 		return payload;

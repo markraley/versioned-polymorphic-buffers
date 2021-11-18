@@ -23,8 +23,8 @@ vlist_Word = [
 	( 1, 0 ),
 	( 3, 0 ),
 	( 3, 0 ),
-	( 4, 0 ),
-	( 4, 0 )
+	( 3, 0 ),
+	( 3, 0 )
 ]
 
 def get_vlist_Word(ver):
@@ -60,7 +60,7 @@ def get_vlist_Phrase(ver):
 	return v
 
 rlist_Phrase = [
-	( 4, 0, 'h2', HashBrowns )
+	( 3, 0, 'h2', HashBrowns )
 ]
 
 def get_rlist_Phrase(ver, seed):
@@ -101,11 +101,11 @@ def write_Word(ctx, payload):
 def write_Phrase(ctx, payload):
 	for i in ctx.reorder_map['Phrase'][1]():
 		if i==0:
-			write_Word(ctx, payload.word1)
+			write_str(ctx, payload.word1)
 		elif i==1:
-			write_Word(ctx, payload.word2)
+			write_str(ctx, payload.word2)
 		elif i==2:
-			write_Word(ctx, payload.word3)
+			write_str(ctx, payload.word3)
 
 def read_str(ctx):
    t = ctx.decoder.readInteger() # amf3
@@ -135,23 +135,23 @@ def read_Word(ctx):
 		elif i==3:
 			payload.fragment4 = read_str(ctx)
 		elif i==4:
-			assert(read_str(ctx) == ctx.salt_map['SaltShaker']())
+			read_str(ctx)
 		elif i==5:
-			assert(read_str(ctx) == ctx.salt_map['SaltShaker']())
+			read_str(ctx)
 		elif i==6:
-			assert(read_str(ctx) == ctx.salt_map['SaltShaker']())
+			read_str(ctx)
 		elif i==7:
-			assert(read_str(ctx) == ctx.salt_map['SaltShaker']())
+			read_str(ctx)
 	return payload
 
 def read_Phrase(ctx):
 	payload = Phrase()
 	for i in ctx.reorder_map['Phrase'][1]():
 		if i==0:
-			payload.word1 = read_Word(ctx)
+			payload.word1 = read_str(ctx)
 		elif i==1:
-			payload.word2 = read_Word(ctx)
+			payload.word2 = read_str(ctx)
 		elif i==2:
-			payload.word3 = read_Word(ctx)
+			payload.word3 = read_str(ctx)
 	return payload
 

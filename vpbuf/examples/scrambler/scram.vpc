@@ -15,11 +15,11 @@ rpod Word : h1 (EggScrambler 2)
 
     salt SaltShaker (string)   3
     salt SaltShaker (string)   3
-    salt SaltShaker (string)   4
-    salt SaltShaker (string)   4
+    salt SaltShaker (string)   3
+    salt SaltShaker (string)   3
 
 
-rpod Phrase : h2 (HashBrowns 4)
-    Word word1
-    Word word2
-    Word word3
+rpod Phrase : h2 (HashBrowns 3)
+    rstring word1 : cog(EggScrambler) salt(SaltShaker)
+    rstring word2
+    rstring word3

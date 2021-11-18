@@ -250,9 +250,10 @@ cards left 0
 
 ### Motivation
 
-Encryption is a glass cannon, extremely powerful but fragile, with any misconfiguration or implementation flaw potentially exposing precious data. It is axiomatic then that when an attacker cannot succeeed by brute force, they will nibble at its edges, mapping, studying, and ultimately exploiting any underlying structure known or discovered. Therefore, security may be improved by systematically hiding the structure an attacker relies on to navigate not one system but many.
+Encryption is a glass cannon, extremely powerful but fragile, with any misconfiguration or implementation flaw potentially exposing precious data. It is axiomatic then that when an attacker cannot succeeed by brute force, they will nibble at its edges, mapping, studying, and ultimately exploiting any underlying structure known or discovered. Therefore, security may be improved by systematically hiding this very structure an attacker relies on to navigate not one system but many.
 
 #### Active Development
+    adding reorderable string feature (rstring) for clarity in scrambler example
     scrambler example of reorder pods and salts
 
 #### TODO
