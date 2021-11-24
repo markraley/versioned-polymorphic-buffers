@@ -791,23 +791,6 @@ struct vptype_option_adder
    TypeVector &vp_typedefs;
 };
 
-struct vptype_opt_class_adder
-{
-   template <typename> struct result {typedef void type;};
-   vptype_opt_class_adder(TypeVector &vpt) : vp_typedefs(vpt) {}
-
-   void operator()(const std::string &opt_class) const
-   {
-      TypeVector::reverse_iterator ii;
-      ii = vp_typedefs.rbegin();
-
-      auto jj = (*ii)->vptype_options.rbegin();
-      (*jj).opt_class = opt_class;
-   };
-
-   TypeVector &vp_typedefs;
-};
-
 template <typename Iterator>
 struct vp_compiler : qi::grammar<Iterator, ascii::space_type>
 {
@@ -862,7 +845,6 @@ struct vp_compiler : qi::grammar<Iterator, ascii::space_type>
    function<typedef_vrange_adder> typedef_vrange_add;
    function<vptype_option_adder> vptype_option_add;
    function<vpopt_vrange_adder> vpopt_vrange_add;
-   function<vptype_opt_class_adder> vptype_opt_class_add;
 };
 
 
@@ -885,7 +867,6 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
    , typedef_vrange_add(vp_typedefs)
    , vptype_option_add(vp_typedefs)
    , vpopt_vrange_add(vp_typedefs)
-   , vptype_opt_class_add(vptype_opt_class_adder(vp_typedefs))
    , vpc_path(vpc_path)
 {
    using namespace qi::labels;
