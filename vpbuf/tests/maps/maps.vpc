@@ -28,7 +28,7 @@ pod D1
 pod OuterD
     map string D1 lookup
 
-rpod Egg : h1 (EggScrambler)
+rpod Egg : cog (EggScrambler)
     varint i1
     string s1
     sea_salt SaltShaker (string)

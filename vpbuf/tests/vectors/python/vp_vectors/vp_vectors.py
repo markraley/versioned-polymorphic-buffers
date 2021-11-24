@@ -34,8 +34,8 @@ rlist_A = [
 def get_rlist_A(ver, seed):
 	for p in rlist_A:
 		if (p[1] == 0 and ver >= p[0]) or (ver >= p[0] and ver <= p[1]):
-			return [p[2], p[3](get_vlist_A(ver), seed)]
-	return ['ident', IdentityScrambler(get_vlist_A(ver))]
+			return p[2](get_vlist_A(ver), seed)
+	return IdentityScrambler(get_vlist_A(ver))
 
 def write_str(ctx, payload):
     ctx.encoder.writeString(payload) # amf3
@@ -48,7 +48,7 @@ def write_Header(ctx, payload):
 	write_str(ctx, payload.test_name)
 
 def write_A(ctx, payload):
-	for i in ctx.reorder_map['A'][1]():
+	for i in ctx.reorder_map['A']():
 		if i==0:
 			write_int(ctx, payload.i1)
 		elif i==1:
@@ -146,7 +146,7 @@ def read_Header(ctx):
 
 def read_A(ctx):
 	payload = A()
-	for i in ctx.reorder_map['A'][1]():
+	for i in ctx.reorder_map['A']():
 		if i==0:
 			payload.i1 = read_int(ctx)
 		elif i==1:

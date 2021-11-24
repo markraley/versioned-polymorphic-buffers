@@ -28,16 +28,16 @@ module.exports = {
 	},
 
 	rlist_Egg: [
-		[ 1, 0, 'h1', persist.EggScrambler ]
+		[ 1, 0,  persist.EggScrambler ]
 	],
 
 	get_rlist_Egg: function (ver, seed) {
 		for (var i = 0; i < this.rlist_Egg.length; i++) {
 			var p = this.rlist_Egg[i]
 			if ((p[1] == 0 && ver >= p[0]) || (ver >= p[0] && ver <= p[1]))
-				return [p[2], p[3](this.get_vlist_Egg(ver), seed)]
+				return p[2](this.get_vlist_Egg(ver), seed)
 		}
-		return ['ident', persist.IdentityScrambler(this.get_vlist_Egg(ver))]
+		return persist.IdentityScrambler(this.get_vlist_Egg(ver))
 	},
 
 	write_String: function(ctx, payload) {
@@ -98,7 +98,7 @@ module.exports = {
 	},
 
 	write_Egg: function(ctx, payload) {
-		var v = ctx.reorder_map['Egg'][1]();
+		var v = ctx.reorder_map['Egg']();
 		for (var i = 0; i < v.length; i++)
 			switch(v[i]) {
 				case 0:
@@ -209,7 +209,7 @@ module.exports = {
 
 	read_Egg: function(ctx) {
 		var payload = new this.factory.Egg();
-		var v = ctx.reorder_map['Egg'][1]();
+		var v = ctx.reorder_map['Egg']();
 		for (var i = 0; i < v.length; i++)
 			switch(v[i]) {
 				case 0:

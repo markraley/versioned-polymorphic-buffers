@@ -7,19 +7,9 @@ pod Header
     varint version
     string test_name
 
-rpod Word : h1 (EggScrambler 2)
-    string fragment1
-    string fragment2
-    string fragment3
-    string fragment4
-
-    salt SaltShaker (string)   3
-    salt SaltShaker (string)   3
-    salt SaltShaker (string)   3
-    salt SaltShaker (string)   3
-
-
-rpod Phrase : h2 (HashBrowns 3)
+rpod Phrase : cog (HashBrowns 3)
     rstring word1 : cog(EggScrambler) salt(SaltShaker)
     rstring word2
     rstring word3
+
+    salt PepperShaker (string)   3

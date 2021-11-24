@@ -32,9 +32,9 @@ module.exports = {
 		for (var i = 0; i < this.rlist_A.length; i++) {
 			var p = this.rlist_A[i]
 			if ((p[1] == 0 && ver >= p[0]) || (ver >= p[0] && ver <= p[1]))
-				return [p[2], p[3](this.get_vlist_A(ver), seed)]
+				return p[2](this.get_vlist_A(ver), seed)
 		}
-		return ['ident', persist.IdentityScrambler(this.get_vlist_A(ver))]
+		return persist.IdentityScrambler(this.get_vlist_A(ver))
 	},
 
 	write_String: function(ctx, payload) {
@@ -51,7 +51,7 @@ module.exports = {
 	},
 
 	write_A: function(ctx, payload) {
-		var v = ctx.reorder_map['A'][1]();
+		var v = ctx.reorder_map['A']();
 		for (var i = 0; i < v.length; i++)
 			switch(v[i]) {
 				case 0:
@@ -144,7 +144,7 @@ module.exports = {
 
 	read_A: function(ctx) {
 		var payload = new this.factory.A();
-		var v = ctx.reorder_map['A'][1]();
+		var v = ctx.reorder_map['A']();
 		for (var i = 0; i < v.length; i++)
 			switch(v[i]) {
 				case 0:

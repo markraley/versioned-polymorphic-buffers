@@ -31,14 +31,14 @@ def get_vlist_Egg(ver):
 	return v
 
 rlist_Egg = [
-	( 1, 0, 'h1', EggScrambler )
+	( 1, 0, EggScrambler )
 ]
 
 def get_rlist_Egg(ver, seed):
 	for p in rlist_Egg:
 		if (p[1] == 0 and ver >= p[0]) or (ver >= p[0] and ver <= p[1]):
-			return [p[2], p[3](get_vlist_Egg(ver), seed)]
-	return ['ident', IdentityScrambler(get_vlist_Egg(ver))]
+			return p[2](get_vlist_Egg(ver), seed)
+	return IdentityScrambler(get_vlist_Egg(ver))
 
 def write_str(ctx, payload):
     ctx.encoder.writeString(payload) # amf3
@@ -85,7 +85,7 @@ def write_OuterD(ctx, payload):
 		write_D1(ctx, v)
 
 def write_Egg(ctx, payload):
-	for i in ctx.reorder_map['Egg'][1]():
+	for i in ctx.reorder_map['Egg']():
 		if i==0:
 			write_int(ctx, payload.i1)
 		elif i==1:
@@ -193,7 +193,7 @@ def read_OuterD(ctx):
 
 def read_Egg(ctx):
 	payload = Egg()
-	for i in ctx.reorder_map['Egg'][1]():
+	for i in ctx.reorder_map['Egg']():
 		if i==0:
 			payload.i1 = read_int(ctx)
 		elif i==1:

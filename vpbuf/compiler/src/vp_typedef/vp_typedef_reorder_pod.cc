@@ -77,7 +77,7 @@ void vp_typedef_reorder_pod::gen_cpp_utils(
       ofs <<tab(in+1)<<"{ "
                   << (*jj).vrange.nBegin <<", "
                   << (*jj).vrange.nEnd <<", "
-                  <<"\""<< (*jj).opt_name <<"\"}";
+                  <<"\""<< (*jj).opt_class <<"\"}";
       if (jj_rlast == jj)
          ofs << "\n";
       else
@@ -92,7 +92,7 @@ void vp_typedef_reorder_pod::gen_cpp_utils(
                      <<"(string &n, vector<int> v, uint seed) {\n";
 
    for (auto jj = vptype_options.begin(); jj != vptype_options.end(); ++jj) {
-      ofs <<tab(in+1)<< "if (n == \"" << (*jj).opt_name <<"\")\n";
+      ofs <<tab(in+1)<< "if (n == \"" << (*jj).opt_class <<"\")\n";
       ofs <<tab(in+2)<< "return new "<< (*jj).opt_class <<"(v, seed);\n";
    }
 
@@ -187,9 +187,7 @@ void vp_typedef_reorder_pod::gen_js_utils(
       ofs <<tab(in+1)<<"[ "
                   << (*jj).vrange.nBegin <<", "
                   << (*jj).vrange.nEnd <<", "
-                  <<"'"<< (*jj).opt_name  <<"', persist."
-                  << (*jj).opt_class
-                  <<" ]";
+                  <<" persist."<< (*jj).opt_class <<" ]";
       if (jj_rlast == jj)
          ofs << "\n";
       else
@@ -207,12 +205,12 @@ void vp_typedef_reorder_pod::gen_js_utils(
    ofs <<tab(in+2)<< "var p = this.rlist_"<< type_name <<"[i]\n";
    ofs <<tab(in+2)<< "if ((p[1] == 0 && ver >= p[0]) "<<
             "|| (ver >= p[0] && ver <= p[1]))\n";
-   ofs <<tab(in+3)<< "return [p[2], p[3](this.get_vlist_"
-                     << type_name <<"(ver), seed)]\n";
+   ofs <<tab(in+3)<< "return p[2](this.get_vlist_"
+                     << type_name <<"(ver), seed)\n";
    ofs <<tab(in+1)<< "}\n";
 
-   ofs <<tab(in+1)<<"return ['ident', persist.IdentityScrambler(this.get_vlist_"
-                     << type_name <<"(ver))]\n";
+   ofs <<tab(in+1)<<"return persist.IdentityScrambler(this.get_vlist_"
+                     << type_name <<"(ver))\n";
 
    ofs <<tab(in)<< "},\n\n";
 
@@ -368,9 +366,7 @@ void vp_typedef_reorder_pod::gen_py_utils(
       ofs <<tab(in+1)<<"( "
                   << (*jj).vrange.nBegin <<", "
                   << (*jj).vrange.nEnd <<", "
-                  <<"'"<< (*jj).opt_name  <<"', "
-                  << (*jj).opt_class
-                  <<" )";
+                  << (*jj).opt_class <<" )";
       if (jj_rlast == jj)
          ofs << "\n";
       else
@@ -386,11 +382,11 @@ void vp_typedef_reorder_pod::gen_py_utils(
    ofs <<tab(in+1)<< "for p in rlist_"<< type_name<< ":\n";
    ofs <<tab(in+2)<< "if (p[1] == 0 and ver >= p[0]) "<<
             "or (ver >= p[0] and ver <= p[1]):\n";
-   ofs <<tab(in+3)<< "return [p[2], p[3](get_vlist_"
-                           << type_name <<"(ver), seed)]\n";
+   ofs <<tab(in+3)<< "return p[2](get_vlist_"
+                           << type_name <<"(ver), seed)\n";
 
-   ofs <<tab(in+1)<< "return ['ident', IdentityScrambler(get_vlist_"
-                           << type_name <<"(ver))]\n";
+   ofs <<tab(in+1)<< "return IdentityScrambler(get_vlist_"
+                           << type_name <<"(ver))\n";
 
    ofs << "\n";
 }
@@ -412,7 +408,7 @@ vp_typedef_reorder_pod::serialize_out_py(
 
    ofs <<tab(in)<< "def write_"<< type_name <<"(ctx, payload):\n";
 
-   ofs <<tab(in+1)<< "for i in ctx.reorder_map['"<< type_name <<"'][1]():\n";
+   ofs <<tab(in+1)<< "for i in ctx.reorder_map['"<< type_name <<"']():\n";
    int k = 0;
    // TODO: replace this with match/case when available
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
@@ -448,7 +444,7 @@ vp_typedef_reorder_pod::serialize_in_py(
 
    ofs <<tab(in+1)<<"payload = "<< type_name <<"()\n";
 
-   ofs <<tab(in+1)<< "for i in ctx.reorder_map['"<< type_name <<"'][1]():\n";
+   ofs <<tab(in+1)<< "for i in ctx.reorder_map['"<< type_name <<"']():\n";
    int k = 0;
    // TODO: replace this with match/case when available
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
@@ -478,7 +474,7 @@ vp_typedef_reorder_pod::serialize_out_js(
 
    ofs <<tab(in)<<"write_"<< type_name <<": function(ctx, payload) {\n";
 
-   ofs <<tab(in+1)<< "var v = ctx.reorder_map['"<< type_name <<"'][1]();\n";
+   ofs <<tab(in+1)<< "var v = ctx.reorder_map['"<< type_name <<"']();\n";
    ofs <<tab(in+1)<< "for (var i = 0; i < v.length; i++)\n";
    ofs <<tab(in+2)<< "switch(v[i]) {\n";
    for (jj = pod_items.begin(); jj != pod_items.end(); ++jj) {
@@ -518,7 +514,7 @@ vp_typedef_reorder_pod::serialize_in_js(
 
    ofs <<tab(in+1) <<"var payload = new this.factory." << type_name << "();\n";
 
-   ofs <<tab(in+1)<< "var v = ctx.reorder_map['"<< type_name <<"'][1]();\n";
+   ofs <<tab(in+1)<< "var v = ctx.reorder_map['"<< type_name <<"']();\n";
    ofs <<tab(in+1)<< "for (var i = 0; i < v.length; i++)\n";
    ofs <<tab(in+2)<< "switch(v[i]) {\n";
 

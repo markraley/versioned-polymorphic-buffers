@@ -778,12 +778,12 @@ struct vptype_option_adder
    template <typename> struct result {typedef void type;};
    vptype_option_adder(TypeVector &vpt) : vp_typedefs(vpt) {}
 
-   void operator()(const std::string &opt_name) const
+   void operator()(const std::string &opt_class) const
    {
       TypeVector::reverse_iterator ii;
       VPTypeOption vpt;
 
-      vpt.opt_name = opt_name;
+      vpt.opt_class = opt_class;
       ii = vp_typedefs.rbegin();
       (*ii)->vptype_options.push_back(vpt);
    };
@@ -987,10 +987,9 @@ vp_compiler<Iterator>::vp_compiler(std::string vpc_path)
    reorder_pi_options = (lit(":") >> reorder_pi_list) ;
 
    // vptype_options
-   vptype_options_item_params = "(">> identifier[vptype_opt_class_add(_1)]
+   vptype_options_item_params = "(">> identifier[vptype_option_add(_1)]
                               >> -vptype_option_vrange >>")" ;
-   vptype_options_item = identifier [vptype_option_add(_1)]
-                           >> vptype_options_item_params;
+   vptype_options_item = lit("cog")>> vptype_options_item_params;
    vptype_options_list = vptype_options_item
                            >> *(lit(",") >> vptype_options_item);
    vptype_options = (lit(":") >> vptype_options_list) ;

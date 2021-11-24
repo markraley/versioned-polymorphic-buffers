@@ -12,60 +12,19 @@ namespace vp_scram {
 		return 1;
 	}
 
-	vector<tuple<int, int>> vlist_Word = {
-		{ 1, 0 },
-		{ 1, 0 },
-		{ 1, 0 },
-		{ 1, 0 },
-		{ 3, 0 },
-		{ 3, 0 },
-		{ 3, 0 },
-		{ 3, 0 }
-	};
-
-	vector<tuple<int, int, string>> rlist_Word = {
-		{ 2, 0, "h1"}
-	};
-
-	ReorderCog *rcog_factory_Word(string &n, vector<int> v, uint seed) {
-		if (n == "h1")
-			return new EggScrambler(v, seed);
-		return(NULL);
-	}
-
-	vector<int> get_vlist_Word(int ver) {
-		vector<int> v; int i = 0;
-		for (auto tt = vlist_Word.begin(); tt != vlist_Word.end(); tt++, i++) {
-			if ((get<1>(*tt) == 0 && ver >= get<0>(*tt)) || (ver >= get<0>(*tt) && ver <= get<1>(*tt))) {
-				v.push_back(i);
-			}
-		};
-
-		return v;
-	}
-
-	ReorderCog *get_rcog_Word(int ver, uint seed) {
-		for (auto tt = rlist_Word.begin(); tt != rlist_Word.end(); tt++) {
-			if ((get<1>(*tt) == 0 && ver >= get<0>(*tt)) || (ver >= get<0>(*tt) && ver <= get<1>(*tt))) {
-				return rcog_factory_Word(get<2>(*tt), get_vlist_Word(ver), seed);
-			}
-		};
-
-		return(new IdentityReorderCog(get_vlist_Word(ver)));
-	}
-
 	vector<tuple<int, int>> vlist_Phrase = {
 		{ 1, 0 },
 		{ 1, 0 },
-		{ 1, 0 }
+		{ 1, 0 },
+		{ 3, 0 }
 	};
 
 	vector<tuple<int, int, string>> rlist_Phrase = {
-		{ 3, 0, "h2"}
+		{ 3, 0, "HashBrowns"}
 	};
 
 	ReorderCog *rcog_factory_Phrase(string &n, vector<int> v, uint seed) {
-		if (n == "h2")
+		if (n == "HashBrowns")
 			return new HashBrowns(v, seed);
 		return(NULL);
 	}
@@ -97,39 +56,6 @@ namespace vp_scram {
 		write_string(ctx, payload.test_name);
 	}
 
-	void write_Word(write_context &ctx, Word &payload)
-	{
-		vector<int> v((*ctx.reorder_map["Word"])());
-
-		for (auto i : v) 
-			switch(i) {
-				case 0:
-				write_string(ctx, payload.fragment1);
-				break;
-				case 1:
-				write_string(ctx, payload.fragment2);
-				break;
-				case 2:
-				write_string(ctx, payload.fragment3);
-				break;
-				case 3:
-				write_string(ctx, payload.fragment4);
-				break;
-				case 4:
-				write_string(ctx, (*ctx.salt_map["SaltShaker"])());
-				break;
-				case 5:
-				write_string(ctx, (*ctx.salt_map["SaltShaker"])());
-				break;
-				case 6:
-				write_string(ctx, (*ctx.salt_map["SaltShaker"])());
-				break;
-				case 7:
-				write_string(ctx, (*ctx.salt_map["SaltShaker"])());
-				break;
-			}
-	}
-
 	void write_Phrase(write_context &ctx, Phrase &payload)
 	{
 		vector<int> v((*ctx.reorder_map["Phrase"])());
@@ -145,6 +71,9 @@ namespace vp_scram {
 				case 2:
 				write_string(ctx, payload.word3);
 				break;
+				case 3:
+				write_string(ctx, (*ctx.salt_map["PepperShaker"])());
+				break;
 			}
 	}
 
@@ -152,39 +81,6 @@ namespace vp_scram {
 	{
 		read_int(ctx, payload.version);
 		read_string(ctx, payload.test_name);
-	}
-
-	void read_Word(read_context &ctx, Word &payload)
-	{
-		vector<int> v((*ctx.reorder_map["Word"])());
-
-		for (auto i : v) 
-			switch(i) {
-				case 0:
-					read_string(ctx, payload.fragment1);
-					break;
-				case 1:
-					read_string(ctx, payload.fragment2);
-					break;
-				case 2:
-					read_string(ctx, payload.fragment3);
-					break;
-				case 3:
-					read_string(ctx, payload.fragment4);
-					break;
-				case 4:
-					read_string(ctx);
-					break;
-				case 5:
-					read_string(ctx);
-					break;
-				case 6:
-					read_string(ctx);
-					break;
-				case 7:
-					read_string(ctx);
-					break;
-			}
 	}
 
 	void read_Phrase(read_context &ctx, Phrase &payload)
@@ -202,11 +98,13 @@ namespace vp_scram {
 				case 2:
 					read_string(ctx, payload.word3);
 					break;
+				case 3:
+					read_string(ctx);
+					break;
 			}
 	}
 
 	void init_reorder_map(map<string, ReorderCog *> &rmap, int ver, uint seed) {
-		rmap["Word"] = get_rcog_Word(ver, seed);
 		rmap["Phrase"] = get_rcog_Phrase(ver, seed);
 	}
 

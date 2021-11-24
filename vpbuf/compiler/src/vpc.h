@@ -64,7 +64,6 @@ struct pod_item;
 
 typedef struct vptype_option {
    VRange vrange;
-   std::string opt_name;
    std::string opt_class;
 } VPTypeOption;
 
