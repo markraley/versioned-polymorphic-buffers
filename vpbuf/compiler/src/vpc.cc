@@ -8,6 +8,7 @@
 #include "pod_map.h"
 #include "pod_typed.h"
 #include "pod_string.h"
+#include "pod_reorder_string.h"
 #include "pod_varint.h"
 #include "pod_salt.h"
 
