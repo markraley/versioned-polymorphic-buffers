@@ -4,6 +4,9 @@
 
 struct pod_reorder_string : public pod_item
 {
+
+   std::vector<VPOption> cogs;
+
    void serialize_out_cpp(ofstream &, int, TypeMap &, TarLang &, bool);
    void serialize_in_cpp(ofstream &, int, TypeMap &, TarLang &, bool);
 

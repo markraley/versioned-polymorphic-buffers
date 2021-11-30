@@ -62,10 +62,10 @@ typedef struct target_language TarLang;
 
 struct pod_item;
 
-typedef struct vptype_option {
-   VRange vrange;
+typedef struct {
    std::string opt_class;
-} VPTypeOption;
+   VRange vrange;
+} VPOption;
 
 struct vp_typedef
 {
@@ -73,7 +73,7 @@ struct vp_typedef
    ImplMap impls;
    string parent_name;
    VRange vrange;
-   std::vector<VPTypeOption> vptype_options;
+   std::vector<VPOption> vptype_options;
 
    virtual void serialize_out_cpp(ofstream &, int, TypeMap &, TarLang &) = 0;
    virtual void serialize_in_cpp(ofstream &, int, TypeMap &, TarLang &) = 0;

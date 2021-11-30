@@ -782,7 +782,7 @@ struct vptype_option_adder
    void operator()(const std::string &opt_class) const
    {
       TypeVector::reverse_iterator ii;
-      VPTypeOption vpt;
+      VPOption vpt;
 
       vpt.opt_class = opt_class;
       ii = vp_typedefs.rbegin();
