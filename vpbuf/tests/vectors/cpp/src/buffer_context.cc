@@ -61,7 +61,8 @@ pullInteger(
 // -----------------------------------------------------------------------------
 
 namespace vp_vectors {
-   void init_reorder_map(map<string, ReorderCog *> &rmap, int ver, uint seed);
+   void init_reorder_map(
+               map<string, CogStack> &rmap, int ver, uint seed);
    bool version_check(long);
 }
 
@@ -69,7 +70,7 @@ using namespace vp_vectors;
 
 class read_context {
    public:
-      map<string, ReorderCog *> reorder_map;
+      map<string, CogStack> reorder_map;
       long m_ver;
       ByteVec buf_arr;
       ByteVec::const_iterator ii;
@@ -101,7 +102,7 @@ class read_context {
 
 class write_context {
    public:
-      map<string, ReorderCog *> reorder_map;
+      map<string, CogStack> reorder_map;
       map<string, Shaker *> salt_map;
       long m_ver;
       std::vector<byte> buf_arr;

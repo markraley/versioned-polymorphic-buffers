@@ -89,11 +89,11 @@ void vp_typedef_reorder_pod::gen_cpp_utils(
    // ------ rcog_factory
 
    ofs <<tab(in)<< "ReorderCog *rcog_factory_"<< type_name
-                     <<"(string &n, vector<int> v, uint seed) {\n";
+                     <<"(string &n, uint seed) {\n";
 
    for (auto jj = vptype_options.begin(); jj != vptype_options.end(); ++jj) {
       ofs <<tab(in+1)<< "if (n == \"" << (*jj).opt_class <<"\")\n";
-      ofs <<tab(in+2)<< "return new "<< (*jj).opt_class <<"(v, seed);\n";
+      ofs <<tab(in+2)<< "return new "<< (*jj).opt_class <<"(seed);\n";
    }
 
    ofs <<tab(in+1)<< "return(NULL);\n";
@@ -120,23 +120,24 @@ void vp_typedef_reorder_pod::gen_cpp_utils(
 
    // ------ get_rcog
 
-   ofs <<tab(in)<< "ReorderCog *get_rcog_"<< type_name
-                              <<"(int ver, uint seed) {\n";
+   ofs <<tab(in)<< "void init_rcog_"<< type_name
+                     <<"(map<string, CogStack> &rmap, int ver, uint seed) {\n";
+
+   ofs <<tab(in+1)<< "rmap.emplace(\""<< type_name
+                        <<"\", CogStack(get_vlist_"<< type_name <<"(ver)));\n";
+   ofs <<tab(in+1)<< "auto &cs = rmap[\""<< type_name <<"\"];\n";
 
    ofs <<tab(in+1)<< "for (auto tt = rlist_"<< type_name
                      <<".begin(); tt != rlist_"
                      << type_name <<".end(); tt++) {\n";
    ofs <<tab(in+2)<< "if ((get<1>(*tt) == 0 && ver >= get<0>(*tt)) "<<
             "|| (ver >= get<0>(*tt) && ver <= get<1>(*tt))) {\n";
-   ofs <<tab(in+3)<<"return rcog_factory_" << type_name
-                  <<"(get<2>(*tt), get_vlist_"<< type_name <<"(ver), seed);\n";
+   ofs <<tab(in+3)<<"cs.cogs.push_back(rcog_factory_" << type_name
+                  <<"(get<2>(*tt), seed));\n";
    ofs <<tab(in+2)<< "}\n";
 
    ofs <<tab(in+1)<< "};\n\n";
 
-
-   ofs <<tab(in+1)<< "return(new IdentityReorderCog(get_vlist_"
-                           << type_name <<"(ver)));\n";
    ofs <<tab(in)<< "}\n\n";
 
 }
@@ -235,7 +236,7 @@ vp_typedef_reorder_pod::serialize_out_cpp(
       << "(write_context &ctx, " << type_name << " &payload)\n";
    ofs << tab(in) << "{\n";
 
-   ofs << tab(in+1) << "vector<int> v((*ctx.reorder_map[\""
+   ofs << tab(in+1) << "vector<int> v((ctx.reorder_map[\""
       << type_name <<"\"])());\n\n";
 
    int j = 0;
@@ -280,7 +281,7 @@ vp_typedef_reorder_pod::serialize_in_cpp(
       ofs <<tab(in+1)<< "auto *payload_ptr = new "<< type_name <<";\n";
       ofs <<tab(in+1)<< "auto &payload = *payload_ptr;\n";
 
-      ofs << tab(in+1) << "vector<int> v((*ctx.reorder_map[\""
+      ofs << tab(in+1) << "vector<int> v((ctx.reorder_map[\""
          << type_name <<"\"])());\n\n";
 
       int j = 0;
@@ -303,7 +304,7 @@ vp_typedef_reorder_pod::serialize_in_cpp(
       << type_name << " &payload)\n";
    ofs <<tab(in)<< "{\n";
 
-   ofs << tab(in+1) << "vector<int> v((*ctx.reorder_map[\""
+   ofs << tab(in+1) << "vector<int> v((ctx.reorder_map[\""
       << type_name <<"\"])());\n\n";
 
    int j = 0;

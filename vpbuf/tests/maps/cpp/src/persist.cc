@@ -101,11 +101,36 @@ class Omlette {
 
 class ReorderCog {
    public:
-      virtual vector<int> operator ()() = 0;
+      virtual void operator ()(vector<int> &v) = 0;
       virtual ~ReorderCog();
 };
 
 ReorderCog::~ReorderCog() {}
+
+class CogStack {
+   public:
+      vector <int> index_list;
+      vector <ReorderCog *> cogs;
+
+      CogStack() {}
+
+      CogStack(vector<int> const &v) : index_list(v) {}
+
+      vector <int> operator ()() {
+
+         auto tmp(index_list);
+
+         for (auto &cog : cogs) {
+            (*cog)(tmp);
+
+//            for (auto const& ii : tmp)
+//               cout << tmp[ii] << " ";
+//            cout << endl;
+         }
+
+         return tmp;
+      }
+};
 
 class Shaker {
    public:
@@ -117,30 +142,14 @@ Shaker::~Shaker() {}
 
 // -----------------------------------------------------------------------------
 
-class IdentityReorderCog : public ReorderCog {
-   public:
-      vector <int> base_list;
-
-   public:
-      IdentityReorderCog(vector <int> const &v) : base_list(v) { };
-
-      vector<int> operator ()() {
-         return base_list;
-      }
-};
-
 class EggScrambler : public ReorderCog {
    public:
-      vector <int> base_arr;
       uint seed;
 
    public:
-      EggScrambler(
-         vector <int> const &v,
-         uint seed = 1) : base_arr(v), seed(seed) { };
+      EggScrambler(uint seed = 1) : seed(seed) {};
 
-      vector<int> operator ()() {
-         auto tmp(base_arr);
+      void operator ()(vector<int> &tmp) {
          auto j = tmp.size() - 1;
          uint i = 0;
 
@@ -155,14 +164,7 @@ class EggScrambler : public ReorderCog {
             tmp[i] = xchg;
 
             j--;
-
          }
-
-//         for (auto const& ii : tmp)
-//            cout << tmp[ii] << " ";
-//         cout << endl;
-
-         return tmp;
       }
 };
 

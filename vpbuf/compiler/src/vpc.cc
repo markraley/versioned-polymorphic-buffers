@@ -76,14 +76,13 @@ code_footer_cpp(
 
    // ------ init_reorder_map
 
-   ofs <<tab(in)<< "void init_reorder_map(map<string, ReorderCog *> &rmap"
-                     <<", int ver, uint seed) {\n";
+   ofs <<tab(in)<< "void init_reorder_map(map<string, CogStack> "
+                     <<"&rmap, int ver, uint seed) {\n";
 
    for (auto ii = vp_typedefs.begin(); ii != vp_typedefs.end(); ++ii) {
       if ((*ii)->can_reorder()) {
-         ofs <<tab(in+1)<<"rmap[\""
-                     << (*ii)->type_name <<"\"] = get_rcog_"
-                     << (*ii)->type_name <<"(ver, seed);\n";
+         ofs <<tab(in+1)<<"init_rcog_"
+                     << (*ii)->type_name <<"(rmap, ver, seed);\n";
       }
    }
 

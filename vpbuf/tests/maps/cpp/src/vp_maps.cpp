@@ -23,9 +23,9 @@ namespace vp_maps {
 		{ 1, 0, "EggScrambler"}
 	};
 
-	ReorderCog *rcog_factory_Egg(string &n, vector<int> v, uint seed) {
+	ReorderCog *rcog_factory_Egg(string &n, uint seed) {
 		if (n == "EggScrambler")
-			return new EggScrambler(v, seed);
+			return new EggScrambler(seed);
 		return(NULL);
 	}
 
@@ -40,14 +40,15 @@ namespace vp_maps {
 		return v;
 	}
 
-	ReorderCog *get_rcog_Egg(int ver, uint seed) {
+	void init_rcog_Egg(map<string, CogStack> &rmap, int ver, uint seed) {
+		rmap.emplace("Egg", CogStack(get_vlist_Egg(ver)));
+		auto &cs = rmap["Egg"];
 		for (auto tt = rlist_Egg.begin(); tt != rlist_Egg.end(); tt++) {
 			if ((get<1>(*tt) == 0 && ver >= get<0>(*tt)) || (ver >= get<0>(*tt) && ver <= get<1>(*tt))) {
-				return rcog_factory_Egg(get<2>(*tt), get_vlist_Egg(ver), seed);
+				cs.cogs.push_back(rcog_factory_Egg(get<2>(*tt), seed));
 			}
 		};
 
-		return(new IdentityReorderCog(get_vlist_Egg(ver)));
 	}
 
 	void write_Header(write_context &ctx, Header &payload)
@@ -108,7 +109,7 @@ namespace vp_maps {
 
 	void write_Egg(write_context &ctx, Egg &payload)
 	{
-		vector<int> v((*ctx.reorder_map["Egg"])());
+		vector<int> v((ctx.reorder_map["Egg"])());
 
 		for (auto i : v) 
 			switch(i) {
@@ -215,7 +216,7 @@ namespace vp_maps {
 
 	void read_Egg(read_context &ctx, Egg &payload)
 	{
-		vector<int> v((*ctx.reorder_map["Egg"])());
+		vector<int> v((ctx.reorder_map["Egg"])());
 
 		for (auto i : v) 
 			switch(i) {
@@ -248,8 +249,8 @@ namespace vp_maps {
 
 	}
 
-	void init_reorder_map(map<string, ReorderCog *> &rmap, int ver, uint seed) {
-		rmap["Egg"] = get_rcog_Egg(ver, seed);
+	void init_reorder_map(map<string, CogStack> &rmap, int ver, uint seed) {
+		init_rcog_Egg(rmap, ver, seed);
 	}
 
 }
