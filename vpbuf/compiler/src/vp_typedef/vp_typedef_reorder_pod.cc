@@ -378,16 +378,14 @@ void vp_typedef_reorder_pod::gen_py_utils(
 
    // ------ rlist wrapper function
 
-   ofs <<tab(in)<< "def get_rlist_"<< type_name <<"(ver, seed):\n";
+   ofs <<tab(in)<< "def get_rlist_"<< type_name <<"(rmap, ver, seed):\n";
 
+   ofs <<tab(in+1)<< "rmap['"<< type_name <<"'] = CogStack(get_vlist_"
+                           << type_name <<"(ver))\n";
    ofs <<tab(in+1)<< "for p in rlist_"<< type_name<< ":\n";
    ofs <<tab(in+2)<< "if (p[1] == 0 and ver >= p[0]) "<<
             "or (ver >= p[0] and ver <= p[1]):\n";
-   ofs <<tab(in+3)<< "return p[2](get_vlist_"
-                           << type_name <<"(ver), seed)\n";
-
-   ofs <<tab(in+1)<< "return IdentityScrambler(get_vlist_"
-                           << type_name <<"(ver))\n";
+   ofs <<tab(in+3)<< "rmap['"<< type_name <<"'].cogs.append(p[2](seed))\n";
 
    ofs << "\n";
 }

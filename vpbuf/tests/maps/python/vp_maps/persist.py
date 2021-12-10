@@ -66,21 +66,25 @@ class Omlette:
 
 # ------------------------------------------------------------------------------
 
-class IdentityScrambler:
-    def __init__(self, base_arr = [], seed = 1):
-        self.base_arr = base_arr
+class CogStack:
+    def __init__(self, indexes = []):
+        self.indexes = indexes
+        self.cogs = []
 
     def __call__(self):
-        return self.base_arr
+        tmp = list(self.indexes)
+
+        for cog in self.cogs:
+            cog(tmp)
+
+        return tmp
 
 class EggScrambler:
-    def __init__(self, base_arr = [], seed = 1):
-        self.base_arr = base_arr
+    def __init__(self, seed = 1):
         self.seed = seed
 
-    def __call__(self):
+    def __call__(self, tmp):
         # simple shuffle via two primes
-        tmp = list(self.base_arr)
         j = len(tmp) - 1
 
         while (j > 0):

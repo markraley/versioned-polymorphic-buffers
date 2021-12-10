@@ -12,8 +12,8 @@ def get_high_version():
 def get_low_version():
 	return 1
 
-def init_reorder_map(map, ver, seed):
-	map['Egg'] = get_rlist_Egg(ver, seed)
+def init_reorder_map(rmap, ver, seed):
+	get_rlist_Egg(rmap, ver, seed)
 
 vlist_Egg = [
 	( 1, 0 ),
@@ -31,14 +31,15 @@ def get_vlist_Egg(ver):
 	return v
 
 rlist_Egg = [
-	( 1, 0, EggScrambler )
+	( 1, 0, EggScrambler ),
+	( 2, 0, EggScrambler )
 ]
 
-def get_rlist_Egg(ver, seed):
+def get_rlist_Egg(rmap, ver, seed):
+	rmap['Egg'] = CogStack(get_vlist_Egg(ver))
 	for p in rlist_Egg:
 		if (p[1] == 0 and ver >= p[0]) or (ver >= p[0] and ver <= p[1]):
-			return p[2](get_vlist_Egg(ver), seed)
-	return IdentityScrambler(get_vlist_Egg(ver))
+			rmap['Egg'].cogs.append(p[2](seed))
 
 def write_str(ctx, payload):
     ctx.encoder.writeString(payload) # amf3

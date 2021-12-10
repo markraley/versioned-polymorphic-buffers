@@ -20,10 +20,13 @@ namespace vp_maps {
 	};
 
 	vector<tuple<int, int, string>> rlist_Egg = {
-		{ 1, 0, "EggScrambler"}
+		{ 1, 0, "EggScrambler"},
+		{ 2, 0, "EggScrambler"}
 	};
 
 	ReorderCog *rcog_factory_Egg(string &n, uint seed) {
+		if (n == "EggScrambler")
+			return new EggScrambler(seed);
 		if (n == "EggScrambler")
 			return new EggScrambler(seed);
 		return(NULL);

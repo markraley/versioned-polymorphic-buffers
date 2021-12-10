@@ -171,13 +171,12 @@ code_header_python(
    ofs <<tab(in)<< "def get_low_version():\n";
    ofs <<tab(in+1)<< "return "<< tar_lang.start <<"\n\n";
 
-   ofs <<tab(in)<< "def init_reorder_map(map, ver, seed):\n";
+   ofs <<tab(in)<< "def init_reorder_map(rmap, ver, seed):\n";
    bool any_found = false;
    for (auto ii = vp_typedefs.begin(); ii != vp_typedefs.end(); ++ii) {
       if ((*ii)->can_reorder()) {
-         ofs <<tab(in+1)<<"map['"
-                     << (*ii)->type_name <<"'] = get_rlist_"
-                     << (*ii)->type_name <<"(ver, seed)\n";
+         ofs <<tab(in+1)<<"get_rlist_"
+                     << (*ii)->type_name <<"(rmap, ver, seed)\n";
          any_found = true;
       }
    }

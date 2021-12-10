@@ -28,7 +28,8 @@ module.exports = {
 	},
 
 	rlist_Egg: [
-		[ 1, 0,  persist.EggScrambler ]
+		[ 1, 0,  persist.EggScrambler ],
+		[ 2, 0,  persist.EggScrambler ]
 	],
 
 	get_rlist_Egg: function (ver, seed) {

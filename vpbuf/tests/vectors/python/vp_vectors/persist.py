@@ -58,12 +58,18 @@ class OuterF:
 
 # ------------------------------------------------------------------------------
 
-class IdentityScrambler:
-    def __init__(self, base_arr = [], seed = 1):
-        self.base_arr = base_arr
+class CogStack:
+    def __init__(self, indexes = []):
+        self.indexes = indexes
+        self.cogs = []
 
     def __call__(self):
-        return self.base_arr
+        tmp = list(self.indexes)
+
+        for cog in self.cogs:
+            cog(tmp)
+
+        return tmp
 
 # ------------------------------------------------------------------------------
 
