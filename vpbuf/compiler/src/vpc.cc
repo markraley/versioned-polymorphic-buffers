@@ -111,13 +111,12 @@ code_header_js(
    in += 1;
    ofs <<tab(in)<< "factory: null, // must be set to class factory object\n\n";
 
-   ofs <<tab(in)<< "init_reorder_map: function(map, ver, seed) {\n";
+   ofs <<tab(in)<< "init_reorder_map: function(rmap, ver, seed) {\n";
 
    for (auto ii = vp_typedefs.begin(); ii != vp_typedefs.end(); ++ii) {
       if ((*ii)->can_reorder()) {
-         ofs <<tab(in+1)<<"map['"
-                     << (*ii)->type_name <<"'] = this.get_rlist_"
-                     << (*ii)->type_name <<"(ver, seed)\n";
+         ofs <<tab(in+1)<<"this.get_rlist_"
+                     << (*ii)->type_name <<"(rmap, ver, seed)\n";
       }
    }
    ofs <<tab(in)<< "},\n\n";

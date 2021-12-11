@@ -61,16 +61,21 @@ module.exports = {
 
 // -----------------------------------------------------------------------------
 
-    IdentityScrambler: function(base_arr) {
+    CogStack: function(base_arr, cogs) {
+
         return function() {
             var tmp = base_arr.slice()
+
+            for (i = 0; i < cogs.length; i++)
+                cogs[i](tmp)
+
             return tmp
         }
     },
 
-    EggScrambler: function(base_arr, seed = 1) {
-        return function() {
-            var tmp = base_arr.slice()
+    EggScrambler: function(seed = 1) {
+
+        return function(tmp) {
             var j = tmp.length - 1
 
             while (j > 0) {

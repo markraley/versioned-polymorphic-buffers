@@ -199,19 +199,19 @@ void vp_typedef_reorder_pod::gen_js_utils(
 
    // ------ rlist wrapper function
 
-   ofs <<tab(in)<< "get_rlist_"<< type_name <<": function (ver, seed) {\n";
+   ofs <<tab(in)<<"get_rlist_"<< type_name <<": function (rmap, ver, seed) {\n";
 
+   ofs <<tab(in+1)<< "var cogs = []\n";
    ofs <<tab(in+1)<< "for (var i = 0; i < this.rlist_"
                      << type_name << ".length; i++) {\n";
    ofs <<tab(in+2)<< "var p = this.rlist_"<< type_name <<"[i]\n";
    ofs <<tab(in+2)<< "if ((p[1] == 0 && ver >= p[0]) "<<
             "|| (ver >= p[0] && ver <= p[1]))\n";
-   ofs <<tab(in+3)<< "return p[2](this.get_vlist_"
-                     << type_name <<"(ver), seed)\n";
+   ofs <<tab(in+3)<< "cogs.push(p[2](seed))\n";
    ofs <<tab(in+1)<< "}\n";
 
-   ofs <<tab(in+1)<<"return persist.IdentityScrambler(this.get_vlist_"
-                     << type_name <<"(ver))\n";
+   ofs <<tab(in+1)<<"rmap['"<< type_name <<"'] = new persist.CogStack(this.get_vlist_"
+                           << type_name <<"(ver), cogs)\n";
 
    ofs <<tab(in)<< "},\n\n";
 

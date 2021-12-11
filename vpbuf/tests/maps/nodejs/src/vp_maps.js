@@ -6,8 +6,8 @@ const assert = require('chai').assert;
 module.exports = {
 	factory: null, // must be set to class factory object
 
-	init_reorder_map: function(map, ver, seed) {
-		map['Egg'] = this.get_rlist_Egg(ver, seed)
+	init_reorder_map: function(rmap, ver, seed) {
+		this.get_rlist_Egg(rmap, ver, seed)
 	},
 
 	vlist_Egg: [
@@ -32,13 +32,14 @@ module.exports = {
 		[ 2, 0,  persist.EggScrambler ]
 	],
 
-	get_rlist_Egg: function (ver, seed) {
+	get_rlist_Egg: function (rmap, ver, seed) {
+		var cogs = []
 		for (var i = 0; i < this.rlist_Egg.length; i++) {
 			var p = this.rlist_Egg[i]
 			if ((p[1] == 0 && ver >= p[0]) || (ver >= p[0] && ver <= p[1]))
-				return p[2](this.get_vlist_Egg(ver), seed)
+				cogs.push(p[2](seed))
 		}
-		return persist.IdentityScrambler(this.get_vlist_Egg(ver))
+		rmap['Egg'] = new persist.CogStack(this.get_vlist_Egg(ver), cogs)
 	},
 
 	write_String: function(ctx, payload) {
