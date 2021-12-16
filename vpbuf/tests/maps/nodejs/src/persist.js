@@ -63,8 +63,11 @@ module.exports = {
 
     CogStack: function(base_arr, cogs) {
 
-        return function() {
-            var tmp = base_arr.slice()
+        return function(v = null) {
+            if (v == null)
+                var tmp = base_arr.slice()
+            else
+                tmp = v
 
             for (i = 0; i < cogs.length; i++)
                 cogs[i](tmp)

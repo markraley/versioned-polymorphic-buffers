@@ -130,6 +130,16 @@ class CogStack {
 
          return tmp;
       }
+
+      void operator ()(vector<int> &v) {
+         for (auto &cog : cogs) {
+            (*cog)(v);
+
+//            for (auto const& ii : v)
+//               cout << tmp[ii] << " ";
+//            cout << endl;
+         }
+      }
 };
 
 class Shaker {

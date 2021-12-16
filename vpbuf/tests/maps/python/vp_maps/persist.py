@@ -71,8 +71,11 @@ class CogStack:
         self.indexes = indexes
         self.cogs = []
 
-    def __call__(self):
-        tmp = list(self.indexes)
+    def __call__(self, v = None):
+        if (v is None):
+            tmp = list(self.indexes)
+        else:
+            tmp = v
 
         for cog in self.cogs:
             cog(tmp)
