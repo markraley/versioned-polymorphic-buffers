@@ -6,8 +6,8 @@ const assert = require('chai').assert;
 module.exports = {
 	factory: null, // must be set to class factory object
 
-	init_reorder_map: function(map, ver, seed) {
-		map['Phrase'] = this.get_rlist_Phrase(ver, seed)
+	init_reorder_map: function(rmap, ver, seed) {
+		this.get_rlist_Phrase(rmap, ver, seed)
 	},
 
 	vlist_Phrase: [
@@ -31,13 +31,14 @@ module.exports = {
 		[ 3, 0,  persist.HashBrowns ]
 	],
 
-	get_rlist_Phrase: function (ver, seed) {
+	get_rlist_Phrase: function (rmap, ver, seed) {
+		var cogs = []
 		for (var i = 0; i < this.rlist_Phrase.length; i++) {
 			var p = this.rlist_Phrase[i]
 			if ((p[1] == 0 && ver >= p[0]) || (ver >= p[0] && ver <= p[1]))
-				return p[2](this.get_vlist_Phrase(ver), seed)
+				cogs.push(p[2](seed))
 		}
-		return persist.IdentityScrambler(this.get_vlist_Phrase(ver))
+		rmap['Phrase'] = new persist.CogStack(this.get_vlist_Phrase(ver), cogs)
 	},
 
 	write_String: function(ctx, payload) {

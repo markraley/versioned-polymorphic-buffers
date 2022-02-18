@@ -23,9 +23,9 @@ namespace vp_scram {
 		{ 3, 0, "HashBrowns"}
 	};
 
-	ReorderCog *rcog_factory_Phrase(string &n, vector<int> v, uint seed) {
+	ReorderCog *rcog_factory_Phrase(string &n, uint seed) {
 		if (n == "HashBrowns")
-			return new HashBrowns(v, seed);
+			return new HashBrowns(seed);
 		return(NULL);
 	}
 
@@ -40,14 +40,15 @@ namespace vp_scram {
 		return v;
 	}
 
-	ReorderCog *get_rcog_Phrase(int ver, uint seed) {
+	void init_rcog_Phrase(map<string, CogStack> &rmap, int ver, uint seed) {
+		rmap.emplace("Phrase", CogStack(get_vlist_Phrase(ver)));
+		auto &cs = rmap["Phrase"];
 		for (auto tt = rlist_Phrase.begin(); tt != rlist_Phrase.end(); tt++) {
 			if ((get<1>(*tt) == 0 && ver >= get<0>(*tt)) || (ver >= get<0>(*tt) && ver <= get<1>(*tt))) {
-				return rcog_factory_Phrase(get<2>(*tt), get_vlist_Phrase(ver), seed);
+				cs.cogs.push_back(rcog_factory_Phrase(get<2>(*tt), seed));
 			}
 		};
 
-		return(new IdentityReorderCog(get_vlist_Phrase(ver)));
 	}
 
 	void write_Header(write_context &ctx, Header &payload)
@@ -58,7 +59,7 @@ namespace vp_scram {
 
 	void write_Phrase(write_context &ctx, Phrase &payload)
 	{
-		vector<int> v((*ctx.reorder_map["Phrase"])());
+		vector<int> v((ctx.reorder_map["Phrase"])());
 
 		for (auto i : v) 
 			switch(i) {
@@ -85,7 +86,7 @@ namespace vp_scram {
 
 	void read_Phrase(read_context &ctx, Phrase &payload)
 	{
-		vector<int> v((*ctx.reorder_map["Phrase"])());
+		vector<int> v((ctx.reorder_map["Phrase"])());
 
 		for (auto i : v) 
 			switch(i) {
@@ -104,8 +105,8 @@ namespace vp_scram {
 			}
 	}
 
-	void init_reorder_map(map<string, ReorderCog *> &rmap, int ver, uint seed) {
-		rmap["Phrase"] = get_rcog_Phrase(ver, seed);
+	void init_reorder_map(map<string, CogStack> &rmap, int ver, uint seed) {
+		init_rcog_Phrase(rmap, ver, seed);
 	}
 
 }

@@ -12,8 +12,8 @@ def get_high_version():
 def get_low_version():
 	return 1
 
-def init_reorder_map(map, ver, seed):
-	map['Phrase'] = get_rlist_Phrase(ver, seed)
+def init_reorder_map(rmap, ver, seed):
+	get_rlist_Phrase(rmap, ver, seed)
 
 vlist_Phrase = [
 	( 1, 0 ),
@@ -34,11 +34,11 @@ rlist_Phrase = [
 	( 3, 0, HashBrowns )
 ]
 
-def get_rlist_Phrase(ver, seed):
+def get_rlist_Phrase(rmap, ver, seed):
+	rmap['Phrase'] = CogStack(get_vlist_Phrase(ver))
 	for p in rlist_Phrase:
 		if (p[1] == 0 and ver >= p[0]) or (ver >= p[0] and ver <= p[1]):
-			return p[2](get_vlist_Phrase(ver), seed)
-	return IdentityScrambler(get_vlist_Phrase(ver))
+			rmap['Phrase'].cogs.append(p[2](seed))
 
 def write_str(ctx, payload):
     ctx.encoder.writeString(payload) # amf3
